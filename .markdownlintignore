@@ -1,0 +1,29 @@
+# Dependencies and build outputs
+
+node_modules/
+.next/
+out/
+dist/
+build/
+
+# Lock files and logs
+
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+\*.log
+
+# Auto-generated files
+
+tsconfig.tsbuildinfo
+
+# Git and IDE files
+
+.git/
+.vscode/
+.idea/
+
+# Temporary files
+
+.tmp/
+temp/

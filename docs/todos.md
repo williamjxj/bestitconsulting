@@ -9,3 +9,7 @@ I want to implement eslint + prettier + editorconfig to improve code quality.
 ### Step 3
 
 Add a markdownlint.json to ignore MD warnings.
+
+### Step 4
+
+In order to enhance the effectiveness and appeal of bestitconsulting.ca for outsourcing clients, please prepare a comprehensive Product Requirements Document (`prd.md`) and place it in the `docs/` folder.
