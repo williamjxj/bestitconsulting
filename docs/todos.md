@@ -1,6 +1,25 @@
+## v0.dev
+
+BestITConsulting Ltd: design and implement a website for software outsourcing purpose
+
+(1) profile: professional full-stack engineers, js, ts, python, java, .net etc
+(2) outsource wide various software projects
+(3) located in Vancouver, Canada, with branch in east aisa.
+(4) strong and extensive, comprehensive experience and skills, with proven demonstrated accomblishment
+(5) some typical examples to list.
+(6) users/customers feedback.
+(7) general, popular web design and convenient UI, UX
+(8) multi-language supports (en, fr, es, cn)
+(9) social media links to connect.
+
+I prefer to refer/use popular websites, vivid and good UI. Use JS Nextjs ecosystem, latest version.
+
 ### Step 1
 
 The logic is currently centralized in `/app/page.tsx`. Please extract it into individual components to improve code organization, so I can use next Router to navigate between these pages.
+
+use `v0.dev` to generate Prototype first-version.
+
 
 ### Step 2
 
