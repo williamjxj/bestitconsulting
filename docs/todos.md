@@ -13,3 +13,7 @@ Add a markdownlint.json to ignore MD warnings.
 ### Step 4
 
 In order to enhance the effectiveness and appeal of bestitconsulting.ca for outsourcing clients, please prepare a comprehensive Product Requirements Document (`prd.md`) and place it in the `docs/` folder.
+
+### Step 5
+
+Dynamic category and language support, and the ability to add new categories and languages.
