@@ -18,7 +18,7 @@ import {
   Smartphone,
 } from 'lucide-react'
 
-export default function ServicesPage() {
+export default function HomePage() {
   const services = [
     {
       icon: <Code2 className='h-12 w-12' />,

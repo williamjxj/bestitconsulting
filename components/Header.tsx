@@ -3,58 +3,12 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { Menu, X } from 'lucide-react'
+import { useNavTranslation } from '@/lib/i18n/hooks'
+import { LanguageSelector } from './LanguageSelector'
 
-const languages = {
-  en: {
-    nav: {
-      home: 'Home',
-      services: 'Services',
-      about: 'About',
-      portfolio: 'Portfolio',
-      testimonials: 'Testimonials',
-      contact: 'Contact',
-    },
-  },
-  fr: {
-    nav: {
-      home: 'Accueil',
-      services: 'Services',
-      about: 'À propos',
-      portfolio: 'Portfolio',
-      testimonials: 'Témoignages',
-      contact: 'Contact',
-    },
-  },
-  es: {
-    nav: {
-      home: 'Inicio',
-      services: 'Servicios',
-      about: 'Acerca de',
-      portfolio: 'Portafolio',
-      testimonials: 'Testimonios',
-      contact: 'Contacto',
-    },
-  },
-  cn: {
-    nav: {
-      home: '首页',
-      services: '服务',
-      about: '关于我们',
-      portfolio: '项目案例',
-      testimonials: '客户评价',
-      contact: '联系我们',
-    },
-  },
-}
-
-interface HeaderProps {
-  currentLang: keyof typeof languages
-  setCurrentLang: (lang: keyof typeof languages) => void
-}
-
-export default function Header({ currentLang, setCurrentLang }: HeaderProps) {
+export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const t = languages[currentLang]
+  const { t } = useNavTranslation()
 
   const navItems = [
     { key: 'home', href: '/' },
@@ -86,7 +40,7 @@ export default function Header({ currentLang, setCurrentLang }: HeaderProps) {
                   href={href}
                   className='text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors'
                 >
-                  {t.nav[key as keyof typeof t.nav]}
+                  {t(key)}
                 </Link>
               ))}
             </div>
@@ -94,19 +48,7 @@ export default function Header({ currentLang, setCurrentLang }: HeaderProps) {
 
           {/* Language Selector */}
           <div className='hidden md:flex items-center space-x-2'>
-            {Object.keys(languages).map(lang => (
-              <button
-                key={lang}
-                onClick={() => setCurrentLang(lang as keyof typeof languages)}
-                className={`px-2 py-1 text-xs rounded ${
-                  currentLang === lang
-                    ? 'bg-blue-600 text-white'
-                    : 'text-gray-600 hover:text-blue-600'
-                }`}
-              >
-                {lang.toUpperCase()}
-              </button>
-            ))}
+            <LanguageSelector />
           </div>
 
           {/* Mobile menu button */}
@@ -136,26 +78,11 @@ export default function Header({ currentLang, setCurrentLang }: HeaderProps) {
                 className='text-gray-700 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium'
                 onClick={() => setMobileMenuOpen(false)}
               >
-                {t.nav[key as keyof typeof t.nav]}
+                {t(key)}
               </Link>
             ))}
             <div className='flex space-x-2 px-3 py-2'>
-              {Object.keys(languages).map(lang => (
-                <button
-                  key={lang}
-                  onClick={() => {
-                    setCurrentLang(lang as keyof typeof languages)
-                    setMobileMenuOpen(false)
-                  }}
-                  className={`px-2 py-1 text-xs rounded ${
-                    currentLang === lang
-                      ? 'bg-blue-600 text-white'
-                      : 'text-gray-600 hover:text-blue-600'
-                  }`}
-                >
-                  {lang.toUpperCase()}
-                </button>
-              ))}
+              <LanguageSelector />
             </div>
           </div>
         </div>

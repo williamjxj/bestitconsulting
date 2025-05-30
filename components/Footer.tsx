@@ -1,36 +1,39 @@
+'use client'
+
 import { Github, Linkedin, Twitter } from 'lucide-react'
+import { useTranslation } from '@/lib/i18n/hooks'
 
 export default function Footer() {
+  const { t } = useTranslation('footer')
+
   return (
     <footer className='bg-gray-900 text-white py-12'>
       <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
         <div className='grid grid-cols-1 md:grid-cols-4 gap-8'>
           <div>
             <h3 className='text-2xl font-bold text-blue-400 mb-4'>BestIT</h3>
-            <p className='text-gray-400'>
-              Elite software development outsourcing from Vancouver to Asia.
-            </p>
+            <p className='text-gray-400'>{t('companyDescription')}</p>
           </div>
           <div>
-            <h4 className='font-semibold mb-4'>Services</h4>
+            <h4 className='font-semibold mb-4'>{t('services')}</h4>
             <ul className='space-y-2 text-gray-400'>
-              <li>Full-Stack Development</li>
-              <li>Cloud Solutions</li>
-              <li>Team Augmentation</li>
-              <li>Enterprise Solutions</li>
+              <li>{t('servicesList.fullStack')}</li>
+              <li>{t('servicesList.cloud')}</li>
+              <li>{t('servicesList.team')}</li>
+              <li>{t('servicesList.enterprise')}</li>
             </ul>
           </div>
           <div>
-            <h4 className='font-semibold mb-4'>Technologies</h4>
+            <h4 className='font-semibold mb-4'>{t('technologies')}</h4>
             <ul className='space-y-2 text-gray-400'>
-              <li>React & Next.js</li>
-              <li>Node.js & TypeScript</li>
-              <li>Python & Java</li>
-              <li>Cloud Platforms</li>
+              <li>{t('techList.react')}</li>
+              <li>{t('techList.node')}</li>
+              <li>{t('techList.python')}</li>
+              <li>{t('techList.cloud')}</li>
             </ul>
           </div>
           <div>
-            <h4 className='font-semibold mb-4'>Follow Us</h4>
+            <h4 className='font-semibold mb-4'>{t('followUs')}</h4>
             <div className='flex space-x-4'>
               <a
                 href='#'
