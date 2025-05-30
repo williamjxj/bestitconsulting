@@ -20,6 +20,65 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
+## Code Quality & Development Tools
+
+This project is configured with a comprehensive code quality setup:
+
+### ESLint
+
+- **Configuration**: Extended from Next.js and TypeScript recommendations
+- **Run linting**: `npm run lint`
+- **Auto-fix issues**: `npm run lint:fix`
+
+### Prettier
+
+- **Configuration**: `.prettierrc.json` with project-specific rules
+- **Format code**: `npm run format`
+- **Check formatting**: `npm run format:check`
+
+### EditorConfig
+
+- **File**: `.editorconfig` ensures consistent coding styles across different editors
+- **Settings**: 2-space indentation, LF line endings, UTF-8 encoding
+
+### TypeScript
+
+- **Type checking**: `npm run type-check`
+- **Strict mode enabled** with comprehensive type checking
+
+### Available Scripts
+
+```bash
+# Development
+npm run dev              # Start development server
+
+# Building
+npm run build           # Build for production
+npm run start           # Start production server
+
+# Code Quality
+npm run lint            # Run ESLint
+npm run lint:fix        # Run ESLint with auto-fix
+npm run format          # Format code with Prettier
+npm run format:check    # Check if code is formatted
+npm run type-check      # Run TypeScript type checking
+npm run quality         # Run all quality checks (lint, format, type-check)
+```
+
+### VS Code Integration
+
+- **Auto-format on save** with Prettier
+- **Auto-fix ESLint issues** on save
+- **EditorConfig support** for consistent formatting
+- **TypeScript integration** with auto-imports
+
+### Recommended VS Code Extensions
+
+- ESLint
+- Prettier - Code formatter
+- EditorConfig for VS Code
+- TypeScript Importer
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:

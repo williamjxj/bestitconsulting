@@ -22,5 +22,14 @@
     "javascriptreact",
     "typescript",
     "typescriptreact"
-  ]
+  ],
+  "prettier.requireConfig": true,
+  "typescript.preferences.includePackageJsonAutoImports": "on",
+  "editor.rulers": [
+    80
+  ],
+  "files.insertFinalNewline": true,
+  "files.trimTrailingWhitespace": true,
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true
 }
