@@ -43,6 +43,58 @@ export const ZH_TRANSLATIONS: Translations = {
     consultingDesc: '战略技术指导，帮助您的企业发展和优化运营。',
     features: '功能特性',
     technologies: '技术栈',
+    services: {
+      fullStackDevelopment: {
+        title: '全栈开发',
+        description:
+          '使用现代技术和最佳实践进行端到端的Web和移动应用程序开发。',
+        features: {
+          frontendDevelopment: '响应式前端开发',
+          backendDevelopment: '可扩展的后端架构',
+          databaseDesign: '数据库设计和优化',
+          apiDevelopment: 'RESTful和GraphQL API开发',
+          performanceOptimization: '性能优化',
+          codeReview: '代码审查和重构',
+        },
+      },
+      cloudSolutions: {
+        title: '云解决方案',
+        description: '为现代应用程序提供可扩展的云架构和部署解决方案。',
+        features: {
+          cloudMigration: '云迁移策略',
+          infrastructureAsCode: '基础设施即代码',
+          containerization: '使用Docker和Kubernetes的容器化',
+          serverlessArchitecture: '无服务器架构',
+          cloudSecurityAndCompliance: '云安全和合规',
+          costOptimization: '成本优化',
+        },
+      },
+      teamAugmentation: {
+        title: '团队扩充',
+        description:
+          '通过我们熟练的开发人员和顾问扩展您的团队，加速您的项目进展。',
+        features: {
+          skillGapFilling: '填补您团队的技能差距',
+          flexibleResourcing: '灵活的资源模型',
+          seamlessIntegration: '与您的团队无缝集成',
+          knowledgeTransfer: '知识转移',
+          agileMethodology: '敏捷方法论专业知识',
+          scalabilityAndFlexibility: '可扩展性和灵活性',
+        },
+      },
+      enterpriseSolutions: {
+        title: '企业解决方案',
+        description: '为解决复杂业务挑战而设计的定制企业解决方案。',
+        features: {
+          digitalTransformation: '数字化转型',
+          legacySystemModernization: '传统系统现代化',
+          enterpriseArchitecture: '企业架构',
+          customWorkflows: '自定义工作流和自动化',
+          systemIntegration: '系统集成',
+          dataMigration: '数据迁移和ETL',
+        },
+      },
+    },
   },
   about: {
     title: '关于BestIT咨询',
@@ -97,5 +149,77 @@ export const ZH_TRANSLATIONS: Translations = {
     portfolioTitle: '项目案例 - BestIT咨询',
     testimonialsTitle: '客户评价 - BestIT咨询',
     contactTitle: '联系我们 - BestIT咨询',
+  },
+  home: {
+    hero: {
+      title: '精英软件开发与IT咨询',
+      subtitle: '今天构建明天的技术解决方案',
+      description: '我们通过专业的软件开发和IT咨询服务帮助企业进行技术转型。',
+      cta: '立即开始',
+      learnMore: '了解更多',
+    },
+    services: {
+      title: '我们的服务',
+      subtitle: '为您的业务提供全面的IT解决方案',
+      viewAll: '查看所有服务',
+    },
+    about: {
+      title: '为什么选择我们',
+      subtitle: '我们在所有工作中都追求卓越',
+      points: {
+        expertise: {
+          title: '技术专长',
+          description:
+            '我们的团队由高技能的开发人员和顾问组成，他们在多种技术领域拥有深厚的专业知识。',
+        },
+        quality: {
+          title: '质量保证',
+          description:
+            '我们通过严格的测试和代码审查确保所有交付成果的最高质量。',
+        },
+        communication: {
+          title: '清晰沟通',
+          description: '我们在整个项目生命周期中保持透明和一致的沟通。',
+        },
+        delivery: {
+          title: '按时交付',
+          description: '我们尊重截止日期，确保项目按时按预算交付。',
+        },
+      },
+    },
+    stats: {
+      title: '我们的影响',
+      subtitle: '数字说明一切',
+      clients: '满意客户',
+      projects: '完成项目',
+      years: '年经验',
+      team: '团队成员',
+    },
+    cta: {
+      title: '准备好转变您的业务了吗？',
+      description: '立即联系我们，讨论如何帮助您实现技术目标。',
+      button: '联系我们',
+    },
+  },
+  footer: {
+    companyDescription: '从温哥华到亚洲的精英软件开发外包。',
+    services: '服务',
+    servicesList: {
+      fullStack: '全栈开发',
+      cloud: '云解决方案',
+      team: '团队扩充',
+      enterprise: '企业解决方案',
+    },
+    technologies: '技术',
+    techList: {
+      react: 'React 和 Next.js',
+      node: 'Node.js 和 TypeScript',
+      python: 'Python 和 Java',
+      cloud: '云平台',
+    },
+    followUs: '关注我们',
+    rights: '版权所有',
+    privacy: '隐私政策',
+    terms: '服务条款',
   },
 }

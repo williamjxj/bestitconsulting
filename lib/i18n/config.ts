@@ -34,18 +34,6 @@ export const AVAILABLE_LANGUAGES: Language[] = [
     nativeName: '中文',
     flag: '🇨🇳',
   },
-  {
-    code: 'de',
-    name: 'German',
-    nativeName: 'Deutsch',
-    flag: '🇩🇪',
-  },
-  {
-    code: 'ja',
-    name: 'Japanese',
-    nativeName: '日本語',
-    flag: '🇯🇵',
-  },
 ]
 
 // Translation categories
@@ -94,5 +82,15 @@ export const TRANSLATION_CATEGORIES: TranslationCategory[] = [
     id: 'meta',
     name: 'Meta',
     description: 'SEO titles, descriptions, and meta content',
+  },
+  {
+    id: 'home',
+    name: 'Home',
+    description: 'Home page content',
+  },
+  {
+    id: 'footer',
+    name: 'Footer',
+    description: 'Footer content and links',
   },
 ]

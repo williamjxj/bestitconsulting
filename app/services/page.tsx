@@ -8,6 +8,8 @@ export default function Page() {
     <Layout>
       <CldImage
         src='cld-sample-5' // Use this sample image or upload your own via the Media Explorer
+        alt='A sample image from Cloudinary'
+        className='rounded-lg'
         width='500' // Transform the image: auto-crop to square aspect_ratio
         height='500'
         crop={{
