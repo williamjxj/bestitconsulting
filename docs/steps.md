@@ -1,4 +1,4 @@
-## v0.dev
+## v0.dev for prototype
 
 BestITConsulting Ltd: design and implement a website for software outsourcing purpose
 
@@ -14,12 +14,13 @@ BestITConsulting Ltd: design and implement a website for software outsourcing pu
 
 I prefer to refer/use popular websites, vivid and good UI. Use JS Nextjs ecosystem, latest version.
 
+`v0.dev` provided the first version of the website, then `Vscode`+`Copilot` to improve.
+
+## Vscode + Copilot
+
 ### Step 1
 
 The logic is currently centralized in `/app/page.tsx`. Please extract it into individual components to improve code organization, so I can use next Router to navigate between these pages.
-
-use `v0.dev` to generate Prototype first-version.
-
 
 ### Step 2
 
@@ -36,3 +37,11 @@ In order to enhance the effectiveness and appeal of bestitconsulting.ca for outs
 ### Step 5
 
 Dynamic category and language support, and the ability to add new categories and languages.
+
+### Step 6
+
+create github repo
+
+### Step 7
+
+- use `manus` to analyse this github repo project: `manus-report.md`
