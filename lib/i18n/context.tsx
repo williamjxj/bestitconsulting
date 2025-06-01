@@ -12,7 +12,6 @@ import {
   Language,
   Translations,
   TranslationCategory,
-  LanguageData,
 } from './types'
 import {
   AVAILABLE_LANGUAGES,
@@ -27,7 +26,6 @@ import {
   getBrowserLanguage,
   getStoredLanguage,
   storeLanguage,
-  getFallbackLanguage,
   isSupportedLanguage,
   mergeTranslations,
   validateLanguage,
@@ -153,7 +151,7 @@ export function I18nProvider({
       params?: Record<string, string | number>
     ): string => {
       if (!translations[category]) {
-        console.warn(`Translation category not found: ${category}`)
+        // console.warn(`Translation category not found: ${category}`)
         return key
       }
 

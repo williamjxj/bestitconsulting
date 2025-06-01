@@ -1,15 +1,17 @@
-## Env
+## This APP (v0.dev)
 
-Define and configure a modern Next.js 15.2.4 project with the following technical specifications:
+- Use `v0.dev` as the initial project version
+- Always use latest version of Next.js
+- Use context7 as assistant for best practices
 
-Required Dependencies:
+### Required Dependencies:
 
-- React 19
-- TailwindCSS 4
-- TypeScript 5
-- ESLint 9
+- React ^19
+- TailwindCSS ^4
+- TypeScript ^5
+- ESLint ^9
 
-Project Requirements:
+### Project Requirements:
 
 - Use strict TypeScript configuration
 - Implement ESLint with recommended rules
@@ -21,14 +23,14 @@ Project Requirements:
 - Set up Jest/React Testing Library
 - Add Prettier integration
 
-Project Structure:
+### Project Structure:
 
 - Follow Next.js conventions for routing
 - Implement component-based architecture
 - Use proper file naming conventions
 - Separate business logic from UI components
 
-Deliverables:
+### Deliverables:
 
 - package.json with all dependencies
 - Configuration files (tsconfig.json, next.config.js, etc.)

@@ -1,4 +1,4 @@
-## v0.dev for prototype
+## 🚀 v0.dev for prototype
 
 BestITConsulting Ltd: design and implement a website for software outsourcing purpose
 
@@ -14,34 +14,36 @@ BestITConsulting Ltd: design and implement a website for software outsourcing pu
 
 I prefer to refer/use popular websites, vivid and good UI. Use JS Nextjs ecosystem, latest version.
 
-`v0.dev` provided the first version of the website, then `Vscode`+`Copilot` to improve.
+- `v0.dev` provided the first version of the website, then - `Vscode`+`Copilot` to improve.
 
-## Vscode + Copilot
+## 💻 Vscode + Copilot
 
-### Step 1
+### Step 1 🧩 解藕
 
 The logic is currently centralized in `/app/page.tsx`. Please extract it into individual components to improve code organization, so I can use next Router to navigate between these pages.
 
-### Step 2
+### Step 2 ✨ eslint+prettier+editorconfig
 
 I want to implement eslint + prettier + editorconfig to improve code quality.
 
-### Step 3
+### Step 3 📝 markdownlint.json
 
 Add a markdownlint.json to ignore MD warnings.
 
-### Step 4
+### Step 4 📋 prd.md
 
 In order to enhance the effectiveness and appeal of bestitconsulting.ca for outsourcing clients, please prepare a comprehensive Product Requirements Document (`prd.md`) and place it in the `docs/` folder.
 
-### Step 5
+### Step 5 🌐 i18n
 
 Dynamic category and language support, and the ability to add new categories and languages.
 
-### Step 6
+### Step 6 📦 github
 
 create github repo
 
-### Step 7
+### Step 7 📊 manus.md
 
-- use `manus` to analyse this github repo project: `manus-report.md`
+- use `manus` to analyse this github repo project: `manus-report.md`（from Github Repo）
+
+### Step 8 📚 Deployment

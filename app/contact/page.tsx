@@ -4,6 +4,7 @@ import { useState } from 'react'
 import Layout from '@/components/Layout'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
+import { Linkedin, Twitter, Github, Youtube } from 'lucide-react'
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -350,22 +351,63 @@ export default function ContactPage() {
                 {/* Social Media */}
                 <Card>
                   <CardContent className='p-6'>
-                    <h3 className='text-xl font-bold text-gray-900 mb-4'>
+                    <h3 className='text-xl font-bold text-gray-900 mb-5'>
                       Follow Us
                     </h3>
-                    <div className='flex space-x-4'>
-                      <a href='#' className='text-blue-600 hover:text-blue-800'>
-                        LinkedIn
-                      </a>
-                      <a href='#' className='text-blue-400 hover:text-blue-600'>
-                        Twitter
-                      </a>
-                      <a href='#' className='text-gray-800 hover:text-gray-600'>
-                        GitHub
-                      </a>
-                      <a href='#' className='text-red-600 hover:text-red-800'>
-                        YouTube
-                      </a>
+                    <div className='flex flex-wrap gap-3 justify-between'>
+                      <div className='bg-white p-2 rounded-lg shadow-sm hover:shadow-md transition-all duration-300'>
+                        <a
+                          href='#'
+                          className='group flex items-center gap-2 text-gray-700 hover:text-blue-600 transition-all duration-300'
+                          aria-label='LinkedIn'
+                        >
+                          <div className='flex items-center justify-center w-8 h-8 rounded-full bg-blue-100 group-hover:bg-blue-200 transition-all duration-300'>
+                            <Linkedin className='h-4 w-4 text-blue-600' />
+                          </div>
+                          <span className='text-xs text-blue-600'>
+                            LinkedIn
+                          </span>
+                        </a>
+                      </div>
+
+                      <div className='bg-white p-2 rounded-lg shadow-sm hover:shadow-md transition-all duration-300'>
+                        <a
+                          href='#'
+                          className='group flex items-center gap-2 text-gray-700 hover:text-blue-400 transition-all duration-300'
+                          aria-label='Twitter'
+                        >
+                          <div className='flex items-center justify-center w-8 h-8 rounded-full bg-blue-50 group-hover:bg-blue-100 transition-all duration-300'>
+                            <Twitter className='h-4 w-4 text-blue-400' />
+                          </div>
+                          <span className='text-xs text-blue-400'>Twitter</span>
+                        </a>
+                      </div>
+
+                      <div className='bg-white p-2 rounded-lg shadow-sm hover:shadow-md transition-all duration-300'>
+                        <a
+                          href='#'
+                          className='group flex items-center gap-2 text-gray-700 hover:text-gray-900 transition-all duration-300'
+                          aria-label='GitHub'
+                        >
+                          <div className='flex items-center justify-center w-8 h-8 rounded-full bg-gray-100 group-hover:bg-gray-200 transition-all duration-300'>
+                            <Github className='h-4 w-4 text-gray-800' />
+                          </div>
+                          <span className='text-xs text-gray-800'>GitHub</span>
+                        </a>
+                      </div>
+
+                      <div className='bg-white p-2 rounded-lg shadow-sm hover:shadow-md transition-all duration-300'>
+                        <a
+                          href='#'
+                          className='group flex items-center gap-2 text-gray-700 hover:text-red-600 transition-all duration-300'
+                          aria-label='YouTube'
+                        >
+                          <div className='flex items-center justify-center w-8 h-8 rounded-full bg-red-50 group-hover:bg-red-100 transition-all duration-300'>
+                            <Youtube className='h-4 w-4 text-red-600' />
+                          </div>
+                          <span className='text-xs text-red-600'>YouTube</span>
+                        </a>
+                      </div>
                     </div>
                   </CardContent>
                 </Card>
