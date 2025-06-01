@@ -1,35 +1,43 @@
-import {
-  Language,
-  Translations,
-  TranslationCategory,
-  LanguageCode,
-  CategoryKey,
-  TranslationKey,
-} from './types'
+import { Language, Translations, TranslationCategory } from './types'
 import { DEFAULT_CONFIG } from './config'
 
 /**
  * Get nested translation value using dot notation
  */
-export function getNestedValue(obj: any, path: string): string {
-  return path.split('.').reduce((current, key) => {
-    return current && current[key] !== undefined ? current[key] : undefined
-  }, obj)
+export function getNestedValue(
+  obj: Record<string, unknown>,
+  path: string
+): string | undefined {
+  return path.split('.').reduce((current: unknown, key: string) => {
+    return current &&
+      typeof current === 'object' &&
+      current !== null &&
+      key in current
+      ? (current as Record<string, unknown>)[key]
+      : undefined
+  }, obj) as string | undefined
 }
 
 /**
  * Set nested translation value using dot notation
  */
-export function setNestedValue(obj: any, path: string, value: string): void {
+export function setNestedValue(
+  obj: Record<string, unknown>,
+  path: string,
+  value: string
+): void {
   const keys = path.split('.')
   const lastKey = keys.pop()!
 
-  const target = keys.reduce((current, key) => {
-    if (!current[key]) {
-      current[key] = {}
-    }
-    return current[key]
-  }, obj)
+  const target = keys.reduce(
+    (current: Record<string, unknown>, key: string) => {
+      if (!current[key]) {
+        current[key] = {}
+      }
+      return current[key] as Record<string, unknown>
+    },
+    obj
+  )
 
   target[lastKey] = value
 }
@@ -180,14 +188,14 @@ export function extractTranslationKeys(
   Object.keys(translations).forEach(category => {
     keys[category] = []
 
-    function extractKeys(obj: any, prefix = ''): void {
+    function extractKeys(obj: Record<string, unknown>, prefix = ''): void {
       Object.keys(obj).forEach(key => {
         const fullKey = prefix ? `${prefix}.${key}` : key
 
         if (typeof obj[key] === 'string') {
           keys[category].push(fullKey)
-        } else if (typeof obj[key] === 'object') {
-          extractKeys(obj[key], fullKey)
+        } else if (typeof obj[key] === 'object' && obj[key] !== null) {
+          extractKeys(obj[key] as Record<string, unknown>, fullKey)
         }
       })
     }
@@ -234,8 +242,8 @@ export function validateLanguage(language: Language): string[] {
  */
 export function deepClone<T>(obj: T): T {
   if (obj === null || typeof obj !== 'object') return obj
-  if (obj instanceof Date) return new Date(obj.getTime()) as any
-  if (obj instanceof Array) return obj.map(item => deepClone(item)) as any
+  if (obj instanceof Date) return new Date(obj.getTime()) as T
+  if (obj instanceof Array) return obj.map(item => deepClone(item)) as T
 
   const cloned = {} as T
   Object.keys(obj).forEach(key => {
@@ -256,7 +264,7 @@ export const STORAGE_KEYS = {
 /**
  * Store translations in localStorage
  */
-export function storeTranslations(translations: Record<string, any>): void {
+export function storeTranslations(translations: Record<string, unknown>): void {
   if (typeof window === 'undefined') return
 
   try {
@@ -272,7 +280,7 @@ export function storeTranslations(translations: Record<string, any>): void {
 /**
  * Get translations from localStorage
  */
-export function getStoredTranslations(): Record<string, any> | null {
+export function getStoredTranslations(): Record<string, unknown> | null {
   if (typeof window === 'undefined') return null
 
   try {
@@ -286,7 +294,7 @@ export function getStoredTranslations(): Record<string, any> | null {
 /**
  * Store custom languages in localStorage
  */
-export function storeCustomLanguages(languages: any[]): void {
+export function storeCustomLanguages(languages: Language[]): void {
   if (typeof window === 'undefined') return
 
   try {
@@ -302,7 +310,7 @@ export function storeCustomLanguages(languages: any[]): void {
 /**
  * Get custom languages from localStorage
  */
-export function getStoredCustomLanguages(): any[] | null {
+export function getStoredCustomLanguages(): Language[] | null {
   if (typeof window === 'undefined') return null
 
   try {

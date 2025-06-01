@@ -108,7 +108,7 @@ export function I18nProvider({
         if (storedTranslations && storedTranslations[initialLanguage]) {
           initialTranslations = mergeTranslations(
             initialTranslations || {},
-            storedTranslations[initialLanguage]
+            storedTranslations[initialLanguage] as Translations
           )
         }
 
@@ -158,7 +158,11 @@ export function I18nProvider({
       const value = getNestedValue(translations[category], key)
 
       if (value === undefined) {
-        console.warn(`Translation key not found: ${category}.${key}`)
+        // Log translation key not found in development
+        if (process.env.NODE_ENV === 'development') {
+          // eslint-disable-next-line no-console
+          console.warn(`Translation key not found: ${category}.${key}`)
+        }
 
         // Try fallback language
         const fallbackData =
@@ -203,7 +207,7 @@ export function I18nProvider({
         if (storedTranslations && storedTranslations[languageCode]) {
           languageTranslations = mergeTranslations(
             languageTranslations,
-            storedTranslations[languageCode]
+            storedTranslations[languageCode] as Translations
           )
         }
 
@@ -294,7 +298,8 @@ export function I18nProvider({
         }
 
         // Store translations in localStorage
-        const storedTranslations = getStoredTranslations() || {}
+        const storedTranslations =
+          (getStoredTranslations() as Record<string, Translations>) || {}
         if (!storedTranslations[languageCode]) {
           storedTranslations[languageCode] = {}
         }
@@ -304,7 +309,7 @@ export function I18nProvider({
 
         // Use a temporary object to set the nested value
         const temp = deepClone(storedTranslations[languageCode][category])
-        setNestedValue(temp, key, value)
+        setNestedValue(temp as Record<string, unknown>, key, value)
         storedTranslations[languageCode][category] = temp
 
         storeTranslations(storedTranslations)
@@ -340,7 +345,8 @@ export function I18nProvider({
         }))
 
         // Store the new category in all stored translations
-        const storedTranslations = getStoredTranslations() || {}
+        const storedTranslations =
+          (getStoredTranslations() as Record<string, Translations>) || {}
 
         // Initialize this category for all languages in stored translations
         Object.keys(storedTranslations).forEach(langCode => {

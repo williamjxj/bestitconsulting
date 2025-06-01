@@ -89,6 +89,7 @@ Your project is now ready for development! You can:
    ```
 
 3. **Run Quality Checks**:
+
    ```bash
    npm run quality
    ```
@@ -153,7 +154,6 @@ npm run quality         # Run all quality checks (lint, format, type-check)
 - Prettier - Code formatter
 - EditorConfig for VS Code
 - TypeScript Importer
-
 
 ## Deploy on Vercel
 

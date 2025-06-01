@@ -42,7 +42,7 @@ This PRD outlines the enhancement requirements for the bestitconsulting.ca websi
 
 ### 2.1 Target Audience Segments
 
-#### Primary Segments:
+#### Primary Segments
 
 1. **Enterprise Decision Makers (C-Level, VPs)**
 
@@ -371,14 +371,14 @@ This PRD outlines the enhancement requirements for the bestitconsulting.ca websi
 
 ### 10.1 Key Performance Indicators (KPIs)
 
-#### Primary KPIs:
+#### Primary KPIs
 
 - **Lead Generation:** Contact form submissions, consultation bookings
 - **Conversion Rate:** Visitor-to-lead conversion percentage
 - **Lead Quality:** Marketing Qualified Leads (MQLs) to Sales Qualified Leads (SQLs) ratio
 - **Revenue Impact:** Website-attributed revenue growth
 
-#### Secondary KPIs:
+#### Secondary KPIs
 
 - **Traffic Metrics:** Organic traffic growth, page views, session duration
 - **Engagement Metrics:** Bounce rate, pages per session, content downloads

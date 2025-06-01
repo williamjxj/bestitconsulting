@@ -41,7 +41,11 @@ export interface I18nContextType {
   categories: TranslationCategory[]
   translations: Translations
   setLanguage: (languageCode: string) => void
-  t: (key: string, category?: string) => string
+  t: (
+    key: string,
+    category?: string,
+    params?: Record<string, string | number>
+  ) => string
   addLanguage: (language: Language, translations: Translations) => Promise<void>
   addTranslation: (
     category: string,
