@@ -24,6 +24,7 @@ import {
   Rocket,
   ArrowRight,
   Building,
+  Zap,
   Shield,
   Award,
   HeadphonesIcon,

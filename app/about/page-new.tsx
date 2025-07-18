@@ -10,15 +10,18 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import Layout from '@/components/Layout'
 import {
+  MapPin,
   Globe,
   Users,
   Award,
+  Clock,
   Target,
   Rocket,
   Shield,
   Heart,
   Lightbulb,
   CheckCircle,
+  Star,
   ArrowRight,
   Code2,
   Database,

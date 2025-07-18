@@ -1,5 +1,3 @@
-'use client'
-
 import { Button } from '@/components/ui/button'
 import {
   ArrowRight,
@@ -9,15 +7,15 @@ import {
   Shield,
   Server,
   BarChart2,
-  CheckCircle,
-  Target,
-  Zap,
+  GitMerge,
+  Cpu,
 } from 'lucide-react'
+import { HeroSection } from '@/components/HeroSection'
 import { ServiceCard } from '@/components/ServiceCard'
 import Layout from '@/components/Layout'
 import Link from 'next/link'
 
-export default function ServicesPage() {
+export default function HomePage() {
   const services = [
     {
       icon: <Code2 className='h-6 w-6' />,
@@ -164,80 +162,24 @@ export default function ServicesPage() {
     },
   ]
 
-  const processSteps = [
-    {
-      step: '01',
-      title: 'Discovery & Analysis',
-      description:
-        'We analyze your business needs, technical requirements, and current infrastructure to create a comprehensive project roadmap.',
-      icon: <Target className='h-8 w-8' />,
-    },
-    {
-      step: '02',
-      title: 'Strategy & Planning',
-      description:
-        'Our experts develop a detailed technical strategy and project plan with clear milestones and deliverables.',
-      icon: <CheckCircle className='h-8 w-8' />,
-    },
-    {
-      step: '03',
-      title: 'Implementation',
-      description:
-        'We execute the project using agile methodologies, ensuring regular communication and feedback throughout the process.',
-      icon: <Zap className='h-8 w-8' />,
-    },
-    {
-      step: '04',
-      title: 'Support & Optimization',
-      description:
-        'Ongoing support, monitoring, and optimization to ensure your solution continues to deliver maximum value.',
-      icon: <Shield className='h-8 w-8' />,
-    },
-  ]
-
   return (
     <Layout>
       <div className='min-h-screen'>
-        {/* Hero Section */}
-        <section className='relative bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 text-white py-20 md:py-32'>
-          <div className='absolute inset-0 bg-black/20'></div>
-          <div className='container mx-auto px-4 relative z-10'>
-            <div className='max-w-4xl mx-auto text-center'>
-              <span className='inline-block px-4 py-2 text-sm font-medium bg-blue-600/20 rounded-full mb-6 border border-blue-500/30'>
-                Our Services
-              </span>
-              <h1 className='text-4xl md:text-6xl font-bold leading-tight mb-6'>
-                Comprehensive IT Solutions
-                <span className='bg-clip-text text-transparent bg-gradient-to-r from-blue-300 to-cyan-300'>
-                  {' '}
-                  for Your Business
-                </span>
-              </h1>
-              <p className='text-xl text-blue-100 max-w-3xl mx-auto mb-10'>
-                From full-stack development to cloud solutions and
-                cybersecurity, we provide end-to-end technology services that
-                drive digital transformation and business growth.
-              </p>
-              <Button size='lg' className='group' asChild>
-                <Link href='/contact'>
-                  Get Started Today
-                  <ArrowRight className='ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform' />
-                </Link>
-              </Button>
-            </div>
-          </div>
-        </section>
+        <HeroSection />
 
-        {/* Services Grid */}
+        {/* Services Section */}
         <section className='py-20 bg-background'>
           <div className='container mx-auto px-4'>
             <div className='text-center mb-16'>
-              <h2 className='text-3xl md:text-4xl font-bold mb-4'>
+              <span className='inline-block px-4 py-1.5 text-sm font-medium bg-blue-100 text-blue-800 rounded-full mb-4'>
                 What We Offer
+              </span>
+              <h2 className='text-3xl md:text-4xl font-bold mb-4'>
+                Comprehensive IT Solutions for Your Business
               </h2>
               <p className='text-lg text-muted-foreground max-w-2xl mx-auto'>
-                We deliver cutting-edge technology services that help businesses
-                scale, innovate, and succeed in the digital era.
+                We deliver end-to-end technology services that drive digital
+                transformation and business growth.
               </p>
             </div>
 
@@ -246,35 +188,78 @@ export default function ServicesPage() {
                 <ServiceCard key={index} {...service} />
               ))}
             </div>
+
+            <div className='mt-16 text-center'>
+              <Button size='lg' asChild>
+                <Link href='/services' className='group'>
+                  View All Services
+                  <ArrowRight className='ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform' />
+                </Link>
+              </Button>
+            </div>
           </div>
         </section>
 
-        {/* Process Section */}
-        <section className='py-20 bg-muted/30'>
+        {/* Why Choose Us Section */}
+        <section className='py-20 bg-muted/50'>
           <div className='container mx-auto px-4'>
             <div className='text-center mb-16'>
+              <span className='inline-block px-4 py-1.5 text-sm font-medium bg-blue-100 text-blue-800 rounded-full mb-4'>
+                Why Choose Us
+              </span>
               <h2 className='text-3xl md:text-4xl font-bold mb-4'>
-                Our Process
+                Your Trusted Technology Partner
               </h2>
               <p className='text-lg text-muted-foreground max-w-2xl mx-auto'>
-                We follow a proven methodology to ensure successful project
-                delivery and client satisfaction.
+                We go beyond software development to deliver real business value
+                and innovation.
               </p>
             </div>
 
             <div className='grid md:grid-cols-2 lg:grid-cols-4 gap-8'>
-              {processSteps.map((step, index) => (
-                <div key={index} className='text-center group'>
-                  <div className='relative mb-6'>
-                    <div className='w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300'>
-                      <div className='text-white'>{step.icon}</div>
-                    </div>
-                    <span className='absolute -top-2 -right-2 w-8 h-8 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-sm font-bold'>
-                      {step.step}
-                    </span>
+              {[
+                {
+                  icon: (
+                    <Cpu className='h-8 w-8 text-blue-500 animate-pulse-slow' />
+                  ),
+                  title: 'Cutting-Edge Technology',
+                  description:
+                    'We leverage the latest technologies and frameworks to build future-proof solutions.',
+                },
+                {
+                  icon: (
+                    <GitMerge className='h-8 w-8 text-blue-500 animate-float' />
+                  ),
+                  title: 'Agile Development',
+                  description:
+                    'Our iterative approach ensures flexibility and faster time-to-market for your projects.',
+                },
+                {
+                  icon: (
+                    <Users className='h-8 w-8 text-blue-500 animate-scale-pulse' />
+                  ),
+                  title: 'Expert Team',
+                  description:
+                    'Work with certified professionals who are passionate about delivering excellence.',
+                },
+                {
+                  icon: (
+                    <Shield className='h-8 w-8 text-blue-500 animate-rotate-slow' />
+                  ),
+                  title: 'Security First',
+                  description:
+                    'We prioritize security and compliance in every solution we deliver.',
+                },
+              ].map((item, index) => (
+                <div
+                  key={index}
+                  className='bg-card p-6 rounded-xl border border-border/40 hover:border-blue-500/30 transition-all duration-300 hover-lift hover-glow group'
+                >
+                  <div className='w-12 h-12 flex items-center justify-center bg-blue-50 rounded-lg mb-4 group-hover:bg-blue-100 transition-colors duration-300'>
+                    {item.icon}
                   </div>
-                  <h3 className='text-xl font-semibold mb-3'>{step.title}</h3>
-                  <p className='text-muted-foreground'>{step.description}</p>
+                  <h3 className='text-xl font-semibold mb-2'>{item.title}</h3>
+                  <p className='text-muted-foreground'>{item.description}</p>
                 </div>
               ))}
             </div>
@@ -285,11 +270,11 @@ export default function ServicesPage() {
         <section className='py-20 bg-gradient-to-r from-blue-600 to-indigo-700 text-white'>
           <div className='container mx-auto px-4 text-center'>
             <h2 className='text-3xl md:text-4xl font-bold mb-6'>
-              Ready to Transform Your Business?
+              Ready to Start Your Project?
             </h2>
             <p className='text-xl text-blue-100 max-w-2xl mx-auto mb-8'>
-              Let's discuss how our expert team can help you achieve your
-              technology goals and drive business growth.
+              Let&apos;s discuss how we can help you achieve your business goals
+              with our expert software solutions.
             </p>
             <div className='flex flex-col sm:flex-row gap-4 justify-center'>
               <Button
@@ -297,7 +282,7 @@ export default function ServicesPage() {
                 className='bg-white text-blue-700 hover:bg-blue-50'
                 asChild
               >
-                <Link href='/contact'>Schedule Consultation</Link>
+                <Link href='/contact'>Get a Free Consultation</Link>
               </Button>
               <Button
                 size='lg'
@@ -305,7 +290,7 @@ export default function ServicesPage() {
                 className='border-white/30 hover:bg-white/10'
                 asChild
               >
-                <Link href='/portfolio'>View Case Studies</Link>
+                <Link href='/portfolio'>View Our Work</Link>
               </Button>
             </div>
           </div>

@@ -53,15 +53,25 @@ export function I18nProvider({
 }: I18nProviderProps) {
   const [currentLanguage, setCurrentLanguage] =
     useState<string>(defaultLanguage)
-  const [translations, setTranslations] = useState<Translations>({})
-  const [isLoading, setIsLoading] = useState(true)
+  const [translations, setTranslations] = useState<Translations>(
+    DEFAULT_TRANSLATIONS[defaultLanguage]?.translations || {}
+  )
+  const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [languages, setLanguages] = useState<Language[]>(availableLanguages)
   const [translationCategories, setTranslationCategories] =
     useState<TranslationCategory[]>(categories)
+  const [isHydrated, setIsHydrated] = useState(false)
 
-  // Initialize language and translations
+  // Hydration effect
   useEffect(() => {
+    setIsHydrated(true)
+  }, [])
+
+  // Initialize language and translations after hydration
+  useEffect(() => {
+    if (!isHydrated) return
+
     const initializeI18n = async () => {
       try {
         setIsLoading(true)
@@ -113,8 +123,15 @@ export function I18nProvider({
         }
 
         if (initialTranslations) {
-          setCurrentLanguage(initialLanguage)
-          setTranslations(initialTranslations)
+          // Only update if language actually changed
+          if (initialLanguage !== currentLanguage) {
+            setCurrentLanguage(initialLanguage)
+          }
+          if (
+            JSON.stringify(initialTranslations) !== JSON.stringify(translations)
+          ) {
+            setTranslations(initialTranslations)
+          }
 
           if (DEFAULT_CONFIG.persistLanguage) {
             storeLanguage(initialLanguage)
@@ -141,7 +158,13 @@ export function I18nProvider({
     }
 
     initializeI18n()
-  }, [defaultLanguage, availableLanguages])
+  }, [
+    isHydrated,
+    defaultLanguage,
+    availableLanguages,
+    currentLanguage,
+    translations,
+  ])
 
   // Translation function
   const t = useCallback(

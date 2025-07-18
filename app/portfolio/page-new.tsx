@@ -236,6 +236,23 @@ export default function PortfolioPage() {
     },
   ]
 
+  const categories = [
+    'All',
+    'Web Application',
+    'Mobile App',
+    'AI/ML',
+    'IoT',
+    'Cloud Platform',
+  ]
+  const industries = [
+    'All',
+    'Healthcare',
+    'Finance',
+    'Retail',
+    'Manufacturing',
+    'Transportation',
+  ]
+
   return (
     <Layout>
       <div className='min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50'>

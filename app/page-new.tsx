@@ -5,15 +5,19 @@ import {
   Users,
   Cloud,
   Shield,
+  GitMerge,
+  Cpu,
   Play,
   Star,
   Quote,
   Building,
   Trophy,
+  TrendingUp,
 } from 'lucide-react'
 import { HeroSection } from '@/components/HeroSection'
 import Layout from '@/components/Layout'
 import Link from 'next/link'
+import Image from 'next/image'
 
 export default function HomePage() {
   const features = [
