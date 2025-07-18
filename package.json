@@ -1,6 +1,6 @@
 {
   "name": "bestitconsulting",
-  "version": "0.2.1",
+  "version": "0.2.4",
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
@@ -13,7 +13,8 @@
     "type-check": "tsc --noEmit",
     "lint:md": "markdownlint-cli2 \"*.md\" \"docs/**/*.md\" \"content/**/*.md\"",
     "lint:md:fix": "markdownlint-cli2 --fix \"*.md\" \"docs/**/*.md\" \"content/**/*.md\"",
-    "quality": "npm run lint:fix && npm run format && npm run type-check && npm run lint:md"
+    "quality": "npm run lint:fix && npm run format && npm run type-check && npm run lint:md",
+    "setup:email": "./scripts/setup-email.sh"
   },
   "dependencies": {
     "@radix-ui/react-avatar": "^1.1.10",
@@ -25,12 +26,13 @@
     "next-cloudinary": "^6.16.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "resend": "^4.7.0",
     "tailwind-merge": "^3.3.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4",
-    "@types/node": "^20",
+    "@types/node": "^20.19.8",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@typescript-eslint/eslint-plugin": "^8.33.0",
