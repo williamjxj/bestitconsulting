@@ -88,11 +88,7 @@ export default function ContactPage() {
       } else {
         setSubmitStatus('error')
       }
-    } catch (error) {
-      if (process.env.NODE_ENV === 'development') {
-        // eslint-disable-next-line no-console
-        console.error('Form submission error:', error)
-      }
+    } catch {
       setSubmitStatus('error')
     } finally {
       setIsSubmitting(false)
@@ -374,9 +370,13 @@ export default function ContactPage() {
                             <h4 className='font-semibold text-green-800'>
                               Message sent successfully!
                             </h4>
-                            <p className='text-green-700 text-sm'>
+                            <p className='text-green-700 text-sm mb-2'>
                               We'll get back to you within 24 hours with a
                               detailed response.
+                            </p>
+                            <p className='text-green-600 text-xs'>
+                              📧 Check your email for a confirmation message
+                              (including spam/junk folder)
                             </p>
                           </div>
                         </div>
@@ -393,7 +393,7 @@ export default function ContactPage() {
                             </h4>
                             <p className='text-red-700 text-sm'>
                               Please try again or contact us directly at
-                              hello@bestitconsulting.com
+                              williamjxj@gmail.com
                             </p>
                           </div>
                         </div>

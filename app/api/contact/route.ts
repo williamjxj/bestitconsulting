@@ -37,7 +37,7 @@ export async function POST(request: NextRequest) {
 
     // Send email to your business email
     const businessEmailResult = await resend.emails.send({
-      from: 'BestIT Consulting <noreply@bestitconsulting.vercel.app>',
+      from: 'BestIT Consulting <onboarding@resend.dev>',
       to: [process.env.BUSINESS_EMAIL || 'contact@bestitconsulting.com'],
       subject: `New Contact Form Submission from ${name}`,
       html: `
@@ -93,7 +93,7 @@ export async function POST(request: NextRequest) {
 
     // Send confirmation email to the customer
     const customerEmailResult = await resend.emails.send({
-      from: 'BestIT Consulting <noreply@bestitconsulting.vercel.app>',
+      from: 'BestIT Consulting <onboarding@resend.dev>',
       to: [email],
       subject: 'Thank you for contacting BestIT Consulting',
       html: `
@@ -161,15 +161,6 @@ export async function POST(request: NextRequest) {
       `,
     })
 
-    // Log success for debugging in development
-    if (process.env.NODE_ENV === 'development') {
-      // eslint-disable-next-line no-console
-      console.log('Email sent successfully:', {
-        businessEmailResult,
-        customerEmailResult,
-      })
-    }
-
     return NextResponse.json(
       {
         message: 'Email sent successfully',
@@ -178,12 +169,7 @@ export async function POST(request: NextRequest) {
       },
       { status: 200 }
     )
-  } catch (error) {
-    // Log error for debugging
-    if (process.env.NODE_ENV === 'development') {
-      // eslint-disable-next-line no-console
-      console.error('Error sending email:', error)
-    }
+  } catch {
     return NextResponse.json(
       { error: 'Failed to send email. Please try again later.' },
       { status: 500 }
