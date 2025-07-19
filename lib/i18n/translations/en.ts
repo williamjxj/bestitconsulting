@@ -6,6 +6,7 @@ export const EN_TRANSLATIONS: Translations = {
     home: 'Home',
     services: 'Services',
     about: 'About',
+    'our-work': 'Our Work',
     portfolio: 'Portfolio',
     testimonials: 'Testimonials',
     contact: 'Contact',

@@ -6,6 +6,7 @@ export const ZH_TRANSLATIONS: Translations = {
     home: '首页',
     services: '服务',
     about: '关于我们',
+    'our-work': '我们的作品',
     portfolio: '项目案例',
     testimonials: '客户评价',
     contact: '联系我们',

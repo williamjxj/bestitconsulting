@@ -95,6 +95,13 @@ export default function ContactPage() {
     }
   }
 
+  const openGoogleMaps = (address: string, postal: string) => {
+    const fullAddress = `${address}, ${postal}`
+    const encodedAddress = encodeURIComponent(fullAddress)
+    const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodedAddress}`
+    window.open(googleMapsUrl, '_blank')
+  }
+
   const contactMethods = [
     {
       icon: <Phone className='h-8 w-8 text-blue-500' />,
@@ -136,12 +143,13 @@ export default function ContactPage() {
 
   const offices = [
     {
-      city: 'Toronto',
+      city: 'Surrey',
       country: 'Canada',
-      address: '123 Business St, Suite 400',
-      postal: 'Toronto, ON M5V 3A8',
-      phone: '+1 (416) 555-0123',
+      address: '9727 152b Street',
+      postal: 'Surrey, BC V3R 0G5',
+      phone: '+1 (604) 555-0123',
       isHeadquarters: true,
+      coordinates: '49.1913,-122.8490', // Surrey coordinates
     },
     {
       city: 'Vancouver',
@@ -150,14 +158,16 @@ export default function ContactPage() {
       postal: 'Vancouver, BC V6B 2W9',
       phone: '+1 (604) 555-0456',
       isHeadquarters: false,
+      coordinates: '49.2827,-123.1207', // Vancouver coordinates
     },
     {
-      city: 'Montreal',
+      city: 'Toronto',
       country: 'Canada',
-      address: '789 Innovation Blvd, Suite 200',
-      postal: 'Montreal, QC H3B 4W5',
-      phone: '+1 (514) 555-0789',
+      address: '123 Business St, Suite 400',
+      postal: 'Toronto, ON M5V 3A8',
+      phone: '+1 (416) 555-0123',
       isHeadquarters: false,
+      coordinates: '43.6532,-79.3832', // Toronto coordinates
     },
   ]
 
@@ -405,7 +415,7 @@ export default function ContactPage() {
                         <div>
                           <label
                             htmlFor='name'
-                            className='block text-sm font-semibold text-gray-700 mb-2'
+                            className='block text-sm font-bold text-gray-800 mb-2'
                           >
                             Full Name *
                           </label>
@@ -416,14 +426,14 @@ export default function ContactPage() {
                             value={formData.name}
                             onChange={handleChange}
                             required
-                            className='w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300'
+                            className='w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300 hover:border-gray-300 bg-white shadow-sm'
                             placeholder='John Doe'
                           />
                         </div>
                         <div>
                           <label
                             htmlFor='email'
-                            className='block text-sm font-semibold text-gray-700 mb-2'
+                            className='block text-sm font-bold text-gray-800 mb-2'
                           >
                             Email Address *
                           </label>
@@ -434,7 +444,7 @@ export default function ContactPage() {
                             value={formData.email}
                             onChange={handleChange}
                             required
-                            className='w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300'
+                            className='w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300 hover:border-gray-300 bg-white shadow-sm'
                             placeholder='john@company.com'
                           />
                         </div>
@@ -444,7 +454,7 @@ export default function ContactPage() {
                         <div>
                           <label
                             htmlFor='company'
-                            className='block text-sm font-semibold text-gray-700 mb-2'
+                            className='block text-sm font-bold text-gray-800 mb-2'
                           >
                             Company
                           </label>
@@ -454,14 +464,14 @@ export default function ContactPage() {
                             name='company'
                             value={formData.company}
                             onChange={handleChange}
-                            className='w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300'
+                            className='w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300 hover:border-gray-300 bg-white shadow-sm'
                             placeholder='Company Name'
                           />
                         </div>
                         <div>
                           <label
                             htmlFor='phone'
-                            className='block text-sm font-semibold text-gray-700 mb-2'
+                            className='block text-sm font-bold text-gray-800 mb-2'
                           >
                             Phone Number
                           </label>
@@ -471,7 +481,7 @@ export default function ContactPage() {
                             name='phone'
                             value={formData.phone}
                             onChange={handleChange}
-                            className='w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300'
+                            className='w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300 hover:border-gray-300 bg-white shadow-sm'
                             placeholder='+1 (555) 123-4567'
                           />
                         </div>
@@ -481,7 +491,7 @@ export default function ContactPage() {
                         <div>
                           <label
                             htmlFor='service'
-                            className='block text-sm font-semibold text-gray-700 mb-2'
+                            className='block text-sm font-bold text-gray-800 mb-2'
                           >
                             Service Interest
                           </label>
@@ -490,7 +500,7 @@ export default function ContactPage() {
                             name='service'
                             value={formData.service}
                             onChange={handleChange}
-                            className='w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300'
+                            className='w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300 hover:border-gray-300 bg-white shadow-sm'
                           >
                             <option value=''>Select a service</option>
                             <option value='web-development'>
@@ -516,7 +526,7 @@ export default function ContactPage() {
                         <div>
                           <label
                             htmlFor='budget'
-                            className='block text-sm font-semibold text-gray-700 mb-2'
+                            className='block text-sm font-bold text-gray-800 mb-2'
                           >
                             Project Budget
                           </label>
@@ -525,7 +535,7 @@ export default function ContactPage() {
                             name='budget'
                             value={formData.budget}
                             onChange={handleChange}
-                            className='w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300'
+                            className='w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300 hover:border-gray-300 bg-white shadow-sm'
                           >
                             <option value=''>Select budget range</option>
                             <option value='under-25k'>Under $25K</option>
@@ -541,7 +551,7 @@ export default function ContactPage() {
                       <div>
                         <label
                           htmlFor='timeline'
-                          className='block text-sm font-semibold text-gray-700 mb-2'
+                          className='block text-sm font-bold text-gray-800 mb-2'
                         >
                           Project Timeline
                         </label>
@@ -550,7 +560,7 @@ export default function ContactPage() {
                           name='timeline'
                           value={formData.timeline}
                           onChange={handleChange}
-                          className='w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300'
+                          className='w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300 hover:border-gray-300 bg-white shadow-sm'
                         >
                           <option value=''>Select timeline</option>
                           <option value='asap'>ASAP (Rush project)</option>
@@ -565,7 +575,7 @@ export default function ContactPage() {
                       <div>
                         <label
                           htmlFor='message'
-                          className='block text-sm font-semibold text-gray-700 mb-2'
+                          className='block text-sm font-bold text-gray-800 mb-2'
                         >
                           Project Description *
                         </label>
@@ -576,7 +586,7 @@ export default function ContactPage() {
                           onChange={handleChange}
                           required
                           rows={6}
-                          className='w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 resize-none'
+                          className='w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300 hover:border-gray-300 bg-white shadow-sm resize-none'
                           placeholder='Tell us about your project goals, requirements, and any specific challenges you&#39;re facing...'
                         />
                       </div>
@@ -584,17 +594,21 @@ export default function ContactPage() {
                       <Button
                         type='submit'
                         disabled={isSubmitting}
-                        className='w-full py-4 text-lg font-semibold bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 transition-all duration-300 hover:shadow-lg'
+                        className='w-full py-4 text-lg font-bold text-white bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 disabled:from-gray-400 disabled:to-gray-500 disabled:cursor-not-allowed transition-all duration-300 hover:shadow-xl hover:scale-[1.02] transform border-0 shadow-lg'
                       >
                         {isSubmitting ? (
                           <>
                             <div className='animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2'></div>
-                            Sending Message...
+                            <span className='text-white font-bold'>
+                              Sending Message...
+                            </span>
                           </>
                         ) : (
                           <>
-                            <Send className='mr-2 h-5 w-5' />
-                            Send Message
+                            <Send className='mr-2 h-5 w-5 text-white' />
+                            <span className='text-white font-bold'>
+                              Send Message
+                            </span>
                           </>
                         )}
                       </Button>
@@ -617,8 +631,19 @@ export default function ContactPage() {
                     {offices.map((office, index) => (
                       <div key={index} className='relative'>
                         <div className='flex items-start gap-4'>
-                          <div className='w-12 h-12 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-lg flex items-center justify-center flex-shrink-0'>
+                          <div
+                            className='w-12 h-12 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-lg flex items-center justify-center flex-shrink-0 cursor-pointer hover:scale-110 transition-transform duration-300 group relative'
+                            onClick={() =>
+                              openGoogleMaps(office.address, office.postal)
+                            }
+                            title='Open in Google Maps'
+                          >
                             <MapPin className='h-6 w-6 text-white' />
+                            {/* Tooltip */}
+                            <div className='absolute -top-12 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap pointer-events-none'>
+                              Open in Google Maps
+                              <div className='absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-900'></div>
+                            </div>
                           </div>
                           <div className='flex-1'>
                             <div className='flex items-center gap-2 mb-1'>
@@ -632,9 +657,17 @@ export default function ContactPage() {
                               )}
                             </div>
                             <p className='text-gray-600 text-sm leading-relaxed'>
-                              {office.address}
-                              <br />
-                              {office.postal}
+                              <span
+                                className='cursor-pointer hover:text-blue-600 transition-colors duration-300'
+                                onClick={() =>
+                                  openGoogleMaps(office.address, office.postal)
+                                }
+                                title='Open in Google Maps'
+                              >
+                                {office.address}
+                                <br />
+                                {office.postal}
+                              </span>
                               <br />
                               <span className='text-blue-600'>
                                 {office.phone}
