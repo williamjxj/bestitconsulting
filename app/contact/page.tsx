@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import Layout from '@/components/Layout'
+import SmartGoogleMap from '@/components/SmartGoogleMap'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
@@ -765,6 +766,125 @@ export default function ContactPage() {
                           {social.name}
                         </Button>
                       ))}
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Google Maps Section */}
+        <section className='py-20 px-4 bg-gradient-to-br from-blue-50 to-cyan-50'>
+          <div className='max-w-7xl mx-auto'>
+            <div className='text-center mb-16'>
+              <h2 className='text-4xl font-bold text-gray-900 mb-6'>
+                Find Our Offices
+              </h2>
+              <p className='text-xl text-gray-600 max-w-3xl mx-auto'>
+                Visit us at any of our locations across Canada. Click on the
+                markers to get directions and contact information.
+              </p>
+            </div>
+
+            <div className='grid grid-cols-1 lg:grid-cols-3 gap-8'>
+              {/* Map */}
+              <div className='lg:col-span-2'>
+                <Card className='border-0 shadow-xl bg-white overflow-hidden'>
+                  <CardContent className='p-0'>
+                    <SmartGoogleMap
+                      addresses={offices}
+                      height='500px'
+                      className='w-full'
+                    />
+                  </CardContent>
+                </Card>
+              </div>
+
+              {/* Office Details */}
+              <div className='space-y-6'>
+                <Card className='border-0 shadow-xl bg-white'>
+                  <CardHeader>
+                    <CardTitle className='flex items-center gap-2 text-xl font-bold text-gray-900'>
+                      <MapPin className='h-5 w-5 text-blue-600' />
+                      Office Locations
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className='space-y-6'>
+                    {offices.map((office, index) => (
+                      <div key={index} className='relative'>
+                        <div className='flex items-start gap-4'>
+                          <div
+                            className={`w-4 h-4 rounded-full flex-shrink-0 mt-1 ${
+                              office.isHeadquarters
+                                ? 'bg-green-500'
+                                : 'bg-blue-500'
+                            }`}
+                          ></div>
+                          <div className='flex-1'>
+                            <div className='flex items-center gap-2 mb-1'>
+                              <h4 className='font-semibold text-gray-900'>
+                                {office.city}
+                              </h4>
+                              {office.isHeadquarters && (
+                                <Badge variant='secondary' className='text-xs'>
+                                  HQ
+                                </Badge>
+                              )}
+                            </div>
+                            <p className='text-gray-600 text-sm leading-relaxed'>
+                              {office.address}
+                              <br />
+                              {office.postal}
+                              <br />
+                              <span className='text-blue-600 font-medium'>
+                                {office.phone}
+                              </span>
+                            </p>
+                            <Button
+                              variant='outline'
+                              size='sm'
+                              className='mt-3 text-xs'
+                              onClick={() =>
+                                window.open(
+                                  `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
+                                    office.address + ', ' + office.postal
+                                  )}`,
+                                  '_blank'
+                                )
+                              }
+                            >
+                              Get Directions
+                            </Button>
+                          </div>
+                        </div>
+                        {index < offices.length - 1 && (
+                          <div className='mt-6 border-b border-gray-100'></div>
+                        )}
+                      </div>
+                    ))}
+                  </CardContent>
+                </Card>
+
+                {/* Map Legend */}
+                <Card className='border-0 shadow-xl bg-white'>
+                  <CardHeader>
+                    <CardTitle className='text-lg font-bold text-gray-900'>
+                      Map Legend
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className='space-y-3'>
+                    <div className='flex items-center gap-3'>
+                      <div className='w-4 h-4 bg-green-500 rounded-full'></div>
+                      <span className='text-sm text-gray-600'>
+                        Headquarters
+                      </span>
+                    </div>
+                    <div className='flex items-center gap-3'>
+                      <div className='w-4 h-4 bg-blue-500 rounded-full'></div>
+                      <span className='text-sm text-gray-600'>
+                        Branch Office
+                      </span>
                     </div>
                   </CardContent>
                 </Card>
