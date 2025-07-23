@@ -5,14 +5,9 @@ import { Badge } from '@/components/ui/badge'
 import {
   ExternalLink,
   Building2,
-  Users,
-  Camera,
   Sparkles,
   Code2,
-  LayoutDashboard,
-  Target,
   ShoppingBag,
-  GraduationCap,
   Globe,
   BarChart3,
   ImageIcon,
@@ -26,94 +21,86 @@ import { useState } from 'react'
 
 interface BookmarkItem {
   id: number
-  title: string
+  name: string
   url: string
   description: string
   category: string
-  meaningfulIcon?: React.ComponentType<{ className?: string }>
+  icon?: React.ComponentType<{ className?: string }>
+  status: string
 }
 
 const bookmarkData: BookmarkItem[] = [
   {
-    id: 1028,
-    title: 'Best IT Consulting',
-    url: 'https://bestitconsulting.vercel.app',
-    description:
-      'Professional IT consulting services and digital transformation solutions for modern businesses',
-    category: 'Business',
-    meaningfulIcon: Building2,
+    id: 1001,
+    name: 'Face Fusion Agent',
+    url: 'https://face-fusion-agent.vercel.app',
+    description: 'AI-powered face fusion and manipulation tool',
+    category: 'AI/ML',
+    icon: Sparkles,
+    status: 'active',
   },
   {
-    id: 1029,
-    title: 'Best IT Consultants',
-    url: 'https://bestitconsultants.vercel.app',
-    description:
-      'Expert consulting platform connecting businesses with top-tier technology consultants',
-    category: 'Business',
-    meaningfulIcon: Users,
-  },
-  {
-    id: 1049,
-    title: 'Image Gallery App',
-    url: 'https://gallery.vercel.app',
-    description:
-      'Modern image gallery application with advanced filtering, search, and organization features',
-    category: 'Media',
-    meaningfulIcon: Camera,
-  },
-  {
-    id: 1050,
-    title: 'AI Face Fusion',
-    url: 'https://facefusion.vercel.app',
-    description:
-      'Cutting-edge AI-powered face swapping technology with real-time processing capabilities',
-    category: 'AI',
-    meaningfulIcon: Sparkles,
-  },
-  {
-    id: 1051,
-    title: 'Next.js MCP Template',
-    url: 'https://nextjs-mcp-template.vercel.app',
-    description:
-      'Production-ready Next.js template with MCP integration, authentication, and modern development tools',
+    id: 1002,
+    name: 'NextJS Supabase',
+    url: 'https://nextjs-supabase-kappa-nine.vercel.app',
+    description: 'Full-stack web application with authentication',
     category: 'Development',
-    meaningfulIcon: Code2,
+    icon: Code,
+    status: 'active',
   },
   {
-    id: 1052,
-    title: 'Next.js Dashboard',
-    url: 'https://nextjs-dashboard.vercel.app',
-    description:
-      'Comprehensive analytics dashboard built with Next.js featuring real-time data visualization',
-    category: 'Development',
-    meaningfulIcon: LayoutDashboard,
-  },
-  {
-    id: 1070,
-    title: 'BidMaster Hub',
-    url: 'https://bidmaster-hub.vercel.app',
-    description:
-      'Project discovery platform enabling seamless bidding, collaboration, and project management',
-    category: 'Business',
-    meaningfulIcon: Target,
-  },
-  {
-    id: 1071,
-    title: 'Premium Products Gallery',
-    url: 'https://products-gallery.vercel.app',
-    description:
-      'Sophisticated marketplace platform showcasing premium products with advanced e-commerce features',
+    id: 1003,
+    name: 'Manus AI Shop',
+    url: 'https://manus-ai-shop.vercel.app',
+    description: 'AI-powered e-commerce platform',
     category: 'E-commerce',
-    meaningfulIcon: ShoppingBag,
+    icon: ShoppingBag,
+    status: 'active',
   },
   {
-    id: 1072,
-    title: 'Friendship Corner Daycare',
-    url: 'https://friendship-daycare.vercel.app',
-    description:
-      'Montessori-based daycare services in Coquitlam, BC, focusing on early childhood development',
+    id: 1004,
+    name: 'BidMaster Hub',
+    url: 'https://bidmaster-hub.vercel.app/',
+    description: 'Project bidding management platform',
+    category: 'Business',
+    icon: Building2,
+    status: 'active',
+  },
+  {
+    id: 1005,
+    name: 'NextJS MCP Template',
+    url: 'https://nextjs-mcp-template.vercel.app/',
+    description: 'Model Context Protocol template application',
+    category: 'Development',
+    icon: Code2,
+    status: 'beta',
+  },
+  {
+    id: 1006,
+    name: 'Friendship Daycare',
+    url: 'https://friendshipdaycare.vercel.app/',
+    description: 'Childcare and daycare management system',
     category: 'Education',
-    meaningfulIcon: GraduationCap,
+    icon: Heart,
+    status: 'active',
+  },
+  {
+    id: 1007,
+    name: 'Best IT Consulting',
+    url: 'https://bestitconsulting.vercel.app/',
+    description: 'IT consulting and services platform',
+    category: 'Business',
+    icon: Building2,
+    status: 'active',
+  },
+  {
+    id: 1008,
+    name: 'Best IT Consultants',
+    url: 'https://bestitconsultants.vercel.app/',
+    description: 'Professional IT consulting services',
+    category: 'Business',
+    icon: Building2,
+    status: 'active',
   },
 ]
 
@@ -124,6 +111,7 @@ const getCategoryIcon = (category: string) => {
     case 'Media':
       return <ImageIcon className='h-3 w-3' />
     case 'AI':
+    case 'AI/ML':
       return <Zap className='h-3 w-3' />
     case 'Development':
       return <Code className='h-3 w-3' />
@@ -143,6 +131,7 @@ const getCategoryColor = (category: string) => {
     case 'Media':
       return 'bg-purple-500/20 text-purple-200 border-purple-400/30 backdrop-blur-sm'
     case 'AI':
+    case 'AI/ML':
       return 'bg-yellow-500/20 text-yellow-200 border-yellow-400/30 backdrop-blur-sm'
     case 'Development':
       return 'bg-green-500/20 text-green-200 border-green-400/30 backdrop-blur-sm'
@@ -195,7 +184,7 @@ export default function BookmarkList() {
     }
 
     // Use meaningful icon if favicon fails or doesn't exist
-    const IconComponent = bookmark.meaningfulIcon || Globe
+    const IconComponent = bookmark.icon || Globe
     return (
       <div className='w-8 h-8 rounded-lg bg-gradient-to-br from-cyan-500/25 to-blue-500/15 flex items-center justify-center border border-cyan-400/30 shadow-lg group-hover:from-cyan-400/30 group-hover:to-blue-400/20 transition-all duration-300 backdrop-blur-sm'>
         <IconComponent className='h-5 w-5 text-cyan-300' />
@@ -212,7 +201,7 @@ export default function BookmarkList() {
           role='button'
           tabIndex={0}
           title={bookmark.description}
-          aria-label={`Open ${bookmark.title}`}
+          aria-label={`Open ${bookmark.name}`}
           onClick={() => handleItemClick(bookmark.url)}
           onKeyDown={e => {
             if (e.key === 'Enter' || e.key === ' ') {
@@ -231,7 +220,7 @@ export default function BookmarkList() {
                 <div className='flex items-center justify-between gap-4'>
                   <div className='flex-1 min-w-0'>
                     <h3 className='font-semibold text-lg text-white truncate group-hover:text-cyan-300 transition-colors duration-200 tracking-tight mb-1'>
-                      {bookmark.title}
+                      {bookmark.name}
                     </h3>
                     <p className='text-sm text-blue-200/70 truncate font-medium mb-2'>
                       {bookmark.url
