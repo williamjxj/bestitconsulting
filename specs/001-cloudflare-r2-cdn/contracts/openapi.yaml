@@ -1,0 +1,25 @@
+openapi: 3.0.3
+info:
+  title: R2 CDN Integration (Public Assets)
+  version: 1.0.0
+  description: |
+    Public assets are served directly via CDN; no application proxy endpoints are required.
+    Optional health endpoint documented for future use.
+servers:
+  - url: https://your-domain.example.com
+paths:
+  /api/r2/health:
+    get:
+      summary: Health check for R2 configuration (optional)
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                  baseUrl:
+                    type: string
