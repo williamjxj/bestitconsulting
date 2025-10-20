@@ -74,6 +74,19 @@ const config: Config = {
         'fade-in': 'fadeIn 0.5s ease-in-out',
         'slide-up': 'slideUp 0.5s ease-out',
         'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+        'scroll-horizontal': 'scrollHorizontal 0.3s ease-out',
+        'scale-in': 'scaleIn 0.2s ease-out',
+        'slide-in-left': 'slideInLeft 0.3s ease-out',
+        'slide-in-right': 'slideInRight 0.3s ease-out',
+        'bounce-gentle': 'bounceGentle 0.6s ease-out',
+        glow: 'glow 2s ease-in-out infinite alternate',
+        'scroll-horizontal-continuous':
+          'scrollHorizontalContinuous 30s linear infinite',
+        'scroll-horizontal-slow': 'scrollHorizontalSlow 40s linear infinite',
+        'scroll-horizontal-continuous-paused':
+          'scrollHorizontalContinuous 30s linear infinite paused',
+        'scroll-horizontal-slow-paused':
+          'scrollHorizontalSlow 40s linear infinite paused',
       },
       keyframes: {
         fadeIn: {
@@ -83,6 +96,39 @@ const config: Config = {
         slideUp: {
           '0%': { opacity: '0', transform: 'translateY(20px)' },
           '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+        scrollHorizontal: {
+          '0%': { transform: 'translateX(-100%)' },
+          '100%': { transform: 'translateX(0)' },
+        },
+        scaleIn: {
+          '0%': { opacity: '0', transform: 'scale(0.9)' },
+          '100%': { opacity: '1', transform: 'scale(1)' },
+        },
+        slideInLeft: {
+          '0%': { opacity: '0', transform: 'translateX(-30px)' },
+          '100%': { opacity: '1', transform: 'translateX(0)' },
+        },
+        slideInRight: {
+          '0%': { opacity: '0', transform: 'translateX(30px)' },
+          '100%': { opacity: '1', transform: 'translateX(0)' },
+        },
+        bounceGentle: {
+          '0%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-10px)' },
+          '100%': { transform: 'translateY(0)' },
+        },
+        glow: {
+          '0%': { boxShadow: '0 0 5px rgba(59, 130, 246, 0.5)' },
+          '100%': { boxShadow: '0 0 20px rgba(59, 130, 246, 0.8)' },
+        },
+        scrollHorizontalContinuous: {
+          '0%': { transform: 'translateX(0)' },
+          '100%': { transform: 'translateX(-100%)' },
+        },
+        scrollHorizontalSlow: {
+          '0%': { transform: 'translateX(0)' },
+          '100%': { transform: 'translateX(-50%)' },
         },
       },
     },
