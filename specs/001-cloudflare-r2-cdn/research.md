@@ -2,7 +2,7 @@
 
 ## Decisions
 
-- Decision: Use public Cloudflare R2 bucket behind CDN with base URL from env (`R2_PUBLIC_BASE_URL`).
+- Decision: Use public Cloudflare R2 bucket behind CDN with base URL from env (`NEXT_PUBLIC_R2_BASE_URL`).
 
   - Rationale: Simpler, aligns with public-assets scope; no signed URLs required.
   - Alternatives considered: Signed URLs (not needed for public assets); Proxy through Next.js (adds latency, cost, and complexity).

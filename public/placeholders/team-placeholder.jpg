@@ -1,0 +1,30 @@
+<svg width="800" height="600" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background rectangle -->
+  <rect width="800" height="600" fill="#f0f0f0"/>
+
+  <!-- Diagonal lines pattern -->
+  <defs>
+    <pattern id="diagonalLines" width="40" height="40" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <line x1="0" y1="0" x2="0" y2="40" stroke="#e0e0e0" stroke-width="8"/>
+    </pattern>
+  </defs>
+  <rect width="800" height="600" fill="url(#diagonalLines)"/>
+
+  <!-- Outer border -->
+  <rect x="10" y="10" width="780" height="580" stroke="#d0d0d0" stroke-width="4" fill="none"/>
+
+  <!-- Center icon placeholder -->
+  <g transform="translate(400, 300)">
+    <rect x="-100" y="-80" width="200" height="160" rx="15" fill="#e0e0e0"/>
+    <rect x="-80" y="-60" width="160" height="120" rx="10" fill="#d0d0d0"/>
+    <circle cx="0" cy="-10" r="30" fill="#c0c0c0"/>
+    <rect x="-60" y="40" width="120" height="20" rx="5" fill="#c0c0c0"/>
+  </g>
+
+  <!-- Text -->
+  <text x="400" y="420" font-family="Arial, sans-serif" font-size="24" text-anchor="middle" fill="#888888">Image Placeholder</text>
+  <text x="400" y="450" font-family="Arial, sans-serif" font-size="16" text-anchor="middle" fill="#888888">800 × 600</text>
+
+  <!-- BestIT Consulting watermark -->
+  <text x="400" y="560" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#a0a0a0">BestIT Consulting</text>
+</svg>

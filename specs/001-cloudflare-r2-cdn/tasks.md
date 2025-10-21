@@ -2,7 +2,7 @@
 
 ## Setup
 
-- [ ] Verify `.env.local` contains `R2_PUBLIC_BASE_URL` (and optional `NEXT_PUBLIC_R2_BASE_URL`)
+- [ ] Verify `.env.local` contains `NEXT_PUBLIC_R2_BASE_URL`
 - [ ] Configure Next.js `images.remotePatterns` to allow CDN hostname
 
 ## Tests

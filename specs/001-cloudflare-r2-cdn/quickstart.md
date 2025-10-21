@@ -4,7 +4,8 @@
 
 Add to `.env.local` (values supplied separately):
 
-- R2_PUBLIC_BASE_URL=https://cdn.example.com # public base URL to bucket/object gateway
+R2_PUBLIC_BASE_URL is deprecated. Use:
+NEXT_PUBLIC_R2_BASE_URL=https://cdn.example.com # public base URL to bucket/object gateway
 
 ## 2) Allow CDN domain for Next.js images
 
@@ -22,8 +23,7 @@ Create `lib/images.ts`:
 
 ```ts
 export function buildR2Url(key: string): string {
-  const base =
-    process.env.NEXT_PUBLIC_R2_BASE_URL || process.env.R2_PUBLIC_BASE_URL
+  const base = process.env.NEXT_PUBLIC_R2_BASE_URL
   if (!base) return ''
   return `${base.replace(/\/$/, '')}/${key.replace(/^\//, '')}`
 }
@@ -72,5 +72,5 @@ If you see `upstream image response failed for https://... 404`:
 ### Common Issues
 
 - **Wrong image key**: Update the key in `app/page.tsx` (currently `hero.jpg`)
-- **Missing environment variable**: Ensure `R2_PUBLIC_BASE_URL` is set in `.env.local`
+- **Missing environment variable**: Ensure `NEXT_PUBLIC_R2_BASE_URL` is set in `.env.local`
 - **CDN not configured**: The base URL should point to your R2 public gateway, not the bucket directly

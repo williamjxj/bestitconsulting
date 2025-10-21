@@ -1,11 +1,5 @@
 import Image from 'next/image'
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import Layout from '@/components/Layout'
@@ -27,41 +21,6 @@ import {
 import Link from 'next/link'
 
 export default function AboutPage() {
-  const teamMembers = [
-    {
-      name: 'Sarah Chen',
-      role: 'CEO & Founder',
-      bio: '15+ years in software development and business strategy. Former tech lead at major Silicon Valley companies.',
-      image: '/placeholder.svg',
-      skills: ['Strategic Planning', 'Team Leadership', 'Business Development'],
-    },
-    {
-      name: 'Michael Rodriguez',
-      role: 'CTO',
-      bio: 'Full-stack architect with expertise in scalable systems and cloud infrastructure. PhD in Computer Science.',
-      image: '/placeholder.svg',
-      skills: [
-        'System Architecture',
-        'Cloud Computing',
-        'Technical Leadership',
-      ],
-    },
-    {
-      name: 'Emily Wang',
-      role: 'Lead Developer',
-      bio: 'Frontend specialist with a passion for user experience and modern web technologies.',
-      image: '/placeholder.svg',
-      skills: ['React/Next.js', 'UI/UX Design', 'TypeScript'],
-    },
-    {
-      name: 'David Kim',
-      role: 'Senior Backend Engineer',
-      bio: 'Backend systems expert with experience in high-performance applications and database optimization.',
-      image: '/placeholder.svg',
-      skills: ['Node.js', 'Python', 'Database Design'],
-    },
-  ]
-
   const values = [
     {
       icon: <Rocket className='h-8 w-8 text-blue-500' />,
@@ -163,9 +122,9 @@ export default function AboutPage() {
               </h1>
 
               <p className='text-xl md:text-2xl text-blue-100/90 max-w-3xl mx-auto mb-12 leading-relaxed'>
-                We're a team of passionate technologists dedicated to
-                transforming businesses through innovative software solutions
-                and strategic digital transformation.
+                A solo software company dedicated to transforming businesses
+                through innovative software solutions and strategic digital
+                transformation.
               </p>
 
               <div className='flex flex-col sm:flex-row gap-6 justify-center items-center'>
@@ -176,7 +135,7 @@ export default function AboutPage() {
                 >
                   <Link href='/contact'>
                     <Users className='mr-2 h-5 w-5' />
-                    Meet Our Team
+                    Get In Touch
                     <ArrowRight className='ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform' />
                   </Link>
                 </Button>
@@ -207,9 +166,9 @@ export default function AboutPage() {
                 <p className='text-lg text-gray-600 mb-6 leading-relaxed'>
                   Founded in 2014, BestIT Consulting emerged from a simple yet
                   powerful vision: to bridge the gap between complex technology
-                  and business success. What started as a small team of
-                  passionate developers has grown into a full-service digital
-                  transformation partner.
+                  and business success. As a solo software company, we focus on
+                  delivering personalized, high-quality solutions tailored to
+                  each client's unique needs.
                 </p>
                 <p className='text-lg text-gray-600 mb-8 leading-relaxed'>
                   Today, we're proud to have delivered over 500 successful
@@ -229,23 +188,22 @@ export default function AboutPage() {
                   </div>
                   <div className='text-center p-4 bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl'>
                     <div className='text-3xl font-bold text-green-600 mb-2'>
-                      50+
+                      500+
                     </div>
                     <div className='text-gray-600 font-medium'>
-                      Team Members
+                      Projects Delivered
                     </div>
                   </div>
                 </div>
               </div>
 
               <div className='relative'>
-                <div className='aspect-square bg-gradient-to-br from-blue-100 to-cyan-100 rounded-2xl p-8 flex items-center justify-center'>
+                <div className='aspect-square bg-gradient-to-br from-blue-100 to-cyan-100 rounded-2xl p-8 flex items-center justify-center relative'>
                   <Image
-                    src='/placeholder.svg'
-                    alt='Team collaboration'
-                    width={400}
-                    height={400}
-                    className='rounded-xl opacity-80'
+                    src='https://pub-280494fad9014906948b6a6a70b3466f.r2.dev/istockphoto-492514758-612x612.webp'
+                    alt='Business people working together in modern office'
+                    fill
+                    className='rounded-xl opacity-80 object-cover'
                   />
                 </div>
                 <div className='absolute -bottom-6 -right-6 bg-white p-4 rounded-xl shadow-lg'>
@@ -345,61 +303,54 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* Team Section */}
+        {/* Solo Founder Section */}
         <section className='py-20 px-4 bg-gradient-to-br from-blue-50 to-cyan-50'>
-          <div className='max-w-6xl mx-auto'>
-            <div className='text-center mb-16'>
-              <h2 className='text-4xl font-bold text-gray-900 mb-6'>
-                Meet Our Team
-              </h2>
-              <p className='text-xl text-gray-600 max-w-3xl mx-auto'>
-                Our diverse team of experts brings together decades of
-                experience in software development, design, and business
-                strategy
-              </p>
-            </div>
+          <div className='max-w-4xl mx-auto text-center'>
+            <h2 className='text-4xl font-bold text-gray-900 mb-6'>
+              Meet the Founder
+            </h2>
+            <p className='text-xl text-gray-600 mb-12 max-w-3xl mx-auto'>
+              BestIT Consulting is a solo software company founded and operated
+              by William Jiang, a passionate developer with expertise in modern
+              web technologies and digital transformation.
+            </p>
 
-            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8'>
-              {teamMembers.map((member, index) => (
-                <Card
-                  key={index}
-                  className='group border-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2 bg-white'
-                >
-                  <CardHeader className='text-center pb-4'>
-                    <div className='w-24 h-24 mx-auto rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 p-0.5 mb-4'>
-                      <Image
-                        src={member.image}
-                        alt={member.name}
-                        width={96}
-                        height={96}
-                        className='w-full h-full rounded-full object-cover'
-                      />
-                    </div>
-                    <CardTitle className='text-lg font-bold text-gray-900'>
-                      {member.name}
-                    </CardTitle>
-                    <CardDescription className='text-blue-600 font-medium'>
-                      {member.role}
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent className='space-y-4'>
-                    <p className='text-gray-600 text-sm leading-relaxed'>
-                      {member.bio}
-                    </p>
-                    <div className='flex flex-wrap gap-2'>
-                      {member.skills.map((skill, skillIndex) => (
-                        <Badge
-                          key={skillIndex}
-                          variant='secondary'
-                          className='text-xs'
-                        >
-                          {skill}
-                        </Badge>
-                      ))}
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
+            <div className='grid grid-cols-1 md:grid-cols-2 gap-12 items-center'>
+              <div className='text-left'>
+                <h3 className='text-2xl font-bold text-gray-900 mb-4'>
+                  William Jiang
+                </h3>
+                <p className='text-lg text-gray-600 mb-6'>
+                  Founder & Lead Developer with 10+ years of experience in
+                  software development, cloud architecture, and digital
+                  transformation. Specializing in modern web technologies and
+                  helping businesses leverage technology for growth.
+                </p>
+                <div className='flex flex-wrap gap-3'>
+                  {[
+                    'Full-Stack Development',
+                    'Cloud Architecture',
+                    'Digital Transformation',
+                    'Business Strategy',
+                  ].map((skill, index) => (
+                    <Badge key={index} variant='secondary' className='text-sm'>
+                      {skill}
+                    </Badge>
+                  ))}
+                </div>
+              </div>
+
+              <div className='relative'>
+                <div className='aspect-square bg-gradient-to-br from-blue-100 to-cyan-100 rounded-2xl p-8 flex items-center justify-center'>
+                  <Image
+                    src='/placeholder.svg'
+                    alt='William Jiang, Founder'
+                    width={300}
+                    height={300}
+                    className='rounded-xl opacity-80'
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </section>
@@ -413,8 +364,8 @@ export default function AboutPage() {
                   Certifications & Expertise
                 </h2>
                 <p className='text-lg text-gray-600 mb-8'>
-                  Our team maintains industry-leading certifications and stays
-                  current with the latest technologies and best practices.
+                  I maintain industry-leading certifications and stay current
+                  with the latest technologies and best practices.
                 </p>
 
                 <div className='grid grid-cols-1 sm:grid-cols-2 gap-4'>
@@ -482,7 +433,7 @@ export default function AboutPage() {
           <div className='max-w-4xl mx-auto text-center'>
             <h2 className='text-4xl font-bold mb-6'>Ready to Work Together?</h2>
             <p className='text-xl text-blue-100/90 mb-8 max-w-2xl mx-auto'>
-              Let's discuss how our expertise can help transform your business
+              Let's discuss how my expertise can help transform your business
               and achieve your digital goals.
             </p>
 

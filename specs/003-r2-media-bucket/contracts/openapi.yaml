@@ -1,0 +1,288 @@
+openapi: 3.0.3
+info:
+  title: R2 Media Bucket API
+  description: API contracts for R2 media bucket integration and about page media rendering
+  version: 1.0.0
+  contact:
+    name: BestIT Consulting
+    email: contact@bestitconsulting.com
+
+servers:
+  - url: https://bestitconsulting.com
+    description: Production server
+  - url: http://localhost:3001
+    description: Development server
+
+paths:
+  /api/r2/health:
+    get:
+      summary: Check R2 bucket health
+      description: Verifies that the R2 media bucket is accessible and configured correctly
+      operationId: checkR2Health
+      tags:
+        - R2 Media
+      responses:
+        '200':
+          description: R2 bucket is healthy and accessible
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: 'healthy'
+                  bucketUrl:
+                    type: string
+                    example: 'https://pub-280494fad9014906948b6a6a70b3466f.r2.dev'
+                  lastChecked:
+                    type: string
+                    format: date-time
+                    example: '2024-12-19T10:30:00Z'
+                  responseTime:
+                    type: number
+                    example: 150
+        '503':
+          description: R2 bucket is unavailable
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: 'unhealthy'
+                  error:
+                    type: string
+                    example: 'Bucket not accessible'
+                  lastChecked:
+                    type: string
+                    format: date-time
+                    example: '2024-12-19T10:30:00Z'
+
+  /api/r2/media:
+    get:
+      summary: Get media assets by category
+      description: Retrieves media assets from R2 bucket filtered by category
+      operationId: getMediaAssets
+      tags:
+        - R2 Media
+      parameters:
+        - name: category
+          in: query
+          description: Media category filter
+          required: true
+          schema:
+            type: string
+            enum: [team, company, general]
+        - name: type
+          in: query
+          description: Media type filter
+          required: false
+          schema:
+            type: string
+            enum: [image, video]
+        - name: limit
+          in: query
+          description: Maximum number of assets to return
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 20
+        - name: offset
+          in: query
+          description: Number of assets to skip
+          required: false
+          schema:
+            type: integer
+            minimum: 0
+            default: 0
+      responses:
+        '200':
+          description: Media assets retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  assets:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/MediaAsset'
+                  total:
+                    type: integer
+                    example: 25
+                  hasMore:
+                    type: boolean
+                    example: true
+        '400':
+          description: Invalid request parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '503':
+          description: R2 bucket unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /api/r2/media/{assetId}:
+    get:
+      summary: Get specific media asset
+      description: Retrieves details for a specific media asset by ID
+      operationId: getMediaAsset
+      tags:
+        - R2 Media
+      parameters:
+        - name: assetId
+          in: path
+          description: Media asset identifier
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Media asset details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MediaAsset'
+        '404':
+          description: Media asset not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '503':
+          description: R2 bucket unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+components:
+  schemas:
+    MediaAsset:
+      type: object
+      required:
+        - id
+        - filename
+        - url
+        - type
+        - alt
+        - category
+        - uploadedAt
+        - isActive
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the media asset
+          example: 'team-photo-001'
+        filename:
+          type: string
+          description: Original filename of the media file
+          example: 'william-jiang-headshot.jpg'
+        url:
+          type: string
+          description: Full R2 CDN URL for the media asset
+          example: 'https://pub-280494fad9014906948b6a6a70b3466f.r2.dev/team/william-jiang-headshot.jpg'
+        type:
+          type: string
+          enum: [image, video]
+          description: Media type classification
+          example: 'image'
+        format:
+          type: string
+          description: File format
+          example: 'jpg'
+        size:
+          type: integer
+          description: File size in bytes
+          example: 245760
+        width:
+          type: integer
+          description: Image/video width in pixels
+          example: 800
+        height:
+          type: integer
+          description: Image/video height in pixels
+          example: 600
+        alt:
+          type: string
+          description: Alternative text for accessibility
+          example: 'William Jiang, CEO of BestIT Consulting'
+        category:
+          type: string
+          enum: [team, company, general]
+          description: Content category
+          example: 'team'
+        uploadedAt:
+          type: string
+          format: date-time
+          description: Upload timestamp
+          example: '2024-12-19T10:30:00Z'
+        isActive:
+          type: boolean
+          description: Whether the asset is currently displayed
+          example: true
+
+    ErrorResponse:
+      type: object
+      required:
+        - error
+        - message
+      properties:
+        error:
+          type: string
+          description: Error type
+          example: 'VALIDATION_ERROR'
+        message:
+          type: string
+          description: Human-readable error message
+          example: 'Invalid category parameter'
+        details:
+          type: object
+          description: Additional error details
+          additionalProperties: true
+
+    HealthCheck:
+      type: object
+      required:
+        - status
+        - lastChecked
+      properties:
+        status:
+          type: string
+          enum: [healthy, unhealthy]
+          description: Health status of the R2 bucket
+        bucketUrl:
+          type: string
+          description: Configured R2 bucket URL
+        lastChecked:
+          type: string
+          format: date-time
+          description: Last health check timestamp
+        responseTime:
+          type: number
+          description: Response time in milliseconds
+        error:
+          type: string
+          description: Error message if unhealthy
+
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+      description: API key for authentication
+
+security:
+  - ApiKeyAuth: []
+
+tags:
+  - name: R2 Media
+    description: Operations related to R2 media bucket integration

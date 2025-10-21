@@ -95,8 +95,7 @@ export default function HomePage() {
     },
   ]
 
-  const r2Base =
-    process.env.NEXT_PUBLIC_R2_BASE_URL || process.env.R2_PUBLIC_BASE_URL
+  const r2Base = process.env.NEXT_PUBLIC_R2_BASE_URL
   const r2SampleSrc = r2Base
     ? `${r2Base.replace(/\/$/, '')}/jimeng-1.png`
     : undefined
@@ -143,6 +142,7 @@ export default function HomePage() {
                     <R2Video
                       src={`${r2Base.replace(/\/$/, '')}/jimeng-5.mp4`}
                       poster={`${r2Base.replace(/\/$/, '')}/jimeng-1.png`}
+                      alt='Company video showcasing our services'
                     />
                   )}
                   {/* Fallback placeholder if no R2 base URL */}

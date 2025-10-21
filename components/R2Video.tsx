@@ -1,82 +1,164 @@
 'use client'
 
-import { useState, useRef } from 'react'
-import { Code2, Cloud, Play } from 'lucide-react'
+import { useState, useEffect, useRef } from 'react'
+import { buildR2Url, getFallbackUrl } from '@/lib/r2-media'
+import { getLoadingTimeout } from '@/lib/media-config'
+import { Skeleton } from '@/components/ui/skeleton'
 
 interface R2VideoProps {
   src: string
-  poster: string
+  poster?: string
+  alt: string
+  width?: number
+  height?: number
+  autoplay?: boolean
+  muted?: boolean
+  loop?: boolean
+  controls?: boolean
+  fallback?: string
+  className?: string
+  category?: 'team' | 'company' | 'general'
+  onLoad?: () => void
+  onError?: () => void
 }
 
-export default function R2Video({ src, poster }: R2VideoProps) {
-  const [videoError, setVideoError] = useState(false)
-  const [isPlaying, setIsPlaying] = useState(false)
+export default function R2Video({
+  src,
+  poster,
+  alt,
+  width = 400,
+  height = 300,
+  autoplay = false,
+  muted = true,
+  loop = false,
+  controls = true,
+  fallback,
+  className = '',
+  category = 'general',
+  onLoad,
+  onError,
+}: R2VideoProps) {
+  const [videoSrc, setVideoSrc] = useState(buildR2Url(src))
+  const [isLoading, setIsLoading] = useState(true)
+  const [hasError, setHasError] = useState(false)
+  const [retryCount, setRetryCount] = useState(0)
   const videoRef = useRef<HTMLVideoElement>(null)
 
-  const handlePlay = async () => {
-    setIsPlaying(true)
-    if (videoRef.current) {
-      try {
-        await videoRef.current.play()
-      } catch (error) {
-        console.error('Error playing video:', error)
-      }
+  const fallbackUrl = fallback || getFallbackUrl(category)
+  const loadingTimeout = getLoadingTimeout('video')
+
+  // Reset state when src changes
+  useEffect(() => {
+    setVideoSrc(buildR2Url(src))
+    setIsLoading(true)
+    setHasError(false)
+    setRetryCount(0)
+  }, [src])
+
+  const handleError = () => {
+    if (retryCount < 3) {
+      // Retry with exponential backoff
+      const delay = Math.pow(2, retryCount) * 1000
+      setTimeout(() => {
+        setRetryCount(prev => prev + 1)
+        setVideoSrc(buildR2Url(src))
+      }, delay)
+    } else {
+      // Use fallback after max retries
+      setHasError(true)
+      setIsLoading(false)
+      onError?.()
     }
   }
 
-  return (
-    <div className='relative bg-gradient-to-br from-blue-100 to-indigo-100 rounded-2xl overflow-hidden aspect-video group'>
-      {!videoError && (
-        <>
-          <video
-            ref={videoRef}
-            src={src}
-            className='w-full h-full object-cover'
-            controls={isPlaying}
-            poster={poster}
-            onError={() => {
-              console.warn('R2 video failed to load:', src)
-              setVideoError(true)
-            }}
-            onPlay={() => setIsPlaying(true)}
+  const handleLoad = () => {
+    setIsLoading(false)
+    setHasError(false)
+    onLoad?.()
+  }
+
+  // Set loading timeout
+  useEffect(() => {
+    if (isLoading) {
+      const timeout = setTimeout(() => {
+        if (isLoading) {
+          handleError()
+        }
+      }, loadingTimeout)
+
+      return () => clearTimeout(timeout)
+    }
+  }, [isLoading, loadingTimeout])
+
+  // Handle video events
+  useEffect(() => {
+    const video = videoRef.current
+    if (!video) return
+
+    const handleLoadedData = () => handleLoad()
+    const handleVideoError = () => handleError()
+
+    video.addEventListener('loadeddata', handleLoadedData)
+    video.addEventListener('error', handleVideoError)
+
+    return () => {
+      video.removeEventListener('loadeddata', handleLoadedData)
+      video.removeEventListener('error', handleVideoError)
+    }
+  }, [videoSrc, handleLoad, handleError])
+
+  if (hasError) {
+    return (
+      <div
+        className={`relative flex items-center justify-center bg-gray-100 dark:bg-gray-800 ${className}`}
+        style={{ width, height }}
+      >
+        <div className='text-center text-gray-500 dark:text-gray-400'>
+          <svg
+            className='w-8 h-8 mx-auto mb-2'
+            fill='none'
+            stroke='currentColor'
+            viewBox='0 0 24 24'
           >
-            Your browser does not support the video tag.
-          </video>
-          {/* Play button overlay - only show when not playing */}
-          {!isPlaying && (
-            <div className='absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/30 transition-colors'>
-              <button
-                onClick={handlePlay}
-                className='w-20 h-20 bg-white/90 hover:bg-white rounded-full flex items-center justify-center hover:scale-110 transition-all duration-200 shadow-lg'
-              >
-                <Play
-                  className='h-8 w-8 text-blue-600 ml-1'
-                  fill='currentColor'
-                />
-              </button>
-            </div>
-          )}
-        </>
-      )}
-      {/* Fallback content when video fails */}
-      {videoError && (
-        <div className='absolute inset-0 flex items-center justify-center'>
-          <div className='text-center'>
-            <div className='w-20 h-20 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4 hover:scale-110 transition-transform cursor-pointer'>
-              <Cloud className='h-8 w-8 text-white' />
-            </div>
-            <p className='text-blue-700 font-medium'>Video Not Available</p>
-            <p className='text-sm text-blue-600'>R2 video failed to load</p>
-          </div>
+            <path
+              strokeLinecap='round'
+              strokeLinejoin='round'
+              strokeWidth={2}
+              d='M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z'
+            />
+          </svg>
+          <p className='text-sm'>Video unavailable</p>
         </div>
+      </div>
+    )
+  }
+
+  return (
+    <div className={`relative ${className}`}>
+      {isLoading && (
+        <Skeleton className='absolute inset-0' style={{ width, height }} />
       )}
-      {/* Floating elements for visual appeal */}
-      <div className='absolute top-4 right-4 w-12 h-12 bg-white/80 rounded-lg flex items-center justify-center'>
-        <Code2 className='h-6 w-6 text-blue-600' />
-      </div>
-      <div className='absolute bottom-4 left-4 w-12 h-12 bg-white/80 rounded-lg flex items-center justify-center'>
-        <Cloud className='h-6 w-6 text-green-600' />
-      </div>
+
+      <video
+        ref={videoRef}
+        src={videoSrc}
+        poster={poster}
+        width={width}
+        height={height}
+        autoPlay={autoplay}
+        muted={muted}
+        loop={loop}
+        controls={controls}
+        className={`transition-opacity duration-300 ${
+          isLoading ? 'opacity-0' : 'opacity-100'
+        }`}
+        style={{
+          width: '100%',
+          height: 'auto',
+          objectFit: 'cover',
+        }}
+        aria-label={alt}
+      />
     </div>
   )
 }
