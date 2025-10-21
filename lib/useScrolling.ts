@@ -13,7 +13,8 @@ export interface ScrollingState {
   scrollPosition: number
   isScrolling: boolean
   animationProgress: number
-  reducedMotion: boolean
+  reduced
+  : boolean
 }
 
 export interface UseScrollingReturn {

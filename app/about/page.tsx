@@ -220,13 +220,19 @@ export default function AboutPage() {
         </section>
 
         {/* Company Values */}
-        <section className='py-20 px-4 bg-white/50'>
-          <div className='max-w-6xl mx-auto'>
+        <section className='py-20 px-4 bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/50 relative overflow-hidden'>
+          {/* Animated background elements */}
+          <div className='absolute inset-0'>
+            <div className='absolute top-1/4 left-1/4 w-64 h-64 bg-gradient-to-r from-blue-400/10 to-cyan-400/10 rounded-full blur-3xl animate-pulse-slow'></div>
+            <div className='absolute bottom-1/4 right-1/4 w-80 h-80 bg-gradient-to-r from-purple-400/10 to-pink-400/10 rounded-full blur-3xl animate-float'></div>
+          </div>
+
+          <div className='max-w-6xl mx-auto relative z-10'>
             <div className='text-center mb-16'>
-              <h2 className='text-4xl font-bold text-gray-900 mb-6'>
+              <h2 className='text-4xl font-bold text-gray-900 mb-6 animate-fade-in-up'>
                 Our Values
               </h2>
-              <p className='text-xl text-gray-600 max-w-3xl mx-auto'>
+              <p className='text-xl text-gray-600 max-w-3xl mx-auto animate-fade-in-up animation-delay-200'>
                 These core principles guide everything we do, from client
                 relationships to technical decisions
               </p>
@@ -236,25 +242,78 @@ export default function AboutPage() {
               {values.map((value, index) => (
                 <Card
                   key={index}
-                  className='group border-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2 bg-white'
+                  className='values-card group relative border-0 bg-white/90 backdrop-blur-md shadow-xl hover:shadow-2xl transition-all duration-700 hover:-translate-y-6 hover:scale-105 overflow-hidden animate-fade-in-up'
+                  style={{
+                    animationDelay: `${index * 200}ms`,
+                    animationFillMode: 'both',
+                  }}
                 >
-                  <CardHeader className='text-center pb-4'>
-                    <div
-                      className={`w-16 h-16 mx-auto rounded-xl bg-gradient-to-br ${value.gradient} p-0.5 mb-4`}
-                    >
-                      <div className='w-full h-full bg-white rounded-lg flex items-center justify-center'>
-                        {value.icon}
+                  {/* Animated gradient background with shimmer */}
+                  <div
+                    className={`absolute inset-0 bg-gradient-to-br ${value.gradient} opacity-0 group-hover:opacity-15 transition-all duration-700`}
+                  ></div>
+
+                  {/* Glow effect on hover */}
+                  <div
+                    className={`absolute inset-0 bg-gradient-to-br ${value.gradient} opacity-0 group-hover:opacity-30 blur-2xl transition-all duration-700 -z-10 scale-110`}
+                  ></div>
+
+                  {/* Shimmer overlay */}
+                  <div className='absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 animate-shimmer'></div>
+
+                  <CardHeader className='text-center pb-4 relative z-10'>
+                    <div className='relative mb-6'>
+                      {/* Icon container with enhanced effects */}
+                      <div
+                        className={`icon-container w-24 h-24 mx-auto rounded-3xl bg-gradient-to-br ${value.gradient} p-1 group-hover:scale-115 transition-all duration-700 group-hover:rotate-6 shadow-2xl`}
+                      >
+                        <div className='w-full h-full bg-white rounded-2xl flex items-center justify-center group-hover:bg-gradient-to-br group-hover:from-white/95 group-hover:to-white/80 transition-all duration-700 shadow-inner'>
+                          <div className='group-hover:scale-125 transition-transform duration-700 group-hover:animate-scale-bounce'>
+                            {value.icon}
+                          </div>
+                        </div>
                       </div>
+
+                      {/* Enhanced floating particles effect */}
+                      <div className='absolute -top-3 -right-3 w-4 h-4 bg-gradient-to-r from-blue-400 to-cyan-400 rounded-full opacity-0 group-hover:opacity-100 group-hover:animate-particle-float animation-delay-300 shadow-lg'></div>
+                      <div className='absolute -bottom-3 -left-3 w-3 h-3 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full opacity-0 group-hover:opacity-100 group-hover:animate-particle-float animation-delay-500 shadow-lg'></div>
+                      <div className='absolute top-1/2 -right-2 w-2 h-2 bg-gradient-to-r from-yellow-400 to-orange-400 rounded-full opacity-0 group-hover:opacity-100 group-hover:animate-particle-float animation-delay-700 shadow-lg'></div>
+
+                      {/* Rotating border effect */}
+                      <div
+                        className={`absolute inset-0 rounded-3xl bg-gradient-to-r ${value.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-700 animate-rotate-slow`}
+                        style={{
+                          background: `conic-gradient(from 0deg, transparent, ${value.gradient.includes('blue') ? '#3b82f6' : value.gradient.includes('green') ? '#10b981' : value.gradient.includes('red') ? '#ef4444' : '#f59e0b'}, transparent)`,
+                          padding: '2px',
+                        }}
+                      ></div>
                     </div>
-                    <CardTitle className='text-xl font-bold text-gray-900'>
+
+                    <CardTitle className='text-xl font-bold text-gray-900 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-blue-600 group-hover:to-purple-600 transition-all duration-700 group-hover:scale-105'>
                       {value.title}
                     </CardTitle>
                   </CardHeader>
-                  <CardContent>
-                    <p className='text-gray-600 text-center leading-relaxed'>
+
+                  <CardContent className='relative z-10'>
+                    <p className='text-gray-600 text-center leading-relaxed group-hover:text-gray-700 transition-all duration-500 group-hover:scale-105'>
                       {value.description}
                     </p>
                   </CardContent>
+
+                  {/* Animated border effect with gradient */}
+                  <div
+                    className={`absolute inset-0 rounded-lg bg-gradient-to-r ${value.gradient} opacity-0 group-hover:opacity-100 transition-all duration-700`}
+                    style={{
+                      background: `linear-gradient(45deg, transparent, rgba(255,255,255,0.2), transparent)`,
+                      backgroundSize: '200% 200%',
+                      animation: 'shimmer 3s infinite',
+                    }}
+                  ></div>
+
+                  {/* Corner accent */}
+                  <div
+                    className={`absolute top-0 right-0 w-0 h-0 border-l-[20px] border-l-transparent border-t-[20px] border-t-${value.gradient.split('-')[1]}-500 opacity-0 group-hover:opacity-100 transition-opacity duration-500`}
+                  ></div>
                 </Card>
               ))}
             </div>
