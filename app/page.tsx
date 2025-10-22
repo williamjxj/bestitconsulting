@@ -17,6 +17,9 @@ import Link from 'next/link'
 import R2Image from '@/components/R2Image'
 import R2Video from '@/components/R2Video'
 import TechnologyShowcase from '@/components/TechnologyShowcase'
+import ServiceComparison from '@/components/ServiceComparison'
+import TestimonialCarousel from '@/components/TestimonialCarousel'
+import FAQ from '@/components/FAQ'
 
 export default function HomePage() {
   const features = [
@@ -312,6 +315,15 @@ export default function HomePage() {
 
         {/* Technology Showcase */}
         <TechnologyShowcase />
+
+        {/* Service Comparison */}
+        <ServiceComparison />
+
+        {/* Testimonials Carousel */}
+        <TestimonialCarousel />
+
+        {/* FAQ Section */}
+        <FAQ />
 
         {/* CTA Section */}
         <section className='py-20 bg-gradient-to-r from-blue-600 to-indigo-700 text-white'>

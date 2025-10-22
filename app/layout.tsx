@@ -1,22 +1,33 @@
 import type { Metadata } from 'next'
-import { Geist, Geist_Mono } from 'next/font/google'
+import { Inter } from 'next/font/google'
 import './globals.css'
 import { I18nProvider } from '@/lib/i18n'
 
-const geistSans = Geist({
-  variable: '--font-geist-sans',
+const inter = Inter({
+  variable: '--font-inter',
   subsets: ['latin'],
-})
-
-const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
-  subsets: ['latin'],
+  display: 'swap',
 })
 
 export const metadata: Metadata = {
-  title: 'BestIT Consulting',
+  title: 'BestIT Consulting - Modern IT Solutions & Digital Transformation',
   description:
-    'We provide top-notch IT consulting services to help your business thrive.',
+    'Transform your business with our expert IT consulting services. We deliver modern, scalable solutions that drive growth and innovation.',
+  keywords: 'IT consulting, digital transformation, cloud solutions, software development, cybersecurity',
+  authors: [{ name: 'BestIT Consulting' }],
+  openGraph: {
+    title: 'BestIT Consulting - Modern IT Solutions',
+    description: 'Transform your business with our expert IT consulting services.',
+    type: 'website',
+    locale: 'en_US',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'BestIT Consulting - Modern IT Solutions',
+    description: 'Transform your business with our expert IT consulting services.',
+  },
+  viewport: 'width=device-width, initial-scale=1',
+  robots: 'index, follow',
 }
 
 export default function RootLayout({
@@ -25,9 +36,9 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang='en'>
+    <html lang='en' className={inter.variable}>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className='font-sans antialiased bg-background text-foreground'
         suppressHydrationWarning={true}
       >
         <I18nProvider>{children}</I18nProvider>
