@@ -1,10 +1,11 @@
 'use client'
 
 import Image from 'next/image'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { buildR2Url, getFallbackUrl } from '@/lib/r2-media'
 import { getLoadingTimeout } from '@/lib/media-config'
 import { Skeleton } from '@/components/ui/skeleton'
+import { useResponsive } from '@/lib/breakpoints'
 
 interface R2ImageProps {
   src: string
@@ -17,6 +18,10 @@ interface R2ImageProps {
   category?: 'team' | 'company' | 'general'
   onLoad?: () => void
   onError?: () => void
+  quality?: number
+  sizes?: string
+  placeholder?: 'blur' | 'empty'
+  blurDataURL?: string
 }
 
 export default function R2Image({
@@ -30,30 +35,86 @@ export default function R2Image({
   category = 'general',
   onLoad,
   onError,
+  quality,
+  sizes,
+  placeholder = 'blur',
+  blurDataURL,
 }: R2ImageProps) {
   const [imgSrc, setImgSrc] = useState(buildR2Url(src))
   const [isLoading, setIsLoading] = useState(true)
   const [hasError, setHasError] = useState(false)
   const [retryCount, setRetryCount] = useState(0)
+  const [webpSupported, setWebpSupported] = useState(false)
+  const { isMobile } = useResponsive()
 
   const fallbackUrl = fallback || getFallbackUrl(category)
   const loadingTimeout = getLoadingTimeout('image')
 
+  // Detect WebP support
+  useEffect(() => {
+    const checkWebPSupport = () => {
+      const canvas = document.createElement('canvas')
+      canvas.width = 1
+      canvas.height = 1
+      return canvas.toDataURL('image/webp').indexOf('data:image/webp') === 0
+    }
+    setWebpSupported(checkWebPSupport())
+  }, [])
+
+  // Generate optimized image URL with WebP support
+  const getOptimizedUrl = useCallback(
+    (originalSrc: string) => {
+      const baseUrl = buildR2Url(originalSrc)
+      if (webpSupported && !baseUrl.includes('.webp')) {
+        // Add WebP format parameter if supported
+        return `${baseUrl}?format=webp&quality=${quality || (isMobile ? 75 : 90)}`
+      }
+      return baseUrl
+    },
+    [webpSupported, quality, isMobile]
+  )
+
+  // Generate responsive sizes
+  const getResponsiveSizes = useCallback(() => {
+    if (sizes) return sizes
+
+    if (isMobile) {
+      return '(max-width: 768px) 100vw, 50vw'
+    }
+    return '(max-width: 1200px) 50vw, 33vw'
+  }, [sizes, isMobile])
+
+  // Generate blur data URL if not provided
+  const getBlurDataURL = useCallback(() => {
+    if (blurDataURL) return blurDataURL
+
+    // Generate a simple blur placeholder
+    const canvas = document.createElement('canvas')
+    canvas.width = 8
+    canvas.height = 6
+    const ctx = canvas.getContext('2d')
+    if (ctx) {
+      ctx.fillStyle = '#f3f4f6'
+      ctx.fillRect(0, 0, 8, 6)
+    }
+    return canvas.toDataURL('image/jpeg', 0.1)
+  }, [blurDataURL])
+
   // Reset state when src changes
   useEffect(() => {
-    setImgSrc(buildR2Url(src))
+    setImgSrc(getOptimizedUrl(src))
     setIsLoading(true)
     setHasError(false)
     setRetryCount(0)
-  }, [src])
+  }, [src, getOptimizedUrl])
 
-  const handleError = () => {
+  const handleError = useCallback(() => {
     if (retryCount < 3) {
       // Retry with exponential backoff
       const delay = Math.pow(2, retryCount) * 1000
       setTimeout(() => {
         setRetryCount(prev => prev + 1)
-        setImgSrc(buildR2Url(src))
+        setImgSrc(getOptimizedUrl(src))
       }, delay)
     } else {
       // Use fallback after max retries
@@ -62,13 +123,13 @@ export default function R2Image({
       setIsLoading(false)
       onError?.()
     }
-  }
+  }, [retryCount, getOptimizedUrl, src, fallbackUrl, onError])
 
-  const handleLoad = () => {
+  const handleLoad = useCallback(() => {
     setIsLoading(false)
     setHasError(false)
     onLoad?.()
-  }
+  }, [onLoad])
 
   // Set loading timeout
   useEffect(() => {
@@ -95,6 +156,10 @@ export default function R2Image({
         width={width}
         height={height}
         priority={priority}
+        quality={quality || (isMobile ? 75 : 90)}
+        sizes={getResponsiveSizes()}
+        placeholder={placeholder}
+        blurDataURL={placeholder === 'blur' ? getBlurDataURL() : undefined}
         onError={handleError}
         onLoad={handleLoad}
         className={`transition-opacity duration-300 ${

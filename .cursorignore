@@ -1,0 +1,30 @@
+# Add directories or file patterns to ignore during indexing (e.g. foo/ or *.csv)
+# Ignore dependencies
+node_modules/
+
+# Ignore Next.js build output
+.next/
+
+# Ignore static assets
+
+# Ignore environment variables
+.env*KW
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Ignore test files
+**/*.test.js
+**/*.test.ts
+**/*.spec.js
+**/*.spec.ts
+
+# Ignore logs and miscellaneous files
+*.log
+.DS_Store
+/.cursor
+/.github
+/.specify
+/.vscode
+.obsidian/

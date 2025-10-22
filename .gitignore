@@ -41,5 +41,7 @@ next-env.d.ts
 
 # customize
 /.cursor
-/docs
-/team
+/.github
+/.specify
+/.vscode
+.obsidian/

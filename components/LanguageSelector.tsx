@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { ChevronDown, Globe, Check } from 'lucide-react'
 import { useLanguageManager } from '@/lib/i18n/hooks'
 
@@ -20,6 +20,11 @@ export function LanguageSelector({
   const { availableLanguages, currentLanguage, setLanguage, isLoading } =
     useLanguageManager()
   const [isOpen, setIsOpen] = useState(false)
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   const currentLang = availableLanguages.find(
     lang => lang.code === currentLanguage
@@ -28,6 +33,11 @@ export function LanguageSelector({
   const handleLanguageChange = async (languageCode: string) => {
     await setLanguage(languageCode)
     setIsOpen(false)
+  }
+
+  // Don't render until mounted and not loading
+  if (!mounted || isLoading) {
+    return null
   }
 
   if (variant === 'buttons') {
