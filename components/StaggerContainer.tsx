@@ -12,6 +12,7 @@ import { ReactNode } from 'react'
 interface StaggerContainerProps {
   children: ReactNode
   staggerDelay?: number
+  delay?: number
   className?: string
   once?: boolean
   threshold?: number
@@ -26,6 +27,7 @@ interface StaggerContainerProps {
 export function StaggerContainer({
   children,
   staggerDelay = 0.1,
+  delay = 0,
   className = '',
   once = scrollTriggerConfig.once,
   threshold = scrollTriggerConfig.threshold,
@@ -35,7 +37,7 @@ export function StaggerContainer({
     visible: {
       transition: {
         staggerChildren: staggerDelay,
-        delayChildren: 0.1,
+        delayChildren: delay,
       },
     },
   })

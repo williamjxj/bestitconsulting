@@ -49,10 +49,6 @@ export function AnimatedCard({
       rotate: hover.rotate || 0,
       y: hover.translateY || 0,
       opacity: hover.opacity || 1,
-      transition: {
-        duration: 0.2,
-        ease: 'easeOut',
-      },
     },
   }
 

@@ -72,10 +72,6 @@ export function AnimatedButton({
       rotate: hover.rotate || 0,
       y: hover.translateY || 0,
       opacity: hover.opacity || 1,
-      transition: {
-        duration: 0.2,
-        ease: 'easeOut',
-      },
     },
     tap: {
       scale: 0.95,

@@ -1,7 +1,8 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { AnimatedSection, AnimatedText } from './'
+import { AnimatedSection } from './AnimatedSection'
+import { AnimatedText } from './AnimatedText'
 import { useResponsive } from '@/lib/breakpoints'
 import {
   Calendar,

@@ -1,7 +1,9 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { AnimatedSection, AnimatedText, AnimatedCounter } from './'
+import { AnimatedSection } from './AnimatedSection'
+import { AnimatedText } from './AnimatedText'
+import { AnimatedCounter } from './AnimatedCounter'
 import { useResponsive } from '@/lib/breakpoints'
 import {
   TrendingUp,

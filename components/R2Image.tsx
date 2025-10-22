@@ -12,6 +12,7 @@ interface R2ImageProps {
   alt: string
   width?: number
   height?: number
+  fill?: boolean
   priority?: boolean
   fallback?: string
   className?: string
@@ -29,6 +30,7 @@ export default function R2Image({
   alt,
   width = 300,
   height = 200,
+  fill = false,
   priority = false,
   fallback,
   className = '',
@@ -153,8 +155,9 @@ export default function R2Image({
       <Image
         src={imgSrc}
         alt={alt}
-        width={width}
-        height={height}
+        width={fill ? undefined : width}
+        height={fill ? undefined : height}
+        fill={fill}
         priority={priority}
         quality={quality || (isMobile ? 75 : 90)}
         sizes={getResponsiveSizes()}
@@ -164,12 +167,16 @@ export default function R2Image({
         onLoad={handleLoad}
         className={`transition-opacity duration-300 ${
           isLoading ? 'opacity-0' : 'opacity-100'
-        } ${hasError ? 'grayscale' : ''}`}
-        style={{
-          width: '100%',
-          height: 'auto',
-          objectFit: 'cover',
-        }}
+        } ${hasError ? 'grayscale' : ''} ${className}`}
+        style={
+          fill
+            ? undefined
+            : {
+                width: '100%',
+                height: 'auto',
+                objectFit: 'cover',
+              }
+        }
       />
 
       {hasError && (

@@ -1,7 +1,9 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { AnimatedSection, AnimatedText, AnimatedButton } from './'
+import { AnimatedSection } from './AnimatedSection'
+import { AnimatedText } from './AnimatedText'
+import { AnimatedButton } from './AnimatedButton'
 import { useResponsive } from '@/lib/breakpoints'
 import {
   Target,

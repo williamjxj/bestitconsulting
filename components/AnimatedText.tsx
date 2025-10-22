@@ -77,9 +77,10 @@ export function AnimatedText({
     }
   }
 
+  const MotionComponent = motion[Component] as any
+
   return (
-    <motion.div
-      as={Component}
+    <MotionComponent
       initial='hidden'
       whileInView='visible'
       viewport={{
@@ -96,6 +97,6 @@ export function AnimatedText({
       className={className}
     >
       {children}
-    </motion.div>
+    </MotionComponent>
   )
 }
