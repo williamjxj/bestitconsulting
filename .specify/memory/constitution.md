@@ -1,91 +1,166 @@
 <!--
 Sync Impact Report:
-Version change: 1.0.0 → 1.1.0
-Modified principles: None (initial constitution)
-Added sections: CDN Integration, Client-Server Architecture, Error Handling
-Removed sections: None
-Templates requiring updates: ✅ updated
-- .specify/templates/plan-template.md - Updated constitution check
-- .specify/templates/spec-template.md - Updated scope alignment
-- .specify/templates/tasks-template.md - Updated task categorization
-Follow-up TODOs: None
+Version change: 0.0.0 → 1.0.0
+Modified principles: N/A (initial creation)
+Added sections: All sections (initial constitution)
+Removed sections: N/A
+Templates requiring updates: ⚠ pending (templates not yet created)
+Follow-up TODOs: Create template files in .specify/templates/
 -->
 
-# BestIT Consulting Constitution
+# BestIT Consulting Project Constitution
+
+**Project**: BestIT Consulting Website  
+**Constitution Version**: 1.0.0  
+**Ratification Date**: 2025-01-27  
+**Last Amended Date**: 2025-01-27  
+
+## Preamble
+
+This constitution establishes the foundational principles, architectural patterns, and governance framework for the BestIT Consulting website project. It serves as the authoritative guide for all development decisions, ensuring consistency, quality, and maintainability across the entire codebase.
 
 ## Core Principles
 
-### I. Next.js App Router Architecture
+### Principle 1: Next.js App Router Architecture
+**MANDATORY**: All new features MUST use Next.js App Router patterns with clear separation between Server and Client Components. Server Components for data fetching and static content, Client Components for interactivity and state management. All pages MUST be implemented as Server Components by default, with Client Components used only when necessary for interactivity.
 
-All pages and components MUST follow Next.js 15 App Router patterns. Server Components are the default; Client Components require explicit 'use client' directive. API routes MUST be in app/api/ directory with proper HTTP method handlers. Static generation preferred over server-side rendering where possible.
+**Rationale**: Ensures optimal performance through server-side rendering, reduces client-side JavaScript, and clear architectural boundaries that prevent hydration issues.
 
-### II. TypeScript-First Development
+### Principle 2: TypeScript-First Development
+**MANDATORY**: All new code MUST be written in TypeScript with strict type checking enabled. All components, utilities, and API routes MUST have comprehensive type definitions. No `any` types allowed without explicit justification and proper type guards.
 
-All code MUST be written in TypeScript with strict type checking enabled. No 'any' types allowed without explicit justification. Interfaces MUST be defined for all props, API responses, and data structures. Type safety is NON-NEGOTIABLE for maintainability and developer experience.
+**Rationale**: Prevents runtime errors, improves developer experience, enables better IDE support, and ensures code maintainability as the project scales.
 
-### III. Tailwind CSS Utility-First Styling
+### Principle 3: Tailwind CSS Utility-First Styling
+**MANDATORY**: All styling MUST use Tailwind CSS utility classes. Custom CSS is prohibited except for complex animations and design system tokens. All responsive design MUST use Tailwind's responsive prefixes. Design system tokens MUST be defined in tailwind.config.ts.
 
-All styling MUST use Tailwind CSS utility classes. Custom CSS is prohibited unless absolutely necessary. Component variants MUST use class-variance-authority (CVA) for type-safe styling. Responsive design MUST be mobile-first with proper breakpoint usage.
+**Rationale**: Ensures consistent design system, reduces CSS bundle size, improves maintainability, and enables rapid prototyping with predictable styling patterns.
 
-### IV. CDN-Optimized Asset Delivery
+### Principle 4: Performance-Optimized Asset Delivery
+**MANDATORY**: All images MUST use Next.js Image component with proper optimization. All media assets MUST be served through Cloudflare R2 CDN with appropriate caching headers. All animations MUST be GPU-accelerated and respect user's motion preferences.
 
-All images and videos MUST be served via Cloudflare R2 CDN with proper optimization. Images MUST use Next.js Image component with appropriate sizing and lazy loading. Video content MUST include poster images and proper error handling. CDN configuration MUST be environment-driven with fallback mechanisms.
+**Rationale**: Ensures fast loading times, optimal user experience, and cost-effective asset delivery while maintaining visual quality.
 
-### V. Client-Server Component Separation
+### Principle 5: Accessibility-First Development
+**MANDATORY**: All components MUST meet WCAG 2.1 AA standards. All interactive elements MUST have proper ARIA labels and keyboard navigation. All animations MUST respect `prefers-reduced-motion` setting. Color contrast ratios MUST meet 4.5:1 minimum standards.
 
-Interactive components with event handlers MUST be Client Components. Server Components MUST handle data fetching and static content. Event handlers, useState, useEffect, and browser APIs MUST be isolated to Client Components. Clear boundaries MUST be maintained between server and client code.
+**Rationale**: Ensures inclusive user experience, legal compliance, and broad accessibility across all user capabilities and assistive technologies.
 
-### VI. Error Handling & Resilience
+### Principle 6: Internationalization Support
+**MANDATORY**: All user-facing text MUST be internationalized using the project's i18n system. All components MUST use translation hooks instead of hardcoded strings. All new features MUST include translation keys for all supported languages.
 
-All external dependencies (CDN, APIs, databases) MUST have graceful fallback mechanisms. User-facing errors MUST be informative and actionable. Console errors MUST be logged for debugging. Network failures MUST not break the user experience.
+**Rationale**: Enables global reach, supports multiple languages (English, French, Spanish, Chinese), and ensures consistent user experience across different locales.
 
-## Technology Standards
+### Principle 7: Component-Driven Architecture
+**MANDATORY**: All UI elements MUST be implemented as reusable components in the `/components` directory. All components MUST have proper TypeScript interfaces and JSDoc documentation. All components MUST be tested with unit tests.
 
-### Required Stack
+**Rationale**: Ensures code reusability, maintainability, and consistent user interface patterns across the entire application.
 
-- **Framework**: Next.js 15.2.4 with App Router
-- **Language**: TypeScript 5 with strict mode
-- **Styling**: Tailwind CSS v4 with utility classes
-- **UI Components**: shadcn/ui with Radix UI primitives
-- **CDN**: Cloudflare R2 for asset delivery
-- **Deployment**: Vercel-compatible build configuration
+### Principle 8: Animation and Interaction Excellence
+**MANDATORY**: All animations MUST use Framer Motion for consistency and performance. All animations MUST have reduced motion fallbacks. All interactive elements MUST provide visual feedback. Animation durations MUST not exceed 300ms for micro-interactions.
 
-### Code Quality Gates
+**Rationale**: Creates engaging user experience while maintaining performance and respecting user preferences for motion.
 
-- ESLint MUST pass with zero warnings
-- Prettier formatting MUST be enforced
-- TypeScript compilation MUST succeed
-- Markdown linting MUST pass for documentation
-- All components MUST have proper accessibility attributes
+### Principle 9: Quality Assurance and Testing
+**MANDATORY**: All new features MUST include comprehensive testing (unit, integration, e2e). All components MUST have accessibility testing. All performance-critical features MUST have performance benchmarks. Code coverage MUST maintain minimum 80% threshold.
 
-## Development Workflow
+**Rationale**: Ensures code reliability, prevents regressions, and maintains high quality standards as the project evolves.
 
-### Component Architecture
+### Principle 10: Modern Development Practices
+**MANDATORY**: All code MUST follow ESLint and Prettier configurations. All commits MUST pass quality checks (lint, format, type-check). All dependencies MUST be kept up-to-date with security patches. All code MUST be documented with JSDoc comments.
 
-- Server Components for data fetching and static content
-- Client Components for interactivity and browser APIs
-- Shared utilities in lib/ directory
-- UI components in components/ui/ directory
-- Feature-specific components co-located with pages
+**Rationale**: Ensures code consistency, security, and maintainability while enabling efficient team collaboration.
 
-### CDN Integration Requirements
+## Technical Standards
 
-- Environment variables MUST use NEXT*PUBLIC* prefix for client access
-- R2 URLs MUST be constructed using helper utilities
-- Image optimization MUST use Next.js Image component
-- Video content MUST include proper poster and error handling
-- Health check endpoints MUST be available for monitoring
+### Code Quality Requirements
+- **ESLint**: Extended from Next.js and TypeScript recommendations
+- **Prettier**: Consistent code formatting with project-specific rules
+- **TypeScript**: Strict mode enabled with comprehensive type checking
+- **Testing**: Jest, React Testing Library, Playwright for E2E
+- **Performance**: Lighthouse CI with 90+ scores required
 
-### Quality Assurance
+### Architecture Patterns
+- **App Router**: Next.js 15+ App Router with Server/Client Component separation
+- **State Management**: React hooks and context for client state
+- **Data Fetching**: Server Components for static data, Client Components for dynamic data
+- **Styling**: Tailwind CSS v4 with custom design system
+- **Animations**: Framer Motion with performance optimization
+- **Internationalization**: Custom i18n system with React context
 
-- All features MUST be manually tested before deployment
-- CDN integration MUST be verified with actual assets
-- Error scenarios MUST be tested and handled gracefully
-- Performance MUST be monitored for CDN delivery
-- Accessibility MUST be validated for all user interactions
+### Performance Standards
+- **Page Load**: <3 seconds initial load time
+- **Animations**: 60fps smooth animations
+- **Mobile**: 95+ mobile usability score
+- **Accessibility**: WCAG 2.1 AA compliance
+- **Bundle Size**: Optimized with code splitting and lazy loading
 
 ## Governance
 
-This constitution supersedes all other development practices. Amendments require documentation of the change rationale, impact assessment, and migration plan for existing code. All pull requests MUST verify compliance with these principles. Complexity beyond these standards MUST be justified with clear business value.
+### Amendment Procedure
+1. **Proposal**: Any team member may propose constitutional amendments
+2. **Review**: Technical lead reviews proposal for feasibility and impact
+3. **Approval**: Amendments require 2/3 majority approval from development team
+4. **Implementation**: Approved amendments are implemented within 2 weeks
+5. **Documentation**: All amendments are documented with rationale and impact
 
-**Version**: 1.1.0 | **Ratified**: 2025-01-20 | **Last Amended**: 2025-01-20
+### Versioning Policy
+- **MAJOR**: Backward incompatible changes to principles or architecture
+- **MINOR**: New principles or significant expansions to existing principles
+- **PATCH**: Clarifications, wording improvements, or non-semantic refinements
+
+### Compliance Review
+- **Frequency**: Quarterly reviews of constitution compliance
+- **Scope**: All active development work and architectural decisions
+- **Process**: Automated checks where possible, manual review for complex cases
+- **Outcomes**: Compliance reports with recommendations for improvements
+
+### Enforcement
+- **Automated**: ESLint, TypeScript, and testing enforce technical standards
+- **Manual**: Code reviews ensure principle adherence
+- **Escalation**: Non-compliance issues escalate to technical lead
+- **Resolution**: Issues must be resolved before feature completion
+
+## Implementation Guidelines
+
+### New Feature Development
+1. **Constitution Check**: Verify compliance with all applicable principles
+2. **Architecture Review**: Ensure proper Server/Client Component separation
+3. **Type Safety**: Implement comprehensive TypeScript interfaces
+4. **Testing**: Include unit, integration, and accessibility tests
+5. **Documentation**: Update relevant documentation and examples
+
+### Code Review Process
+1. **Automated Checks**: All automated quality checks must pass
+2. **Principle Compliance**: Review for adherence to constitutional principles
+3. **Performance Impact**: Assess performance implications of changes
+4. **Accessibility**: Verify accessibility requirements are met
+5. **Documentation**: Ensure code is properly documented
+
+### Maintenance and Updates
+1. **Dependency Updates**: Regular security and feature updates
+2. **Performance Monitoring**: Continuous performance tracking and optimization
+3. **Accessibility Audits**: Regular accessibility compliance reviews
+4. **Documentation**: Keep documentation current with implementation changes
+
+## Success Metrics
+
+### Technical Metrics
+- **Performance**: <3s page load, 60fps animations, 95+ Lighthouse score
+- **Accessibility**: WCAG 2.1 AA compliance, zero critical issues
+- **Quality**: 80%+ code coverage, zero linting errors
+- **Performance**: 60fps animations, <200ms interaction response
+
+### Business Metrics
+- **User Experience**: 20% bounce rate reduction, 30% time on page increase
+- **Accessibility**: 100% keyboard navigation support, screen reader compatibility
+- **Internationalization**: Full support for all target languages
+- **Maintainability**: <2 hours average time to implement new features
+
+## Conclusion
+
+This constitution serves as the foundation for all development decisions in the BestIT Consulting project. It ensures consistency, quality, and maintainability while enabling innovation and growth. All team members are expected to understand and follow these principles in their daily work.
+
+**Next Review Date**: 2025-04-27  
+**Constitution Maintainer**: Technical Lead  
+**Approval Authority**: Development Team
