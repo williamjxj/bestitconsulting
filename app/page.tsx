@@ -18,6 +18,7 @@ import { ScrollTrigger } from '@/components/animations/ScrollTrigger'
 import { AnimatedCounter } from '@/components/animations/AnimatedCounter'
 import { CredibilitySection } from '@/components/sections/CredibilitySection'
 import TechnologyShowcase from '@/components/sections/TechnologyShowcase'
+import { DemoVideo } from '@/components/DemoVideo'
 
 export default function HomePage() {
   const features = [
@@ -141,32 +142,7 @@ export default function HomePage() {
 
                   <ScrollTrigger animation='slide' direction='left' delay={0.4}>
                     <div className='relative'>
-                      {/* Placeholder Video/Image */}
-                      <div className='relative bg-gradient-to-br from-blue-100 to-indigo-100 rounded-2xl overflow-hidden aspect-video'>
-                        <div className='absolute inset-0 flex items-center justify-center'>
-                          <div className='text-center'>
-                            <div className='w-20 h-20 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4 hover:scale-110 transition-transform cursor-pointer'>
-                              <Play
-                                className='h-8 w-8 text-white ml-1'
-                                fill='currentColor'
-                              />
-                            </div>
-                            <p className='text-blue-700 font-medium'>
-                              Watch Demo Video
-                            </p>
-                            <p className='text-sm text-blue-600'>
-                              3 min overview
-                            </p>
-                          </div>
-                        </div>
-                        {/* Floating elements for visual appeal */}
-                        <div className='absolute top-4 right-4 w-12 h-12 bg-white/80 rounded-lg flex items-center justify-center'>
-                          <Code2 className='h-6 w-6 text-blue-600' />
-                        </div>
-                        <div className='absolute bottom-4 left-4 w-12 h-12 bg-white/80 rounded-lg flex items-center justify-center'>
-                          <Cloud className='h-6 w-6 text-green-600' />
-                        </div>
-                      </div>
+                      <DemoVideo />
                     </div>
                   </ScrollTrigger>
                 </div>
@@ -277,7 +253,9 @@ export default function HomePage() {
                               : ''
                         }
                         className='text-3xl md:text-4xl font-bold mb-2'
-                      />
+                      >
+                        <></>
+                      </AnimatedCounter>
                       <div className='text-blue-100'>{stat.label}</div>
                     </div>
                   </ScrollTrigger>
