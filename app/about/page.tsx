@@ -22,6 +22,7 @@ import {
   Zap,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import DisplayCards from '@/components/ui/display-cards'
 
 const teamMembers = [
   {
@@ -169,54 +170,101 @@ export default function AboutPage() {
         </div>
 
         <div className='container mx-auto px-4 relative z-10'>
-          <motion.div
-            className='text-center max-w-4xl mx-auto'
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
-            <div className='inline-flex items-center gap-2 px-4 py-2 text-sm font-medium bg-blue-600/20 rounded-full mb-8 border border-blue-500/30'>
-              <span>About Us</span>
-            </div>
-            <div className='text-4xl lg:text-6xl font-bold mb-6'>
-              <AnimatedHeadline
-                text='About Best IT Consulting'
-                className='text-4xl lg:text-6xl font-bold text-white leading-tight'
-              />
-            </div>
-            <motion.p
-              className='text-xl text-blue-100/90 mb-8 leading-relaxed max-w-3xl mx-auto'
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-            >
-              We're a team of passionate technologists dedicated to transforming
-              businesses through innovative digital solutions. With over a
-              decade of experience, we've helped hundreds of companies scale,
-              innovate, and succeed in the digital era.
-            </motion.p>
+          <div className='grid lg:grid-cols-2 gap-4 items-center'>
             <motion.div
-              className='flex flex-col sm:flex-row gap-6 justify-center'
+              className='text-center lg:text-left'
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
+              transition={{ duration: 0.6 }}
             >
-              <Button
-                size='lg'
-                className='group text-lg px-8 py-4 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700'
+              <div className='inline-flex items-center gap-2 px-4 py-2 text-sm font-medium bg-blue-600/20 rounded-full mb-8 border border-blue-500/30'>
+                <span>About Us</span>
+              </div>
+              <div className='text-4xl lg:text-6xl font-bold mb-6'>
+                <AnimatedHeadline
+                  text='About Best IT Consulting'
+                  className='text-4xl lg:text-6xl font-bold text-white leading-tight'
+                />
+              </div>
+              <motion.p
+                className='text-xl text-blue-100/90 mb-8 leading-relaxed max-w-3xl mx-auto'
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
               >
-                Our Services
-                <ArrowRight className='ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform' />
-              </Button>
-              <Button
-                variant='outline'
-                size='lg'
-                className='text-lg px-8 py-4 bg-white/10 border-white/20 hover:bg-white/20'
+                We're a team of passionate technologists dedicated to
+                transforming businesses through innovative digital solutions.
+                With over a decade of experience, we've helped hundreds of
+                companies scale, innovate, and succeed in the digital era.
+              </motion.p>
+              <motion.div
+                className='flex flex-col sm:flex-row gap-6 justify-center mb-12'
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.3 }}
               >
-                View Portfolio
-              </Button>
+                <Button
+                  size='lg'
+                  className='group text-lg px-8 py-4 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700'
+                >
+                  Our Services
+                  <ArrowRight className='ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform' />
+                </Button>
+                <Button
+                  variant='outline'
+                  size='lg'
+                  className='text-lg px-8 py-4 bg-white/10 border-white/20 hover:bg-white/20'
+                >
+                  View Portfolio
+                </Button>
+              </motion.div>
             </motion.div>
-          </motion.div>
+
+            {/* Display Cards as Background Element */}
+            <motion.div
+              className='hidden lg:flex justify-center items-center relative'
+              initial={{ opacity: 0, x: 30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.5 }}
+            >
+              <div className='relative w-80 h-80 flex items-center justify-center'>
+                <DisplayCards
+                  cards={[
+                    {
+                      icon: <Briefcase className='size-4 text-blue-300' />,
+                      title: '500+ Projects',
+                      description: 'Successfully delivered',
+                      date: '2024',
+                      iconClassName: 'text-blue-400',
+                      titleClassName: 'text-blue-400',
+                      className:
+                        "[grid-area:stack] hover:-translate-y-8 before:absolute before:w-[100%] before:outline-1 before:rounded-xl before:outline-border before:h-[100%] before:content-[''] before:bg-blend-overlay before:bg-background/50 grayscale-[100%] hover:before:opacity-0 before:transition-opacity before:duration:700 hover:grayscale-0 before:left-0 before:top-0",
+                    },
+                    {
+                      icon: <Users className='size-4 text-green-300' />,
+                      title: '50+ Clients',
+                      description: 'Happy customers worldwide',
+                      date: '2024',
+                      iconClassName: 'text-green-400',
+                      titleClassName: 'text-green-400',
+                      className:
+                        "[grid-area:stack] translate-x-8 translate-y-6 hover:-translate-y-1 before:absolute before:w-[100%] before:outline-1 before:rounded-xl before:outline-border before:h-[100%] before:content-[''] before:bg-blend-overlay before:bg-background/50 grayscale-[100%] hover:before:opacity-0 before:transition-opacity before:duration:700 hover:grayscale-0 before:left-0 before:top-0",
+                    },
+                    {
+                      icon: <Award className='size-4 text-purple-300' />,
+                      title: '10+ Years',
+                      description: 'Industry experience',
+                      date: 'Since 2014',
+                      iconClassName: 'text-purple-400',
+                      titleClassName: 'text-purple-400',
+                      className:
+                        '[grid-area:stack] translate-x-16 translate-y-12 hover:translate-y-8',
+                    },
+                  ]}
+                />
+              </div>
+            </motion.div>
+          </div>
         </div>
       </section>
 

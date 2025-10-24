@@ -2,7 +2,6 @@
  * Performance optimization utilities for animations and UI components
  */
 
-import { useReducedMotion } from './accessibility'
 import { getDeviceType } from './mobile-optimization'
 
 export interface PerformanceConfig {
@@ -19,14 +18,13 @@ export function getPerformanceConfig(
     deviceType?: 'mobile' | 'tablet' | 'desktop'
   } = {}
 ): PerformanceConfig {
-  const { reducedMotion, deviceType } = options
+  const { reducedMotion = false, deviceType } = options
 
-  const motionPreference = reducedMotion ?? useReducedMotion()
   const device = deviceType ?? getDeviceType()
 
   return {
-    enableAnimations: !motionPreference,
-    reduceComplexity: device === 'mobile' || motionPreference,
+    enableAnimations: !reducedMotion,
+    reduceComplexity: device === 'mobile' || reducedMotion,
     optimizeForMobile: device === 'mobile',
     maxFPS: device === 'mobile' ? 30 : 60,
     enableGPUAcceleration: true,

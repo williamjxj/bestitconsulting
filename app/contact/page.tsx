@@ -7,6 +7,7 @@ import { AnimatedForm } from '@/components/ui/animated-form'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
+import SphereImageGrid from '@/components/ui/image-sphere'
 import {
   Phone,
   Mail,
@@ -31,6 +32,94 @@ import {
   HeadphonesIcon,
 } from 'lucide-react'
 import Link from 'next/link'
+
+// High-quality images for the sphere component
+const BASE_IMAGES = [
+  {
+    src: 'https://res.cloudinary.com/dctgknnt7/image/upload/v1758731403/1_d8uozd.jpg',
+    alt: 'Web Development',
+    title: 'Web Development',
+    description: 'Modern web applications built with cutting-edge technologies',
+  },
+  {
+    src: 'https://res.cloudinary.com/dctgknnt7/image/upload/v1758731402/5_ionpyy.jpg',
+    alt: 'Mobile Apps',
+    title: 'Mobile Apps',
+    description: 'iOS and Android solutions for seamless user experiences',
+  },
+  {
+    src: 'https://res.cloudinary.com/dctgknnt7/image/upload/v1758731402/4_zeoqje.jpg',
+    alt: 'Cloud Solutions',
+    title: 'Cloud Solutions',
+    description: 'Scalable cloud infrastructure for modern businesses',
+  },
+  {
+    src: 'https://res.cloudinary.com/dctgknnt7/image/upload/v1758731402/2_hme6yu.jpg',
+    alt: 'AI & ML',
+    title: 'AI & ML',
+    description: 'Intelligent automation and machine learning solutions',
+  },
+  {
+    src: 'https://res.cloudinary.com/dctgknnt7/image/upload/v1758731402/3_nfdtim.jpg',
+    alt: 'DevOps',
+    title: 'DevOps',
+    description: 'Streamlined deployment and continuous integration',
+  },
+  {
+    src: 'https://res.cloudinary.com/dctgknnt7/image/upload/v1758823070/11_c9flg6.jpg',
+    alt: 'Consulting',
+    title: 'Consulting',
+    description: 'Strategic technology guidance and digital transformation',
+  },
+  {
+    src: 'https://res.cloudinary.com/dctgknnt7/image/upload/v1758823069/10_qujlpy.jpg',
+    alt: 'Data Analytics',
+    title: 'Data Analytics',
+    description: 'Advanced analytics and business intelligence solutions',
+  },
+  {
+    src: 'https://res.cloudinary.com/dctgknnt7/image/upload/v1758823070/8_hkn2jm.jpg',
+    alt: 'Cybersecurity',
+    title: 'Cybersecurity',
+    description: 'Enterprise-grade security solutions and protection',
+  },
+  {
+    src: 'https://res.cloudinary.com/dctgknnt7/image/upload/v1758823069/6_li3ger.jpg',
+    alt: 'IoT Solutions',
+    title: 'IoT Solutions',
+    description: 'Internet of Things integration and smart device connectivity',
+  },
+  {
+    src: 'https://res.cloudinary.com/dctgknnt7/image/upload/v1758823069/12_kitql2.jpg',
+    alt: 'Blockchain',
+    title: 'Blockchain',
+    description: 'Distributed ledger technology and cryptocurrency solutions',
+  },
+  {
+    src: 'https://res.cloudinary.com/dctgknnt7/image/upload/v1758823069/7_ojrozd.jpg',
+    alt: 'E-commerce',
+    title: 'E-commerce',
+    description: 'Online marketplace and digital commerce platforms',
+  },
+  {
+    src: 'https://res.cloudinary.com/dctgknnt7/image/upload/v1758823069/9_gkuidt.jpg',
+    alt: 'Digital Marketing',
+    title: 'Digital Marketing',
+    description: 'SEO, social media, and digital advertising solutions',
+  },
+]
+
+// Generate more images by repeating the base set for better sphere coverage
+const sampleImages = []
+for (let i = 0; i < 24; i++) {
+  const baseIndex = i % BASE_IMAGES.length
+  const baseImage = BASE_IMAGES[baseIndex]
+  sampleImages.push({
+    id: `img-${i + 1}`,
+    ...baseImage,
+    alt: `${baseImage.alt} (${Math.floor(i / BASE_IMAGES.length) + 1})`,
+  })
+}
 
 export default function ContactPage() {
   const formFields = [
@@ -87,74 +176,25 @@ export default function ContactPage() {
   ]
 
   const handleFormSubmit = async (data: Record<string, string>) => {
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 2000))
-    console.log('Form submitted:', data)
-  }
-
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    company: '',
-    phone: '',
-    service: '',
-    projectType: '',
-    budget: '',
-    timeline: '',
-    message: '',
-  })
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [submitStatus, setSubmitStatus] = useState<
-    'idle' | 'success' | 'error'
-  >('idle')
-
-  const handleChange = (
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >
-  ) => {
-    setFormData(prev => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }))
-  }
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsSubmitting(true)
-    setSubmitStatus('idle')
-
+    // Send form data to API
     try {
       const response = await fetch('/api/contact', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(data),
       })
 
-      if (response.ok) {
-        setSubmitStatus('success')
-        setFormData({
-          name: '',
-          email: '',
-          company: '',
-          phone: '',
-          service: '',
-          projectType: '',
-          budget: '',
-          timeline: '',
-          message: '',
-        })
-      } else {
-        setSubmitStatus('error')
+      if (!response.ok) {
+        throw new Error('Failed to submit form')
       }
-    } catch {
-      setSubmitStatus('error')
-    } finally {
-      setIsSubmitting(false)
+    } catch (error) {
+      throw new Error('Failed to submit form')
     }
   }
+
+  const [submitStatus] = useState<'idle' | 'success' | 'error'>('idle')
 
   const openGoogleMaps = (address: string, postal: string) => {
     const fullAddress = `${address}, ${postal}`
@@ -290,47 +330,69 @@ export default function ContactPage() {
           </div>
 
           <div className='container mx-auto px-4 relative z-10'>
-            <div className='max-w-4xl mx-auto text-center'>
-              <div className='inline-flex items-center gap-2 px-4 py-2 text-sm font-medium bg-blue-600/20 rounded-full mb-8 border border-blue-500/30'>
-                <MessageSquare className='h-4 w-4 text-cyan-300' />
-                <span>Free Consultation • Response within 24 hours</span>
+            <div className='grid lg:grid-cols-2 gap-8 items-center'>
+              <div className='text-center lg:text-left'>
+                <div className='inline-flex items-center gap-2 px-4 py-2 text-sm font-medium bg-blue-600/20 rounded-full mb-8 border border-blue-500/30'>
+                  <MessageSquare className='h-4 w-4 text-cyan-300' />
+                  <span>Free Consultation • Response within 24 hours</span>
+                </div>
+
+                <h1 className='text-5xl md:text-6xl lg:text-7xl font-bold leading-tight mb-8'>
+                  <span className='block'>Let's Start Your</span>
+                  <span className='block bg-clip-text text-transparent bg-gradient-to-r from-blue-300 via-cyan-300 to-purple-400'>
+                    Digital Journey
+                  </span>
+                </h1>
+
+                <p className='text-xl md:text-2xl text-blue-100/90 max-w-3xl mx-auto lg:mx-0 mb-12 leading-relaxed'>
+                  Ready to transform your business with cutting-edge technology?
+                  Our expert team is here to turn your vision into reality.
+                </p>
+
+                <div className='flex flex-col sm:flex-row gap-6 justify-center lg:justify-start items-center'>
+                  <Button
+                    size='lg'
+                    className='group text-lg px-8 py-4 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700'
+                    asChild
+                  >
+                    <Link href='#contact-form'>
+                      <Send className='mr-2 h-5 w-5' />
+                      Get Free Consultation
+                      <ArrowRight className='ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform' />
+                    </Link>
+                  </Button>
+                  <Button
+                    size='lg'
+                    variant='outline'
+                    className='text-lg px-8 py-4 bg-white/10 border-white/20 hover:bg-white/20'
+                    asChild
+                  >
+                    <Link href='#contact-methods'>
+                      <Phone className='mr-2 h-5 w-5' />
+                      Call Now
+                    </Link>
+                  </Button>
+                </div>
               </div>
 
-              <h1 className='text-5xl md:text-6xl lg:text-7xl font-bold leading-tight mb-8'>
-                <span className='block'>Let's Start Your</span>
-                <span className='block bg-clip-text text-transparent bg-gradient-to-r from-blue-300 via-cyan-300 to-purple-400'>
-                  Digital Journey
-                </span>
-              </h1>
-
-              <p className='text-xl md:text-2xl text-blue-100/90 max-w-3xl mx-auto mb-12 leading-relaxed'>
-                Ready to transform your business with cutting-edge technology?
-                Our expert team is here to turn your vision into reality.
-              </p>
-
-              <div className='flex flex-col sm:flex-row gap-6 justify-center items-center'>
-                <Button
-                  size='lg'
-                  className='group text-lg px-8 py-4 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700'
-                  asChild
-                >
-                  <Link href='#contact-form'>
-                    <Send className='mr-2 h-5 w-5' />
-                    Get Free Consultation
-                    <ArrowRight className='ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform' />
-                  </Link>
-                </Button>
-                <Button
-                  size='lg'
-                  variant='outline'
-                  className='text-lg px-8 py-4 bg-white/10 border-white/20 hover:bg-white/20'
-                  asChild
-                >
-                  <Link href='#contact-methods'>
-                    <Phone className='mr-2 h-5 w-5' />
-                    Call Now
-                  </Link>
-                </Button>
+              {/* Image Sphere as Background Element */}
+              <div className='hidden lg:flex justify-center items-center relative'>
+                <div className='relative w-80 h-80 flex items-center justify-center'>
+                  <SphereImageGrid
+                    images={sampleImages}
+                    containerSize={400}
+                    sphereRadius={150}
+                    autoRotate={true}
+                    autoRotateSpeed={0.3}
+                    dragSensitivity={0.8}
+                    momentumDecay={0.96}
+                    maxRotationSpeed={6}
+                    baseImageScale={0.12}
+                    hoverScale={1.3}
+                    perspective={1000}
+                    className='opacity-90'
+                  />
+                </div>
               </div>
             </div>
           </div>
@@ -474,208 +536,8 @@ export default function ContactPage() {
                     <AnimatedForm
                       fields={formFields}
                       onSubmit={handleFormSubmit}
-                      submitText="Send Message"
+                      submitText='Send Message'
                     />
-                          <label
-                            htmlFor='name'
-                            className='block text-sm font-bold text-gray-800 mb-2'
-                          >
-                            Full Name *
-                          </label>
-                          <input
-                            type='text'
-                            id='name'
-                            name='name'
-                            value={formData.name}
-                            onChange={handleChange}
-                            required
-                            className='w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300 hover:border-gray-300 bg-white shadow-sm'
-                            placeholder='John Doe'
-                          />
-                        </div>
-                        <div>
-                          <label
-                            htmlFor='email'
-                            className='block text-sm font-bold text-gray-800 mb-2'
-                          >
-                            Email Address *
-                          </label>
-                          <input
-                            type='email'
-                            id='email'
-                            name='email'
-                            value={formData.email}
-                            onChange={handleChange}
-                            required
-                            className='w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300 hover:border-gray-300 bg-white shadow-sm'
-                            placeholder='john@company.com'
-                          />
-                        </div>
-                      </div>
-
-                      <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
-                        <div>
-                          <label
-                            htmlFor='company'
-                            className='block text-sm font-bold text-gray-800 mb-2'
-                          >
-                            Company
-                          </label>
-                          <input
-                            type='text'
-                            id='company'
-                            name='company'
-                            value={formData.company}
-                            onChange={handleChange}
-                            className='w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300 hover:border-gray-300 bg-white shadow-sm'
-                            placeholder='Company Name'
-                          />
-                        </div>
-                        <div>
-                          <label
-                            htmlFor='phone'
-                            className='block text-sm font-bold text-gray-800 mb-2'
-                          >
-                            Phone Number
-                          </label>
-                          <input
-                            type='tel'
-                            id='phone'
-                            name='phone'
-                            value={formData.phone}
-                            onChange={handleChange}
-                            className='w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300 hover:border-gray-300 bg-white shadow-sm'
-                            placeholder='+1 (555) 123-4567'
-                          />
-                        </div>
-                      </div>
-
-                      <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
-                        <div>
-                          <label
-                            htmlFor='service'
-                            className='block text-sm font-bold text-gray-800 mb-2'
-                          >
-                            Service Interest
-                          </label>
-                          <select
-                            id='service'
-                            name='service'
-                            value={formData.service}
-                            onChange={handleChange}
-                            className='w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300 hover:border-gray-300 bg-white shadow-sm'
-                          >
-                            <option value=''>Select a service</option>
-                            <option value='web-development'>
-                              Web Development
-                            </option>
-                            <option value='mobile-apps'>
-                              Mobile App Development
-                            </option>
-                            <option value='cloud-migration'>
-                              Cloud Migration
-                            </option>
-                            <option value='ai-ml'>AI/ML Solutions</option>
-                            <option value='iot'>IoT Development</option>
-                            <option value='consulting'>
-                              Technology Consulting
-                            </option>
-                            <option value='maintenance'>
-                              Support & Maintenance
-                            </option>
-                            <option value='other'>Other</option>
-                          </select>
-                        </div>
-                        <div>
-                          <label
-                            htmlFor='budget'
-                            className='block text-sm font-bold text-gray-800 mb-2'
-                          >
-                            Project Budget
-                          </label>
-                          <select
-                            id='budget'
-                            name='budget'
-                            value={formData.budget}
-                            onChange={handleChange}
-                            className='w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300 hover:border-gray-300 bg-white shadow-sm'
-                          >
-                            <option value=''>Select budget range</option>
-                            <option value='under-25k'>Under $25K</option>
-                            <option value='25k-50k'>$25K - $50K</option>
-                            <option value='50k-100k'>$50K - $100K</option>
-                            <option value='100k-250k'>$100K - $250K</option>
-                            <option value='250k-plus'>$250K+</option>
-                            <option value='discuss'>Let's discuss</option>
-                          </select>
-                        </div>
-                      </div>
-
-                      <div>
-                        <label
-                          htmlFor='timeline'
-                          className='block text-sm font-bold text-gray-800 mb-2'
-                        >
-                          Project Timeline
-                        </label>
-                        <select
-                          id='timeline'
-                          name='timeline'
-                          value={formData.timeline}
-                          onChange={handleChange}
-                          className='w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300 hover:border-gray-300 bg-white shadow-sm'
-                        >
-                          <option value=''>Select timeline</option>
-                          <option value='asap'>ASAP (Rush project)</option>
-                          <option value='1-3-months'>1-3 months</option>
-                          <option value='3-6-months'>3-6 months</option>
-                          <option value='6-12-months'>6-12 months</option>
-                          <option value='12-plus-months'>12+ months</option>
-                          <option value='flexible'>Flexible</option>
-                        </select>
-                      </div>
-
-                      <div>
-                        <label
-                          htmlFor='message'
-                          className='block text-sm font-bold text-gray-800 mb-2'
-                        >
-                          Project Description *
-                        </label>
-                        <textarea
-                          id='message'
-                          name='message'
-                          value={formData.message}
-                          onChange={handleChange}
-                          required
-                          rows={6}
-                          className='w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300 hover:border-gray-300 bg-white shadow-sm resize-none'
-                          placeholder='Tell us about your project goals, requirements, and any specific challenges you&#39;re facing...'
-                        />
-                      </div>
-
-                      <Button
-                        type='submit'
-                        disabled={isSubmitting}
-                        className='w-full py-4 text-lg font-bold text-white bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 disabled:from-gray-400 disabled:to-gray-500 disabled:cursor-not-allowed transition-all duration-300 hover:shadow-xl hover:scale-[1.02] transform border-0 shadow-lg'
-                      >
-                        {isSubmitting ? (
-                          <>
-                            <div className='animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2'></div>
-                            <span className='text-white font-bold'>
-                              Sending Message...
-                            </span>
-                          </>
-                        ) : (
-                          <>
-                            <Send className='mr-2 h-5 w-5 text-white' />
-                            <span className='text-white font-bold'>
-                              Send Message
-                            </span>
-                          </>
-                        )}
-                      </Button>
-                    </form>
                   </CardContent>
                 </Card>
               </div>
