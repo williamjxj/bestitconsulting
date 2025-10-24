@@ -237,7 +237,7 @@ export function Footer() {
           viewport={{ once: true }}
         >
           <div className='text-gray-400 text-sm mb-4 lg:mb-0'>
-            © 2024 BestIT Consulting. All rights reserved.
+            © 2024 Best IT Consulting. All rights reserved.
           </div>
           <div className='flex items-center space-x-6 text-sm text-gray-400'>
             <Link

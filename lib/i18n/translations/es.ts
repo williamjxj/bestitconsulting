@@ -103,7 +103,7 @@ export const ES_TRANSLATIONS: Translations = {
     },
   },
   about: {
-    title: 'Acerca de BestIT Consulting',
+    title: 'Acerca de Best IT Consulting',
     subtitle: 'Su socio de confianza en transformación digital',
     description:
       'Somos un equipo de desarrolladores y consultores experimentados dedicados a ayudar a las empresas a aprovechar la tecnología para el crecimiento y el éxito.',
@@ -149,15 +149,15 @@ export const ES_TRANSLATIONS: Translations = {
     networkError: 'Error de red',
   },
   meta: {
-    siteTitle: 'BestIT Consulting - Servicios IT Profesionales',
+    siteTitle: 'Best IT Consulting - Servicios IT Profesionales',
     siteDescription:
       'Servicios profesionales de consultoría IT incluyendo desarrollo full-stack, soluciones en la nube y orientación tecnológica estratégica.',
-    homeTitle: 'Inicio - BestIT Consulting',
-    servicesTitle: 'Servicios - BestIT Consulting',
-    aboutTitle: 'Acerca de - BestIT Consulting',
-    portfolioTitle: 'Portafolio - BestIT Consulting',
-    testimonialsTitle: 'Testimonios - BestIT Consulting',
-    contactTitle: 'Contacto - BestIT Consulting',
+    homeTitle: 'Inicio - Best IT Consulting',
+    servicesTitle: 'Servicios - Best IT Consulting',
+    aboutTitle: 'Acerca de - Best IT Consulting',
+    portfolioTitle: 'Portafolio - Best IT Consulting',
+    testimonialsTitle: 'Testimonios - Best IT Consulting',
+    contactTitle: 'Contacto - Best IT Consulting',
   },
   home: {
     hero: {

@@ -38,21 +38,21 @@ import { Variants } from 'framer-motion'
 export const fadeInUp: Variants = {
   initial: { opacity: 0, y: 20 },
   animate: { opacity: 1, y: 0 },
-  exit: { opacity: 0, y: -20 }
+  exit: { opacity: 0, y: -20 },
 }
 
 export const staggerContainer: Variants = {
   animate: {
     transition: {
-      staggerChildren: 0.1
-    }
-  }
+      staggerChildren: 0.1,
+    },
+  },
 }
 
 export const scaleIn: Variants = {
   initial: { scale: 0.8, opacity: 0 },
   animate: { scale: 1, opacity: 1 },
-  exit: { scale: 0.8, opacity: 0 }
+  exit: { scale: 0.8, opacity: 0 },
 }
 ```
 
@@ -189,7 +189,7 @@ export function AnimatedHero() {
       <div className="container mx-auto px-4 text-center">
         <FadeIn delay={0.2}>
           <h1 className="text-4xl md:text-6xl font-bold mb-6">
-            BestIT Consulting
+            Best IT Consulting
           </h1>
         </FadeIn>
 
@@ -314,13 +314,13 @@ export function getAnimationConfig(reducedMotion: boolean) {
   if (reducedMotion) {
     return {
       duration: 0.1,
-      ease: 'linear'
+      ease: 'linear',
     }
   }
 
   return {
     duration: 0.6,
-    ease: 'easeOut'
+    ease: 'easeOut',
   }
 }
 ```
@@ -339,7 +339,7 @@ export function getMobileAnimationConfig() {
   return {
     duration: 0.3, // Shorter animations on mobile
     ease: 'easeOut',
-    stagger: 0.05 // Reduced stagger
+    stagger: 0.05, // Reduced stagger
   }
 }
 ```
@@ -412,7 +412,7 @@ Add to `app/layout.tsx`:
 import { PerformanceObserver } from 'web-vitals'
 
 if (typeof window !== 'undefined') {
-  new PerformanceObserver((list) => {
+  new PerformanceObserver(list => {
     for (const entry of list.getEntries()) {
       if (entry.entryType === 'measure') {
         console.log('Animation performance:', entry.name, entry.duration)

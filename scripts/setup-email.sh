@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "� BestIT Consulting Email Setup"
+echo "� Best IT Consulting Email Setup"
 echo "================================"
 echo ""
 

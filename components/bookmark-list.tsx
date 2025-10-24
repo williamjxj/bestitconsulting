@@ -87,8 +87,8 @@ const bookmarkData: BookmarkItem[] = [
   {
     id: 1007,
     name: 'Best IT Consulting',
-    url: 'https://bestitconsulting.vercel.app/',
-    description: 'IT consulting and services platform',
+    url: 'https://bestitconsulting.ca/',
+    description: 'Professional IT, AI consulting and services',
     category: 'Business',
     icon: Building2,
     status: 'active',
@@ -96,8 +96,8 @@ const bookmarkData: BookmarkItem[] = [
   {
     id: 1008,
     name: 'Best IT Consultants',
-    url: 'https://bestitconsultants.vercel.app/',
-    description: 'Professional IT consulting services',
+    url: 'https://bestitconsultants.ca/',
+    description: 'Professional IT, AI consulting and services',
     category: 'Business',
     icon: Building2,
     status: 'active',

@@ -8,7 +8,7 @@ Templates requiring updates: ✅ plan-template.md (Constitution Check section), 
 Follow-up TODOs: None
 -->
 
-# BestIT Consulting Constitution
+# Best IT Consulting Constitution
 
 ## Core Principles
 

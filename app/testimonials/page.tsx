@@ -37,7 +37,7 @@ export default function TestimonialsPage() {
       image: '/placeholder.svg',
       rating: 5,
       content:
-        'BestIT Consulting transformed our entire digital infrastructure. Their expertise in cloud migration saved us 60% on operational costs while improving our system reliability dramatically. The team was professional, responsive, and delivered beyond our expectations.',
+        'Best IT Consulting transformed our entire digital infrastructure. Their expertise in cloud migration saved us 60% on operational costs while improving our system reliability dramatically. The team was professional, responsive, and delivered beyond our expectations.',
       project: 'Cloud Migration & Infrastructure Modernization',
       results: [
         '60% cost reduction',
@@ -91,7 +91,7 @@ export default function TestimonialsPage() {
       image: '/placeholder.svg',
       rating: 5,
       content:
-        'The real-time analytics dashboard BestIT created has transformed how we make financial decisions. The insights we gain from their sophisticated data visualization platform have led to better investment strategies and risk management.',
+        'The real-time analytics dashboard BestITConsulting created has transformed how we make financial decisions. The insights we gain from their sophisticated data visualization platform have led to better investment strategies and risk management.',
       project: 'Financial Analytics Dashboard',
       results: [
         '70% faster insights',
@@ -246,7 +246,7 @@ export default function TestimonialsPage() {
               </h1>
 
               <p className='text-xl md:text-2xl text-blue-100/90 max-w-3xl mx-auto mb-12 leading-relaxed'>
-                Discover why hundreds of businesses trust BestIT Consulting to
+                Discover why hundreds of businesses trust Best IT Consulting to
                 deliver exceptional technology solutions and drive their digital
                 transformation success.
               </p>

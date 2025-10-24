@@ -103,7 +103,7 @@ export const EN_TRANSLATIONS: Translations = {
     },
   },
   about: {
-    title: 'About BestIT Consulting',
+    title: 'About Best IT Consulting',
     subtitle: 'Your trusted partner in digital transformation',
     description:
       'We are a team of experienced developers and consultants dedicated to helping businesses leverage technology for growth and success.',
@@ -149,15 +149,15 @@ export const EN_TRANSLATIONS: Translations = {
     networkError: 'Network error',
   },
   meta: {
-    siteTitle: 'BestIT Consulting - Professional IT Services',
+    siteTitle: 'Best IT Consulting - Professional IT Services',
     siteDescription:
       'Professional IT consulting services including full-stack development, cloud solutions, and strategic technology guidance.',
-    homeTitle: 'Home - BestIT Consulting',
-    servicesTitle: 'Services - BestIT Consulting',
-    aboutTitle: 'About Us - BestIT Consulting',
-    portfolioTitle: 'Portfolio - BestIT Consulting',
-    testimonialsTitle: 'Testimonials - BestIT Consulting',
-    contactTitle: 'Contact Us - BestIT Consulting',
+    homeTitle: 'Home - Best IT Consulting',
+    servicesTitle: 'Services - Best IT Consulting',
+    aboutTitle: 'About Us - Best IT Consulting',
+    portfolioTitle: 'Portfolio - Best IT Consulting',
+    testimonialsTitle: 'Testimonials - Best IT Consulting',
+    contactTitle: 'Contact Us - Best IT Consulting',
   },
   home: {
     hero: {

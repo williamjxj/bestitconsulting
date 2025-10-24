@@ -37,14 +37,14 @@ export async function POST(request: NextRequest) {
 
     // Send email to your business email
     const businessEmailResult = await resend.emails.send({
-      from: 'BestIT Consulting <onboarding@resend.dev>',
+      from: 'Best IT Consulting <onboarding@resend.dev>',
       to: [process.env.BUSINESS_EMAIL || 'contact@bestitconsulting.com'],
       subject: `New Contact Form Submission from ${name}`,
       html: `
         <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f8fafc;">
           <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; border-radius: 12px 12px 0 0; text-align: center;">
             <h1 style="color: white; margin: 0; font-size: 28px; font-weight: bold;">New Contact Form Submission</h1>
-            <p style="color: #e2e8f0; margin: 10px 0 0 0; font-size: 16px;">From BestIT Consulting Website</p>
+            <p style="color: #e2e8f0; margin: 10px 0 0 0; font-size: 16px;">From Best IT Consulting Website</p>
           </div>
 
           <div style="background: white; padding: 30px; border-radius: 0 0 12px 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);">
@@ -93,9 +93,9 @@ export async function POST(request: NextRequest) {
 
     // Send confirmation email to the customer
     const customerEmailResult = await resend.emails.send({
-      from: 'BestIT Consulting <onboarding@resend.dev>',
+      from: 'Best IT Consulting <onboarding@resend.dev>',
       to: [email],
-      subject: 'Thank you for contacting BestIT Consulting',
+      subject: 'Thank you for contacting Best IT Consulting',
       html: `
         <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f8fafc;">
           <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; border-radius: 12px 12px 0 0; text-align: center;">
@@ -109,7 +109,7 @@ export async function POST(request: NextRequest) {
             </p>
 
             <p style="color: #374151; font-size: 16px; line-height: 1.6; margin: 0 0 20px 0;">
-              Thank you for reaching out to BestIT Consulting! We've received your message and appreciate your interest in our services.
+              Thank you for reaching out to Best IT Consulting! We've received your message and appreciate your interest in our services.
             </p>
 
             <div style="background: #f0f9ff; border: 1px solid #0ea5e9; border-radius: 8px; padding: 20px; margin: 20px 0;">
@@ -153,7 +153,7 @@ export async function POST(request: NextRequest) {
             <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #e2e8f0; text-align: center;">
               <p style="color: #64748b; font-size: 14px; margin: 0;">
                 Best regards,<br>
-                <strong>The BestIT Consulting Team</strong>
+                <strong>The Best IT Consulting Team</strong>
               </p>
             </div>
           </div>

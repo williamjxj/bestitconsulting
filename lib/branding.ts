@@ -1,5 +1,5 @@
 /**
- * BestIT Consulting Branding System
+ * Best IT Consulting Branding System
  * Centralized brand configuration for consistent visual identity
  */
 

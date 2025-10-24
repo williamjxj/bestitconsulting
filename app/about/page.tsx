@@ -6,12 +6,13 @@ import { motion } from 'framer-motion'
 import { brandClasses } from '@/lib/branding'
 import { useReducedMotion } from '@/lib/accessibility'
 import { getDeviceType } from '@/lib/mobile-optimization'
+import { useEffect, useRef } from 'react'
+import { gsap } from 'gsap'
 import {
   Users,
   Award,
   Target,
   Globe,
-  Code2,
   Shield,
   CheckCircle,
   ArrowRight,
@@ -87,6 +88,69 @@ const stats = [
   { number: '24/7', label: 'Support Available', icon: Zap },
 ]
 
+// Component for animated headline with GSAP stagger
+const AnimatedHeadline = ({
+  text,
+  className,
+}: {
+  text: string
+  className?: string
+}) => {
+  const containerRef = useRef<HTMLDivElement>(null)
+  const reducedMotion = useReducedMotion()
+  const deviceType = getDeviceType()
+  const shouldAnimate = !reducedMotion && deviceType !== 'mobile'
+
+  useEffect(() => {
+    if (!shouldAnimate || !containerRef.current) return
+
+    const words = text.split(' ')
+    const chars = words.map(word => word.split(''))
+
+    // Create GSAP timeline
+    const tl = gsap.timeline()
+
+    // Animate each character
+    chars.forEach((wordChars, wordIndex) => {
+      wordChars.forEach((char, charIndex) => {
+        const charElement = containerRef.current?.querySelector(
+          `[data-char="${wordIndex}-${charIndex}"]`
+        )
+        if (charElement) {
+          tl.fromTo(
+            charElement,
+            { y: 50, opacity: 0 },
+            { y: 0, opacity: 1, duration: 0.6, ease: 'back.out(1.7)' },
+            wordIndex * 0.1 + charIndex * 0.05
+          )
+        }
+      })
+    })
+  }, [shouldAnimate, text])
+
+  if (!shouldAnimate) {
+    return <h1 className={className}>{text}</h1>
+  }
+
+  return (
+    <h1 className={className} ref={containerRef}>
+      {text.split(' ').map((word, wordIndex) => (
+        <div key={wordIndex} className='inline-block overflow-hidden mr-2'>
+          {word.split('').map((char, charIndex) => (
+            <span
+              key={`${wordIndex}-${charIndex}`}
+              data-char={`${wordIndex}-${charIndex}`}
+              className='inline-block'
+            >
+              {char === ' ' ? '\u00A0' : char}
+            </span>
+          ))}
+        </div>
+      ))}
+    </h1>
+  )
+}
+
 export default function AboutPage() {
   const reducedMotion = useReducedMotion()
   const deviceType = getDeviceType()
@@ -97,27 +161,31 @@ export default function AboutPage() {
       <Header />
 
       {/* Hero Section */}
-      <section className='pt-20 pb-16 lg:pt-32 lg:pb-24 bg-gradient-to-br from-blue-50 via-white to-indigo-50'>
-        <div className={brandClasses.container}>
+      <section className='relative overflow-hidden bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 text-white py-24 md:py-32'>
+        {/* Animated background elements */}
+        <div className='absolute inset-0'>
+          <div className='absolute -top-1/2 -right-1/2 w-full h-full bg-gradient-radial from-blue-500/20 to-transparent rounded-full animate-pulse-slow'></div>
+          <div className='absolute -bottom-1/2 -left-1/2 w-full h-full bg-gradient-radial from-cyan-400/15 to-transparent rounded-full animate-float'></div>
+        </div>
+
+        <div className='container mx-auto px-4 relative z-10'>
           <motion.div
             className='text-center max-w-4xl mx-auto'
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <motion.h1
-              className='text-4xl lg:text-6xl font-bold text-gray-900 mb-6'
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-            >
-              About{' '}
-              <span className='bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent'>
-                BestIT Consulting
-              </span>
-            </motion.h1>
+            <div className='inline-flex items-center gap-2 px-4 py-2 text-sm font-medium bg-blue-600/20 rounded-full mb-8 border border-blue-500/30'>
+              <span>About Us</span>
+            </div>
+            <div className='text-4xl lg:text-6xl font-bold mb-6'>
+              <AnimatedHeadline
+                text='About Best IT Consulting'
+                className='text-4xl lg:text-6xl font-bold text-white leading-tight'
+              />
+            </div>
             <motion.p
-              className='text-xl text-gray-600 mb-8 leading-relaxed'
+              className='text-xl text-blue-100/90 mb-8 leading-relaxed max-w-3xl mx-auto'
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
@@ -128,22 +196,22 @@ export default function AboutPage() {
               innovate, and succeed in the digital era.
             </motion.p>
             <motion.div
-              className='flex flex-col sm:flex-row gap-4 justify-center'
+              className='flex flex-col sm:flex-row gap-6 justify-center'
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
             >
               <Button
                 size='lg'
-                className='bg-blue-600 hover:bg-blue-700 text-white'
+                className='group text-lg px-8 py-4 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700'
               >
                 Our Services
-                <ArrowRight className='ml-2 h-4 w-4' />
+                <ArrowRight className='ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform' />
               </Button>
               <Button
                 variant='outline'
                 size='lg'
-                className='border-blue-600 text-blue-600 hover:bg-blue-50'
+                className='text-lg px-8 py-4 bg-white/10 border-white/20 hover:bg-white/20'
               >
                 View Portfolio
               </Button>

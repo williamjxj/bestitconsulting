@@ -7,7 +7,7 @@
 
 ## Summary
 
-Enhance the BestIT Consulting website UI with modern animations, visual effects, and interactive elements using framer-motion and other UI libraries to create an eye-catching, professional appearance that attracts software outsourcing clients. The implementation will focus on hero section animations, scroll-triggered effects, micro-interactions, and performance-optimized visual enhancements.
+Enhance the Best IT Consulting website UI with modern animations, visual effects, and interactive elements using framer-motion and other UI libraries to create an eye-catching, professional appearance that attracts software outsourcing clients. The implementation will focus on hero section animations, scroll-triggered effects, micro-interactions, and performance-optimized visual enhancements.
 
 ## Technical Context
 
@@ -47,6 +47,7 @@ specs/[###-feature]/
 ```
 
 ### Source Code (repository root)
+
 <!--
   ACTION REQUIRED: Replace the placeholder tree below with the concrete layout
   for this feature. Delete unused options and expand the chosen structure with
@@ -107,6 +108,7 @@ public/
 > **No Constitution Check violations detected**
 
 All requirements align with established constitution principles:
+
 - Modern Web Stack: Using Next.js 15.2.4, React 19, TypeScript 5
 - Component-First: All animations built as reusable React components
 - Internationalization: Maintains existing i18n framework

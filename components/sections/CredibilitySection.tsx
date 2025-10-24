@@ -31,7 +31,7 @@ interface CredibilitySectionProps {
 }
 
 export function CredibilitySection({
-  title = 'Why Choose BestIT Consulting',
+  title = 'Why Choose Best IT Consulting',
   description = "Our track record speaks for itself. Here's what sets us apart in the competitive software development landscape.",
   className,
 }: CredibilitySectionProps) {

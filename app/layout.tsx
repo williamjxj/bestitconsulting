@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
-  title: 'BestIT Consulting',
+  title: 'Best IT Consulting',
   description:
     'We provide top-notch IT consulting services to help your business thrive.',
 }

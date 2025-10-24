@@ -1,6 +1,6 @@
 # Animation Assets
 
-This directory contains all animation-related assets for the BestIT Consulting website.
+This directory contains all animation-related assets for the Best IT Consulting website.
 
 ## Directory Structure
 
@@ -37,7 +37,6 @@ Example:
 
 ```tsx
 import Image from 'next/image'
-
 ;<Image
   src='/animations/backgrounds/hero-bg.webp'
   alt='Hero background'
