@@ -1,18 +1,18 @@
+'use client'
 import Link from 'next/link'
-import Image from 'next/image'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { PortfolioSection } from '@/components/sections/PortfolioSection'
 import Layout from '@/components/Layout'
 import { ScrollTrigger } from '@/components/animations/ScrollTrigger'
-import { FadeIn } from '@/components/animations/FadeIn'
-import { SlideIn } from '@/components/animations/SlideIn'
 import { ScaleIn } from '@/components/animations/ScaleIn'
 import { AnimatedCounter } from '@/components/animations/AnimatedCounter'
+import { useEffect, useRef } from 'react'
+import { gsap } from 'gsap'
+import { useReducedMotion } from '@/lib/accessibility'
+import { getDeviceType } from '@/lib/mobile-optimization'
+import './animations.css'
 import {
-  ExternalLink,
-  Github,
   Rocket,
   TrendingUp,
   Users,
@@ -20,228 +20,79 @@ import {
   ArrowRight,
   CheckCircle,
   Globe,
-  Smartphone,
   Monitor,
   Database,
   Cloud,
-  Shield,
-  Zap,
 } from 'lucide-react'
 
-export default function PortfolioPage() {
-  const projects = [
-    {
-      id: 1,
-      title: 'E-Commerce Platform',
-      client: 'Online Retail Chain',
-      description:
-        'A comprehensive e-commerce solution with advanced inventory management, payment processing, and real-time analytics. Built for scalability to handle millions of transactions.',
-      image: '/placeholder.svg',
-      technologies: [
-        'Next.js',
-        'TypeScript',
-        'Node.js',
-        'PostgreSQL',
-        'Stripe',
-        'Redis',
-        'AWS',
-      ],
-      category: 'Web Application',
-      industry: 'Retail',
-      results: [
-        '40% increase in conversion rates',
-        '60% improvement in page load speed',
-        '500K+ users served monthly',
-        '99.9% uptime achieved',
-      ],
-      features: [
-        'Multi-vendor marketplace',
-        'Real-time inventory tracking',
-        'Advanced search & filtering',
-        'Mobile-responsive design',
-        'Integrated payment gateway',
-        'Admin dashboard with analytics',
-      ],
-      icon: <Monitor className='h-6 w-6' />,
-      gradient: 'from-blue-500 to-cyan-500',
-    },
-    {
-      id: 2,
-      title: 'Healthcare Management System',
-      client: 'Regional Healthcare Provider',
-      description:
-        'HIPAA-compliant patient management system with appointment scheduling, electronic health records, and telemedicine capabilities.',
-      image: '/placeholder.svg',
-      technologies: [
-        'React',
-        'Node.js',
-        'Express',
-        'MongoDB',
-        'Socket.io',
-        'Docker',
-        'Azure',
-      ],
-      category: 'Healthcare Software',
-      industry: 'Healthcare',
-      results: [
-        '30% reduction in appointment no-shows',
-        '50% faster patient check-in process',
-        '25% increase in patient satisfaction',
-        '100% HIPAA compliance achieved',
-      ],
-      features: [
-        'Patient portal with secure messaging',
-        'Telemedicine video consultations',
-        'Electronic health records (EHR)',
-        'Appointment scheduling system',
-        'Prescription management',
-        'Insurance claim processing',
-      ],
-      icon: <Shield className='h-6 w-6' />,
-      gradient: 'from-green-500 to-emerald-500',
-    },
-    {
-      id: 3,
-      title: 'Financial Analytics Dashboard',
-      client: 'Investment Firm',
-      description:
-        'Real-time financial data visualization platform with advanced analytics, portfolio tracking, and automated reporting capabilities.',
-      image: '/placeholder.svg',
-      technologies: [
-        'Vue.js',
-        'Python',
-        'Django',
-        'PostgreSQL',
-        'Redis',
-        'D3.js',
-        'AWS',
-      ],
-      category: 'Data Visualization',
-      industry: 'Finance',
-      results: [
-        '70% faster data processing',
-        '90% reduction in report generation time',
-        '45% improvement in decision-making speed',
-        '$2M+ in cost savings annually',
-      ],
-      features: [
-        'Real-time market data integration',
-        'Interactive charts and graphs',
-        'Portfolio performance tracking',
-        'Risk assessment algorithms',
-        'Automated compliance reporting',
-        'Multi-currency support',
-      ],
-      icon: <TrendingUp className='h-6 w-6' />,
-      gradient: 'from-purple-500 to-pink-500',
-    },
-    {
-      id: 4,
-      title: 'IoT Fleet Management',
-      client: 'Logistics Company',
-      description:
-        'IoT-powered fleet management system with real-time vehicle tracking, predictive maintenance, and route optimization.',
-      image: '/placeholder.svg',
-      technologies: [
-        'React Native',
-        'Node.js',
-        'IoT Sensors',
-        'MongoDB',
-        'GraphQL',
-        'AWS IoT',
-        'Machine Learning',
-      ],
-      category: 'IoT Application',
-      industry: 'Transportation',
-      results: [
-        '35% reduction in fuel costs',
-        '50% decrease in maintenance expenses',
-        '25% improvement in delivery times',
-        '99.5% vehicle uptime achieved',
-      ],
-      features: [
-        'Real-time GPS tracking',
-        'Predictive maintenance alerts',
-        'Route optimization algorithms',
-        'Driver behavior monitoring',
-        'Fuel consumption analytics',
-        'Mobile driver app',
-      ],
-      icon: <Smartphone className='h-6 w-6' />,
-      gradient: 'from-orange-500 to-red-500',
-    },
-    {
-      id: 5,
-      title: 'Cloud Migration Platform',
-      client: 'Manufacturing Enterprise',
-      description:
-        'Enterprise-grade cloud migration platform with automated workload assessment, migration planning, and monitoring.',
-      image: '/placeholder.svg',
-      technologies: [
-        'Angular',
-        'Spring Boot',
-        'Java',
-        'MySQL',
-        'Kubernetes',
-        'Docker',
-        'Google Cloud',
-      ],
-      category: 'Cloud Platform',
-      industry: 'Manufacturing',
-      results: [
-        '60% reduction in infrastructure costs',
-        '80% improvement in system reliability',
-        '40% faster deployment cycles',
-        'Zero-downtime migration achieved',
-      ],
-      features: [
-        'Automated workload discovery',
-        'Migration planning dashboard',
-        'Cost optimization recommendations',
-        'Security compliance monitoring',
-        'Performance analytics',
-        'Multi-cloud support',
-      ],
-      icon: <Cloud className='h-6 w-6' />,
-      gradient: 'from-indigo-500 to-blue-500',
-    },
-    {
-      id: 6,
-      title: 'AI-Powered Customer Service',
-      client: 'Telecommunications Company',
-      description:
-        'Intelligent customer service platform with AI chatbots, sentiment analysis, and automated ticket routing.',
-      image: '/placeholder.svg',
-      technologies: [
-        'Next.js',
-        'Python',
-        'TensorFlow',
-        'Natural Language Processing',
-        'Redis',
-        'PostgreSQL',
-        'AWS',
-      ],
-      category: 'AI Application',
-      industry: 'Telecommunications',
-      results: [
-        '75% reduction in response time',
-        '50% decrease in support tickets',
-        '90% customer satisfaction rate',
-        '24/7 automated support coverage',
-      ],
-      features: [
-        'AI-powered chatbot',
-        'Sentiment analysis',
-        'Automated ticket routing',
-        'Knowledge base integration',
-        'Multi-language support',
-        'Performance analytics dashboard',
-      ],
-      icon: <Zap className='h-6 w-6' />,
-      gradient: 'from-yellow-500 to-orange-500',
-    },
-  ]
+// Component for animated headline with GSAP stagger
+const AnimatedHeadline = ({
+  text,
+  className,
+}: {
+  text: string
+  className?: string
+}) => {
+  const containerRef = useRef<HTMLDivElement>(null)
+  const reducedMotion = useReducedMotion()
+  const deviceType = getDeviceType()
+  const shouldAnimate = !reducedMotion && deviceType !== 'mobile'
 
+  useEffect(() => {
+    if (!shouldAnimate || !containerRef.current) return
+
+    const words = text.split(' ')
+    const chars = words.map(word => word.split(''))
+
+    // Create GSAP timeline
+    const tl = gsap.timeline()
+
+    // Animate each character
+    chars.forEach((wordChars, wordIndex) => {
+      wordChars.forEach((char, charIndex) => {
+        const charElement = containerRef.current?.querySelector(
+          `[data-char="${wordIndex}-${charIndex}"]`
+        )
+        if (charElement) {
+          tl.fromTo(
+            charElement,
+            { y: 50, opacity: 0 },
+            { y: 0, opacity: 1, duration: 0.6, ease: 'back.out(1.7)' },
+            wordIndex * 0.1 + charIndex * 0.05
+          )
+        }
+      })
+    })
+  }, [shouldAnimate, text])
+
+  if (!shouldAnimate) {
+    return <div className={className}>{text}</div>
+  }
+
+  return (
+    <div className={className} ref={containerRef}>
+      {text.split(' ').map((word, wordIndex) => (
+        <div key={wordIndex} className='inline-block overflow-hidden mr-2'>
+          {word.split('').map((char, charIndex) => (
+            <span
+              key={`${wordIndex}-${charIndex}`}
+              data-char={`${wordIndex}-${charIndex}`}
+              className={`inline-block ${
+                wordIndex === 0
+                  ? 'text-white'
+                  : 'bg-clip-text text-transparent bg-gradient-to-r from-blue-300 via-cyan-300 to-purple-400 bg-[length:200%_100%] animate-text-shimmer'
+              }`}
+            >
+              {char === ' ' ? '\u00A0' : char}
+            </span>
+          ))}
+        </div>
+      ))}
+    </div>
+  )
+}
+
+export default function PortfolioPage() {
   return (
     <Layout>
       <div className='min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50'>
@@ -249,31 +100,63 @@ export default function PortfolioPage() {
         <section className='relative overflow-hidden bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 text-white py-24 md:py-32'>
           {/* Animated background elements */}
           <div className='absolute inset-0'>
-            <div className='absolute -top-1/2 -right-1/2 w-full h-full bg-gradient-radial from-blue-500/20 to-transparent rounded-full animate-pulse-slow'></div>
+            {/* Main gradient background with shifting animation */}
+            <div className='absolute inset-0 bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 bg-[length:200%_200%] animate-gradient-shift'></div>
+
+            {/* Floating orbs with different animations */}
+            <div className='absolute -top-1/2 -right-1/2 w-full h-full bg-gradient-radial from-blue-500/20 to-transparent rounded-full animate-ambient-pulse'></div>
             <div className='absolute -bottom-1/2 -left-1/2 w-full h-full bg-gradient-radial from-cyan-400/15 to-transparent rounded-full animate-float'></div>
+
+            {/* Additional floating particles */}
+            <div className='absolute top-1/4 left-1/4 w-32 h-32 bg-gradient-radial from-purple-400/10 to-transparent rounded-full animate-particle-float parallax-float'></div>
+            <div
+              className='absolute top-3/4 right-1/3 w-24 h-24 bg-gradient-radial from-cyan-300/15 to-transparent rounded-full animate-particle-float gentle-rotate'
+              style={{ animationDelay: '2s' }}
+            ></div>
+            <div
+              className='absolute bottom-1/4 left-1/3 w-40 h-40 bg-gradient-radial from-blue-400/10 to-transparent rounded-full animate-particle-float breathe'
+              style={{ animationDelay: '4s' }}
+            ></div>
+
+            {/* Subtle wave animation */}
+            <div className='absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-blue-500/5 to-transparent animate-wave'></div>
+
+            {/* Glowing accent elements */}
+            <div className='absolute top-1/2 left-1/2 w-2 h-2 bg-cyan-400 rounded-full animate-glow soft-glow'></div>
+            <div
+              className='absolute top-1/3 right-1/4 w-1 h-1 bg-blue-300 rounded-full animate-glow gentle-rotate'
+              style={{ animationDelay: '1s' }}
+            ></div>
+            <div
+              className='absolute bottom-1/3 left-1/4 w-1.5 h-1.5 bg-purple-300 rounded-full animate-glow breathe'
+              style={{ animationDelay: '2s' }}
+            ></div>
           </div>
 
           <div className='container mx-auto px-4 relative z-10'>
             <div className='max-w-4xl mx-auto text-center'>
-              <div className='inline-flex items-center gap-2 px-4 py-2 text-sm font-medium bg-blue-600/20 rounded-full mb-8 border border-blue-500/30'>
-                <Rocket className='h-4 w-4 text-cyan-300' />
+              <div className='inline-flex items-center gap-2 px-4 py-2 text-sm font-medium bg-blue-600/20 rounded-full mb-8 border border-blue-500/30 animate-fade-in backdrop-blur-sm'>
+                <Rocket className='h-4 w-4 text-cyan-300 animate-float' />
                 <span>500+ Successful Projects • Award-Winning Solutions</span>
               </div>
 
               <h1 className='text-5xl md:text-6xl lg:text-7xl font-bold leading-tight mb-8'>
-                <span className='block'>Our</span>
-                <span className='block bg-clip-text text-transparent bg-gradient-to-r from-blue-300 via-cyan-300 to-purple-400'>
-                  Portfolio
-                </span>
+                <AnimatedHeadline
+                  text='Our Portfolio'
+                  className='text-5xl md:text-6xl lg:text-7xl font-bold leading-tight'
+                />
               </h1>
 
-              <p className='text-xl md:text-2xl text-blue-100/90 max-w-3xl mx-auto mb-12 leading-relaxed'>
+              <p className='text-xl md:text-2xl text-blue-100/90 max-w-3xl mx-auto mb-12 leading-relaxed animate-slide-up'>
                 Explore our collection of successful projects that have
                 transformed businesses and delivered measurable results across
                 various industries.
               </p>
 
-              <div className='flex flex-col sm:flex-row gap-6 justify-center items-center'>
+              <div
+                className='flex flex-col sm:flex-row gap-6 justify-center items-center animate-fade-in'
+                style={{ animationDelay: '0.5s' }}
+              >
                 <Button
                   size='lg'
                   className='group text-lg px-8 py-4 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700'
@@ -351,7 +234,10 @@ export default function PortfolioPage() {
                           duration={2}
                           delay={0.4 + index * 0.2}
                           suffix={stat.suffix}
-                        />
+                        >
+                          {stat.number}
+                          {stat.suffix}
+                        </AnimatedCounter>
                       </div>
                       <div className='text-gray-600 font-medium'>
                         {stat.label}

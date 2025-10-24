@@ -1,0 +1,108 @@
+/* Portfolio Hero Section Animations */
+
+/* Subtle parallax effect for background elements */
+@keyframes parallaxFloat {
+  0%,
+  100% {
+    transform: translateY(0px) translateX(0px);
+  }
+  25% {
+    transform: translateY(-10px) translateX(5px);
+  }
+  50% {
+    transform: translateY(-20px) translateX(-5px);
+  }
+  75% {
+    transform: translateY(-10px) translateX(-10px);
+  }
+}
+
+/* Gentle breathing animation for ambient elements */
+@keyframes breathe {
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(1.02);
+  }
+}
+
+/* Subtle rotation for floating elements */
+@keyframes gentleRotate {
+  0% {
+    transform: rotate(0deg) translateY(0px);
+  }
+  100% {
+    transform: rotate(360deg) translateY(-10px);
+  }
+}
+
+/* Soft glow pulse for accent elements */
+@keyframes softGlow {
+  0%,
+  100% {
+    box-shadow: 0 0 10px rgba(59, 130, 246, 0.2);
+  }
+  50% {
+    box-shadow:
+      0 0 20px rgba(59, 130, 246, 0.4),
+      0 0 30px rgba(59, 130, 246, 0.2);
+  }
+}
+
+/* Text reveal animation */
+@keyframes textReveal {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Gradient shimmer for text */
+@keyframes gradientShimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Apply custom animations */
+.parallax-float {
+  animation: parallaxFloat 8s ease-in-out infinite;
+}
+
+.breathe {
+  animation: breathe 6s ease-in-out infinite;
+}
+
+.gentle-rotate {
+  animation: gentleRotate 12s linear infinite;
+}
+
+.soft-glow {
+  animation: softGlow 4s ease-in-out infinite;
+}
+
+.text-reveal {
+  animation: textReveal 0.8s ease-out forwards;
+}
+
+.gradient-shimmer {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  background-size: 200% 100%;
+  animation: gradientShimmer 3s ease-in-out infinite;
+}

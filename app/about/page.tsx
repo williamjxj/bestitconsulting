@@ -130,25 +130,29 @@ const AnimatedHeadline = ({
   }, [shouldAnimate, text])
 
   if (!shouldAnimate) {
-    return <h1 className={className}>{text}</h1>
+    return <div className={className}>{text}</div>
   }
 
   return (
-    <h1 className={className} ref={containerRef}>
+    <div className={className} ref={containerRef}>
       {text.split(' ').map((word, wordIndex) => (
         <div key={wordIndex} className='inline-block overflow-hidden mr-2'>
           {word.split('').map((char, charIndex) => (
             <span
               key={`${wordIndex}-${charIndex}`}
               data-char={`${wordIndex}-${charIndex}`}
-              className='inline-block'
+              className={`inline-block ${
+                wordIndex === 0
+                  ? 'text-white'
+                  : 'bg-clip-text text-transparent bg-gradient-to-r from-blue-300 via-cyan-300 to-purple-400 bg-[length:200%_100%] animate-text-shimmer'
+              }`}
             >
               {char === ' ' ? '\u00A0' : char}
             </span>
           ))}
         </div>
       ))}
-    </h1>
+    </div>
   )
 }
 
@@ -180,12 +184,12 @@ export default function AboutPage() {
               <div className='inline-flex items-center gap-2 px-4 py-2 text-sm font-medium bg-blue-600/20 rounded-full mb-8 border border-blue-500/30'>
                 <span>About Us</span>
               </div>
-              <div className='text-4xl lg:text-6xl font-bold mb-6'>
+              <h1 className='text-4xl lg:text-6xl font-bold mb-6'>
                 <AnimatedHeadline
                   text='About Best IT Consulting'
-                  className='text-4xl lg:text-6xl font-bold text-white leading-tight'
+                  className='text-4xl lg:text-6xl font-bold leading-tight'
                 />
-              </div>
+              </h1>
               <motion.p
                 className='text-xl text-blue-100/90 mb-8 leading-relaxed max-w-3xl mx-auto'
                 initial={{ opacity: 0, y: 20 }}

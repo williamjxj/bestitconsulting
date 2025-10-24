@@ -25,6 +25,6 @@
   <text x="400" y="420" font-family="Arial, sans-serif" font-size="24" text-anchor="middle" fill="#888888">Image Placeholder</text>
   <text x="400" y="450" font-family="Arial, sans-serif" font-size="16" text-anchor="middle" fill="#888888">800 × 600</text>
 
-  <!-- Best IT Consulting watermark -->
-  <text x="400" y="560" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#a0a0a0">Best IT Consulting</text>
+  <!-- BestIT Consulting watermark -->
+  <text x="400" y="560" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#a0a0a0">BestIT Consulting</text>
 </svg>

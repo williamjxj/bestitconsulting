@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Button } from '@/components/ui/button'
@@ -71,18 +72,25 @@ export function Header() {
       <div className={brandClasses.container}>
         <div className='flex items-center justify-between h-16 lg:h-20'>
           {/* Logo */}
-          <Link href='/' className='flex items-center space-x-2 group'>
+          <Link href='/' className='flex items-center space-x-3 group'>
             <motion.div
               className='relative'
               whileHover={shouldAnimate ? { scale: 1.05 } : undefined}
               transition={{ duration: 0.2 }}
             >
-              <div className='w-10 h-10 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-lg flex items-center justify-center'>
-                <Code2 className='h-6 w-6 text-white' />
+              <div className='w-10 h-10 relative'>
+                <Image
+                  src='/bitc-logo.png'
+                  alt='BestIT Consulting Logo'
+                  width={40}
+                  height={40}
+                  className='w-full h-full object-contain'
+                  priority
+                />
               </div>
               {shouldAnimate && (
                 <motion.div
-                  className='absolute inset-0 bg-gradient-to-br from-blue-400 to-indigo-400 rounded-lg opacity-0 group-hover:opacity-100'
+                  className='absolute inset-0 bg-gradient-to-br from-blue-400 to-indigo-400 rounded-lg opacity-0 group-hover:opacity-20'
                   transition={{ duration: 0.2 }}
                 />
               )}
