@@ -35,7 +35,9 @@ _GATE: Must pass before Phase 0 research. Re-check after Phase 1 design._
 **Component-First**: All UI elements MUST be React components with TypeScript
 **Internationalization**: All user-facing content MUST support i18n framework
 **Quality Standards**: Code MUST pass ESLint 9, Prettier, TypeScript strict mode
-**Performance & Accessibility**: Components MUST be accessible with ARIA attributes
+**Performance & Accessibility**: Components MUST be accessible with ARIA attributes and respect prefers-reduced-motion
+**Animation & Visual Effects**: All animations MUST use Framer Motion/GSAP with accessibility support
+**Mobile Optimization**: All components MUST be optimized for mobile devices and touch interactions
 **Developer Experience**: MUST use Turbopack and established tooling patterns
 
 ## Project Structure
@@ -53,6 +55,7 @@ specs/[###-feature]/
 ```
 
 ### Source Code (repository root)
+
 <!--
   ACTION REQUIRED: Replace the placeholder tree below with the concrete layout
   for this feature. Delete unused options and expand the chosen structure with
@@ -103,7 +106,7 @@ directories captured above]
 
 > **Fill ONLY if Constitution Check has violations that must be justified**
 
-| Violation | Why Needed | Simpler Alternative Rejected Because |
-|-----------|------------|-------------------------------------|
-| [e.g., 4th project] | [current need] | [why 3 projects insufficient] |
-| [e.g., Repository pattern] | [specific problem] | [why direct DB access insufficient] |
+| Violation                  | Why Needed         | Simpler Alternative Rejected Because |
+| -------------------------- | ------------------ | ------------------------------------ |
+| [e.g., 4th project]        | [current need]     | [why 3 projects insufficient]        |
+| [e.g., Repository pattern] | [specific problem] | [why direct DB access insufficient]  |

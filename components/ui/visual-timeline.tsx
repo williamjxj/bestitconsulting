@@ -6,14 +6,45 @@ import { getDeviceType } from '@/lib/mobile-optimization'
 import { ScrollTrigger } from '@/components/animations/ScrollTrigger'
 import { FadeIn, SlideIn } from '@/components/animations'
 import { cn } from '@/lib/utils'
+import {
+  Rocket,
+  Target,
+  Globe,
+  Code2,
+  Award,
+  Users,
+  Shield,
+  Heart,
+  Lightbulb,
+  CheckCircle,
+  ArrowRight,
+  Database,
+  Cloud,
+} from 'lucide-react'
 
 interface TimelineItem {
   year: string
   title: string
   description: string
-  icon: React.ComponentType<any>
+  icon: string
   color: string
   gradient: string
+}
+
+const iconMap = {
+  Rocket,
+  Target,
+  Globe,
+  Code2,
+  Award,
+  Users,
+  Shield,
+  Heart,
+  Lightbulb,
+  CheckCircle,
+  ArrowRight,
+  Database,
+  Cloud,
 }
 
 interface VisualTimelineProps {
@@ -53,7 +84,13 @@ export function VisualTimeline({ items, className }: VisualTimelineProps) {
                   whileHover={shouldAnimate ? { scale: 1.1 } : undefined}
                   transition={{ duration: 0.2 }}
                 >
-                  <item.icon className='h-8 w-8 text-white' />
+                  {(() => {
+                    const IconComponent =
+                      iconMap[item.icon as keyof typeof iconMap]
+                    return IconComponent ? (
+                      <IconComponent className='h-8 w-8 text-white' />
+                    ) : null
+                  })()}
                 </motion.div>
                 {shouldAnimate && (
                   <motion.div
