@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import Layout from '@/components/Layout'
 import SmartGoogleMap from '@/components/SmartGoogleMap'
+import { AnimatedForm } from '@/components/ui/animated-form'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
@@ -32,6 +33,65 @@ import {
 import Link from 'next/link'
 
 export default function ContactPage() {
+  const formFields = [
+    {
+      name: 'name',
+      label: 'Full Name',
+      type: 'text' as const,
+      placeholder: 'Enter your full name',
+      required: true,
+    },
+    {
+      name: 'email',
+      label: 'Email Address',
+      type: 'email' as const,
+      placeholder: 'Enter your email address',
+      required: true,
+    },
+    {
+      name: 'phone',
+      label: 'Phone Number',
+      type: 'tel' as const,
+      placeholder: 'Enter your phone number',
+      required: false,
+    },
+    {
+      name: 'company',
+      label: 'Company',
+      type: 'text' as const,
+      placeholder: 'Enter your company name',
+      required: false,
+    },
+    {
+      name: 'service',
+      label: 'Service Interest',
+      type: 'select' as const,
+      placeholder: 'Select a service',
+      required: true,
+      options: [
+        { value: 'web-development', label: 'Web Development' },
+        { value: 'mobile-apps', label: 'Mobile Apps' },
+        { value: 'cloud-solutions', label: 'Cloud Solutions' },
+        { value: 'ai-ml', label: 'AI & Machine Learning' },
+        { value: 'devops', label: 'DevOps' },
+        { value: 'consulting', label: 'Consulting' },
+      ],
+    },
+    {
+      name: 'message',
+      label: 'Message',
+      type: 'textarea' as const,
+      placeholder: 'Tell us about your project requirements...',
+      required: true,
+    },
+  ]
+
+  const handleFormSubmit = async (data: Record<string, string>) => {
+    // Simulate API call
+    await new Promise(resolve => setTimeout(resolve, 2000))
+    console.log('Form submitted:', data)
+  }
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -411,9 +471,11 @@ export default function ContactPage() {
                       </div>
                     )}
 
-                    <form onSubmit={handleSubmit} className='space-y-6'>
-                      <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
-                        <div>
+                    <AnimatedForm
+                      fields={formFields}
+                      onSubmit={handleFormSubmit}
+                      submitText="Send Message"
+                    />
                           <label
                             htmlFor='name'
                             className='block text-sm font-bold text-gray-800 mb-2'

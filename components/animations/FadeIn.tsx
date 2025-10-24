@@ -1,0 +1,145 @@
+/**
+ * FadeIn animation wrapper component
+ * Provides consistent fade-in animation behavior across the application
+ */
+
+'use client'
+
+import { motion, Variants } from 'framer-motion'
+import { ReactNode, forwardRef } from 'react'
+import { useReducedMotion } from '@/lib/accessibility'
+import {
+  getMobileOptimizedVariants,
+  getDeviceType,
+} from '@/lib/mobile-optimization'
+import { fadeInUp } from '@/lib/framer-variants'
+
+interface FadeInProps {
+  children: ReactNode
+  delay?: number
+  duration?: number
+  direction?: 'up' | 'down' | 'left' | 'right' | 'none'
+  stagger?: number
+  threshold?: number
+  className?: string
+  as?: keyof JSX.IntrinsicElements
+  once?: boolean
+  amount?: number
+  fallback?: ReactNode
+}
+
+export const FadeIn = forwardRef<HTMLElement, FadeInProps>(
+  (
+    {
+      children,
+      delay = 0,
+      duration = 0.6,
+      direction = 'up',
+      stagger = 0,
+      threshold = 0.1,
+      className = '',
+      as = 'div',
+      once = true,
+      amount = 0.1,
+      fallback,
+    },
+    ref
+  ) => {
+    const reducedMotion = useReducedMotion()
+    const deviceType = getDeviceType()
+
+    // Get direction-specific variants
+    const getDirectionVariants = (dir: string): Variants => {
+      switch (dir) {
+        case 'up':
+          return fadeInUp
+        case 'down':
+          return {
+            initial: { opacity: 0, y: -20 },
+            animate: { opacity: 1, y: 0 },
+            exit: { opacity: 0, y: 20 },
+          }
+        case 'left':
+          return {
+            initial: { opacity: 0, x: -20 },
+            animate: { opacity: 1, x: 0 },
+            exit: { opacity: 0, x: 20 },
+          }
+        case 'right':
+          return {
+            initial: { opacity: 0, x: 20 },
+            animate: { opacity: 1, x: 0 },
+            exit: { opacity: 0, x: -20 },
+          }
+        case 'none':
+        default:
+          return {
+            initial: { opacity: 0 },
+            animate: { opacity: 1 },
+            exit: { opacity: 0 },
+          }
+      }
+    }
+
+    const baseVariants = getDirectionVariants(direction)
+
+    // Apply mobile optimization
+    const optimizedVariants = getMobileOptimizedVariants(
+      baseVariants,
+      deviceType
+    )
+
+    // Apply reduced motion optimization
+    const finalVariants = reducedMotion
+      ? {
+          ...optimizedVariants,
+          animate: {
+            ...optimizedVariants.animate,
+            transition: {
+              duration: 0.1,
+              ease: 'linear',
+            },
+          },
+        }
+      : optimizedVariants
+
+    // If reduced motion and fallback is provided, show fallback
+    if (reducedMotion && fallback) {
+      return <>{fallback}</>
+    }
+
+    const MotionComponent = motion[as] as any
+
+    return (
+      <MotionComponent
+        ref={ref}
+        variants={finalVariants}
+        initial='initial'
+        animate='animate'
+        exit='exit'
+        transition={{
+          duration: reducedMotion ? 0.1 : duration,
+          delay: reducedMotion ? 0 : delay,
+          ease: reducedMotion ? 'linear' : 'easeOut',
+          staggerChildren: stagger,
+        }}
+        whileInView={{
+          opacity: 1,
+          y: 0,
+          x: 0,
+        }}
+        viewport={{
+          once,
+          amount,
+          margin: '0px 0px -50px 0px',
+        }}
+        className={className}
+        aria-label='Content is fading in'
+      >
+        {children}
+      </MotionComponent>
+    )
+  }
+)
+
+FadeIn.displayName = 'FadeIn'

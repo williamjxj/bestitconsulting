@@ -1,9 +1,30 @@
 import * as React from 'react'
+import { motion } from 'framer-motion'
 
 import { cn } from '@/lib/utils'
+import { useReducedMotion } from '@/lib/accessibility'
+import { getDeviceType } from '@/lib/mobile-optimization'
+import { cardHover } from '@/lib/framer-variants'
 
-function Card({ className, ...props }: React.ComponentProps<'div'>) {
-  return (
+interface CardProps extends React.ComponentProps<'div'> {
+  animated?: boolean
+  hover?: boolean
+}
+
+function Card({
+  className,
+  animated = true,
+  hover = true,
+  ...props
+}: CardProps) {
+  const reducedMotion = useReducedMotion()
+  const deviceType = getDeviceType()
+
+  // Disable animations for reduced motion or mobile if needed
+  const shouldAnimate =
+    animated && !reducedMotion && (deviceType !== 'mobile' || hover)
+
+  const cardElement = (
     <div
       data-slot='card'
       className={cn(
@@ -12,6 +33,21 @@ function Card({ className, ...props }: React.ComponentProps<'div'>) {
       )}
       {...props}
     />
+  )
+
+  if (!shouldAnimate) {
+    return cardElement
+  }
+
+  return (
+    <motion.div
+      variants={cardHover}
+      whileHover={hover ? 'hover' : undefined}
+      whileTap={hover ? 'tap' : undefined}
+      className='inline-block w-full'
+    >
+      {cardElement}
+    </motion.div>
   )
 }
 

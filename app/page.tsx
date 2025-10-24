@@ -14,6 +14,9 @@ import {
 import { HeroSection } from '@/components/HeroSection'
 import Layout from '@/components/Layout'
 import Link from 'next/link'
+import { ScrollTrigger } from '@/components/animations/ScrollTrigger'
+import { AnimatedCounter } from '@/components/animations/AnimatedCounter'
+import { CredibilitySection } from '@/components/sections/CredibilitySection'
 
 export default function HomePage() {
   const features = [
@@ -98,141 +101,190 @@ export default function HomePage() {
         <HeroSection />
 
         {/* Video/Demo Section */}
-        <section className='py-20 bg-background'>
-          <div className='container mx-auto px-4'>
-            <div className='max-w-6xl mx-auto'>
-              <div className='grid lg:grid-cols-2 gap-12 items-center'>
-                <div>
-                  <span className='inline-block px-4 py-1.5 text-sm font-medium bg-blue-100 text-blue-800 rounded-full mb-4'>
-                    See Us In Action
-                  </span>
-                  <h2 className='text-3xl md:text-4xl font-bold mb-6'>
-                    Watch How We Transform
-                    <span className='text-blue-600'> Businesses</span>
-                  </h2>
-                  <p className='text-lg text-muted-foreground mb-8'>
-                    Discover how our innovative solutions have helped companies
-                    streamline operations, reduce costs, and accelerate growth
-                    through digital transformation.
-                  </p>
-                  <div className='flex gap-4'>
-                    <Button size='lg' asChild>
-                      <Link href='/contact'>
-                        Start Your Journey
-                        <ArrowRight className='ml-2 h-4 w-4' />
-                      </Link>
-                    </Button>
-                    <Button size='lg' variant='outline' asChild>
-                      <Link href='/portfolio'>View Case Studies</Link>
-                    </Button>
-                  </div>
-                </div>
-
-                <div className='relative'>
-                  {/* Placeholder Video/Image */}
-                  <div className='relative bg-gradient-to-br from-blue-100 to-indigo-100 rounded-2xl overflow-hidden aspect-video'>
-                    <div className='absolute inset-0 flex items-center justify-center'>
-                      <div className='text-center'>
-                        <div className='w-20 h-20 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4 hover:scale-110 transition-transform cursor-pointer'>
-                          <Play
-                            className='h-8 w-8 text-white ml-1'
-                            fill='currentColor'
-                          />
-                        </div>
-                        <p className='text-blue-700 font-medium'>
-                          Watch Demo Video
-                        </p>
-                        <p className='text-sm text-blue-600'>3 min overview</p>
+        <ScrollTrigger animation='fade' direction='up' duration={0.8}>
+          <section className='py-20 bg-background'>
+            <div className='container mx-auto px-4'>
+              <div className='max-w-6xl mx-auto'>
+                <div className='grid lg:grid-cols-2 gap-12 items-center'>
+                  <ScrollTrigger
+                    animation='slide'
+                    direction='right'
+                    delay={0.2}
+                  >
+                    <div>
+                      <span className='inline-block px-4 py-1.5 text-sm font-medium bg-blue-100 text-blue-800 rounded-full mb-4'>
+                        See Us In Action
+                      </span>
+                      <h2 className='text-3xl md:text-4xl font-bold mb-6'>
+                        Watch How We Transform
+                        <span className='text-blue-600'> Businesses</span>
+                      </h2>
+                      <p className='text-lg text-muted-foreground mb-8'>
+                        Discover how our innovative solutions have helped
+                        companies streamline operations, reduce costs, and
+                        accelerate growth through digital transformation.
+                      </p>
+                      <div className='flex gap-4'>
+                        <Button size='lg' asChild>
+                          <Link href='/contact'>
+                            Start Your Journey
+                            <ArrowRight className='ml-2 h-4 w-4' />
+                          </Link>
+                        </Button>
+                        <Button size='lg' variant='outline' asChild>
+                          <Link href='/portfolio'>View Case Studies</Link>
+                        </Button>
                       </div>
                     </div>
-                    {/* Floating elements for visual appeal */}
-                    <div className='absolute top-4 right-4 w-12 h-12 bg-white/80 rounded-lg flex items-center justify-center'>
-                      <Code2 className='h-6 w-6 text-blue-600' />
+                  </ScrollTrigger>
+
+                  <ScrollTrigger animation='slide' direction='left' delay={0.4}>
+                    <div className='relative'>
+                      {/* Placeholder Video/Image */}
+                      <div className='relative bg-gradient-to-br from-blue-100 to-indigo-100 rounded-2xl overflow-hidden aspect-video'>
+                        <div className='absolute inset-0 flex items-center justify-center'>
+                          <div className='text-center'>
+                            <div className='w-20 h-20 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4 hover:scale-110 transition-transform cursor-pointer'>
+                              <Play
+                                className='h-8 w-8 text-white ml-1'
+                                fill='currentColor'
+                              />
+                            </div>
+                            <p className='text-blue-700 font-medium'>
+                              Watch Demo Video
+                            </p>
+                            <p className='text-sm text-blue-600'>
+                              3 min overview
+                            </p>
+                          </div>
+                        </div>
+                        {/* Floating elements for visual appeal */}
+                        <div className='absolute top-4 right-4 w-12 h-12 bg-white/80 rounded-lg flex items-center justify-center'>
+                          <Code2 className='h-6 w-6 text-blue-600' />
+                        </div>
+                        <div className='absolute bottom-4 left-4 w-12 h-12 bg-white/80 rounded-lg flex items-center justify-center'>
+                          <Cloud className='h-6 w-6 text-green-600' />
+                        </div>
+                      </div>
                     </div>
-                    <div className='absolute bottom-4 left-4 w-12 h-12 bg-white/80 rounded-lg flex items-center justify-center'>
-                      <Cloud className='h-6 w-6 text-green-600' />
-                    </div>
-                  </div>
+                  </ScrollTrigger>
                 </div>
               </div>
             </div>
-          </div>
-        </section>
+          </section>
+        </ScrollTrigger>
 
         {/* Features Overview */}
-        <section className='py-20 bg-muted/30'>
-          <div className='container mx-auto px-4'>
-            <div className='text-center mb-16'>
-              <span className='inline-block px-4 py-1.5 text-sm font-medium bg-blue-100 text-blue-800 rounded-full mb-4'>
-                Our Expertise
-              </span>
-              <h2 className='text-3xl md:text-4xl font-bold mb-4'>
-                Comprehensive IT Solutions
-              </h2>
-              <p className='text-lg text-muted-foreground max-w-2xl mx-auto'>
-                From concept to deployment, we provide end-to-end technology
-                services that drive innovation.
-              </p>
-            </div>
-
-            <div className='grid md:grid-cols-2 lg:grid-cols-4 gap-8'>
-              {features.map((feature, index) => (
-                <div
-                  key={index}
-                  className='group bg-card p-6 rounded-xl border border-border/40 hover:border-blue-500/30 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg'
-                >
-                  <div className='w-12 h-12 bg-blue-500/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-blue-500/20 transition-colors'>
-                    <div className='text-blue-500 group-hover:scale-110 transition-transform'>
-                      {feature.icon}
-                    </div>
-                  </div>
-                  <h3 className='text-xl font-semibold mb-2'>
-                    {feature.title}
-                  </h3>
-                  <p className='text-muted-foreground'>{feature.description}</p>
+        <ScrollTrigger animation='fade' direction='up' duration={0.8}>
+          <section className='py-20 bg-muted/30'>
+            <div className='container mx-auto px-4'>
+              <ScrollTrigger animation='slide' direction='up' delay={0.2}>
+                <div className='text-center mb-16'>
+                  <span className='inline-block px-4 py-1.5 text-sm font-medium bg-blue-100 text-blue-800 rounded-full mb-4'>
+                    Our Expertise
+                  </span>
+                  <h2 className='text-3xl md:text-4xl font-bold mb-4'>
+                    Comprehensive IT Solutions
+                  </h2>
+                  <p className='text-lg text-muted-foreground max-w-2xl mx-auto'>
+                    From concept to deployment, we provide end-to-end technology
+                    services that drive innovation.
+                  </p>
                 </div>
-              ))}
-            </div>
+              </ScrollTrigger>
 
-            <div className='text-center mt-12'>
-              <Button size='lg' asChild>
-                <Link href='/services' className='group'>
-                  Explore All Services
-                  <ArrowRight className='ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform' />
-                </Link>
-              </Button>
+              <div className='grid md:grid-cols-2 lg:grid-cols-4 gap-8'>
+                {features.map((feature, index) => (
+                  <ScrollTrigger
+                    key={index}
+                    animation='scale'
+                    delay={0.4 + index * 0.1}
+                  >
+                    <div
+                      key={index}
+                      className='group bg-card p-6 rounded-xl border border-border/40 hover:border-blue-500/30 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg'
+                    >
+                      <div className='w-12 h-12 bg-blue-500/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-blue-500/20 transition-colors'>
+                        <div className='text-blue-500 group-hover:scale-110 transition-transform'>
+                          {feature.icon}
+                        </div>
+                      </div>
+                      <h3 className='text-xl font-semibold mb-2'>
+                        {feature.title}
+                      </h3>
+                      <p className='text-muted-foreground'>
+                        {feature.description}
+                      </p>
+                    </div>
+                  </ScrollTrigger>
+                ))}
+              </div>
+
+              <ScrollTrigger animation='fade' direction='up' delay={0.8}>
+                <div className='text-center mt-12'>
+                  <Button size='lg' asChild>
+                    <Link href='/services' className='group'>
+                      Explore All Services
+                      <ArrowRight className='ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform' />
+                    </Link>
+                  </Button>
+                </div>
+              </ScrollTrigger>
             </div>
-          </div>
-        </section>
+          </section>
+        </ScrollTrigger>
+
+        {/* Credibility Section */}
+        <CredibilitySection />
 
         {/* Stats Section */}
-        <section className='py-20 bg-gradient-to-r from-blue-600 to-indigo-700 text-white'>
-          <div className='container mx-auto px-4'>
-            <div className='text-center mb-16'>
-              <h2 className='text-3xl md:text-4xl font-bold mb-4'>
-                Proven Track Record
-              </h2>
-              <p className='text-xl text-blue-100 max-w-2xl mx-auto'>
-                Numbers that showcase our commitment to excellence and client
-                success.
-              </p>
-            </div>
-
-            <div className='grid grid-cols-2 lg:grid-cols-4 gap-8'>
-              {stats.map((stat, index) => (
-                <div key={index} className='text-center group'>
-                  <div className='w-16 h-16 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-white/20 transition-colors'>
-                    <div className='text-cyan-300'>{stat.icon}</div>
-                  </div>
-                  <div className='text-3xl md:text-4xl font-bold mb-2'>
-                    {stat.number}
-                  </div>
-                  <div className='text-blue-100'>{stat.label}</div>
+        <ScrollTrigger animation='fade' direction='up' duration={0.8}>
+          <section className='py-20 bg-gradient-to-r from-blue-600 to-indigo-700 text-white'>
+            <div className='container mx-auto px-4'>
+              <ScrollTrigger animation='slide' direction='up' delay={0.2}>
+                <div className='text-center mb-16'>
+                  <h2 className='text-3xl md:text-4xl font-bold mb-4'>
+                    Proven Track Record
+                  </h2>
+                  <p className='text-xl text-blue-100 max-w-2xl mx-auto'>
+                    Numbers that showcase our commitment to excellence and
+                    client success.
+                  </p>
                 </div>
-              ))}
+              </ScrollTrigger>
+
+              <div className='grid grid-cols-2 lg:grid-cols-4 gap-8'>
+                {stats.map((stat, index) => (
+                  <ScrollTrigger
+                    key={index}
+                    animation='scale'
+                    delay={0.4 + index * 0.1}
+                  >
+                    <div className='text-center group'>
+                      <div className='w-16 h-16 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-white/20 transition-colors'>
+                        <div className='text-cyan-300'>{stat.icon}</div>
+                      </div>
+                      <AnimatedCounter
+                        value={parseInt(stat.number.replace(/[^\d]/g, ''))}
+                        duration={2}
+                        delay={0.6 + index * 0.2}
+                        suffix={
+                          stat.number.includes('%')
+                            ? '%'
+                            : stat.number.includes('+')
+                              ? '+'
+                              : ''
+                        }
+                        className='text-3xl md:text-4xl font-bold mb-2'
+                      />
+                      <div className='text-blue-100'>{stat.label}</div>
+                    </div>
+                  </ScrollTrigger>
+                ))}
+              </div>
             </div>
-          </div>
-        </section>
+          </section>
+        </ScrollTrigger>
 
         {/* Testimonials */}
         <section className='py-20 bg-background'>

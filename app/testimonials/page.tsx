@@ -4,6 +4,11 @@ import Layout from '@/components/Layout'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
+import { TestimonialsSection } from '@/components/sections/TestimonialsSection'
+import { ScrollTrigger } from '@/components/animations/ScrollTrigger'
+import { FadeIn } from '@/components/animations/FadeIn'
+import { SlideIn } from '@/components/animations/SlideIn'
+import { AnimatedCounter } from '@/components/animations/AnimatedCounter'
 import {
   Star,
   Quote,
@@ -275,122 +280,80 @@ export default function TestimonialsPage() {
         </section>
 
         {/* Stats Section */}
-        <section className='py-20 px-4 bg-white/50'>
-          <div className='max-w-6xl mx-auto'>
-            <div className='grid grid-cols-2 md:grid-cols-4 gap-8'>
-              {stats.map((stat, index) => (
-                <div key={index} className='text-center group'>
-                  <div
-                    className={`w-16 h-16 mx-auto rounded-xl bg-gradient-to-br ${stat.gradient} p-0.5 mb-4 group-hover:scale-110 transition-transform duration-300`}
+        <ScrollTrigger animation='fade' direction='up' duration={0.8}>
+          <section className='py-20 px-4 bg-white/50'>
+            <div className='max-w-6xl mx-auto'>
+              <div className='grid grid-cols-2 md:grid-cols-4 gap-8'>
+                {[
+                  {
+                    icon: <Users className='h-8 w-8 text-blue-500' />,
+                    number: 500,
+                    label: 'Happy Clients',
+                    gradient: 'from-blue-400 to-cyan-500',
+                    suffix: '+',
+                  },
+                  {
+                    icon: <Star className='h-8 w-8 text-yellow-500' />,
+                    number: 4.9,
+                    label: 'Average Rating',
+                    gradient: 'from-yellow-400 to-orange-500',
+                    suffix: '/5',
+                  },
+                  {
+                    icon: <CheckCircle className='h-8 w-8 text-green-500' />,
+                    number: 98,
+                    label: 'Satisfaction Rate',
+                    gradient: 'from-green-400 to-emerald-500',
+                    suffix: '%',
+                  },
+                  {
+                    icon: <Globe className='h-8 w-8 text-purple-500' />,
+                    number: 50,
+                    label: 'Countries Served',
+                    gradient: 'from-purple-400 to-pink-500',
+                    suffix: '+',
+                  },
+                ].map((stat, index) => (
+                  <SlideIn
+                    key={index}
+                    direction='up'
+                    delay={0.2 + index * 0.1}
+                    duration={0.6}
                   >
-                    <div className='w-full h-full bg-white rounded-lg flex items-center justify-center'>
-                      {stat.icon}
+                    <div className='text-center group'>
+                      <div
+                        className={`w-16 h-16 mx-auto rounded-xl bg-gradient-to-br ${stat.gradient} p-0.5 mb-4 group-hover:scale-110 transition-transform duration-300`}
+                      >
+                        <div className='w-full h-full bg-white rounded-lg flex items-center justify-center'>
+                          {stat.icon}
+                        </div>
+                      </div>
+                      <div className='text-3xl font-bold text-gray-900 mb-2'>
+                        <AnimatedCounter
+                          value={stat.number}
+                          duration={2}
+                          delay={0.4 + index * 0.2}
+                          suffix={stat.suffix}
+                        />
+                      </div>
+                      <div className='text-gray-600 font-medium'>
+                        {stat.label}
+                      </div>
                     </div>
-                  </div>
-                  <div className='text-3xl font-bold text-gray-900 mb-2'>
-                    {stat.number}
-                  </div>
-                  <div className='text-gray-600 font-medium'>{stat.label}</div>
-                </div>
-              ))}
+                  </SlideIn>
+                ))}
+              </div>
             </div>
-          </div>
-        </section>
+          </section>
+        </ScrollTrigger>
 
         {/* Featured Testimonials */}
-        <section className='py-20 px-4'>
-          <div className='max-w-7xl mx-auto'>
-            <div className='text-center mb-16'>
-              <h2 className='text-4xl font-bold text-gray-900 mb-6'>
-                What Our Clients Say
-              </h2>
-              <p className='text-xl text-gray-600 max-w-3xl mx-auto'>
-                Real stories from real clients who have transformed their
-                businesses with our solutions
-              </p>
-            </div>
-
-            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
-              {testimonials.map(testimonial => (
-                <Card
-                  key={testimonial.id}
-                  className='group border-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2 bg-white relative overflow-hidden'
-                >
-                  {/* Quote icon */}
-                  <div className='absolute top-6 right-6 opacity-10'>
-                    <Quote className='h-12 w-12 text-blue-500' />
-                  </div>
-
-                  <CardContent className='p-6'>
-                    {/* Rating */}
-                    <div className='flex items-center gap-1 mb-4'>
-                      {[...Array(testimonial.rating)].map((_, i) => (
-                        <Star
-                          key={i}
-                          className='h-4 w-4 fill-yellow-400 text-yellow-400'
-                        />
-                      ))}
-                    </div>
-
-                    {/* Content */}
-                    <p className='text-gray-600 leading-relaxed mb-6 italic relative z-10'>
-                      "{testimonial.content}"
-                    </p>
-
-                    {/* Results */}
-                    <div className='mb-6'>
-                      <h4 className='font-semibold text-gray-900 text-sm mb-3'>
-                        Key Results:
-                      </h4>
-                      <div className='space-y-2'>
-                        {testimonial.results.map((result, index) => (
-                          <div key={index} className='flex items-center gap-2'>
-                            <CheckCircle className='h-4 w-4 text-green-500 flex-shrink-0' />
-                            <span className='text-gray-600 text-sm'>
-                              {result}
-                            </span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Client info */}
-                    <div className='flex items-center gap-4 pt-4 border-t border-gray-100'>
-                      <div className='w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 p-0.5'>
-                        <Image
-                          src={testimonial.image}
-                          alt={testimonial.name}
-                          width={48}
-                          height={48}
-                          className='w-full h-full rounded-full object-cover'
-                        />
-                      </div>
-                      <div className='flex-1'>
-                        <h4 className='font-semibold text-gray-900'>
-                          {testimonial.name}
-                        </h4>
-                        <p className='text-gray-600 text-sm'>
-                          {testimonial.role}
-                        </p>
-                        <p className='text-blue-600 text-sm font-medium'>
-                          {testimonial.company}
-                        </p>
-                      </div>
-                      <div className='text-right'>
-                        <Badge variant='outline' className='text-xs'>
-                          {testimonial.industry}
-                        </Badge>
-                        <p className='text-gray-400 text-xs mt-1'>
-                          {testimonial.date}
-                        </p>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </div>
-        </section>
+        <TestimonialsSection
+          title='What Our Clients Say'
+          description='Real stories from real clients who have transformed their businesses with our solutions'
+          autoPlay={true}
+          autoPlayInterval={5000}
+        />
 
         {/* Awards & Recognition */}
         <section className='py-20 px-4 bg-gradient-to-br from-blue-50 to-cyan-50'>

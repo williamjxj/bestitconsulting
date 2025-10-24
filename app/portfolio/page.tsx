@@ -3,7 +3,13 @@ import Image from 'next/image'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
+import { PortfolioSection } from '@/components/sections/PortfolioSection'
 import Layout from '@/components/Layout'
+import { ScrollTrigger } from '@/components/animations/ScrollTrigger'
+import { FadeIn } from '@/components/animations/FadeIn'
+import { SlideIn } from '@/components/animations/SlideIn'
+import { ScaleIn } from '@/components/animations/ScaleIn'
+import { AnimatedCounter } from '@/components/animations/AnimatedCounter'
 import {
   ExternalLink,
   Github,
@@ -296,166 +302,73 @@ export default function PortfolioPage() {
         </section>
 
         {/* Stats Section */}
-        <section className='py-20 px-4 bg-white/50'>
-          <div className='max-w-6xl mx-auto'>
-            <div className='grid grid-cols-2 md:grid-cols-4 gap-8'>
-              {[
-                {
-                  icon: <CheckCircle className='h-8 w-8 text-green-500' />,
-                  number: '500+',
-                  label: 'Projects Completed',
-                  gradient: 'from-green-400 to-emerald-500',
-                },
-                {
-                  icon: <Users className='h-8 w-8 text-blue-500' />,
-                  number: '50+',
-                  label: 'Happy Clients',
-                  gradient: 'from-blue-400 to-cyan-500',
-                },
-                {
-                  icon: <Clock className='h-8 w-8 text-purple-500' />,
-                  number: '98%',
-                  label: 'On-Time Delivery',
-                  gradient: 'from-purple-400 to-pink-500',
-                },
-                {
-                  icon: <TrendingUp className='h-8 w-8 text-orange-500' />,
-                  number: '10+',
-                  label: 'Industries Served',
-                  gradient: 'from-orange-400 to-red-500',
-                },
-              ].map((stat, index) => (
-                <div key={index} className='text-center group'>
-                  <div
-                    className={`w-16 h-16 mx-auto rounded-xl bg-gradient-to-br ${stat.gradient} p-0.5 mb-4 group-hover:scale-110 transition-transform duration-300`}
-                  >
-                    <div className='w-full h-full bg-white rounded-lg flex items-center justify-center'>
-                      {stat.icon}
+        <ScrollTrigger animation='fade' direction='up' duration={0.8}>
+          <section className='py-20 px-4 bg-white/50'>
+            <div className='max-w-6xl mx-auto'>
+              <div className='grid grid-cols-2 md:grid-cols-4 gap-8'>
+                {[
+                  {
+                    icon: <CheckCircle className='h-8 w-8 text-green-500' />,
+                    number: 500,
+                    label: 'Projects Completed',
+                    gradient: 'from-green-400 to-emerald-500',
+                    suffix: '+',
+                  },
+                  {
+                    icon: <Users className='h-8 w-8 text-blue-500' />,
+                    number: 50,
+                    label: 'Happy Clients',
+                    gradient: 'from-blue-400 to-cyan-500',
+                    suffix: '+',
+                  },
+                  {
+                    icon: <Clock className='h-8 w-8 text-purple-500' />,
+                    number: 98,
+                    label: 'On-Time Delivery',
+                    gradient: 'from-purple-400 to-pink-500',
+                    suffix: '%',
+                  },
+                  {
+                    icon: <TrendingUp className='h-8 w-8 text-orange-500' />,
+                    number: 10,
+                    label: 'Industries Served',
+                    gradient: 'from-orange-400 to-red-500',
+                    suffix: '+',
+                  },
+                ].map((stat, index) => (
+                  <ScaleIn key={index} delay={0.2 + index * 0.1} duration={0.6}>
+                    <div className='text-center group'>
+                      <div
+                        className={`w-16 h-16 mx-auto rounded-xl bg-gradient-to-br ${stat.gradient} p-0.5 mb-4 group-hover:scale-110 transition-transform duration-300`}
+                      >
+                        <div className='w-full h-full bg-white rounded-lg flex items-center justify-center'>
+                          {stat.icon}
+                        </div>
+                      </div>
+                      <div className='text-3xl font-bold text-gray-900 mb-2'>
+                        <AnimatedCounter
+                          value={stat.number}
+                          duration={2}
+                          delay={0.4 + index * 0.2}
+                          suffix={stat.suffix}
+                        />
+                      </div>
+                      <div className='text-gray-600 font-medium'>
+                        {stat.label}
+                      </div>
                     </div>
-                  </div>
-                  <div className='text-3xl font-bold text-gray-900 mb-2'>
-                    {stat.number}
-                  </div>
-                  <div className='text-gray-600 font-medium'>{stat.label}</div>
-                </div>
-              ))}
+                  </ScaleIn>
+                ))}
+              </div>
             </div>
-          </div>
-        </section>
+          </section>
+        </ScrollTrigger>
 
         {/* Projects Grid */}
-        <section className='py-20 px-4'>
-          <div className='max-w-7xl mx-auto'>
-            <div className='text-center mb-16'>
-              <h2 className='text-4xl font-bold text-gray-900 mb-6'>
-                Featured Projects
-              </h2>
-              <p className='text-xl text-gray-600 max-w-3xl mx-auto'>
-                Discover how we've helped businesses across various industries
-                achieve their digital transformation goals
-              </p>
-            </div>
-
-            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
-              {projects.map(project => (
-                <Card
-                  key={project.id}
-                  className='group border-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2 bg-white overflow-hidden'
-                >
-                  <div className='relative h-48 bg-gradient-to-br from-blue-100 to-cyan-100'>
-                    <Image
-                      src={project.image}
-                      alt={project.title}
-                      fill
-                      className='object-cover opacity-80 group-hover:scale-105 transition-transform duration-300'
-                    />
-                    <div
-                      className={`absolute top-4 left-4 w-12 h-12 bg-gradient-to-br ${project.gradient} rounded-lg flex items-center justify-center text-white`}
-                    >
-                      {project.icon}
-                    </div>
-                    <div className='absolute top-4 right-4'>
-                      <Badge variant='secondary' className='bg-white/90'>
-                        {project.category}
-                      </Badge>
-                    </div>
-                  </div>
-
-                  <CardHeader className='pb-4'>
-                    <div className='flex items-center justify-between mb-2'>
-                      <Badge
-                        variant='outline'
-                        className='text-blue-600 border-blue-600'
-                      >
-                        {project.industry}
-                      </Badge>
-                      <div className='flex gap-2'>
-                        <ExternalLink className='h-4 w-4 text-gray-400 group-hover:text-blue-600 transition-colors' />
-                        <Github className='h-4 w-4 text-gray-400 group-hover:text-blue-600 transition-colors' />
-                      </div>
-                    </div>
-                    <CardTitle className='text-xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors'>
-                      {project.title}
-                    </CardTitle>
-                    <p className='text-gray-600 text-sm'>{project.client}</p>
-                  </CardHeader>
-
-                  <CardContent className='space-y-4'>
-                    <p className='text-gray-600 text-sm leading-relaxed line-clamp-3'>
-                      {project.description}
-                    </p>
-
-                    <div className='space-y-3'>
-                      <h4 className='font-semibold text-gray-900 text-sm'>
-                        Key Results:
-                      </h4>
-                      <div className='space-y-2'>
-                        {project.results.slice(0, 2).map((result, index) => (
-                          <div key={index} className='flex items-center gap-2'>
-                            <CheckCircle className='h-4 w-4 text-green-500 flex-shrink-0' />
-                            <span className='text-gray-600 text-sm'>
-                              {result}
-                            </span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-
-                    <div className='space-y-3'>
-                      <h4 className='font-semibold text-gray-900 text-sm'>
-                        Technologies:
-                      </h4>
-                      <div className='flex flex-wrap gap-1'>
-                        {project.technologies.slice(0, 4).map((tech, index) => (
-                          <Badge
-                            key={index}
-                            variant='secondary'
-                            className='text-xs'
-                          >
-                            {tech}
-                          </Badge>
-                        ))}
-                        {project.technologies.length > 4 && (
-                          <Badge variant='secondary' className='text-xs'>
-                            +{project.technologies.length - 4}
-                          </Badge>
-                        )}
-                      </div>
-                    </div>
-
-                    <Button
-                      className='w-full bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700'
-                      size='sm'
-                    >
-                      View Case Study
-                      <ArrowRight className='ml-2 h-4 w-4' />
-                    </Button>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </div>
-        </section>
+        <PortfolioSection
+          title='Featured Projects'
+          description="Discover how we've helped businesses across various industries achieve their digital transformation goals"
+        />
 
         {/* Technologies Section */}
         <section className='py-20 px-4 bg-gradient-to-br from-blue-50 to-cyan-50'>

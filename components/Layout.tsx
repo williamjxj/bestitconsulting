@@ -1,7 +1,7 @@
 'use client'
 
-import Header from './Header'
-import Footer from './Footer'
+import { Header } from './layout/Header'
+import { Footer } from './layout/Footer'
 
 interface LayoutProps {
   children: React.ReactNode

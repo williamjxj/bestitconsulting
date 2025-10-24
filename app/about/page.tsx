@@ -9,6 +9,9 @@ import {
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import Layout from '@/components/Layout'
+import { CredibilitySection } from '@/components/sections/CredibilitySection'
+import { VisualTimeline } from '@/components/ui/visual-timeline'
+import { VisualShowcase } from '@/components/ui/visual-showcase'
 import {
   Globe,
   Users,
@@ -27,6 +30,72 @@ import {
 import Link from 'next/link'
 
 export default function AboutPage() {
+  const timelineData = [
+    {
+      year: '2014',
+      title: 'Company Founded',
+      description:
+        'BestIT Consulting was established with a vision to deliver cutting-edge technology solutions to businesses worldwide.',
+      icon: Rocket,
+      color: 'text-blue-600',
+      gradient: 'from-blue-500 to-cyan-500',
+    },
+    {
+      year: '2017',
+      title: 'First Major Client',
+      description:
+        'Secured our first enterprise client, marking the beginning of our journey in large-scale software development.',
+      icon: Target,
+      color: 'text-green-600',
+      gradient: 'from-green-500 to-emerald-500',
+    },
+    {
+      year: '2020',
+      title: 'Global Expansion',
+      description:
+        'Expanded our services globally, establishing partnerships with clients across 50+ countries.',
+      icon: Globe,
+      color: 'text-purple-600',
+      gradient: 'from-purple-500 to-pink-500',
+    },
+    {
+      year: '2023',
+      title: 'AI Integration',
+      description:
+        'Launched our AI and machine learning services, helping clients leverage cutting-edge technology.',
+      icon: Code2,
+      color: 'text-orange-600',
+      gradient: 'from-orange-500 to-red-500',
+    },
+  ]
+
+  const showcaseData = [
+    {
+      title: 'Innovation Hub',
+      description:
+        'Our state-of-the-art development center equipped with the latest technology and tools.',
+      image: '/images/innovation-hub.jpg',
+      category: 'Infrastructure',
+      featured: true,
+    },
+    {
+      title: 'Global Team',
+      description:
+        'Diverse team of 200+ experts from around the world, bringing unique perspectives and skills.',
+      image: '/images/global-team.jpg',
+      category: 'Team',
+      featured: true,
+    },
+    {
+      title: 'Client Success',
+      description:
+        '500+ successful projects delivered with 98% client satisfaction rate.',
+      image: '/images/client-success.jpg',
+      category: 'Achievement',
+      featured: false,
+    },
+  ]
+
   const teamMembers = [
     {
       name: 'Sarah Chen',
@@ -260,6 +329,34 @@ export default function AboutPage() {
             </div>
           </div>
         </section>
+
+        {/* Credibility Section */}
+        <CredibilitySection
+          title='Why Choose BestIT Consulting'
+          description="Our track record speaks for itself. Here's what sets us apart in the competitive software development landscape."
+        />
+
+        {/* Visual Timeline */}
+        <section className='py-20 bg-gradient-to-br from-slate-50 to-blue-50'>
+          <div className='max-w-6xl mx-auto px-4'>
+            <div className='text-center mb-16'>
+              <h2 className='text-4xl font-bold text-gray-900 mb-4'>
+                Our Journey
+              </h2>
+              <p className='text-xl text-gray-600 max-w-3xl mx-auto'>
+                Key milestones in our company's growth and success
+              </p>
+            </div>
+            <VisualTimeline items={timelineData} />
+          </div>
+        </section>
+
+        {/* Visual Showcase */}
+        <VisualShowcase
+          items={showcaseData}
+          title='What Makes Us Different'
+          description='Unique aspects that set BestIT Consulting apart from the competition'
+        />
 
         {/* Company Values */}
         <section className='py-20 px-4 bg-white/50'>
