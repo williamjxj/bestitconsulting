@@ -42,7 +42,7 @@ export const ParticleBackground = ({
   fallback,
 }: ParticleBackgroundProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
-  const animationRef = useRef<number>()
+  const animationRef = useRef<number | null>(null)
   const particlesRef = useRef<Particle[]>([])
   const [isVisible, setIsVisible] = useState(false)
   const controls = useAnimation()

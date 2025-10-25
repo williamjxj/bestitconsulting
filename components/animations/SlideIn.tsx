@@ -28,13 +28,13 @@ interface SlideInProps {
   stagger?: number
   threshold?: number
   className?: string
-  as?: keyof JSX.IntrinsicElements
+  as?: keyof typeof motion | string
   once?: boolean
   amount?: number
   fallback?: ReactNode
 }
 
-export const SlideIn = forwardRef<HTMLElement, SlideInProps>(
+export const SlideIn = forwardRef<HTMLDivElement, SlideInProps>(
   (
     {
       children,
@@ -114,36 +114,22 @@ export const SlideIn = forwardRef<HTMLElement, SlideInProps>(
       return <>{fallback}</>
     }
 
-    const MotionComponent = motion[as] as any
-
     return (
-      <MotionComponent
+      <motion.div
         ref={ref}
-        variants={finalVariants}
-        initial='initial'
-        animate='animate'
-        exit='exit'
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -20 }}
         transition={{
           duration: reducedMotion ? 0.1 : duration,
           delay: reducedMotion ? 0 : delay,
           ease: reducedMotion ? 'linear' : 'easeOut',
-          staggerChildren: stagger,
-        }}
-        whileInView={{
-          opacity: 1,
-          y: 0,
-          x: 0,
-        }}
-        viewport={{
-          once,
-          amount,
-          margin: '0px 0px -50px 0px',
         }}
         className={className}
         aria-label='Content is sliding into view'
       >
         {children}
-      </MotionComponent>
+      </motion.div>
     )
   }
 )

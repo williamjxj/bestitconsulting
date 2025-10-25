@@ -250,7 +250,6 @@ export const getResponsiveVariants = (baseVariants: Variants) => ({
   animate: {
     ...baseVariants.animate,
     transition: {
-      ...baseVariants.animate?.transition,
       duration:
         typeof window !== 'undefined' && window.innerWidth < 768 ? 0.3 : 0.6,
     },
@@ -263,7 +262,6 @@ export const getReducedMotionVariants = (baseVariants: Variants) => ({
   animate: {
     ...baseVariants.animate,
     transition: {
-      ...baseVariants.animate?.transition,
       duration: 0.1,
       ease: 'linear',
     },

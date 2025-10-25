@@ -110,7 +110,13 @@ const BASE_IMAGES = [
 ]
 
 // Generate more images by repeating the base set for better sphere coverage
-const sampleImages = []
+const sampleImages: Array<{
+  id: string
+  src: string
+  alt: string
+  title: string
+  description: string
+}> = []
 for (let i = 0; i < 24; i++) {
   const baseIndex = i % BASE_IMAGES.length
   const baseImage = BASE_IMAGES[baseIndex]

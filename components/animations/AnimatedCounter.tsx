@@ -7,6 +7,7 @@
 
 import { motion, useInView } from 'framer-motion'
 import { ReactNode, forwardRef, useRef, useEffect, useState } from 'react'
+import React from 'react'
 import { useReducedMotion } from '@/lib/accessibility'
 import { getDeviceType } from '@/lib/mobile-optimization'
 
@@ -18,14 +19,14 @@ interface AnimatedCounterProps {
   suffix?: string
   prefix?: string
   className?: string
-  as?: keyof JSX.IntrinsicElements
+  as?: keyof typeof motion | string
   threshold?: number
   once?: boolean
   amount?: number
   fallback?: ReactNode
 }
 
-export const AnimatedCounter = forwardRef<HTMLElement, AnimatedCounterProps>(
+export const AnimatedCounter = forwardRef<HTMLDivElement, AnimatedCounterProps>(
   (
     {
       children,
@@ -43,7 +44,7 @@ export const AnimatedCounter = forwardRef<HTMLElement, AnimatedCounterProps>(
     },
     ref
   ) => {
-    const elementRef = useRef<HTMLElement>(null)
+    const elementRef = useRef<HTMLDivElement>(null)
     const isInView = useInView(elementRef, {
       once,
       amount,
@@ -102,10 +103,8 @@ export const AnimatedCounter = forwardRef<HTMLElement, AnimatedCounterProps>(
       return <>{fallback}</>
     }
 
-    const MotionComponent = motion[as] as any
-
     return (
-      <MotionComponent
+      <motion.div
         ref={ref || elementRef}
         className={className}
         aria-label={`Animated counter: ${count}${suffix}`}
@@ -116,7 +115,7 @@ export const AnimatedCounter = forwardRef<HTMLElement, AnimatedCounterProps>(
           {count.toLocaleString()}
           {suffix}
         </span>
-      </MotionComponent>
+      </motion.div>
     )
   }
 )

@@ -334,7 +334,9 @@ export default function TestimonialsPage() {
                           duration={2}
                           delay={0.4 + index * 0.2}
                           suffix={stat.suffix}
-                        />
+                        >
+                          {stat.number}
+                        </AnimatedCounter>
                       </div>
                       <div className='text-gray-600 font-medium'>
                         {stat.label}

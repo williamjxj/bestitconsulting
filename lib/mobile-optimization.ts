@@ -48,7 +48,7 @@ export function getDeviceType(): 'mobile' | 'tablet' | 'desktop' {
 export function hasHighRefreshRate(): boolean {
   if (typeof window === 'undefined') return false
   try {
-    return window.screen?.refreshRate >= 90
+    return (window.screen as any)?.refreshRate >= 90
   } catch (error) {
     return false
   }
@@ -77,7 +77,7 @@ export function hasLowBattery(): Promise<boolean> {
     return Promise.resolve(false)
   }
 
-  return navigator
+  return (navigator as any)
     .getBattery()
     .then((battery: any) => {
       return battery.level < 0.2
@@ -137,7 +137,6 @@ export function getMobileOptimizedVariants(
         transition: {
           duration: 0.3,
           ease: 'easeOut',
-          ...optimizedVariants.animate.transition,
         },
       }
     }
@@ -316,9 +315,9 @@ export const touchOptimizedVariants: Record<string, Variants> = {
     dragConstraints: { left: -100, right: 100, top: -100, bottom: 100 },
   },
   pinch: {
-    scale: [1, 1.1, 1],
+    scale: 1.1,
     transition: { duration: 0.3 },
-  },
+  } as any,
 }
 
 // Performance monitoring for mobile
@@ -382,7 +381,7 @@ export function createMobileAnimation(
     optimizedVariants = {
       ...optimizedVariants,
       ...touchOptimizedVariants,
-    }
+    } as any
   }
 
   if (performanceOptimized) {

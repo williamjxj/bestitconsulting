@@ -16,7 +16,7 @@ interface TypewriterTextProps {
   delay?: number
   pauseAtEnd?: number
   className?: string
-  as?: keyof JSX.IntrinsicElements
+  as?: keyof typeof motion | string
   fallback?: ReactNode
 }
 
@@ -86,10 +86,8 @@ export const TypewriterText = ({
     return <>{fallback}</>
   }
 
-  const MotionComponent = motion[as] as any
-
   return (
-    <MotionComponent
+    <motion.div
       className={className}
       aria-label={isTyping ? 'Text is being typed' : 'Text is complete'}
     >
@@ -102,6 +100,6 @@ export const TypewriterText = ({
           aria-hidden='true'
         />
       )}
-    </MotionComponent>
+    </motion.div>
   )
 }

@@ -21,13 +21,13 @@ interface ScrollTriggerProps {
   duration?: number
   threshold?: number
   className?: string
-  as?: keyof JSX.IntrinsicElements
+  as?: keyof typeof motion | string
   once?: boolean
   amount?: number
   fallback?: ReactNode
 }
 
-export const ScrollTrigger = forwardRef<HTMLElement, ScrollTriggerProps>(
+export const ScrollTrigger = forwardRef<HTMLDivElement, ScrollTriggerProps>(
   (
     {
       children,
@@ -44,7 +44,7 @@ export const ScrollTrigger = forwardRef<HTMLElement, ScrollTriggerProps>(
     },
     ref
   ) => {
-    const elementRef = useRef<HTMLElement>(null)
+    const elementRef = useRef<HTMLDivElement>(null)
     const isInView = useInView(elementRef, {
       once,
       amount,
@@ -129,15 +129,12 @@ export const ScrollTrigger = forwardRef<HTMLElement, ScrollTriggerProps>(
       return <>{fallback}</>
     }
 
-    const MotionComponent = motion[as] as any
-
     return (
-      <MotionComponent
+      <motion.div
         ref={ref || elementRef}
-        variants={finalVariants}
-        initial='initial'
-        animate={isInView ? 'animate' : 'initial'}
-        exit='exit'
+        initial={{ opacity: 0, y: 20 }}
+        animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+        exit={{ opacity: 0, y: -20 }}
         transition={{
           duration: reducedMotion ? 0.1 : duration,
           delay: reducedMotion ? 0 : delay,
@@ -147,7 +144,7 @@ export const ScrollTrigger = forwardRef<HTMLElement, ScrollTriggerProps>(
         aria-label='Content with scroll-triggered animation'
       >
         {children}
-      </MotionComponent>
+      </motion.div>
     )
   }
 )

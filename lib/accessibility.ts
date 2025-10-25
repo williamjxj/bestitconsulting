@@ -22,7 +22,11 @@ export function getAccessibleAnimationConfig(
   baseConfig: any,
   reducedMotion?: boolean
 ) {
-  const motionPreference = reducedMotion ?? useReducedMotion()
+  const motionPreference =
+    reducedMotion ??
+    (typeof window !== 'undefined'
+      ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      : false)
   if (motionPreference) {
     return {
       duration: 0.1,
@@ -38,7 +42,11 @@ export function getAccessibleVariants(
   baseVariants: Variants,
   reducedMotion?: boolean
 ): Variants {
-  const motionPreference = reducedMotion ?? useReducedMotion()
+  const motionPreference =
+    reducedMotion ??
+    (typeof window !== 'undefined'
+      ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      : false)
   if (motionPreference) {
     return {
       ...baseVariants,
@@ -60,7 +68,7 @@ export function hasLowBattery(): boolean {
     return false
   }
 
-  return navigator
+  return (navigator as any)
     .getBattery()
     .then((battery: any) => {
       return battery.level < 0.2
@@ -95,7 +103,11 @@ export function getOptimizedAnimationConfig(
     slowConnection = hasSlowConnection(),
   } = options
 
-  const motionPreference = reducedMotion ?? useReducedMotion()
+  const motionPreference =
+    reducedMotion ??
+    (typeof window !== 'undefined'
+      ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      : false)
 
   let optimizedConfig = { ...baseConfig }
 
@@ -120,7 +132,11 @@ export function createAccessibleTransition(
   baseTransition: any,
   reducedMotion?: boolean
 ) {
-  const motionPreference = reducedMotion ?? useReducedMotion()
+  const motionPreference =
+    reducedMotion ??
+    (typeof window !== 'undefined'
+      ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      : false)
   if (motionPreference) {
     return {
       duration: 0.1,
@@ -263,7 +279,10 @@ export function validateAnimationAccessibility(
   }
 
   // Check for reduced motion compliance
-  const reducedMotion = useReducedMotion()
+  const reducedMotion =
+    typeof window !== 'undefined'
+      ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      : false
   if (reducedMotion && animationConfig.duration > 0.1) {
     issues.push('Animation should respect reduced motion preference')
   }
@@ -286,7 +305,11 @@ export function createAccessibleAnimation(
     focusManagement = false,
   } = options
 
-  const motionPreference = reducedMotion ?? useReducedMotion()
+  const motionPreference =
+    reducedMotion ??
+    (typeof window !== 'undefined'
+      ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      : false)
 
   const accessibleVariants = getAccessibleVariants(
     baseVariants,

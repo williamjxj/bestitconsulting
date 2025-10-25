@@ -26,8 +26,21 @@ export function auditAnimationAccessibility(
 ): AccessibilityAuditResult {
   const { reducedMotion, deviceType } = options
 
-  const motionPreference = reducedMotion ?? useReducedMotion()
-  const device = deviceType ?? getDeviceType()
+  // Use provided values or fallback to checking media query directly
+  const motionPreference =
+    reducedMotion ??
+    (typeof window !== 'undefined'
+      ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      : false)
+  const device =
+    deviceType ??
+    (typeof window !== 'undefined'
+      ? window.innerWidth < 768
+        ? 'mobile'
+        : window.innerWidth < 1024
+          ? 'tablet'
+          : 'desktop'
+      : 'desktop')
 
   const issues: AccessibilityIssue[] = []
   const recommendations: string[] = []

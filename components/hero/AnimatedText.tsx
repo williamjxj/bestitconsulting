@@ -21,7 +21,7 @@ interface AnimatedTextProps {
   duration?: number
   stagger?: number
   className?: string
-  as?: keyof JSX.IntrinsicElements
+  as?: keyof typeof motion | string
   fallback?: ReactNode
 }
 
@@ -140,10 +140,8 @@ export const AnimatedText = ({
     return <>{fallback}</>
   }
 
-  const MotionComponent = motion[as] as any
-
   return (
-    <MotionComponent
+    <motion.div
       variants={variants}
       initial='initial'
       animate='animate'
@@ -166,6 +164,6 @@ export const AnimatedText = ({
           aria-hidden='true'
         />
       )}
-    </MotionComponent>
+    </motion.div>
   )
 }

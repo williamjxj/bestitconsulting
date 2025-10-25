@@ -183,7 +183,6 @@ export function I18nProvider({
       if (value === undefined) {
         // Log translation key not found in development
         if (process.env.NODE_ENV === 'development') {
-          // eslint-disable-next-line no-console
           console.warn(`Translation key not found: ${category}.${key}`)
         }
 

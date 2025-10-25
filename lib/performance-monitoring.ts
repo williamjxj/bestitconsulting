@@ -108,7 +108,7 @@ export class AnimationPerformanceMonitor {
       return
     }
 
-    navigator
+    ;(navigator as any)
       .getBattery()
       .then((battery: any) => {
         const checkBattery = () => {

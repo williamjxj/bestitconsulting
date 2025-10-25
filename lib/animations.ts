@@ -237,8 +237,8 @@ export function getOptimizedConfig(
   const reducedMotion = shouldReduceMotion()
   const mobile = isMobile()
 
-  let optimizedConfig = { ...config }
-  let optimizedVariant = { ...variant }
+  const optimizedConfig = { ...config }
+  const optimizedVariant = { ...variant }
 
   if (reducedMotion) {
     optimizedConfig.duration = Math.min(config.duration, 200)
