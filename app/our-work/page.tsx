@@ -1,3 +1,5 @@
+'use client'
+
 import Layout from '@/components/Layout'
 import BookmarkList from '@/components/bookmark-list'
 import { Button } from '@/components/ui/button'
