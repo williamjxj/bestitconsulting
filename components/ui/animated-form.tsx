@@ -125,9 +125,8 @@ export function AnimatedForm({
             key={field.name}
             className='space-y-2'
             initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.4, delay: index * 0.1 }}
-            viewport={{ once: true }}
           >
             <label className='block text-sm font-medium text-gray-700'>
               {field.label}
@@ -232,9 +231,8 @@ export function AnimatedForm({
         <motion.div
           className='pt-4'
           initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: fields.length * 0.1 }}
-          viewport={{ once: true }}
         >
           <motion.button
             type='submit'

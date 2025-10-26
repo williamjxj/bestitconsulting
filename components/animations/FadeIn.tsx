@@ -1,131 +1,178 @@
-/**
- * FadeIn animation wrapper component
- * Provides consistent fade-in animation behavior across the application
- */
-
 'use client'
 
-import { motion, Variants } from 'framer-motion'
-import { ReactNode, forwardRef } from 'react'
-import { useReducedMotion } from '@/lib/accessibility'
-import {
-  getMobileOptimizedVariants,
-  getDeviceType,
-} from '@/lib/mobile-optimization'
-import { fadeInUp } from '@/lib/framer-variants'
+import React from 'react'
+import { motion } from 'framer-motion'
+import { AnimationProps } from '../../lib/types'
+import { useReducedMotion } from '../../hooks/useAccessibility'
+import { useOptimizedAnimation } from '../../hooks/useAnimations'
 
-interface FadeInProps {
-  children: ReactNode
+interface FadeInProps extends AnimationProps {
+  direction?: 'up' | 'down' | 'left' | 'right' | 'fade'
+  distance?: number
   delay?: number
   duration?: number
-  direction?: 'up' | 'down' | 'left' | 'right' | 'none'
   stagger?: number
-  threshold?: number
   className?: string
-  as?: keyof typeof motion | string
-  once?: boolean
-  amount?: number
-  fallback?: ReactNode
 }
 
-export const FadeIn = forwardRef<HTMLDivElement, FadeInProps>(
-  (
+export function FadeIn({
+  children,
+  direction = 'fade',
+  distance = 20,
+  delay = 0,
+  duration = 500,
+  stagger = 0,
+  className,
+  onComplete,
+  onStart,
+  ...props
+}: FadeInProps) {
+  const prefersReducedMotion = useReducedMotion()
+  const { optimizedConfig } = useOptimizedAnimation(
     {
-      children,
-      delay = 0,
-      duration = 0.6,
-      direction = 'up',
-      stagger = 0,
-      threshold = 0.1,
-      className = '',
-      as = 'div',
-      once = true,
-      amount = 0.1,
-      fallback,
+      id: 'fade-in',
+      name: 'Fade In',
+      type: 'transition',
+      duration,
+      easing: 'ease-out',
+      reducedMotion: {
+        enabled: true,
+        alternativeAnimation: 'fade-in-static',
+        staticFallback: true,
+      },
+      performance: {
+        maxDuration: duration,
+        targetFPS: 60,
+        memoryLimit: 10,
+        gpuAcceleration: true,
+      },
     },
-    ref
-  ) => {
-    const reducedMotion = useReducedMotion()
-    const deviceType = getDeviceType()
+    'fade-in'
+  )
 
-    // Get direction-specific variants
-    const getDirectionVariants = (dir: string): Variants => {
-      switch (dir) {
-        case 'up':
-          return fadeInUp
-        case 'down':
-          return {
-            initial: { opacity: 0, y: -20 },
-            animate: { opacity: 1, y: 0 },
-            exit: { opacity: 0, y: 20 },
-          }
-        case 'left':
-          return {
-            initial: { opacity: 0, x: -20 },
-            animate: { opacity: 1, x: 0 },
-            exit: { opacity: 0, x: 20 },
-          }
-        case 'right':
-          return {
-            initial: { opacity: 0, x: 20 },
-            animate: { opacity: 1, x: 0 },
-            exit: { opacity: 0, x: -20 },
-          }
-        case 'none':
-        default:
-          return {
-            initial: { opacity: 0 },
-            animate: { opacity: 1 },
-            exit: { opacity: 0 },
-          }
-      }
-    }
-
-    const baseVariants = getDirectionVariants(direction)
-
-    // Apply mobile optimization
-    const optimizedVariants = getMobileOptimizedVariants(
-      baseVariants,
-      deviceType
-    )
-
-    // Apply reduced motion optimization
-    const finalVariants = reducedMotion
-      ? {
-          ...optimizedVariants,
-          animate: {
-            ...optimizedVariants.animate,
-            transition: {
-              duration: 0.1,
-              ease: 'linear',
-            },
-          },
-        }
-      : optimizedVariants
-
-    // If reduced motion and fallback is provided, show fallback
-    if (reducedMotion && fallback) {
-      return <>{fallback}</>
-    }
-
+  // Reduced motion fallback
+  if (prefersReducedMotion) {
     return (
-      <motion.div
-        ref={ref}
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: -20 }}
-        transition={{
-          duration: reducedMotion ? 0.1 : duration,
-          delay: reducedMotion ? 0 : delay,
-          ease: reducedMotion ? 'linear' : 'easeOut',
-        }}
-        className={className}
-        aria-label='Content is fading in'
-      >
+      <div className={className} {...props}>
         {children}
-      </motion.div>
+      </div>
     )
   }
-)
 
-FadeIn.displayName = 'FadeIn'
+  // Calculate initial position based on direction
+  const getInitialPosition = () => {
+    switch (direction) {
+      case 'up':
+        return { y: distance, opacity: 0 }
+      case 'down':
+        return { y: -distance, opacity: 0 }
+      case 'left':
+        return { x: distance, opacity: 0 }
+      case 'right':
+        return { x: -distance, opacity: 0 }
+      case 'fade':
+      default:
+        return { opacity: 0 }
+    }
+  }
+
+  const getFinalPosition = () => {
+    switch (direction) {
+      case 'up':
+      case 'down':
+        return { y: 0, opacity: 1 }
+      case 'left':
+      case 'right':
+        return { x: 0, opacity: 1 }
+      case 'fade':
+      default:
+        return { opacity: 1 }
+    }
+  }
+
+  return (
+    <motion.div
+      initial={getInitialPosition()}
+      animate={getFinalPosition()}
+      transition={{
+        duration: optimizedConfig.duration / 1000,
+        delay: (delay + stagger) / 1000,
+        ease: optimizedConfig.easing,
+        onComplete: onComplete,
+        onStart: onStart,
+      }}
+      className={className}
+      {...props}
+    >
+      {children}
+    </motion.div>
+  )
+}
+
+// Staggered FadeIn for multiple elements
+export function StaggeredFadeIn({
+  children,
+  stagger = 100,
+  direction = 'up',
+  distance = 20,
+  className,
+  ...props
+}: Omit<FadeInProps, 'stagger'> & { stagger?: number }) {
+  const childrenArray = React.Children.toArray(children)
+
+  return (
+    <div className={className}>
+      {childrenArray.map((child, index) => (
+        <FadeIn
+          key={index}
+          direction={direction}
+          distance={distance}
+          stagger={index * stagger}
+          {...props}
+        >
+          {child}
+        </FadeIn>
+      ))}
+    </div>
+  )
+}
+
+// FadeIn with scroll trigger
+export function ScrollFadeIn({
+  children,
+  threshold = 0.1,
+  triggerOnce = true,
+  direction = 'up',
+  distance = 20,
+  className,
+  ...props
+}: FadeInProps & {
+  threshold?: number
+  triggerOnce?: boolean
+}) {
+  const prefersReducedMotion = useReducedMotion()
+
+  if (prefersReducedMotion) {
+    return (
+      <div className={className} {...props}>
+        {children}
+      </div>
+    )
+  }
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: distance }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: triggerOnce, amount: threshold }}
+      transition={{
+        duration: 0.6,
+        ease: 'ease-out',
+      }}
+      className={className}
+      {...props}
+    >
+      {children}
+    </motion.div>
+  )
+}

@@ -5,6 +5,12 @@ import { cn } from '@/lib/utils'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { ChevronRight } from 'lucide-react'
+import {
+  HoverEffects,
+  HoverLift,
+  HoverGlow,
+} from '@/components/animations/HoverEffects'
+import { AccessibleAnimatedCard } from '@/components/animations/AccessibleAnimation'
 
 interface ServiceCardProps {
   icon: React.ReactNode
@@ -26,12 +32,13 @@ export function ServiceCard({
   const [isHovered, setIsHovered] = React.useState(false)
 
   return (
-    <Card
+    <AccessibleAnimatedCard
+      title={title}
+      description={description}
       className={cn(
         'group relative overflow-hidden h-full transition-all duration-300 border border-border/40 hover:border-blue-500/30',
         'bg-gradient-to-b from-card to-card/80 hover:to-card/90',
         'shadow-sm hover:shadow-lg hover:shadow-blue-500/10',
-        'transform hover:-translate-y-1',
         className
       )}
       onMouseEnter={() => setIsHovered(true)}
@@ -100,6 +107,6 @@ export function ServiceCard({
           </div>
         </div>
       </div>
-    </Card>
+    </AccessibleAnimatedCard>
   )
 }

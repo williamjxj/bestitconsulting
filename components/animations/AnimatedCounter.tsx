@@ -54,18 +54,18 @@ export const AnimatedCounter = forwardRef<HTMLDivElement, AnimatedCounterProps>(
     const reducedMotion = useReducedMotion()
     const deviceType = getDeviceType()
 
-    // Adjust duration for mobile and reduced motion
-    const adjustedDuration = reducedMotion
-      ? 0.1
-      : deviceType === 'mobile'
-        ? Math.min(duration, 1)
-        : duration
-
     useEffect(() => {
       if (!isInView || reducedMotion) {
         setCount(value)
         return
       }
+
+      // Adjust duration for mobile and reduced motion
+      const adjustedDuration = reducedMotion
+        ? 0.1
+        : deviceType === 'mobile'
+          ? Math.min(duration, 1)
+          : duration
 
       let startTime: number
       let animationFrame: number
@@ -96,7 +96,7 @@ export const AnimatedCounter = forwardRef<HTMLDivElement, AnimatedCounterProps>(
           cancelAnimationFrame(animationFrame)
         }
       }
-    }, [isInView, value, adjustedDuration, delay, reducedMotion])
+    }, [isInView, value, duration, delay, reducedMotion, deviceType])
 
     // If reduced motion and fallback is provided, show fallback
     if (reducedMotion && fallback) {

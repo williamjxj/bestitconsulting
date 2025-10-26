@@ -1,6 +1,6 @@
 'use client'
 
-import { Header } from './layout/Header'
+import Header from './Header'
 import { Footer } from './layout/Footer'
 
 interface LayoutProps {

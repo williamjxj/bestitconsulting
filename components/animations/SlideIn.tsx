@@ -1,137 +1,234 @@
-/**
- * SlideIn animation wrapper component
- * Provides consistent slide-in animation behavior across the application
- */
-
 'use client'
 
-import { motion, Variants } from 'framer-motion'
-import { ReactNode, forwardRef } from 'react'
-import { useReducedMotion } from '@/lib/accessibility'
-import {
-  getMobileOptimizedVariants,
-  getDeviceType,
-} from '@/lib/mobile-optimization'
-import {
-  slideInUp,
-  slideInDown,
-  slideInLeft,
-  slideInRight,
-} from '@/lib/framer-variants'
+import React from 'react'
+import { motion } from 'framer-motion'
+import { AnimationProps } from '../../lib/types'
+import { useReducedMotion } from '../../hooks/useAccessibility'
+import { useOptimizedAnimation } from '../../hooks/useAnimations'
 
-interface SlideInProps {
-  children: ReactNode
+interface SlideInProps extends AnimationProps {
   direction?: 'up' | 'down' | 'left' | 'right'
+  distance?: number
   delay?: number
   duration?: number
-  distance?: number
   stagger?: number
-  threshold?: number
   className?: string
-  as?: keyof typeof motion | string
-  once?: boolean
-  amount?: number
-  fallback?: ReactNode
 }
 
-export const SlideIn = forwardRef<HTMLDivElement, SlideInProps>(
-  (
+export function SlideIn({
+  children,
+  direction = 'up',
+  distance = 50,
+  delay = 0,
+  duration = 600,
+  stagger = 0,
+  className,
+  onComplete,
+  onStart,
+  ...props
+}: SlideInProps) {
+  const prefersReducedMotion = useReducedMotion()
+  const { optimizedConfig } = useOptimizedAnimation(
     {
-      children,
-      direction = 'up',
-      delay = 0,
-      duration = 0.6,
-      distance = 50,
-      stagger = 0,
-      threshold = 0.1,
-      className = '',
-      as = 'div',
-      once = true,
-      amount = 0.1,
-      fallback,
+      id: 'slide-in',
+      name: 'Slide In',
+      type: 'transition',
+      duration,
+      easing: [0.4, 0, 0.2, 1],
+      reducedMotion: {
+        enabled: true,
+        alternativeAnimation: 'slide-in-static',
+        staticFallback: true,
+      },
+      performance: {
+        maxDuration: duration,
+        targetFPS: 60,
+        memoryLimit: 15,
+        gpuAcceleration: true,
+      },
     },
-    ref
-  ) => {
-    const reducedMotion = useReducedMotion()
-    const deviceType = getDeviceType()
+    'slide-in'
+  )
 
-    // Get direction-specific variants
-    const getDirectionVariants = (dir: string, dist: number): Variants => {
-      switch (dir) {
-        case 'up':
-          return {
-            initial: { opacity: 0, y: dist },
-            animate: { opacity: 1, y: 0 },
-            exit: { opacity: 0, y: -dist },
-          }
-        case 'down':
-          return {
-            initial: { opacity: 0, y: -dist },
-            animate: { opacity: 1, y: 0 },
-            exit: { opacity: 0, y: dist },
-          }
-        case 'left':
-          return {
-            initial: { opacity: 0, x: -dist },
-            animate: { opacity: 1, x: 0 },
-            exit: { opacity: 0, x: dist },
-          }
-        case 'right':
-          return {
-            initial: { opacity: 0, x: dist },
-            animate: { opacity: 1, x: 0 },
-            exit: { opacity: 0, x: -dist },
-          }
-        default:
-          return slideInUp
-      }
-    }
-
-    const baseVariants = getDirectionVariants(direction, distance)
-
-    // Apply mobile optimization
-    const optimizedVariants = getMobileOptimizedVariants(
-      baseVariants,
-      deviceType
-    )
-
-    // Apply reduced motion optimization
-    const finalVariants = reducedMotion
-      ? {
-          ...optimizedVariants,
-          animate: {
-            ...optimizedVariants.animate,
-            transition: {
-              duration: 0.1,
-              ease: 'linear',
-            },
-          },
-        }
-      : optimizedVariants
-
-    // If reduced motion and fallback is provided, show fallback
-    if (reducedMotion && fallback) {
-      return <>{fallback}</>
-    }
-
+  // Reduced motion fallback
+  if (prefersReducedMotion) {
     return (
-      <motion.div
-        ref={ref}
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: -20 }}
-        transition={{
-          duration: reducedMotion ? 0.1 : duration,
-          delay: reducedMotion ? 0 : delay,
-          ease: reducedMotion ? 'linear' : 'easeOut',
-        }}
-        className={className}
-        aria-label='Content is sliding into view'
-      >
+      <div className={className} {...props}>
         {children}
-      </motion.div>
+      </div>
     )
   }
-)
 
-SlideIn.displayName = 'SlideIn'
+  // Calculate initial position based on direction
+  const getInitialPosition = () => {
+    switch (direction) {
+      case 'up':
+        return { y: distance, opacity: 0 }
+      case 'down':
+        return { y: -distance, opacity: 0 }
+      case 'left':
+        return { x: distance, opacity: 0 }
+      case 'right':
+        return { x: -distance, opacity: 0 }
+      default:
+        return { y: distance, opacity: 0 }
+    }
+  }
+
+  const getFinalPosition = () => {
+    return { x: 0, y: 0, opacity: 1 }
+  }
+
+  return (
+    <motion.div
+      initial={getInitialPosition()}
+      animate={getFinalPosition()}
+      transition={{
+        duration: optimizedConfig.duration / 1000,
+        delay: (delay + stagger) / 1000,
+        ease: optimizedConfig.easing,
+        onComplete: onComplete,
+        onStart: onStart,
+      }}
+      className={className}
+      {...props}
+    >
+      {children}
+    </motion.div>
+  )
+}
+
+// Staggered SlideIn for multiple elements
+export function StaggeredSlideIn({
+  children,
+  stagger = 100,
+  direction = 'up',
+  distance = 50,
+  className,
+  ...props
+}: Omit<SlideInProps, 'stagger'> & { stagger?: number }) {
+  const childrenArray = React.Children.toArray(children)
+
+  return (
+    <div className={className}>
+      {childrenArray.map((child, index) => (
+        <SlideIn
+          key={index}
+          direction={direction}
+          distance={distance}
+          stagger={index * stagger}
+          {...props}
+        >
+          {child}
+        </SlideIn>
+      ))}
+    </div>
+  )
+}
+
+// SlideIn with scroll trigger
+export function ScrollSlideIn({
+  children,
+  threshold = 0.1,
+  triggerOnce = true,
+  direction = 'up',
+  distance = 50,
+  className,
+  ...props
+}: SlideInProps & {
+  threshold?: number
+  triggerOnce?: boolean
+}) {
+  const prefersReducedMotion = useReducedMotion()
+
+  if (prefersReducedMotion) {
+    return (
+      <div className={className} {...props}>
+        {children}
+      </div>
+    )
+  }
+
+  const getInitialPosition = () => {
+    switch (direction) {
+      case 'up':
+        return { y: distance, opacity: 0 }
+      case 'down':
+        return { y: -distance, opacity: 0 }
+      case 'left':
+        return { x: distance, opacity: 0 }
+      case 'right':
+        return { x: -distance, opacity: 0 }
+      default:
+        return { y: distance, opacity: 0 }
+    }
+  }
+
+  return (
+    <motion.div
+      initial={getInitialPosition()}
+      whileInView={{ x: 0, y: 0, opacity: 1 }}
+      viewport={{ once: triggerOnce, amount: threshold }}
+      transition={{
+        duration: 0.8,
+        ease: [0.4, 0, 0.2, 1],
+      }}
+      className={className}
+      {...props}
+    >
+      {children}
+    </motion.div>
+  )
+}
+
+// SlideIn with spring animation
+export function SpringSlideIn({
+  children,
+  direction = 'up',
+  distance = 50,
+  delay = 0,
+  className,
+  ...props
+}: SlideInProps) {
+  const prefersReducedMotion = useReducedMotion()
+
+  if (prefersReducedMotion) {
+    return (
+      <div className={className} {...props}>
+        {children}
+      </div>
+    )
+  }
+
+  const getInitialPosition = () => {
+    switch (direction) {
+      case 'up':
+        return { y: distance, opacity: 0 }
+      case 'down':
+        return { y: -distance, opacity: 0 }
+      case 'left':
+        return { x: distance, opacity: 0 }
+      case 'right':
+        return { x: -distance, opacity: 0 }
+      default:
+        return { y: distance, opacity: 0 }
+    }
+  }
+
+  return (
+    <motion.div
+      initial={getInitialPosition()}
+      animate={{ x: 0, y: 0, opacity: 1 }}
+      transition={{
+        type: 'spring',
+        stiffness: 100,
+        damping: 15,
+        delay: delay / 1000,
+      }}
+      className={className}
+      {...props}
+    >
+      {children}
+    </motion.div>
+  )
+}
