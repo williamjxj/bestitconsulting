@@ -1,9 +1,16 @@
 'use client'
 
+import { useRef } from 'react'
 import Layout from '@/components/Layout'
-import BookmarkList from '@/components/bookmark-list'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Badge } from '@/components/ui/badge'
+import { AnimatedHeadline } from '@/components/animations/AnimatedHeadline'
+import { ScrollTrigger } from '@/components/animations/ScrollTrigger'
+import { FadeIn } from '@/components/animations/FadeIn'
+import { SlideIn } from '@/components/animations/SlideIn'
+import { AnimatedCounter } from '@/components/animations/AnimatedCounter'
+import { AnimatedBeam } from '@/components/ui/animated-beam'
 import {
   Rocket,
   CheckCircle,
@@ -12,38 +19,330 @@ import {
   Globe,
   ArrowRight,
   Users,
+  TrendingUp,
+  Clock,
+  Star,
+  Award,
+  Zap,
+  Monitor,
+  Database,
+  Cloud,
+  Brain,
+  FileCode,
+  Server,
+  BarChart3,
+  Layers,
+  GitBranch,
+  Settings,
+  Cpu,
 } from 'lucide-react'
 import Link from 'next/link'
+import Image from 'next/image'
 
 export default function OurWorkPage() {
+  // Refs for animated beam nodes
+  const containerRef = useRef<HTMLDivElement>(null)
+  const node1Ref = useRef<HTMLDivElement>(null)
+  const node2Ref = useRef<HTMLDivElement>(null)
+  const node3Ref = useRef<HTMLDivElement>(null)
+  const node4Ref = useRef<HTMLDivElement>(null)
+  const node5Ref = useRef<HTMLDivElement>(null)
+  const node6Ref = useRef<HTMLDivElement>(null)
+  const node7Ref = useRef<HTMLDivElement>(null)
+  const node8Ref = useRef<HTMLDivElement>(null)
+  const centerNodeRef = useRef<HTMLDivElement>(null)
+
+  const projects = [
+    {
+      id: 1,
+      title: 'Face Fusion Agent',
+      description: 'AI-powered face fusion and manipulation tool',
+      url: 'https://face-fusion-agent.vercel.app',
+      category: 'AI/ML',
+      status: 'Live',
+      technologies: ['Next.js', 'AI/ML', 'Computer Vision'],
+      image: '/placeholder.svg',
+    },
+    {
+      id: 2,
+      title: 'NextJS Supabase',
+      description: 'Full-stack web application with authentication',
+      url: 'https://nextjs-supabase-kappa-nine.vercel.app',
+      category: 'Development',
+      status: 'Live',
+      technologies: ['Next.js', 'Supabase', 'TypeScript'],
+      image: '/placeholder.svg',
+    },
+    {
+      id: 3,
+      title: 'Manus AI Shop',
+      description: 'AI-powered e-commerce platform',
+      url: 'https://manus-ai-shop.vercel.app',
+      category: 'E-commerce',
+      status: 'Live',
+      technologies: ['Next.js', 'AI', 'E-commerce'],
+      image: '/placeholder.svg',
+    },
+    {
+      id: 4,
+      title: 'BidMaster Hub',
+      description: 'Project bidding management platform',
+      url: 'https://bidmaster-hub.vercel.app',
+      category: 'Business',
+      status: 'Live',
+      technologies: ['Next.js', 'Business Logic', 'Management'],
+      image: '/placeholder.svg',
+    },
+    {
+      id: 5,
+      title: 'NextJS MCP Template',
+      description: 'Model Context Protocol template application',
+      url: 'https://nextjs-mcp-template.vercel.app',
+      category: 'Development',
+      status: 'Live',
+      technologies: ['Next.js', 'MCP', 'Template'],
+      image: '/placeholder.svg',
+    },
+    {
+      id: 6,
+      title: 'Friendship Daycare',
+      description: 'Childcare and daycare management system',
+      url: 'https://friendship-daycare.vercel.app',
+      category: 'Business',
+      status: 'Live',
+      technologies: ['Next.js', 'Management', 'Childcare'],
+      image: '/placeholder.svg',
+    },
+  ]
+
+  const stats = [
+    {
+      icon: <Rocket className='h-8 w-8 text-blue-500' />,
+      label: 'Live Projects',
+      value: 9,
+      suffix: '+',
+    },
+    {
+      icon: <Users className='h-8 w-8 text-green-500' />,
+      label: 'Happy Clients',
+      value: 25,
+      suffix: '+',
+    },
+    {
+      icon: <TrendingUp className='h-8 w-8 text-purple-500' />,
+      label: 'Success Rate',
+      value: 100,
+      suffix: '%',
+    },
+    {
+      icon: <Clock className='h-8 w-8 text-orange-500' />,
+      label: 'Years Experience',
+      value: 5,
+      suffix: '+',
+    },
+  ]
+
   return (
     <Layout>
       <div className='min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50'>
         {/* Hero Section */}
         <section className='relative overflow-hidden bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 text-white py-24 md:py-32'>
-          {/* Background decoration */}
-          <div className='absolute inset-0 overflow-hidden'>
-            <div className='absolute -top-1/2 -right-1/2 w-full h-full bg-gradient-radial from-blue-500/10 to-transparent rounded-full animate-pulse-slow'></div>
-            <div className='absolute -bottom-1/2 -left-1/2 w-full h-full bg-gradient-radial from-cyan-400/10 to-transparent rounded-full animate-pulse-slow'></div>
+          {/* Animated background elements */}
+          <div className='absolute inset-0'>
+            {/* Main gradient background with shifting animation */}
+            <div className='absolute inset-0 bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 bg-[length:200%_200%] animate-gradient-shift'></div>
+
+            {/* Floating orbs with different animations */}
+            <div className='absolute -top-1/2 -right-1/2 w-full h-full bg-gradient-radial from-blue-500/20 to-transparent rounded-full animate-ambient-pulse'></div>
+            <div className='absolute -bottom-1/2 -left-1/2 w-full h-full bg-gradient-radial from-cyan-400/15 to-transparent rounded-full animate-float'></div>
+
+            {/* Additional floating particles */}
+            <div className='absolute top-1/4 left-1/4 w-32 h-32 bg-gradient-radial from-purple-400/10 to-transparent rounded-full animate-particle-float parallax-float'></div>
+            <div
+              className='absolute top-3/4 right-1/3 w-24 h-24 bg-gradient-radial from-cyan-300/15 to-transparent rounded-full animate-particle-float gentle-rotate'
+              style={{ animationDelay: '2s' }}
+            ></div>
+            <div
+              className='absolute bottom-1/4 left-1/3 w-40 h-40 bg-gradient-radial from-blue-400/10 to-transparent rounded-full animate-particle-float breathe'
+              style={{ animationDelay: '4s' }}
+            ></div>
+
+            {/* Subtle wave animation */}
+            <div className='absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-blue-500/5 to-transparent animate-wave'></div>
+
+            {/* Glowing accent elements */}
+            <div className='absolute top-1/2 left-1/2 w-2 h-2 bg-cyan-400 rounded-full animate-glow soft-glow'></div>
+            <div
+              className='absolute top-1/3 right-1/4 w-1 h-1 bg-blue-300 rounded-full animate-glow gentle-rotate'
+              style={{ animationDelay: '1s' }}
+            ></div>
+            <div
+              className='absolute bottom-1/3 left-1/4 w-1.5 h-1.5 bg-purple-300 rounded-full animate-glow breathe'
+              style={{ animationDelay: '2s' }}
+            ></div>
           </div>
 
-          <div className='max-w-7xl mx-auto px-4 relative z-10'>
-            <div className='text-center mb-20'>
-              <div className='inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 mb-6'>
-                <Rocket className='h-4 w-4 text-cyan-400' />
-                <span className='text-sm font-medium text-cyan-100'>
-                  Live Projects Portfolio
-                </span>
+          {/* Animated Beam Background */}
+          <div className='absolute inset-0 overflow-hidden pointer-events-none z-10'>
+            <div className='relative h-full w-full' ref={containerRef}>
+              {/* Technology nodes for animated beams - positioned on far right to avoid content overlap */}
+              <div
+                className='absolute top-1/5 right-1/6 w-16 h-16 rounded-full bg-blue-500/20 border-2 border-blue-400/30 flex items-center justify-center'
+                ref={node1Ref}
+              >
+                <Brain className='h-8 w-8 text-blue-300' />
               </div>
-              <h1 className='text-5xl md:text-6xl lg:text-7xl font-bold mb-8 bg-gradient-to-r from-white via-blue-100 to-cyan-200 bg-clip-text text-transparent'>
-                Our Work
+              <div
+                className='absolute top-1/3 right-1/5 w-16 h-16 rounded-full bg-cyan-500/20 border-2 border-cyan-400/30 flex items-center justify-center'
+                ref={node2Ref}
+              >
+                <FileCode className='h-8 w-8 text-cyan-300' />
+              </div>
+              <div
+                className='absolute bottom-1/3 right-1/6 w-16 h-16 rounded-full bg-purple-500/20 border-2 border-purple-400/30 flex items-center justify-center'
+                ref={node3Ref}
+              >
+                <Server className='h-8 w-8 text-purple-300' />
+              </div>
+              <div
+                className='absolute bottom-1/5 right-1/5 w-16 h-16 rounded-full bg-green-500/20 border-2 border-green-400/30 flex items-center justify-center'
+                ref={node4Ref}
+              >
+                <BarChart3 className='h-8 w-8 text-green-300' />
+              </div>
+              <div
+                className='absolute top-1/6 right-1/8 w-14 h-14 rounded-full bg-orange-500/20 border-2 border-orange-400/30 flex items-center justify-center'
+                ref={node5Ref}
+              >
+                <Layers className='h-6 w-6 text-orange-300' />
+              </div>
+              <div
+                className='absolute top-2/3 right-1/8 w-14 h-14 rounded-full bg-red-500/20 border-2 border-red-400/30 flex items-center justify-center'
+                ref={node6Ref}
+              >
+                <GitBranch className='h-6 w-6 text-red-300' />
+              </div>
+              <div
+                className='absolute bottom-1/6 right-1/5 w-14 h-14 rounded-full bg-indigo-500/20 border-2 border-indigo-400/30 flex items-center justify-center'
+                ref={node7Ref}
+              >
+                <Settings className='h-6 w-6 text-indigo-300' />
+              </div>
+              <div
+                className='absolute top-1/2 right-1/8 w-14 h-14 rounded-full bg-pink-500/20 border-2 border-pink-400/30 flex items-center justify-center'
+                ref={node8Ref}
+              >
+                <Cpu className='h-6 w-6 text-pink-300' />
+              </div>
+              <div
+                className='absolute top-1/2 right-1/3 w-20 h-20 rounded-full bg-gradient-to-r from-blue-500/30 to-purple-500/30 border-2 border-white/20 flex items-center justify-center'
+                ref={centerNodeRef}
+              >
+                <Target className='h-10 w-10 text-white' />
+              </div>
+
+              {/* Animated Beams */}
+              <AnimatedBeam
+                containerRef={containerRef}
+                fromRef={node1Ref}
+                toRef={centerNodeRef}
+                curvature={50}
+                duration={4}
+                delay={0}
+                gradientStartColor='#93c5fd'
+                gradientStopColor='#1e40af'
+              />
+              <AnimatedBeam
+                containerRef={containerRef}
+                fromRef={node2Ref}
+                toRef={centerNodeRef}
+                curvature={-50}
+                duration={4}
+                delay={0.5}
+                gradientStartColor='#67e8f9'
+                gradientStopColor='#0e7490'
+              />
+              <AnimatedBeam
+                containerRef={containerRef}
+                fromRef={node3Ref}
+                toRef={centerNodeRef}
+                curvature={50}
+                duration={4}
+                delay={1.0}
+                gradientStartColor='#c084fc'
+                gradientStopColor='#6b21a8'
+              />
+              <AnimatedBeam
+                containerRef={containerRef}
+                fromRef={node4Ref}
+                toRef={centerNodeRef}
+                curvature={-50}
+                duration={4}
+                delay={1.5}
+                gradientStartColor='#6ee7b7'
+                gradientStopColor='#047857'
+              />
+              <AnimatedBeam
+                containerRef={containerRef}
+                fromRef={node5Ref}
+                toRef={centerNodeRef}
+                curvature={30}
+                duration={4}
+                delay={2.0}
+                gradientStartColor='#fed7aa'
+                gradientStopColor='#c2410c'
+              />
+              <AnimatedBeam
+                containerRef={containerRef}
+                fromRef={node6Ref}
+                toRef={centerNodeRef}
+                curvature={-30}
+                duration={4}
+                delay={2.5}
+                gradientStartColor='#fca5a5'
+                gradientStopColor='#b91c1c'
+              />
+              <AnimatedBeam
+                containerRef={containerRef}
+                fromRef={node7Ref}
+                toRef={centerNodeRef}
+                curvature={40}
+                duration={4}
+                delay={3.0}
+                gradientStartColor='#a5b4fc'
+                gradientStopColor='#3730a3'
+              />
+              <AnimatedBeam
+                containerRef={containerRef}
+                fromRef={node8Ref}
+                toRef={centerNodeRef}
+                curvature={-40}
+                duration={4}
+                delay={3.5}
+                gradientStartColor='#f9a8d4'
+                gradientStopColor='#be185d'
+              />
+            </div>
+          </div>
+
+          <div className='max-w-7xl mx-auto px-4 relative z-30'>
+            <div className='text-left mb-20 max-w-2xl'>
+              <div className='inline-flex items-center gap-2 px-4 py-2 text-sm font-medium bg-blue-600/20 rounded-full mb-8 border border-blue-500/30 animate-fade-in backdrop-blur-sm'>
+                <Rocket className='h-4 w-4 text-cyan-300 animate-float' />
+                <span>Live Projects Portfolio • Interactive Demos</span>
+              </div>
+              <h1 className='text-5xl md:text-6xl lg:text-7xl font-bold mb-8'>
+                <AnimatedHeadline
+                  text='Our Work'
+                  className='text-5xl md:text-6xl lg:text-7xl font-bold'
+                />
               </h1>
-              <p className='text-xl md:text-2xl text-blue-100/90 max-w-4xl mx-auto leading-relaxed mb-8'>
+              <p className='text-xl md:text-2xl text-blue-100/90 max-w-2xl leading-relaxed mb-8'>
                 Discover our portfolio of cutting-edge digital solutions, from
                 AI-powered applications to enterprise-grade platforms that drive
                 business transformation.
               </p>
-              <div className='flex flex-wrap justify-center gap-6 text-sm text-blue-200/80'>
+              <div className='flex flex-wrap gap-6 text-sm text-blue-200/80'>
                 <div className='flex items-center gap-2'>
                   <CheckCircle className='h-4 w-4 text-green-400' />
                   <span>9+ Live Projects</span>
@@ -58,177 +357,182 @@ export default function OurWorkPage() {
                 </div>
               </div>
             </div>
+          </div>
+        </section>
 
-            <div className='grid lg:grid-cols-4 gap-8 items-start'>
-              {/* Left side - Key Features */}
-              <div className='lg:col-span-1 space-y-6'>
-                <Card className='border-0 bg-white/10 backdrop-blur-sm shadow-2xl'>
-                  <CardHeader>
-                    <CardTitle className='flex items-center gap-3 text-lg text-white'>
-                      <div className='p-2 rounded-lg bg-gradient-to-br from-cyan-500 to-blue-500'>
-                        <Code2 className='h-4 w-4' />
-                      </div>
-                      Technologies
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className='space-y-3 text-sm text-blue-100'>
-                    <div className='flex items-center gap-2'>
-                      <div className='w-2 h-2 rounded-full bg-green-400'></div>
-                      <span>Next.js & React</span>
+        {/* Stats Section */}
+        <ScrollTrigger animation='fade' direction='up' duration={0.8}>
+          <section className='py-20 px-4 bg-white/50'>
+            <div className='max-w-6xl mx-auto'>
+              <div className='grid grid-cols-2 md:grid-cols-4 gap-8'>
+                {stats.map((stat, index) => (
+                  <div key={stat.label} className='text-center'>
+                    <div className='flex justify-center mb-4'>{stat.icon}</div>
+                    <div className='text-3xl md:text-4xl font-bold text-gray-900 mb-2'>
+                      <AnimatedCounter
+                        value={stat.value}
+                        duration={2}
+                        suffix={stat.suffix}
+                      />
                     </div>
-                    <div className='flex items-center gap-2'>
-                      <div className='w-2 h-2 rounded-full bg-blue-400'></div>
-                      <span>TypeScript</span>
+                    <div className='text-sm text-gray-600 font-medium'>
+                      {stat.label}
                     </div>
-                    <div className='flex items-center gap-2'>
-                      <div className='w-2 h-2 rounded-full bg-purple-400'></div>
-                      <span>AI Integration</span>
-                    </div>
-                    <div className='flex items-center gap-2'>
-                      <div className='w-2 h-2 rounded-full bg-yellow-400'></div>
-                      <span>Cloud Deployment</span>
-                    </div>
-                    <div className='flex items-center gap-2'>
-                      <div className='w-2 h-2 rounded-full bg-pink-400'></div>
-                      <span>Modern UI/UX</span>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                <Card className='border-0 bg-white/10 backdrop-blur-sm shadow-2xl'>
-                  <CardHeader>
-                    <CardTitle className='flex items-center gap-3 text-lg text-white'>
-                      <div className='p-2 rounded-lg bg-gradient-to-br from-green-500 to-emerald-500'>
-                        <Target className='h-4 w-4' />
-                      </div>
-                      Categories
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className='space-y-3 text-sm text-blue-100'>
-                    <div className='flex justify-between items-center'>
-                      <span>Business Solutions</span>
-                      <span className='text-cyan-400 font-medium'>3</span>
-                    </div>
-                    <div className='flex justify-between items-center'>
-                      <span>AI Applications</span>
-                      <span className='text-yellow-400 font-medium'>2</span>
-                    </div>
-                    <div className='flex justify-between items-center'>
-                      <span>Development Tools</span>
-                      <span className='text-green-400 font-medium'>2</span>
-                    </div>
-                    <div className='flex justify-between items-center'>
-                      <span>E-commerce & Media</span>
-                      <span className='text-purple-400 font-medium'>2</span>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                <Card className='border-0 bg-white/10 backdrop-blur-sm shadow-2xl'>
-                  <CardHeader>
-                    <CardTitle className='flex items-center gap-3 text-lg text-white'>
-                      <div className='p-2 rounded-lg bg-gradient-to-br from-purple-500 to-pink-500'>
-                        <Globe className='h-4 w-4' />
-                      </div>
-                      Live Status
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className='space-y-3 text-sm text-blue-100'>
-                    <div className='flex items-center gap-2'>
-                      <div className='w-2 h-2 rounded-full bg-green-400 animate-pulse'></div>
-                      <span>All projects online</span>
-                    </div>
-                    <div className='flex items-center gap-2'>
-                      <div className='w-2 h-2 rounded-full bg-blue-400'></div>
-                      <span>Interactive demos</span>
-                    </div>
-                    <div className='flex items-center gap-2'>
-                      <div className='w-2 h-2 rounded-full bg-yellow-400'></div>
-                      <span>Regular updates</span>
-                    </div>
-                  </CardContent>
-                </Card>
+                  </div>
+                ))}
               </div>
+            </div>
+          </section>
+        </ScrollTrigger>
 
-              {/* Right side - Project List */}
-              <div className='lg:col-span-3'>
-                <div className='mb-8'>
-                  <h2 className='text-3xl font-bold text-white mb-4'>
-                    Live Projects Portfolio
+        {/* Projects Section */}
+        <ScrollTrigger animation='fade' direction='up' duration={0.8}>
+          <section className='py-20 px-4 bg-gradient-to-br from-blue-50 to-cyan-50'>
+            <div className='max-w-6xl mx-auto'>
+              <div className='text-center mb-16'>
+                <FadeIn delay={0.2} duration={0.8}>
+                  <h2 className='text-4xl font-bold text-gray-900 mb-6'>
+                    Our Live Projects
                   </h2>
-                  <p className='text-blue-200/80 text-lg'>
-                    Click on any project below to explore the live
-                    implementation. Each project showcases our expertise in
-                    different technologies and industries.
+                  <p className='text-xl text-gray-600 max-w-3xl mx-auto'>
+                    Explore our portfolio of live projects that showcase our
+                    expertise in modern web development, AI integration, and
+                    business solutions.
                   </p>
-                </div>
-                <BookmarkList />
+                </FadeIn>
+              </div>
+
+              <div className='grid md:grid-cols-2 lg:grid-cols-3 gap-8'>
+                {projects.map((project, index) => (
+                  <SlideIn
+                    key={project.id}
+                    direction='up'
+                    delay={index * 0.1}
+                    duration={0.6}
+                  >
+                    <Card className='group hover:shadow-xl transition-all duration-300 hover:-translate-y-2 border-0 bg-white/80 backdrop-blur-sm'>
+                      <CardHeader className='pb-4'>
+                        <div className='flex items-center justify-between mb-4'>
+                          <Badge
+                            variant='secondary'
+                            className='bg-blue-100 text-blue-800 border-blue-200'
+                          >
+                            {project.category}
+                          </Badge>
+                          <div className='flex items-center gap-2 text-green-600'>
+                            <div className='w-2 h-2 bg-green-500 rounded-full animate-pulse'></div>
+                            <span className='text-sm font-medium'>
+                              {project.status}
+                            </span>
+                          </div>
+                        </div>
+                        <CardTitle className='text-xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors'>
+                          {project.title}
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <p className='text-gray-600 mb-4 leading-relaxed'>
+                          {project.description}
+                        </p>
+                        <div className='flex flex-wrap gap-2 mb-4'>
+                          {project.technologies
+                            .slice(0, 3)
+                            .map((tech, techIndex) => (
+                              <Badge
+                                key={techIndex}
+                                variant='outline'
+                                className='text-xs bg-gray-50 text-gray-700 border-gray-200'
+                              >
+                                {tech}
+                              </Badge>
+                            ))}
+                        </div>
+                        <Button
+                          asChild
+                          className='w-full group-hover:bg-blue-600 transition-colors'
+                        >
+                          <Link
+                            href={project.url}
+                            target='_blank'
+                            rel='noopener noreferrer'
+                            className='flex items-center justify-center gap-2'
+                          >
+                            <span>View Project</span>
+                            <ArrowRight className='h-4 w-4 group-hover:translate-x-1 transition-transform' />
+                          </Link>
+                        </Button>
+                      </CardContent>
+                    </Card>
+                  </SlideIn>
+                ))}
               </div>
             </div>
-          </div>
-        </section>
+          </section>
+        </ScrollTrigger>
 
-        {/* Additional Info Section */}
-        <section className='py-20 px-4 bg-white'>
-          <div className='max-w-6xl mx-auto'>
-            <div className='text-center mb-16'>
-              <h2 className='text-4xl font-bold text-gray-900 mb-6'>
-                Why Choose Our Solutions?
-              </h2>
-              <p className='text-xl text-gray-600 max-w-3xl mx-auto'>
-                Every project in our portfolio represents our commitment to
-                excellence, innovation, and client success.
-              </p>
+        {/* Technologies Section */}
+        <ScrollTrigger animation='fade' direction='up' duration={0.8}>
+          <section className='py-20 px-4 bg-white'>
+            <div className='max-w-6xl mx-auto'>
+              <div className='text-center mb-16'>
+                <FadeIn delay={0.2} duration={0.8}>
+                  <h2 className='text-4xl font-bold text-gray-900 mb-6'>
+                    Technologies We Use
+                  </h2>
+                  <p className='text-xl text-gray-600 max-w-3xl mx-auto'>
+                    We leverage cutting-edge technologies to build robust,
+                    scalable, and performant applications.
+                  </p>
+                </FadeIn>
+              </div>
+
+              <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8'>
+                {[
+                  {
+                    name: 'Next.js',
+                    icon: <Code2 className='h-8 w-8 text-blue-600' />,
+                  },
+                  {
+                    name: 'React',
+                    icon: <Monitor className='h-8 w-8 text-cyan-600' />,
+                  },
+                  {
+                    name: 'TypeScript',
+                    icon: <Database className='h-8 w-8 text-blue-500' />,
+                  },
+                  {
+                    name: 'Node.js',
+                    icon: <Cloud className='h-8 w-8 text-green-600' />,
+                  },
+                  {
+                    name: 'AI/ML',
+                    icon: <Zap className='h-8 w-8 text-purple-600' />,
+                  },
+                  {
+                    name: 'Cloud',
+                    icon: <Globe className='h-8 w-8 text-indigo-600' />,
+                  },
+                ].map((tech, index) => (
+                  <SlideIn
+                    key={tech.name}
+                    direction='up'
+                    delay={index * 0.1}
+                    duration={0.6}
+                  >
+                    <div className='text-center group hover:scale-105 transition-transform duration-300'>
+                      <div className='flex justify-center mb-3'>
+                        {tech.icon}
+                      </div>
+                      <h3 className='font-semibold text-gray-900 group-hover:text-blue-600 transition-colors'>
+                        {tech.name}
+                      </h3>
+                    </div>
+                  </SlideIn>
+                ))}
+              </div>
             </div>
-
-            <div className='grid grid-cols-1 md:grid-cols-3 gap-8'>
-              <Card className='border-0 shadow-lg hover:shadow-xl transition-all duration-300'>
-                <CardHeader className='text-center'>
-                  <div className='w-16 h-16 mx-auto bg-gradient-to-br from-blue-500 to-cyan-500 rounded-xl flex items-center justify-center mb-4'>
-                    <Code2 className='h-8 w-8 text-white' />
-                  </div>
-                  <CardTitle className='text-xl'>Modern Technology</CardTitle>
-                </CardHeader>
-                <CardContent className='text-center'>
-                  <p className='text-gray-600'>
-                    Built with the latest frameworks and best practices for
-                    optimal performance and scalability.
-                  </p>
-                </CardContent>
-              </Card>
-
-              <Card className='border-0 shadow-lg hover:shadow-xl transition-all duration-300'>
-                <CardHeader className='text-center'>
-                  <div className='w-16 h-16 mx-auto bg-gradient-to-br from-green-500 to-emerald-500 rounded-xl flex items-center justify-center mb-4'>
-                    <Target className='h-8 w-8 text-white' />
-                  </div>
-                  <CardTitle className='text-xl'>Industry Focus</CardTitle>
-                </CardHeader>
-                <CardContent className='text-center'>
-                  <p className='text-gray-600'>
-                    Tailored solutions for diverse industries, from e-commerce
-                    to AI applications and enterprise tools.
-                  </p>
-                </CardContent>
-              </Card>
-
-              <Card className='border-0 shadow-lg hover:shadow-xl transition-all duration-300'>
-                <CardHeader className='text-center'>
-                  <div className='w-16 h-16 mx-auto bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center mb-4'>
-                    <Rocket className='h-8 w-8 text-white' />
-                  </div>
-                  <CardTitle className='text-xl'>Live & Interactive</CardTitle>
-                </CardHeader>
-                <CardContent className='text-center'>
-                  <p className='text-gray-600'>
-                    All projects are live and fully functional, demonstrating
-                    real-world applications and user experiences.
-                  </p>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
-        </section>
+          </section>
+        </ScrollTrigger>
 
         {/* CTA Section */}
         <section className='py-20 px-4 bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 text-white'>
@@ -237,31 +541,29 @@ export default function OurWorkPage() {
               Ready to Build Your Next Project?
             </h2>
             <p className='text-xl text-blue-100/90 mb-8 max-w-2xl mx-auto'>
-              Let's discuss how we can create innovative solutions for your
-              business, just like the projects showcased above.
+              Let's discuss your project requirements and create a solution that
+              drives your business forward with cutting-edge technology.
             </p>
-
-            <div className='flex flex-col sm:flex-row gap-6 justify-center items-center'>
+            <div className='flex flex-col sm:flex-row gap-4 justify-center'>
               <Button
-                size='lg'
-                className='text-lg px-8 py-4 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700'
                 asChild
+                size='lg'
+                className='bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white px-8 py-3'
               >
-                <Link href='/contact'>
-                  <Rocket className='mr-2 h-5 w-5' />
-                  Start Your Project
-                  <ArrowRight className='ml-2 h-5 w-5' />
+                <Link href='/contact' className='flex items-center gap-2'>
+                  <span>Start Your Project</span>
+                  <ArrowRight className='h-5 w-5' />
                 </Link>
               </Button>
               <Button
-                size='lg'
-                variant='outline'
-                className='text-lg px-8 py-4 bg-white/10 border-white/20 hover:bg-white/20'
                 asChild
+                variant='outline'
+                size='lg'
+                className='border-white/30 text-white hover:bg-white/10 px-8 py-3'
               >
-                <Link href='/about'>
-                  <Users className='mr-2 h-5 w-5' />
-                  Learn About Us
+                <Link href='/portfolio' className='flex items-center gap-2'>
+                  <span>View Portfolio</span>
+                  <Globe className='h-5 w-5' />
                 </Link>
               </Button>
             </div>

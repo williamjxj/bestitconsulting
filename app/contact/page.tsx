@@ -9,6 +9,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { AnimatedFAQ } from '@/components/ui/AnimatedFAQ'
+import { AnimatedHeadline } from '@/components/animations/AnimatedHeadline'
 import {
   Phone,
   Mail,
@@ -189,7 +190,7 @@ export default function ContactPage() {
     <Layout>
       <div className='min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50'>
         {/* Compact Hero Section */}
-        <section className='relative overflow-hidden bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 text-white py-16'>
+        <section className='relative overflow-hidden bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 text-white py-24 md:py-32'>
           <div className='container mx-auto px-4 relative z-10'>
             <div className='text-center max-w-4xl mx-auto'>
               <div className='inline-flex items-center gap-2 px-4 py-2 text-sm font-medium bg-blue-600/20 rounded-full mb-6 border border-blue-500/30'>
@@ -198,10 +199,10 @@ export default function ContactPage() {
               </div>
 
               <h1 className='text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6'>
-                <span className='block'>Let's Start Your</span>
-                <span className='block bg-clip-text text-transparent bg-gradient-to-r from-blue-300 via-cyan-300 to-purple-400'>
-                  Digital Journey
-                </span>
+                <AnimatedHeadline
+                  text="Let's Start Your Digital Journey"
+                  className='text-4xl md:text-5xl lg:text-6xl font-bold leading-tight'
+                />
               </h1>
 
               <p className='text-lg md:text-xl text-blue-100/90 mb-8 max-w-2xl mx-auto'>

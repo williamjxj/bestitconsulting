@@ -9,6 +9,7 @@ import { ScrollTrigger } from '@/components/animations/ScrollTrigger'
 import { FadeIn } from '@/components/animations/FadeIn'
 import { SlideIn } from '@/components/animations/SlideIn'
 import { AnimatedCounter } from '@/components/animations/AnimatedCounter'
+import { AnimatedHeadline } from '@/components/animations/AnimatedHeadline'
 import {
   Star,
   Quote,
@@ -34,7 +35,8 @@ export default function TestimonialsPage() {
       role: 'CEO',
       company: 'TechFlow Solutions',
       industry: 'Software',
-      image: '/placeholder.svg',
+      image:
+        'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face&auto=format',
       rating: 5,
       content:
         'Best IT Consulting transformed our entire digital infrastructure. Their expertise in cloud migration saved us 60% on operational costs while improving our system reliability dramatically. The team was professional, responsive, and delivered beyond our expectations.',
@@ -52,7 +54,8 @@ export default function TestimonialsPage() {
       role: 'CTO',
       company: 'HealthVital Medical',
       industry: 'Healthcare',
-      image: '/placeholder.svg',
+      image:
+        'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face&auto=format',
       rating: 5,
       content:
         'The healthcare management system BestIT developed for us has revolutionized our patient care process. The HIPAA-compliant solution streamlined our operations and significantly improved patient satisfaction scores.',
@@ -70,7 +73,8 @@ export default function TestimonialsPage() {
       role: 'Director of Operations',
       company: 'RetailMax Enterprise',
       industry: 'Retail',
-      image: '/placeholder.svg',
+      image:
+        'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face&auto=format',
       rating: 5,
       content:
         'Our e-commerce platform built by BestIT has exceeded all performance expectations. The scalable architecture handles millions of transactions seamlessly, and the conversion rate improvements have significantly boosted our revenue.',
@@ -88,7 +92,8 @@ export default function TestimonialsPage() {
       role: 'VP of Technology',
       company: 'FinanceCore Bank',
       industry: 'Finance',
-      image: '/placeholder.svg',
+      image:
+        'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face&auto=format',
       rating: 5,
       content:
         'The real-time analytics dashboard BestITConsulting created has transformed how we make financial decisions. The insights we gain from their sophisticated data visualization platform have led to better investment strategies and risk management.',
@@ -106,7 +111,8 @@ export default function TestimonialsPage() {
       role: 'Fleet Manager',
       company: 'LogiTrans Solutions',
       industry: 'Transportation',
-      image: '/placeholder.svg',
+      image:
+        'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop&crop=face&auto=format',
       rating: 5,
       content:
         'The IoT fleet management system has revolutionized our operations. Real-time tracking, predictive maintenance, and route optimization have significantly reduced our operational costs while improving service quality.',
@@ -124,7 +130,8 @@ export default function TestimonialsPage() {
       role: 'Manufacturing Director',
       company: 'IndustryMax Corp',
       industry: 'Manufacturing',
-      image: '/placeholder.svg',
+      image:
+        'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face&auto=format',
       rating: 5,
       content:
         "BestIT's cloud migration platform made our digital transformation seamless. The automated assessment and migration tools saved us months of work, and the cost optimization recommendations continue to provide value.",
@@ -142,7 +149,8 @@ export default function TestimonialsPage() {
       role: 'Customer Success Director',
       company: 'TeleConnect Inc',
       industry: 'Telecommunications',
-      image: '/placeholder.svg',
+      image:
+        'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&h=150&fit=crop&crop=face&auto=format',
       rating: 5,
       content:
         'The AI-powered customer service platform has transformed our support operations. The intelligent chatbot and sentiment analysis have dramatically improved response times and customer satisfaction rates.',
@@ -160,7 +168,8 @@ export default function TestimonialsPage() {
       role: 'Innovation Lead',
       company: 'StartupLaunch',
       industry: 'Technology',
-      image: '/placeholder.svg',
+      image:
+        'https://images.unsplash.com/photo-1519345182560-3f2917c472ef?w=150&h=150&fit=crop&crop=face&auto=format',
       rating: 5,
       content:
         'As a startup, we needed a reliable technology partner who could scale with us. BestIT not only delivered an amazing MVP but also provided ongoing support that helped us secure our Series A funding.',
@@ -239,10 +248,10 @@ export default function TestimonialsPage() {
               </div>
 
               <h1 className='text-5xl md:text-6xl lg:text-7xl font-bold leading-tight mb-8'>
-                <span className='block'>Client</span>
-                <span className='block bg-clip-text text-transparent bg-gradient-to-r from-blue-300 via-cyan-300 to-purple-400'>
-                  Testimonials
-                </span>
+                <AnimatedHeadline
+                  text='Client Testimonials'
+                  className='text-5xl md:text-6xl lg:text-7xl font-bold leading-tight'
+                />
               </h1>
 
               <p className='text-xl md:text-2xl text-blue-100/90 max-w-3xl mx-auto mb-12 leading-relaxed'>

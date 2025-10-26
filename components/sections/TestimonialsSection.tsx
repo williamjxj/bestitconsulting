@@ -49,7 +49,8 @@ const defaultTestimonials: Testimonial[] = [
     content:
       'BestIT transformed our infrastructure and helped us scale from startup to enterprise. Outstanding work!',
     rating: 5,
-    avatar: '/api/placeholder/60/60',
+    avatar:
+      'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face&auto=format',
     featured: true,
   },
   {
@@ -60,7 +61,8 @@ const defaultTestimonials: Testimonial[] = [
     content:
       'Their cloud migration strategy saved us 40% in infrastructure costs while improving performance.',
     rating: 5,
-    avatar: '/api/placeholder/60/60',
+    avatar:
+      'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face&auto=format',
   },
   {
     id: 'emily-rodriguez',
@@ -70,7 +72,8 @@ const defaultTestimonials: Testimonial[] = [
     content:
       'The team delivered our MVP in record time. Professional, skilled, and reliable partners.',
     rating: 5,
-    avatar: '/api/placeholder/60/60',
+    avatar:
+      'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face&auto=format',
   },
   {
     id: 'david-kim',
@@ -80,7 +83,8 @@ const defaultTestimonials: Testimonial[] = [
     content:
       'Exceptional quality and attention to detail. They understood our vision and brought it to life perfectly.',
     rating: 5,
-    avatar: '/api/placeholder/60/60',
+    avatar:
+      'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face&auto=format',
   },
   {
     id: 'lisa-wang',
@@ -90,7 +94,8 @@ const defaultTestimonials: Testimonial[] = [
     content:
       "BestIT's expertise in modern technologies helped us stay ahead of the competition.",
     rating: 5,
-    avatar: '/api/placeholder/60/60',
+    avatar:
+      'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop&crop=face&auto=format',
   },
 ]
 
@@ -180,11 +185,29 @@ export function TestimonialsSection({
 
                 <CardContent>
                   <div className='flex items-center justify-center gap-4'>
-                    <div className='w-12 h-12 rounded-full bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center text-primary-foreground font-semibold'>
-                      {currentTestimonial.name
-                        .split(' ')
-                        .map(n => n[0])
-                        .join('')}
+                    <div className='relative'>
+                      <div className='w-16 h-16 rounded-full overflow-hidden bg-gradient-to-r from-blue-500 to-purple-500 p-0.5'>
+                        <div className='w-full h-full rounded-full overflow-hidden bg-white flex items-center justify-center'>
+                          <img
+                            src={currentTestimonial.avatar}
+                            alt={`${currentTestimonial.name} avatar`}
+                            className='w-full h-full object-cover'
+                            onError={e => {
+                              const target = e.target as HTMLImageElement
+                              target.style.display = 'none'
+                              const fallback =
+                                target.nextElementSibling as HTMLElement
+                              if (fallback) fallback.style.display = 'flex'
+                            }}
+                          />
+                          <div className='w-full h-full bg-gradient-to-br from-blue-500 to-purple-500 items-center justify-center text-white font-semibold text-lg hidden'>
+                            {currentTestimonial.name
+                              .split(' ')
+                              .map(n => n[0])
+                              .join('')}
+                          </div>
+                        </div>
+                      </div>
                     </div>
                     <div className='text-left'>
                       <div className='font-semibold text-lg'>
