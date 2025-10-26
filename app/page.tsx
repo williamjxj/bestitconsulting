@@ -20,7 +20,6 @@ import { CredibilitySection } from '@/components/sections/CredibilitySection'
 import TechnologyShowcase from '@/components/sections/TechnologyShowcase'
 import { DemoVideo } from '@/components/DemoVideo'
 import { TestimonialsSection } from '@/components/sections/TestimonialsSection'
-import AnimationTestSuite from '@/components/animations/AnimationTestSuite'
 
 export default function HomePage() {
   const features = [
@@ -319,14 +318,6 @@ export default function HomePage() {
         </section>
       </div>
 
-      {/* Development Test Suite */}
-      {process.env.NODE_ENV === 'development' && (
-        <AnimationTestSuite
-          showPerformance={true}
-          showAccessibility={true}
-          showTestControls={true}
-        />
-      )}
     </Layout>
   )
 }
