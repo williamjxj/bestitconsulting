@@ -17,7 +17,7 @@ export const animationPresets = {
     name: 'Fade In',
     type: 'transition' as const,
     duration: 500,
-    easing: 'ease-out',
+    easing: 'easeOut',
     reducedMotion: {
       enabled: true,
       alternativeAnimation: 'fade-in-static',
@@ -134,7 +134,7 @@ export const animationPresets = {
     name: 'Hover Scale',
     type: 'interaction' as const,
     duration: 200,
-    easing: 'ease-out',
+    easing: 'easeOut',
     reducedMotion: {
       enabled: true,
       alternativeAnimation: 'hover-scale-static',
@@ -153,7 +153,7 @@ export const animationPresets = {
     name: 'Hover Glow',
     type: 'interaction' as const,
     duration: 300,
-    easing: 'ease-out',
+    easing: 'easeOut',
     reducedMotion: {
       enabled: true,
       alternativeAnimation: 'hover-glow-static',
@@ -195,7 +195,7 @@ export const animationPresets = {
     duration: 1500,
     easing: 'ease-in-out',
     iterations: -1,
-    direction: 'alternate',
+    direction: 'alternate' as const,
     reducedMotion: {
       enabled: true,
       alternativeAnimation: 'pulse-static',
@@ -261,7 +261,7 @@ export class AnimationConfigurator {
     name: string,
     type: AnimationConfig['type'],
     duration: number,
-    easing: string = 'ease-out',
+    easing: string = 'easeOut',
     options: Partial<AnimationConfig> = {}
   ): AnimationConfig {
     return {
@@ -272,7 +272,7 @@ export class AnimationConfigurator {
       easing,
       delay: 0,
       iterations: 1,
-      direction: 'normal',
+      direction: 'normal' as const,
       fillMode: 'both',
       reducedMotion: {
         enabled: true,
@@ -408,7 +408,7 @@ export class AnimationConfigurator {
   static getOptimalEasing(
     type: AnimationConfig['type'],
     deviceTier: 'high' | 'medium' | 'low'
-  ): string {
+  ): string | number[] {
     const easingMap = {
       high: {
         transition: [0.4, 0, 0.2, 1],
@@ -417,9 +417,9 @@ export class AnimationConfigurator {
         loading: 'linear',
       },
       medium: {
-        transition: 'ease-out',
-        interaction: 'ease-out',
-        scroll: 'ease-out',
+        transition: 'easeOut',
+        interaction: 'easeOut',
+        scroll: 'easeOut',
         loading: 'linear',
       },
       low: {
@@ -515,7 +515,7 @@ export const animationPerformance = {
     // Iterations factor
     if (animation.iterations === -1) {
       complexity += 2
-    } else if (animation.iterations > 1) {
+    } else if (animation.iterations && animation.iterations > 1) {
       complexity += animation.iterations * 0.5
     }
 

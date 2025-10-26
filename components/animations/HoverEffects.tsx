@@ -35,7 +35,7 @@ const HoverEffects: React.FC<HoverEffectsProps> = ({
       name: `Hover ${effect}`,
       type: 'interaction',
       duration: duration * 1000,
-      easing: 'ease-out',
+      easing: 'easeOut',
       reducedMotion: {
         enabled: true,
         alternativeAnimation: 'static-hover',
@@ -54,7 +54,7 @@ const HoverEffects: React.FC<HoverEffectsProps> = ({
   // Reduced motion fallback
   if (prefersReducedMotion) {
     return (
-      <div className={className} {...rest}>
+      <div className={className} {...(rest as any)}>
         {children}
       </div>
     )
@@ -266,7 +266,7 @@ export const MagneticHover: React.FC<MagneticHoverProps> = ({
 
   if (prefersReducedMotion) {
     return (
-      <div className={className} {...rest}>
+      <div className={className} {...(rest as any)}>
         {children}
       </div>
     )
@@ -318,7 +318,7 @@ export const InteractiveCard: React.FC<InteractiveCardProps> = ({
       y: -8,
       scale: 1.02,
       boxShadow: '0 20px 40px rgba(0, 0, 0, 0.1)',
-      transition: { duration: 0.3, ease: 'ease-out' },
+      transition: { duration: 0.3, ease: 'easeOut' as const },
     },
   }
 

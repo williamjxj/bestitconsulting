@@ -62,7 +62,7 @@ const ConversionTrackingAnimation: React.FC<
       name: 'Conversion Tracking',
       type: 'interaction',
       duration: 1000,
-      easing: 'ease-out',
+      easing: 'easeOut',
       reducedMotion: {
         enabled: true,
         alternativeAnimation: 'static-tracking',
@@ -133,7 +133,7 @@ const ConversionTrackingAnimation: React.FC<
   // Reduced motion fallback
   if (prefersReducedMotion) {
     return (
-      <div className={`space-y-6 ${className}`} {...rest}>
+      <div className={`space-y-6 ${className}`} {...(rest as any)}>
         {/* Metrics overview */}
         <div className='grid grid-cols-2 md:grid-cols-3 gap-4'>
           <div className='bg-white p-4 rounded-lg shadow-sm border'>
@@ -255,7 +255,7 @@ const ConversionTrackingAnimation: React.FC<
       opacity: 1,
       transition: {
         duration: 0.5,
-        ease: 'ease-out',
+        ease: 'easeOut' as const,
       },
     },
   }
@@ -298,7 +298,7 @@ const ConversionTrackingAnimation: React.FC<
           <motion.div
             initial={{ width: 0 }}
             animate={{ width: '100%' }}
-            transition={{ duration: 2, ease: 'ease-out' }}
+            transition={{ duration: 2, ease: 'easeOut' as const }}
             className='absolute bottom-0 left-0 h-1 bg-blue-500'
           />
         </motion.div>
@@ -328,7 +328,7 @@ const ConversionTrackingAnimation: React.FC<
           <motion.div
             initial={{ width: 0 }}
             animate={{ width: '100%' }}
-            transition={{ duration: 2, ease: 'ease-out' }}
+            transition={{ duration: 2, ease: 'easeOut' as const }}
             className='absolute bottom-0 left-0 h-1 bg-green-500'
           />
         </motion.div>
@@ -358,7 +358,7 @@ const ConversionTrackingAnimation: React.FC<
           <motion.div
             initial={{ width: 0 }}
             animate={{ width: '100%' }}
-            transition={{ duration: 2, ease: 'ease-out' }}
+            transition={{ duration: 2, ease: 'easeOut' as const }}
             className='absolute bottom-0 left-0 h-1 bg-purple-500'
           />
         </motion.div>

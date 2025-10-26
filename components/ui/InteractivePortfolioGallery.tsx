@@ -17,7 +17,7 @@ import {
   Filter,
   Search,
 } from 'lucide-react'
-import { OptimizedImage, HeroImage, GalleryImage } from './OptimizedImage'
+import OptimizedImage from './OptimizedImage'
 
 interface InteractivePortfolioGalleryProps extends HTMLMotionProps<'div'> {
   projects: Array<{
@@ -64,7 +64,7 @@ const InteractivePortfolioGallery: React.FC<
       name: 'Portfolio Gallery',
       type: 'interaction',
       duration: 600,
-      easing: 'ease-out',
+      easing: 'easeOut',
       reducedMotion: {
         enabled: true,
         alternativeAnimation: 'static-gallery',
@@ -127,7 +127,7 @@ const InteractivePortfolioGallery: React.FC<
   // Reduced motion fallback
   if (prefersReducedMotion) {
     return (
-      <div className={`space-y-6 ${className}`} {...rest}>
+      <div className={`space-y-6 ${className}`} {...(rest as any)}>
         {/* Filters */}
         <div className='flex flex-wrap gap-2'>
           <button
@@ -140,7 +140,7 @@ const InteractivePortfolioGallery: React.FC<
           >
             All
           </button>
-          {categories.map(category => (
+          {categories.map((category: string) => (
             <button
               key={category}
               onClick={() => onCategoryChange?.(category)}
@@ -157,7 +157,7 @@ const InteractivePortfolioGallery: React.FC<
 
         {/* Projects grid */}
         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
-          {filteredProjects.map(project => (
+          {filteredProjects.map((project: any) => (
             <div
               key={project.id}
               className='bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow'
@@ -180,7 +180,7 @@ const InteractivePortfolioGallery: React.FC<
                   {project.description}
                 </p>
                 <div className='flex flex-wrap gap-1'>
-                  {project.technologies.slice(0, 3).map(tech => (
+                  {project.technologies.slice(0, 3).map((tech: string) => (
                     <Badge key={tech} variant='outline' className='text-xs'>
                       {tech}
                     </Badge>
@@ -216,7 +216,7 @@ const InteractivePortfolioGallery: React.FC<
                   {selectedProject.description}
                 </p>
                 <div className='flex flex-wrap gap-2 mb-4'>
-                  {selectedProject.technologies.map(tech => (
+                  {selectedProject.technologies.map((tech: string) => (
                     <Badge key={tech} variant='secondary'>
                       {tech}
                     </Badge>
@@ -285,7 +285,7 @@ const InteractivePortfolioGallery: React.FC<
       boxShadow: '0 20px 40px rgba(0, 0, 0, 0.1)',
       transition: {
         duration: 0.3,
-        ease: 'ease-out',
+        ease: 'easeOut' as const,
       },
     },
   }
@@ -297,7 +297,7 @@ const InteractivePortfolioGallery: React.FC<
       scale: 1,
       transition: {
         duration: 0.3,
-        ease: 'backOut',
+        ease: 'easeOut' as const,
       },
     },
     exit: {
@@ -305,7 +305,7 @@ const InteractivePortfolioGallery: React.FC<
       scale: 0.8,
       transition: {
         duration: 0.2,
-        ease: 'easeIn',
+        ease: 'easeIn' as const,
       },
     },
   }
@@ -316,7 +316,7 @@ const InteractivePortfolioGallery: React.FC<
       initial='hidden'
       animate='visible'
       className={`space-y-6 ${className}`}
-      {...rest}
+      {...(rest as any)}
     >
       {/* Filters and Search */}
       <motion.div
@@ -338,7 +338,7 @@ const InteractivePortfolioGallery: React.FC<
           >
             All
           </motion.button>
-          {categories.map((category, index) => (
+          {categories.map((category: string, index: number) => (
             <motion.button
               key={category}
               whileHover={{ scale: 1.05 }}
@@ -373,7 +373,7 @@ const InteractivePortfolioGallery: React.FC<
         variants={containerVariants}
         className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'
       >
-        {filteredProjects.map((project, index) => (
+        {filteredProjects.map((project: any, index: number) => (
           <motion.div
             key={project.id}
             variants={projectVariants}
@@ -441,7 +441,7 @@ const InteractivePortfolioGallery: React.FC<
               </p>
 
               <div className='flex flex-wrap gap-1'>
-                {project.technologies.slice(0, 3).map(tech => (
+                {project.technologies.slice(0, 3).map((tech: string) => (
                   <Badge key={tech} variant='outline' className='text-xs'>
                     {tech}
                   </Badge>
@@ -532,7 +532,7 @@ const InteractivePortfolioGallery: React.FC<
                 {selectedProject.gallery &&
                   selectedProject.gallery.length > 1 && (
                     <div className='flex justify-center gap-2 mt-4'>
-                      {selectedProject.gallery.map((_, index) => (
+                      {selectedProject.gallery.map((_: any, index: number) => (
                         <button
                           key={index}
                           onClick={() => setCurrentImageIndex(index)}
@@ -557,7 +557,7 @@ const InteractivePortfolioGallery: React.FC<
 
                   <h3 className='text-xl font-semibold mb-4'>Technologies</h3>
                   <div className='flex flex-wrap gap-2'>
-                    {selectedProject.technologies.map(tech => (
+                    {selectedProject.technologies.map((tech: string) => (
                       <Badge key={tech} variant='secondary'>
                         {tech}
                       </Badge>

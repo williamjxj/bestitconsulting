@@ -5,8 +5,7 @@ import { cn } from '@/lib/utils'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { ChevronRight } from 'lucide-react'
-import {
-  HoverEffects,
+import HoverEffects, {
   HoverLift,
   HoverGlow,
 } from '@/components/animations/HoverEffects'
@@ -41,8 +40,6 @@ export function ServiceCard({
         'shadow-sm hover:shadow-lg hover:shadow-blue-500/10',
         className
       )}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
     >
       <div className='absolute inset-0 bg-gradient-to-br from-blue-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500' />
 

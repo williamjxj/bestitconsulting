@@ -12,7 +12,7 @@ import {
   Monitor,
   Wifi,
   Battery,
-  Touch,
+  Hand,
   CheckCircle,
   AlertTriangle,
   XCircle,
@@ -85,7 +85,7 @@ const MobileOptimization: React.FC<MobileOptimizationProps> = ({
       name: 'Mobile Optimization',
       type: 'interaction',
       duration: 800,
-      easing: 'ease-out',
+      easing: 'easeOut',
       reducedMotion: {
         enabled: true,
         alternativeAnimation: 'static-mobile',
@@ -214,7 +214,7 @@ const MobileOptimization: React.FC<MobileOptimizationProps> = ({
   // Reduced motion fallback
   if (prefersReducedMotion) {
     return (
-      <div className={`space-y-6 ${className}`} {...rest}>
+      <div className={`space-y-6 ${className}`} {...(rest as any)}>
         {/* Optimization controls */}
         <div className='bg-white p-4 rounded-lg shadow-sm border'>
           <div className='flex items-center justify-between mb-4'>
@@ -237,9 +237,9 @@ const MobileOptimization: React.FC<MobileOptimizationProps> = ({
         <div className='grid grid-cols-2 md:grid-cols-3 gap-4'>
           <div className='bg-white p-4 rounded-lg shadow-sm border'>
             <div className='flex items-center gap-2 mb-2'>
-              <Touch className='h-5 w-5 text-blue-500' />
+              <Hand className='h-5 w-5 text-blue-500' />
               <span className='text-sm font-medium text-gray-600'>
-                Touch Targets
+                Hand Targets
               </span>
             </div>
             <div className='text-2xl font-bold text-gray-900'>
@@ -358,7 +358,7 @@ const MobileOptimization: React.FC<MobileOptimizationProps> = ({
       opacity: 1,
       transition: {
         duration: 0.5,
-        ease: 'ease-out',
+        ease: 'easeOut' as const,
       },
     },
   }
@@ -369,7 +369,7 @@ const MobileOptimization: React.FC<MobileOptimizationProps> = ({
       initial='hidden'
       animate='visible'
       className={`space-y-6 ${className}`}
-      {...rest}
+      {...(rest as any)}
     >
       {/* Optimization controls */}
       <motion.div
@@ -455,10 +455,10 @@ const MobileOptimization: React.FC<MobileOptimizationProps> = ({
               animate={{ rotate: isOptimizing ? 360 : 0 }}
               transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
             >
-              <Touch className='h-5 w-5 text-blue-500' />
+              <Hand className='h-5 w-5 text-blue-500' />
             </motion.div>
             <span className='text-sm font-medium text-gray-600'>
-              Touch Targets
+              Hand Targets
             </span>
           </div>
           <motion.div
@@ -470,7 +470,7 @@ const MobileOptimization: React.FC<MobileOptimizationProps> = ({
           <motion.div
             initial={{ width: 0 }}
             animate={{ width: '100%' }}
-            transition={{ duration: 2, ease: 'ease-out' }}
+            transition={{ duration: 2, ease: 'easeOut' as const }}
             className='absolute bottom-0 left-0 h-1 bg-blue-500'
           />
         </motion.div>
@@ -500,7 +500,7 @@ const MobileOptimization: React.FC<MobileOptimizationProps> = ({
           <motion.div
             initial={{ width: 0 }}
             animate={{ width: '100%' }}
-            transition={{ duration: 2, ease: 'ease-out' }}
+            transition={{ duration: 2, ease: 'easeOut' as const }}
             className='absolute bottom-0 left-0 h-1 bg-green-500'
           />
         </motion.div>
@@ -530,7 +530,7 @@ const MobileOptimization: React.FC<MobileOptimizationProps> = ({
           <motion.div
             initial={{ width: 0 }}
             animate={{ width: '100%' }}
-            transition={{ duration: 2, ease: 'ease-out' }}
+            transition={{ duration: 2, ease: 'easeOut' as const }}
             className='absolute bottom-0 left-0 h-1 bg-purple-500'
           />
         </motion.div>

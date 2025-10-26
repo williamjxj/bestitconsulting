@@ -78,7 +78,7 @@ const VisualEnhancementDocumentation: React.FC<
       name: 'Visual Documentation',
       type: 'interaction',
       duration: 600,
-      easing: 'ease-out',
+      easing: 'easeOut',
       reducedMotion: {
         enabled: true,
         alternativeAnimation: 'static-documentation',
@@ -160,7 +160,7 @@ const VisualEnhancementDocumentation: React.FC<
   // Reduced motion fallback
   if (prefersReducedMotion) {
     return (
-      <div className={`space-y-6 ${className}`} {...rest}>
+      <div className={`space-y-6 ${className}`} {...(rest as any)}>
         {/* Header */}
         <div className='bg-white p-4 rounded-lg shadow-sm border'>
           <div className='flex items-center gap-2 mb-4'>
@@ -267,7 +267,7 @@ const VisualEnhancementDocumentation: React.FC<
       height: 'auto',
       transition: {
         duration: 0.3,
-        ease: 'ease-out',
+        ease: 'easeOut' as const,
       },
     },
   }
@@ -278,7 +278,7 @@ const VisualEnhancementDocumentation: React.FC<
       initial='hidden'
       animate='visible'
       className={`space-y-6 ${className}`}
-      {...rest}
+      {...(rest as any)}
     >
       {/* Header */}
       <motion.div

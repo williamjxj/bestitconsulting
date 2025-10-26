@@ -12,11 +12,8 @@ import {
   AlertTriangle,
   XCircle,
   Chrome,
-  Firefox,
-  Safari,
-  Edge,
-  Smartphone,
   Monitor,
+  Smartphone,
   Tablet,
   Wifi,
   Shield,
@@ -72,7 +69,7 @@ const CrossBrowserCompatibility: React.FC<CrossBrowserCompatibilityProps> = ({
       name: 'Cross Browser Compatibility',
       type: 'interaction',
       duration: 800,
-      easing: 'ease-out',
+      easing: 'easeOut',
       reducedMotion: {
         enabled: true,
         alternativeAnimation: 'static-compatibility',
@@ -174,7 +171,7 @@ const CrossBrowserCompatibility: React.FC<CrossBrowserCompatibilityProps> = ({
   // Reduced motion fallback
   if (prefersReducedMotion) {
     return (
-      <div className={`space-y-6 ${className}`} {...rest}>
+      <div className={`space-y-6 ${className}`} {...(rest as any)}>
         {/* Test controls */}
         <div className='bg-white p-4 rounded-lg shadow-sm border'>
           <div className='flex items-center justify-between mb-4'>
@@ -310,7 +307,7 @@ const CrossBrowserCompatibility: React.FC<CrossBrowserCompatibilityProps> = ({
       initial='hidden'
       animate='visible'
       className={`space-y-6 ${className}`}
-      {...rest}
+      {...(rest as any)}
     >
       {/* Test controls */}
       <motion.div

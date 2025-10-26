@@ -90,9 +90,9 @@ export function ScaleIn({
         duration: optimizedConfig.duration / 1000,
         delay: (delay + stagger) / 1000,
         ease: optimizedConfig.easing,
-        onComplete: onComplete,
-        onStart: onStart,
       }}
+      onAnimationStart={onStart}
+      onAnimationComplete={onComplete}
       className={className}
       {...props}
     >

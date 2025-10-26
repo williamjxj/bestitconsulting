@@ -19,7 +19,7 @@ export const visualEffectPresets = {
     type: 'parallax' as const,
     component: 'ParallaxScroll',
     trigger: {
-      type: 'scroll',
+      type: 'scroll' as const,
       threshold: 0.1,
       once: false,
     },
@@ -56,7 +56,7 @@ export const visualEffectPresets = {
     type: 'parallax' as const,
     component: 'ParallaxScroll',
     trigger: {
-      type: 'scroll',
+      type: 'scroll' as const,
       threshold: 0.1,
       once: false,
     },
@@ -94,7 +94,7 @@ export const visualEffectPresets = {
     type: 'reveal' as const,
     component: 'RevealScroll',
     trigger: {
-      type: 'scroll',
+      type: 'scroll' as const,
       threshold: 0.2,
       once: true,
     },
@@ -131,7 +131,7 @@ export const visualEffectPresets = {
     type: 'reveal' as const,
     component: 'RevealScroll',
     trigger: {
-      type: 'scroll',
+      type: 'scroll' as const,
       threshold: 0.2,
       once: true,
     },
@@ -169,7 +169,7 @@ export const visualEffectPresets = {
     type: 'hover' as const,
     component: 'HoverEffect',
     trigger: {
-      type: 'hover',
+      type: 'hover' as const,
       delay: 0,
       once: false,
     },
@@ -206,7 +206,7 @@ export const visualEffectPresets = {
     type: 'hover' as const,
     component: 'HoverEffect',
     trigger: {
-      type: 'hover',
+      type: 'hover' as const,
       delay: 0,
       once: false,
     },
@@ -215,7 +215,7 @@ export const visualEffectPresets = {
       name: 'Hover Glow',
       type: 'interaction' as const,
       duration: 400,
-      easing: 'ease-out',
+      easing: 'easeOut',
       reducedMotion: {
         enabled: true,
         alternativeAnimation: 'hover-glow-static',
@@ -244,7 +244,7 @@ export const visualEffectPresets = {
     type: 'focus' as const,
     component: 'FocusEffect',
     trigger: {
-      type: 'focus',
+      type: 'focus' as const,
       delay: 0,
       once: false,
     },
@@ -253,7 +253,7 @@ export const visualEffectPresets = {
       name: 'Focus Ring',
       type: 'interaction' as const,
       duration: 200,
-      easing: 'ease-out',
+      easing: 'easeOut',
       reducedMotion: {
         enabled: true,
         alternativeAnimation: 'focus-ring-static',
@@ -282,7 +282,7 @@ export const visualEffectPresets = {
     type: 'loading' as const,
     component: 'SkeletonLoader',
     trigger: {
-      type: 'load',
+      type: 'load' as const,
       delay: 0,
       once: true,
     },
@@ -293,7 +293,7 @@ export const visualEffectPresets = {
       duration: 1500,
       easing: 'ease-in-out',
       iterations: -1,
-      direction: 'alternate',
+      direction: 'alternate' as const,
       reducedMotion: {
         enabled: true,
         alternativeAnimation: 'skeleton-static',
@@ -473,7 +473,7 @@ export const visualEffectPerformance = {
 
     const threshold = thresholds[deviceTier]
     const isPerformanceIntensive =
-      effect.type === 'parallax' || effect.type === 'scroll'
+      effect.type === 'parallax' || effect.type === 'loading'
 
     return (
       fps < threshold.fps ||

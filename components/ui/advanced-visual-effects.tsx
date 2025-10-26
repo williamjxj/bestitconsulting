@@ -88,7 +88,7 @@ export function ParticleSystem({
           transition={{
             duration: 3 + Math.random() * 2,
             repeat: Infinity,
-            ease: 'easeInOut',
+            ease: 'easeInOut' as const,
           }}
         />
       ))}
@@ -209,7 +209,7 @@ export function FloatingElements({
             duration: element.duration,
             delay: element.delay,
             repeat: Infinity,
-            ease: 'easeInOut',
+            ease: 'easeInOut' as const,
           }}
         />
       ))}
@@ -256,7 +256,7 @@ export function MorphingShape({
       transition={{
         duration: 4,
         repeat: Infinity,
-        ease: 'easeInOut',
+        ease: 'easeInOut' as const,
       }}
     />
   )
@@ -358,7 +358,7 @@ export function GlowEffect({
       transition={{
         duration: 2,
         repeat: Infinity,
-        ease: 'easeInOut',
+        ease: 'easeInOut' as const,
       }}
     >
       {children}

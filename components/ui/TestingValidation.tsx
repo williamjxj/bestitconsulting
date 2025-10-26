@@ -83,7 +83,7 @@ const TestingValidation: React.FC<TestingValidationProps> = ({
       name: 'Testing Validation',
       type: 'interaction',
       duration: 800,
-      easing: 'ease-out',
+      easing: 'easeOut',
       reducedMotion: {
         enabled: true,
         alternativeAnimation: 'static-testing',
@@ -261,7 +261,7 @@ const TestingValidation: React.FC<TestingValidationProps> = ({
   // Reduced motion fallback
   if (prefersReducedMotion) {
     return (
-      <div className={`space-y-6 ${className}`} {...rest}>
+      <div className={`space-y-6 ${className}`} {...(rest as any)}>
         {/* Test controls */}
         <div className='bg-white p-4 rounded-lg shadow-sm border'>
           <div className='flex items-center justify-between mb-4'>
@@ -402,7 +402,7 @@ const TestingValidation: React.FC<TestingValidationProps> = ({
       opacity: 1,
       transition: {
         duration: 0.5,
-        ease: 'ease-out',
+        ease: 'easeOut' as const,
       },
     },
   }
@@ -413,7 +413,7 @@ const TestingValidation: React.FC<TestingValidationProps> = ({
       initial='hidden'
       animate='visible'
       className={`space-y-6 ${className}`}
-      {...rest}
+      {...(rest as any)}
     >
       {/* Test controls */}
       <motion.div
@@ -518,7 +518,7 @@ const TestingValidation: React.FC<TestingValidationProps> = ({
           <motion.div
             initial={{ width: 0 }}
             animate={{ width: '100%' }}
-            transition={{ duration: 2, ease: 'ease-out' }}
+            transition={{ duration: 2, ease: 'easeOut' as const }}
             className='absolute bottom-0 left-0 h-1 bg-blue-500'
           />
         </motion.div>
@@ -546,7 +546,7 @@ const TestingValidation: React.FC<TestingValidationProps> = ({
           <motion.div
             initial={{ width: 0 }}
             animate={{ width: '100%' }}
-            transition={{ duration: 2, ease: 'ease-out' }}
+            transition={{ duration: 2, ease: 'easeOut' as const }}
             className='absolute bottom-0 left-0 h-1 bg-green-500'
           />
         </motion.div>
@@ -574,7 +574,7 @@ const TestingValidation: React.FC<TestingValidationProps> = ({
           <motion.div
             initial={{ width: 0 }}
             animate={{ width: '100%' }}
-            transition={{ duration: 2, ease: 'ease-out' }}
+            transition={{ duration: 2, ease: 'easeOut' as const }}
             className='absolute bottom-0 left-0 h-1 bg-red-500'
           />
         </motion.div>

@@ -21,7 +21,8 @@ import {
   Zap,
 } from 'lucide-react'
 
-interface AnimatedContactFormProps extends HTMLMotionProps<'form'> {
+interface AnimatedContactFormProps
+  extends Omit<HTMLMotionProps<'form'>, 'onSubmit'> {
   onSubmit?: (data: FormData) => void
   onFieldFocus?: (fieldName: string) => void
   onFieldBlur?: (fieldName: string) => void
@@ -71,7 +72,7 @@ const AnimatedContactForm: React.FC<AnimatedContactFormProps> = ({
       name: 'Contact Form',
       type: 'interaction',
       duration: 500,
-      easing: 'ease-out',
+      easing: 'easeOut',
       reducedMotion: {
         enabled: true,
         alternativeAnimation: 'static-form',
@@ -198,7 +199,7 @@ const AnimatedContactForm: React.FC<AnimatedContactFormProps> = ({
         ref={formRef}
         onSubmit={handleSubmit}
         className={`space-y-6 ${className}`}
-        {...rest}
+        {...(rest as any)}
       >
         {/* Basic Information */}
         <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
@@ -429,7 +430,7 @@ const AnimatedContactForm: React.FC<AnimatedContactFormProps> = ({
       scale: 1,
       transition: {
         duration: 0.5,
-        ease: 'ease-out',
+        ease: 'easeOut' as const,
       },
     },
   }

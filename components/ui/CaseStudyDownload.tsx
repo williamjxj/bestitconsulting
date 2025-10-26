@@ -55,7 +55,7 @@ const CaseStudyDownload: React.FC<CaseStudyDownloadProps> = ({
       name: 'Case Study Download',
       type: 'interaction',
       duration: 600,
-      easing: 'ease-out',
+      easing: 'easeOut',
       reducedMotion: {
         enabled: true,
         alternativeAnimation: 'static-download',
@@ -111,7 +111,7 @@ const CaseStudyDownload: React.FC<CaseStudyDownloadProps> = ({
     return (
       <div
         className={`bg-white rounded-lg shadow-lg border p-6 ${className}`}
-        {...rest}
+        {...(rest as any)}
       >
         <div className='flex items-start justify-between mb-4'>
           <div className='flex-1'>
@@ -247,7 +247,7 @@ const CaseStudyDownload: React.FC<CaseStudyDownloadProps> = ({
       width: `${downloadProgress}%`,
       transition: {
         duration: 0.3,
-        ease: 'ease-out',
+        ease: 'easeOut' as const,
       },
     },
   }
@@ -259,7 +259,7 @@ const CaseStudyDownload: React.FC<CaseStudyDownloadProps> = ({
       scale: 1,
       transition: {
         duration: 0.3,
-        ease: 'ease-out',
+        ease: 'easeOut' as const,
       },
     },
     exit: {
@@ -267,7 +267,7 @@ const CaseStudyDownload: React.FC<CaseStudyDownloadProps> = ({
       scale: 0,
       transition: {
         duration: 0.3,
-        ease: 'ease-in',
+        ease: 'easeIn' as const,
       },
     },
   }
@@ -278,7 +278,7 @@ const CaseStudyDownload: React.FC<CaseStudyDownloadProps> = ({
       initial='hidden'
       animate='visible'
       className={`bg-white rounded-lg shadow-lg border p-6 relative overflow-hidden ${className}`}
-      {...rest}
+      {...(rest as any)}
     >
       {/* Background decoration */}
       <motion.div

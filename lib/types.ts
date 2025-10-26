@@ -3,7 +3,8 @@
  * Defines all types used across the visual enhancement system
  */
 
-import { ReactNode } from 'react'
+import { ReactNode, CSSProperties } from 'react'
+import { MotionStyle } from 'framer-motion'
 
 // ============================================================================
 // Core Visual Asset Types
@@ -46,7 +47,7 @@ export interface AnimationConfig {
   name: string
   type: 'transition' | 'interaction' | 'scroll' | 'loading'
   duration: number
-  easing: string
+  easing: string | number[]
   delay?: number
   iterations?: number
   direction?: 'normal' | 'reverse' | 'alternate'
@@ -381,7 +382,7 @@ export type AnimationEasing =
   | 'linear'
   | 'ease'
   | 'ease-in'
-  | 'ease-out'
+  | 'easeOut'
   | 'ease-in-out'
   | 'cubic-bezier'
   | 'spring'
@@ -465,4 +466,25 @@ export interface UseAccessibilityReturn {
   prefersDarkColorScheme: boolean
   motionPreference: MotionPreference
   announceToScreenReader: (message: string) => void
+}
+
+// ============================================================================
+// Utility Types
+// ============================================================================
+
+/**
+ * Utility type to convert MotionStyle to CSSProperties for compatibility
+ */
+export type MotionStyleToCSS = MotionStyle extends CSSProperties
+  ? MotionStyle
+  : CSSProperties
+
+/**
+ * Utility type to safely convert MotionStyle to CSSProperties
+ */
+export const motionStyleToCSS = (
+  style: MotionStyle | undefined
+): CSSProperties | undefined => {
+  if (!style) return undefined
+  return style as CSSProperties
 }

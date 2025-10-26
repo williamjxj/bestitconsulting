@@ -4,7 +4,11 @@
  */
 
 import { useState, useEffect, useCallback, useRef } from 'react'
-import { motion, useAnimation, useInView } from 'framer-motion'
+import {
+  motion,
+  useAnimation as useFramerAnimation,
+  useInView,
+} from 'framer-motion'
 import { AnimationConfig, UseAnimationReturn } from '../lib/types'
 import { useReducedMotion } from './useAccessibility'
 import { usePerformanceOptimization } from './usePerformance'
@@ -172,7 +176,7 @@ export function useHoverAnimation(hoverConfig?: {
     return {
       transform: `scale(${1 + (scale - 1) * hoverProgress}) rotate(${rotate * hoverProgress}deg)`,
       color: color,
-      transition: `all ${hoverConfig?.duration || 300}ms ease-out`,
+      transition: `all ${hoverConfig?.duration || 300}ms easeOut`,
     }
   }, [isHovered, hoverProgress, hoverConfig])
 
@@ -348,7 +352,7 @@ export function useLoadingAnimation(
       case 'progress':
         return {
           width: `${progress * 100}%`,
-          transition: 'width 100ms ease-out',
+          transition: 'width 100ms easeOut',
         }
       default:
         return {}

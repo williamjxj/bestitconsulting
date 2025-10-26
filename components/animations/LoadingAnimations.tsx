@@ -58,7 +58,7 @@ const LoadingAnimations: React.FC<LoadingAnimationsProps> = ({
     return (
       <div
         className={`flex items-center justify-center ${className}`}
-        {...rest}
+        {...(rest as any)}
       >
         <div className='w-4 h-4 bg-gray-300 rounded-full' />
       </div>
@@ -75,7 +75,7 @@ const LoadingAnimations: React.FC<LoadingAnimationsProps> = ({
     const baseProps = {
       className: `${sizeClasses[size]} ${className}`,
       style: { color },
-      ...rest,
+      ...(rest as any),
     }
 
     switch (type) {
@@ -114,7 +114,7 @@ const LoadingAnimations: React.FC<LoadingAnimationsProps> = ({
                   duration: optimizedConfig.duration / 1000,
                   repeat: Infinity,
                   delay: index * 0.2,
-                  ease: 'ease-in-out',
+                  ease: 'easeInOut' as const,
                 }}
               />
             ))}
@@ -136,7 +136,7 @@ const LoadingAnimations: React.FC<LoadingAnimationsProps> = ({
                   duration: optimizedConfig.duration / 1000,
                   repeat: Infinity,
                   delay: index * 0.1,
-                  ease: 'ease-in-out',
+                  ease: 'easeInOut' as const,
                 }}
               />
             ))}
@@ -156,7 +156,7 @@ const LoadingAnimations: React.FC<LoadingAnimationsProps> = ({
             transition={{
               duration: optimizedConfig.duration / 1000,
               repeat: Infinity,
-              ease: 'ease-in-out',
+              ease: 'easeInOut' as const,
             }}
           />
         )
@@ -175,7 +175,7 @@ const LoadingAnimations: React.FC<LoadingAnimationsProps> = ({
               transition={{
                 duration: optimizedConfig.duration / 1000,
                 repeat: Infinity,
-                ease: 'ease-in-out',
+                ease: 'easeInOut' as const,
               }}
             />
           </div>
@@ -225,7 +225,7 @@ const LoadingAnimations: React.FC<LoadingAnimationsProps> = ({
               transition={{
                 duration: optimizedConfig.duration / 1000,
                 repeat: Infinity,
-                ease: 'ease-in-out',
+                ease: 'easeInOut' as const,
               }}
             />
             <motion.div
@@ -237,7 +237,7 @@ const LoadingAnimations: React.FC<LoadingAnimationsProps> = ({
                 duration: optimizedConfig.duration / 1000,
                 repeat: Infinity,
                 delay: 0.2,
-                ease: 'ease-in-out',
+                ease: 'easeInOut' as const,
               }}
             />
             <motion.div
@@ -249,7 +249,7 @@ const LoadingAnimations: React.FC<LoadingAnimationsProps> = ({
                 duration: optimizedConfig.duration / 1000,
                 repeat: Infinity,
                 delay: 0.4,
-                ease: 'ease-in-out',
+                ease: 'easeInOut' as const,
               }}
             />
           </div>

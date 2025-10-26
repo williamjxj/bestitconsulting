@@ -34,7 +34,7 @@ export function FadeIn({
       name: 'Fade In',
       type: 'transition',
       duration,
-      easing: 'ease-out',
+      easing: 'easeOut',
       reducedMotion: {
         enabled: true,
         alternativeAnimation: 'fade-in-static',
@@ -98,9 +98,9 @@ export function FadeIn({
         duration: optimizedConfig.duration / 1000,
         delay: (delay + stagger) / 1000,
         ease: optimizedConfig.easing,
-        onComplete: onComplete,
-        onStart: onStart,
       }}
+      onAnimationStart={onStart}
+      onAnimationComplete={onComplete}
       className={className}
       {...props}
     >
@@ -167,7 +167,7 @@ export function ScrollFadeIn({
       viewport={{ once: triggerOnce, amount: threshold }}
       transition={{
         duration: 0.6,
-        ease: 'ease-out',
+        ease: 'easeOut' as const,
       }}
       className={className}
       {...props}

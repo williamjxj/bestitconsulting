@@ -35,7 +35,7 @@ const ServiceComparison: React.FC<ServiceComparisonProps> = ({
       name: 'Service Comparison',
       type: 'interaction',
       duration: 600,
-      easing: 'ease-out',
+      easing: 'easeOut',
       reducedMotion: {
         enabled: true,
         alternativeAnimation: 'static-comparison',
@@ -54,7 +54,7 @@ const ServiceComparison: React.FC<ServiceComparisonProps> = ({
   // Reduced motion fallback
   if (prefersReducedMotion) {
     return (
-      <div className={`space-y-4 ${className}`} {...rest}>
+      <div className={`space-y-4 ${className}`} {...(rest as any)}>
         {services.map(service => (
           <div
             key={service.id}
@@ -112,7 +112,7 @@ const ServiceComparison: React.FC<ServiceComparisonProps> = ({
       boxShadow: '0 10px 25px rgba(0, 0, 0, 0.1)',
       transition: {
         duration: 0.3,
-        ease: 'ease-out',
+        ease: 'easeOut' as const,
       },
     },
   }
@@ -123,7 +123,7 @@ const ServiceComparison: React.FC<ServiceComparisonProps> = ({
       initial='hidden'
       animate='visible'
       className={`grid md:grid-cols-2 lg:grid-cols-3 gap-6 ${className}`}
-      {...rest}
+      {...(rest as any)}
     >
       {services.map((service, index) => (
         <motion.div
@@ -279,7 +279,7 @@ export const ServiceComparisonTable: React.FC<ServiceComparisonTableProps> = ({
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, ease: 'ease-out' }}
+      transition={{ duration: 0.6, ease: 'easeOut' as const }}
       className={`overflow-x-auto ${className}`}
     >
       <table className='w-full border-collapse'>

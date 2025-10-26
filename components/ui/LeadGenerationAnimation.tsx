@@ -57,7 +57,7 @@ const LeadGenerationAnimation: React.FC<LeadGenerationAnimationProps> = ({
       name: 'Lead Generation',
       type: 'interaction',
       duration: 600,
-      easing: 'ease-out',
+      easing: 'easeOut',
       reducedMotion: {
         enabled: true,
         alternativeAnimation: 'static-leads',
@@ -143,7 +143,7 @@ const LeadGenerationAnimation: React.FC<LeadGenerationAnimationProps> = ({
   // Reduced motion fallback
   if (prefersReducedMotion) {
     return (
-      <div className={`space-y-4 ${className}`} {...rest}>
+      <div className={`space-y-4 ${className}`} {...(rest as any)}>
         <div className='flex items-center justify-between'>
           <h3 className='text-lg font-semibold'>Recent Leads</h3>
           <Badge variant='secondary' className='bg-green-100 text-green-800'>
@@ -226,7 +226,7 @@ const LeadGenerationAnimation: React.FC<LeadGenerationAnimationProps> = ({
       y: 0,
       transition: {
         duration: 0.5,
-        ease: 'ease-out',
+        ease: 'easeOut' as const,
       },
     },
     exit: {
@@ -235,7 +235,7 @@ const LeadGenerationAnimation: React.FC<LeadGenerationAnimationProps> = ({
       y: -50,
       transition: {
         duration: 0.3,
-        ease: 'ease-in',
+        ease: 'easeIn' as const,
       },
     },
   }
@@ -246,14 +246,14 @@ const LeadGenerationAnimation: React.FC<LeadGenerationAnimationProps> = ({
       opacity: 1,
       transition: {
         duration: 0.3,
-        ease: 'ease-out',
+        ease: 'easeOut' as const,
       },
     },
     exit: {
       opacity: 0,
       transition: {
         duration: 0.3,
-        ease: 'ease-in',
+        ease: 'easeIn' as const,
       },
     },
   }
@@ -264,7 +264,7 @@ const LeadGenerationAnimation: React.FC<LeadGenerationAnimationProps> = ({
       initial='hidden'
       animate='visible'
       className={`space-y-4 ${className}`}
-      {...rest}
+      {...(rest as any)}
     >
       {/* Header */}
       <motion.div

@@ -51,7 +51,7 @@ const AnimatedServiceIcon: React.FC<AnimatedServiceIconProps> = ({
     return (
       <div
         className={`flex items-center justify-center ${className}`}
-        {...rest}
+        {...(rest as any)}
       >
         {icon}
       </div>
@@ -153,7 +153,7 @@ const AnimatedServiceIcon: React.FC<AnimatedServiceIconProps> = ({
       `}
       style={{ color }}
       {...animationVariants}
-      {...rest}
+      {...(rest as any)}
     >
       <div className='transition-transform duration-300 hover:rotate-12'>
         {icon}
@@ -216,7 +216,7 @@ export const ServiceIconHover: React.FC<ServiceIconHoverProps> = ({
       }}
       transition={{
         duration: 0.3,
-        ease: 'ease-out',
+        ease: 'easeOut' as const,
       }}
     >
       <AnimatedServiceIcon {...props} />

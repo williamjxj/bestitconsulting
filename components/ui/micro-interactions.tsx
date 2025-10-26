@@ -142,7 +142,7 @@ export function RippleButton({
             initial={{ width: 0, height: 0, x: '-50%', y: '-50%' }}
             animate={{ width: 200, height: 200, x: '-50%', y: '-50%' }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.6, ease: 'easeOut' }}
+            transition={{ duration: 0.6, ease: 'easeOut' as const }}
           />
         ))}
     </motion.button>
@@ -202,7 +202,7 @@ export function TiltCard({
         rotateY: shouldAnimate ? mousePosition.x : 0,
         scale: isHovered && shouldAnimate ? 1.05 : 1,
       }}
-      transition={{ duration: 0.3, ease: 'easeOut' }}
+      transition={{ duration: 0.3, ease: 'easeOut' as const }}
     >
       {children}
     </motion.div>
@@ -239,7 +239,7 @@ export function FloatingAction({
       transition={{
         duration: floatDuration,
         repeat: Infinity,
-        ease: 'easeInOut',
+        ease: 'easeInOut' as const,
       }}
     >
       {children}
@@ -276,7 +276,7 @@ export function MorphingIcon({
       transition={{
         duration: morphDuration,
         repeat: Infinity,
-        ease: 'easeInOut',
+        ease: 'easeInOut' as const,
       }}
     >
       <Icon />

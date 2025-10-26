@@ -3,7 +3,7 @@
  * React hooks for monitoring and optimizing performance
  */
 
-import { useState, useEffect, useCallback, useRef } from 'react'
+import { useState, useEffect, useCallback, useRef, useMemo } from 'react'
 import {
   PerformanceMonitor,
   PerformanceMetrics,
@@ -52,9 +52,9 @@ export function usePerformanceMonitor(
     }
   }, [budget, enabled])
 
-  const isWithinBudget = useCallback(() => {
+  const isWithinBudget = useMemo(() => {
     return monitorRef.current?.isWithinBudget() ?? true
-  }, [])
+  }, [metrics])
 
   const startMonitoring = useCallback(() => {
     monitorRef.current?.startMonitoring()

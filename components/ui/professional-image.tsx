@@ -106,7 +106,7 @@ export function ProfessionalImage({
       whileTap={hover ? { scale: 0.95 } : undefined}
       transition={{
         duration: 0.4,
-        ease: 'easeOut',
+        ease: 'easeOut' as const,
       }}
     >
       {imageElement}

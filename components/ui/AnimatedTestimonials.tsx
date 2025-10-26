@@ -46,7 +46,7 @@ const AnimatedTestimonials: React.FC<AnimatedTestimonialsProps> = ({
       name: 'Testimonials Animation',
       type: 'interaction',
       duration: 800,
-      easing: 'ease-out',
+      easing: 'easeOut',
       reducedMotion: {
         enabled: true,
         alternativeAnimation: 'static-testimonials',
@@ -101,7 +101,7 @@ const AnimatedTestimonials: React.FC<AnimatedTestimonialsProps> = ({
   // Reduced motion fallback
   if (prefersReducedMotion) {
     return (
-      <div className={`space-y-6 ${className}`} {...rest}>
+      <div className={`space-y-6 ${className}`} {...(rest as any)}>
         {testimonials.map((testimonial, index) => (
           <div
             key={testimonial.id}
@@ -192,7 +192,7 @@ const AnimatedTestimonials: React.FC<AnimatedTestimonialsProps> = ({
       opacity: 1,
       transition: {
         duration: 0.3,
-        ease: 'ease-out',
+        ease: 'easeOut' as const,
       },
     },
   }
@@ -203,7 +203,7 @@ const AnimatedTestimonials: React.FC<AnimatedTestimonialsProps> = ({
       initial='hidden'
       animate='visible'
       className={`relative ${className}`}
-      {...rest}
+      {...(rest as any)}
     >
       {/* Main testimonial display */}
       <div className='relative overflow-hidden'>

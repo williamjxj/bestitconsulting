@@ -107,7 +107,7 @@ export function HeroVisual({
           fill='none'
           initial={{ pathLength: 0 }}
           animate={shouldAnimate ? { pathLength: 1 } : { pathLength: 1 }}
-          transition={{ duration: 2, ease: 'easeInOut' }}
+          transition={{ duration: 2, ease: 'easeInOut' as const }}
         />
         <motion.path
           d='M0,30 Q25,60 50,30 T100,30'
@@ -116,7 +116,7 @@ export function HeroVisual({
           fill='none'
           initial={{ pathLength: 0 }}
           animate={shouldAnimate ? { pathLength: 1 } : { pathLength: 1 }}
-          transition={{ duration: 2.5, ease: 'easeInOut', delay: 0.5 }}
+          transition={{ duration: 2.5, ease: 'easeInOut' as const, delay: 0.5 }}
         />
       </svg>
     </div>
@@ -218,7 +218,7 @@ export function HeroVisual({
           transition={{
             duration: 4,
             repeat: Infinity,
-            ease: 'easeInOut',
+            ease: 'easeInOut' as const,
           }}
         />
       )}
@@ -233,7 +233,7 @@ export function HeroVisual({
           transition={{
             duration: 5,
             repeat: Infinity,
-            ease: 'easeInOut',
+            ease: 'easeInOut' as const,
             delay: 1,
           }}
         />

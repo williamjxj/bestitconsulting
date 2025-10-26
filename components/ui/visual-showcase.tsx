@@ -130,7 +130,7 @@ export function VisualShowcase({
                     transition={{
                       duration: 4,
                       repeat: Infinity,
-                      ease: 'easeInOut',
+                      ease: 'easeInOut' as const,
                     }}
                   />
                   <motion.div
@@ -142,7 +142,7 @@ export function VisualShowcase({
                     transition={{
                       duration: 3,
                       repeat: Infinity,
-                      ease: 'easeInOut',
+                      ease: 'easeInOut' as const,
                       delay: 1,
                     }}
                   />

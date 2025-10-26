@@ -71,7 +71,7 @@ const ProjectShowcaseCarousel: React.FC<ProjectShowcaseCarouselProps> = ({
       name: 'Project Carousel',
       type: 'interaction',
       duration: 600,
-      easing: 'ease-out',
+      easing: 'easeOut',
       reducedMotion: {
         enabled: true,
         alternativeAnimation: 'static-carousel',
@@ -135,7 +135,7 @@ const ProjectShowcaseCarousel: React.FC<ProjectShowcaseCarouselProps> = ({
   // Reduced motion fallback
   if (prefersReducedMotion) {
     return (
-      <div className={`space-y-4 ${className}`} {...rest}>
+      <div className={`space-y-4 ${className}`} {...(rest as any)}>
         {/* Project display */}
         <div className='relative bg-white rounded-lg shadow-lg overflow-hidden'>
           <img
@@ -291,7 +291,7 @@ const ProjectShowcaseCarousel: React.FC<ProjectShowcaseCarouselProps> = ({
   }
 
   const slideTransition = {
-    x: { type: 'spring', stiffness: 300, damping: 30 },
+    x: { type: 'spring' as const, stiffness: 300, damping: 30 },
     opacity: { duration: 0.2 },
   }
 
@@ -339,7 +339,7 @@ const ProjectShowcaseCarousel: React.FC<ProjectShowcaseCarouselProps> = ({
       className={`space-y-4 ${className}`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      {...rest}
+      {...(rest as any)}
     >
       {/* Project display */}
       <div className='relative overflow-hidden rounded-lg shadow-lg'>

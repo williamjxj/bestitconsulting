@@ -375,7 +375,7 @@ const TechnologyShowcase = () => {
                 return (
                   <div
                     key={index}
-                    className='absolute inset-0 transition-all duration-700 ease-out'
+                    className='absolute inset-0 transition-all duration-700 easeOut'
                     style={{
                       transform,
                       opacity,

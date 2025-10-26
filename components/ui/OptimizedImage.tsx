@@ -3,10 +3,6 @@
 import React from 'react'
 import Image from 'next/image'
 import { VisualAsset } from '../../lib/types'
-import {
-  getOptimizedImageUrl,
-  responsiveImageProps,
-} from '../../lib/asset-optimization'
 import { useDevicePerformance } from '../../hooks/usePerformance'
 import { useReducedMotion } from '../../hooks/useAccessibility'
 
@@ -40,7 +36,12 @@ const OptimizedImage: React.FC<OptimizedImageProps> = ({
   const adjustedQuality = deviceTier === 'low' ? Math.min(quality, 60) : quality
 
   // Get optimized image props
-  const imageProps = responsiveImageProps(asset, 1200)
+  const imageProps = {
+    src: asset.src,
+    alt: asset.alt,
+    width: asset.width,
+    height: asset.height,
+  }
 
   // Generate blur placeholder if not provided
   const generateBlurDataURL = () => {
@@ -94,13 +95,15 @@ const OptimizedImage: React.FC<OptimizedImageProps> = ({
       )}
 
       <Image
-        src={getOptimizedImageUrl(asset, 1200, adjustedQuality)}
+        src={asset.src}
         alt={asset.alt}
         width={asset.width}
         height={asset.height}
         priority={priority}
         quality={adjustedQuality}
-        sizes={sizes || imageProps.sizes}
+        sizes={
+          sizes || '(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
+        }
         placeholder={placeholder}
         blurDataURL={placeholder === 'blur' ? generateBlurDataURL() : undefined}
         onLoad={handleLoad}

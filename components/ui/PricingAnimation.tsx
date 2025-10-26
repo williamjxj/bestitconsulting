@@ -45,7 +45,7 @@ const PricingAnimation: React.FC<PricingAnimationProps> = ({
       name: 'Pricing Animation',
       type: 'interaction',
       duration: 600,
-      easing: 'ease-out',
+      easing: 'easeOut',
       reducedMotion: {
         enabled: true,
         alternativeAnimation: 'static-pricing',
@@ -66,7 +66,7 @@ const PricingAnimation: React.FC<PricingAnimationProps> = ({
     return (
       <div
         className={`grid md:grid-cols-2 lg:grid-cols-3 gap-6 ${className}`}
-        {...rest}
+        {...(rest as any)}
       >
         {plans.map(plan => (
           <div
@@ -133,7 +133,7 @@ const PricingAnimation: React.FC<PricingAnimationProps> = ({
       boxShadow: '0 20px 40px rgba(0, 0, 0, 0.1)',
       transition: {
         duration: 0.3,
-        ease: 'ease-out',
+        ease: 'easeOut' as const,
       },
     },
     selected: {
@@ -150,7 +150,7 @@ const PricingAnimation: React.FC<PricingAnimationProps> = ({
       x: 0,
       transition: {
         duration: 0.3,
-        ease: 'ease-out',
+        ease: 'easeOut' as const,
       },
     },
   }
@@ -161,7 +161,7 @@ const PricingAnimation: React.FC<PricingAnimationProps> = ({
       initial='hidden'
       animate='visible'
       className={`grid md:grid-cols-2 lg:grid-cols-3 gap-6 ${className}`}
-      {...rest}
+      {...(rest as any)}
     >
       {plans.map((plan, index) => (
         <motion.div

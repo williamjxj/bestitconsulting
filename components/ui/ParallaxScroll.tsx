@@ -89,7 +89,7 @@ const ParallaxScroll: React.FC<ParallaxScrollProps> = ({
   // Reduced motion fallback
   if (prefersReducedMotion || disabled) {
     return (
-      <div ref={ref} className={className} {...rest}>
+      <div ref={ref} className={className} {...(rest as any)}>
         {children}
       </div>
     )
@@ -103,7 +103,7 @@ const ParallaxScroll: React.FC<ParallaxScrollProps> = ({
         y: direction === 'up' || direction === 'down' ? y : 0,
         x: direction === 'left' || direction === 'right' ? x : 0,
       }}
-      {...rest}
+      {...(rest as any)}
     >
       {children}
     </motion.div>
@@ -127,7 +127,7 @@ export const ParallaxContainer: React.FC<ParallaxContainerProps> = ({
 
   if (prefersReducedMotion || disabled) {
     return (
-      <div className={className} {...rest}>
+      <div className={className} {...(rest as any)}>
         {children}
       </div>
     )
@@ -139,8 +139,8 @@ export const ParallaxContainer: React.FC<ParallaxContainerProps> = ({
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       viewport={{ once: true, margin: '-100px' }}
-      transition={{ duration: 0.6, ease: 'ease-out' }}
-      {...rest}
+      transition={{ duration: 0.6, ease: 'easeOut' as const }}
+      {...(rest as any)}
     >
       {children}
     </motion.div>
@@ -182,7 +182,7 @@ export const ParallaxBackground: React.FC<ParallaxBackgroundProps> = ({
         ref={ref}
         className={`relative overflow-hidden ${className}`}
         style={{ height }}
-        {...rest}
+        {...(rest as any)}
       >
         <img src={image} alt={alt} className='w-full h-full object-cover' />
       </div>
@@ -194,7 +194,7 @@ export const ParallaxBackground: React.FC<ParallaxBackgroundProps> = ({
       ref={ref}
       className={`relative overflow-hidden ${className}`}
       style={{ height }}
-      {...rest}
+      {...(rest as any)}
     >
       <motion.img
         src={image}
@@ -243,14 +243,19 @@ export const ParallaxText: React.FC<ParallaxTextProps> = ({
 
   if (prefersReducedMotion || disabled) {
     return (
-      <div ref={ref} className={className} {...rest}>
+      <div ref={ref} className={className} {...(rest as any)}>
         {children}
       </div>
     )
   }
 
   return (
-    <motion.div ref={ref} className={className} style={{ y }} {...rest}>
+    <motion.div
+      ref={ref}
+      className={className}
+      style={{ y }}
+      {...(rest as any)}
+    >
       {children}
     </motion.div>
   )
@@ -279,7 +284,7 @@ export const ParallaxReveal: React.FC<ParallaxRevealProps> = ({
 
   if (prefersReducedMotion || disabled) {
     return (
-      <div className={className} {...rest}>
+      <div className={className} {...(rest as any)}>
         {children}
       </div>
     )
@@ -325,10 +330,10 @@ export const ParallaxReveal: React.FC<ParallaxRevealProps> = ({
       transition={{
         duration: 0.6,
         delay,
-        ease: 'ease-out',
+        ease: 'easeOut' as const,
       }}
       className={className}
-      {...rest}
+      {...(rest as any)}
     >
       {children}
     </motion.div>
@@ -367,7 +372,7 @@ export const ParallaxSection: React.FC<ParallaxSectionProps> = ({
 
   if (prefersReducedMotion || disabled) {
     return (
-      <div ref={ref} className={className} {...rest}>
+      <div ref={ref} className={className} {...(rest as any)}>
         {children}
       </div>
     )
@@ -377,7 +382,7 @@ export const ParallaxSection: React.FC<ParallaxSectionProps> = ({
     <motion.div
       ref={ref}
       className={`relative overflow-hidden ${className}`}
-      {...rest}
+      {...(rest as any)}
     >
       {/* Background layer */}
       {backgroundImage && (

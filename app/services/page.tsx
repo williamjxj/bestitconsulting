@@ -30,12 +30,12 @@ export default function ServicesPage() {
   const breadcrumbs = [{ name: 'Home', href: '/' }, { name: 'Services' }]
 
   // Refs for animated beam nodes
-  const containerRef = useRef<HTMLDivElement>(null)
-  const node1Ref = useRef<HTMLDivElement>(null)
-  const node2Ref = useRef<HTMLDivElement>(null)
-  const node3Ref = useRef<HTMLDivElement>(null)
-  const node4Ref = useRef<HTMLDivElement>(null)
-  const centerNodeRef = useRef<HTMLDivElement>(null)
+  const containerRef = useRef<HTMLDivElement>(null!)
+  const node1Ref = useRef<HTMLDivElement>(null!)
+  const node2Ref = useRef<HTMLDivElement>(null!)
+  const node3Ref = useRef<HTMLDivElement>(null!)
+  const node4Ref = useRef<HTMLDivElement>(null!)
+  const centerNodeRef = useRef<HTMLDivElement>(null!)
 
   const services = [
     {

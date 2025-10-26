@@ -50,7 +50,7 @@ const ServiceFilter: React.FC<ServiceFilterProps> = ({
       name: 'Service Filter',
       type: 'interaction',
       duration: 400,
-      easing: 'ease-out',
+      easing: 'easeOut',
       reducedMotion: {
         enabled: true,
         alternativeAnimation: 'static-filter',
@@ -74,7 +74,7 @@ const ServiceFilter: React.FC<ServiceFilterProps> = ({
   // Reduced motion fallback
   if (prefersReducedMotion) {
     return (
-      <div className={`space-y-6 ${className}`} {...rest}>
+      <div className={`space-y-6 ${className}`} {...(rest as any)}>
         {/* Search */}
         <div className='relative'>
           <Search className='absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground' />
@@ -177,14 +177,14 @@ const ServiceFilter: React.FC<ServiceFilterProps> = ({
       scale: 1.05,
       transition: {
         duration: 0.2,
-        ease: 'ease-out',
+        ease: 'easeOut' as const,
       },
     },
     tap: {
       scale: 0.95,
       transition: {
         duration: 0.1,
-        ease: 'ease-out',
+        ease: 'easeOut' as const,
       },
     },
   }
@@ -195,7 +195,7 @@ const ServiceFilter: React.FC<ServiceFilterProps> = ({
       initial='hidden'
       animate='visible'
       className={`space-y-6 ${className}`}
-      {...rest}
+      {...(rest as any)}
     >
       {/* Search */}
       <motion.div variants={itemVariants} className='relative'>

@@ -337,12 +337,3 @@ import React from 'react'
 export const useReducedMotion = accessibilityHooks.useReducedMotion
 export const useHighContrast = accessibilityHooks.useHighContrast
 export const useDarkColorScheme = accessibilityHooks.useDarkColorScheme
-export const useMotionPreference = accessibilityHooks.useMotionPreference
-export const useAccessibility = accessibilityHooks.useAccessibility
-export const useKeyboardNavigation = accessibilityHooks.useKeyboardNavigation
-export const useFocusManagement = accessibilityHooks.useFocusManagement
-export const useScreenReader = accessibilityHooks.useScreenReader
-export const useAccessibilityTesting =
-  accessibilityHooks.useAccessibilityTesting
-export const useAccessibleAnimation = accessibilityHooks.useAccessibleAnimation
-export const useFocusIndicator = accessibilityHooks.useFocusIndicator

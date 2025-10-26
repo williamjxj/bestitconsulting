@@ -31,7 +31,6 @@ interface PerformanceOptimizationProps extends HTMLMotionProps<'div'> {
     memoryUsage: number
     renderTime: number
     frameDrops: number
-    memoryUsage: number
     networkLatency: number
     bundleSize: number
   }
@@ -77,7 +76,7 @@ const PerformanceOptimization: React.FC<PerformanceOptimizationProps> = ({
       name: 'Performance Optimization',
       type: 'interaction',
       duration: 1000,
-      easing: 'ease-out',
+      easing: 'easeOut',
       reducedMotion: {
         enabled: true,
         alternativeAnimation: 'static-performance',
@@ -209,7 +208,7 @@ const PerformanceOptimization: React.FC<PerformanceOptimizationProps> = ({
   // Reduced motion fallback
   if (prefersReducedMotion) {
     return (
-      <div className={`space-y-6 ${className}`} {...rest}>
+      <div className={`space-y-6 ${className}`} {...(rest as any)}>
         {/* Performance score */}
         <div className='bg-white p-6 rounded-lg shadow-sm border'>
           <div className='flex items-center justify-between mb-4'>
@@ -365,7 +364,7 @@ const PerformanceOptimization: React.FC<PerformanceOptimizationProps> = ({
       opacity: 1,
       transition: {
         duration: 0.5,
-        ease: 'ease-out',
+        ease: 'easeOut' as const,
       },
     },
   }
@@ -376,7 +375,7 @@ const PerformanceOptimization: React.FC<PerformanceOptimizationProps> = ({
       initial='hidden'
       animate='visible'
       className={`space-y-6 ${className}`}
-      {...rest}
+      {...(rest as any)}
     >
       {/* Performance score */}
       <motion.div
@@ -409,7 +408,7 @@ const PerformanceOptimization: React.FC<PerformanceOptimizationProps> = ({
           <motion.div
             initial={{ width: 0 }}
             animate={{ width: `${performanceScore}%` }}
-            transition={{ duration: 2, ease: 'ease-out' }}
+            transition={{ duration: 2, ease: 'easeOut' as const }}
             className={`h-3 rounded-full relative ${
               performanceScore >= 90
                 ? 'bg-green-500'
@@ -455,7 +454,7 @@ const PerformanceOptimization: React.FC<PerformanceOptimizationProps> = ({
           <motion.div
             initial={{ width: 0 }}
             animate={{ width: '100%' }}
-            transition={{ duration: 2, ease: 'ease-out' }}
+            transition={{ duration: 2, ease: 'easeOut' as const }}
             className='absolute bottom-0 left-0 h-1 bg-blue-500'
           />
         </motion.div>
@@ -483,7 +482,7 @@ const PerformanceOptimization: React.FC<PerformanceOptimizationProps> = ({
           <motion.div
             initial={{ width: 0 }}
             animate={{ width: '100%' }}
-            transition={{ duration: 2, ease: 'ease-out' }}
+            transition={{ duration: 2, ease: 'easeOut' as const }}
             className='absolute bottom-0 left-0 h-1 bg-green-500'
           />
         </motion.div>
@@ -513,7 +512,7 @@ const PerformanceOptimization: React.FC<PerformanceOptimizationProps> = ({
           <motion.div
             initial={{ width: 0 }}
             animate={{ width: '100%' }}
-            transition={{ duration: 2, ease: 'ease-out' }}
+            transition={{ duration: 2, ease: 'easeOut' as const }}
             className='absolute bottom-0 left-0 h-1 bg-purple-500'
           />
         </motion.div>

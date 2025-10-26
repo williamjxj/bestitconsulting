@@ -52,7 +52,7 @@ const ContactSuccessAnimation: React.FC<ContactSuccessAnimationProps> = ({
       name: 'Contact Success',
       type: 'interaction',
       duration: 800,
-      easing: 'ease-out',
+      easing: 'easeOut',
       reducedMotion: {
         enabled: true,
         alternativeAnimation: 'static-success',
@@ -89,7 +89,7 @@ const ContactSuccessAnimation: React.FC<ContactSuccessAnimationProps> = ({
   // Reduced motion fallback
   if (prefersReducedMotion) {
     return (
-      <div className={`text-center py-8 ${className}`} {...rest}>
+      <div className={`text-center py-8 ${className}`} {...(rest as any)}>
         <div className='w-20 h-20 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4'>
           <Check className='h-10 w-10 text-white' />
         </div>
@@ -141,7 +141,7 @@ const ContactSuccessAnimation: React.FC<ContactSuccessAnimationProps> = ({
       rotate: 0,
       transition: {
         duration: 0.6,
-        ease: 'ease-out',
+        ease: 'easeOut' as const,
       },
     },
   }
@@ -153,7 +153,7 @@ const ContactSuccessAnimation: React.FC<ContactSuccessAnimationProps> = ({
       x: 0,
       transition: {
         duration: 0.4,
-        ease: 'ease-out',
+        ease: 'easeOut' as const,
       },
     },
   }
@@ -165,7 +165,7 @@ const ContactSuccessAnimation: React.FC<ContactSuccessAnimationProps> = ({
       y: 0,
       transition: {
         duration: 0.4,
-        ease: 'ease-out',
+        ease: 'easeOut' as const,
       },
     },
     hover: {
@@ -185,7 +185,7 @@ const ContactSuccessAnimation: React.FC<ContactSuccessAnimationProps> = ({
       scale: 1,
       transition: {
         duration: 0.3,
-        ease: 'ease-out',
+        ease: 'easeOut' as const,
       },
     },
     exit: {
@@ -193,7 +193,7 @@ const ContactSuccessAnimation: React.FC<ContactSuccessAnimationProps> = ({
       scale: 0,
       transition: {
         duration: 0.3,
-        ease: 'ease-in',
+        ease: 'easeIn' as const,
       },
     },
   }
@@ -204,7 +204,7 @@ const ContactSuccessAnimation: React.FC<ContactSuccessAnimationProps> = ({
       initial='hidden'
       animate='visible'
       className={`text-center py-8 relative overflow-hidden ${className}`}
-      {...rest}
+      {...(rest as any)}
     >
       {/* Background sparkles */}
       <motion.div
@@ -244,7 +244,7 @@ const ContactSuccessAnimation: React.FC<ContactSuccessAnimationProps> = ({
           transition={{
             duration: 2,
             repeat: Infinity,
-            ease: 'ease-in-out',
+            ease: 'easeInOut' as const,
           }}
           className='w-24 h-24 bg-gradient-to-br from-green-400 to-green-600 rounded-full flex items-center justify-center mx-auto shadow-lg'
         >

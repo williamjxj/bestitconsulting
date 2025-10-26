@@ -93,7 +93,7 @@ const DeploymentReadiness: React.FC<DeploymentReadinessProps> = ({
       name: 'Deployment Readiness',
       type: 'interaction',
       duration: 800,
-      easing: 'ease-out',
+      easing: 'easeOut',
       reducedMotion: {
         enabled: true,
         alternativeAnimation: 'static-deployment',
@@ -268,7 +268,7 @@ const DeploymentReadiness: React.FC<DeploymentReadinessProps> = ({
   // Reduced motion fallback
   if (prefersReducedMotion) {
     return (
-      <div className={`space-y-6 ${className}`} {...rest}>
+      <div className={`space-y-6 ${className}`} {...(rest as any)}>
         {/* Deployment status */}
         <div className='bg-white p-4 rounded-lg shadow-sm border'>
           <div className='flex items-center justify-between mb-4'>
@@ -413,7 +413,7 @@ const DeploymentReadiness: React.FC<DeploymentReadinessProps> = ({
       opacity: 1,
       transition: {
         duration: 0.5,
-        ease: 'ease-out',
+        ease: 'easeOut' as const,
       },
     },
   }
@@ -424,7 +424,7 @@ const DeploymentReadiness: React.FC<DeploymentReadinessProps> = ({
       initial='hidden'
       animate='visible'
       className={`space-y-6 ${className}`}
-      {...rest}
+      {...(rest as any)}
     >
       {/* Deployment status */}
       <motion.div
@@ -565,7 +565,7 @@ const DeploymentReadiness: React.FC<DeploymentReadinessProps> = ({
           <motion.div
             initial={{ width: 0 }}
             animate={{ width: '100%' }}
-            transition={{ duration: 2, ease: 'ease-out' }}
+            transition={{ duration: 2, ease: 'easeOut' as const }}
             className='absolute bottom-0 left-0 h-1 bg-blue-500'
           />
         </motion.div>
@@ -593,7 +593,7 @@ const DeploymentReadiness: React.FC<DeploymentReadinessProps> = ({
           <motion.div
             initial={{ width: 0 }}
             animate={{ width: '100%' }}
-            transition={{ duration: 2, ease: 'ease-out' }}
+            transition={{ duration: 2, ease: 'easeOut' as const }}
             className='absolute bottom-0 left-0 h-1 bg-green-500'
           />
         </motion.div>
@@ -621,7 +621,7 @@ const DeploymentReadiness: React.FC<DeploymentReadinessProps> = ({
           <motion.div
             initial={{ width: 0 }}
             animate={{ width: '100%' }}
-            transition={{ duration: 2, ease: 'ease-out' }}
+            transition={{ duration: 2, ease: 'easeOut' as const }}
             className='absolute bottom-0 left-0 h-1 bg-red-500'
           />
         </motion.div>
