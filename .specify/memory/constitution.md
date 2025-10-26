@@ -1,92 +1,172 @@
 <!--
 Sync Impact Report:
-Version change: 1.0.0 → 1.1.0
-Modified principles: Added Animation & Visual Effects, Enhanced Accessibility & Mobile Optimization
-Added sections: Animation Standards, Visual Effects Guidelines, Mobile Optimization Requirements
-Removed sections: None
-Templates requiring updates: ✅ plan-template.md (Constitution Check section), ✅ spec-template.md (accessibility requirements), ✅ tasks-template.md (animation task categories)
+Version change: 0.0.0 → 1.0.0
+Modified principles: N/A (initial creation)
+Added sections: All core sections
+Templates requiring updates: ✅ plan-template.md, ✅ spec-template.md, ✅ tasks-template.md
 Follow-up TODOs: None
 -->
 
-# Best IT Consulting Constitution
+# Best IT Consulting Project Constitution
+
+**Version:** 1.0.0  
+**Ratification Date:** 2024-12-19  
+**Last Amended Date:** 2024-12-19
+
+## Preamble
+
+This constitution establishes the foundational principles, governance structure, and development standards for the Best IT Consulting website project. It serves as the authoritative guide for all development decisions, ensuring consistency, quality, and maintainability across the entire project lifecycle.
 
 ## Core Principles
 
-### I. Modern Web Stack (NON-NEGOTIABLE)
+### Principle 1: Modern Web Architecture
+**MANDATORY:** All development MUST follow Next.js 15+ App Router patterns with TypeScript, utilizing server and client components appropriately. The architecture MUST prioritize performance, SEO optimization, and developer experience through modern React patterns including hooks, context, and functional components.
 
-All development MUST use Next.js 15.2.4, React 19, and TypeScript 5. The stack provides server-side rendering, client-side interactivity, and type safety. No alternative frameworks without explicit justification and approval.
+**Rationale:** Next.js App Router provides superior performance, SEO capabilities, and developer experience compared to legacy patterns. TypeScript ensures type safety and reduces runtime errors.
 
-### II. Component-First Architecture
+### Principle 2: Accessibility-First Development
+**MANDATORY:** All components MUST meet WCAG 2.1 AA standards with comprehensive screen reader support, keyboard navigation, and reduced motion preferences. Every interactive element MUST include proper ARIA labels, focus management, and semantic HTML structure.
 
-All UI elements MUST be built as reusable React components using functional syntax and TypeScript. Prefer shadcn/ui components over custom implementations. Components must be self-contained, independently testable, and properly documented with JSDoc comments.
+**Rationale:** Accessibility is not optional - it's a legal requirement and moral imperative that ensures our services are available to all users regardless of ability.
 
-### III. Internationalization (NON-NEGOTIABLE)
+### Principle 3: Performance Optimization
+**MANDATORY:** All implementations MUST achieve Core Web Vitals scores above 90, with particular attention to LCP (<2.5s), FID (<100ms), and CLS (<0.1). Mobile performance MUST be prioritized with responsive design and touch-friendly interactions.
 
-All user-facing content MUST support multiple languages through the established i18n framework. Default language is English with fallback support. All new features must include translation keys and support for at least English, French, Spanish, and Chinese.
+**Rationale:** Performance directly impacts user experience, SEO rankings, and business conversion rates. Poor performance leads to user abandonment and lost opportunities.
 
-### IV. Quality Standards (NON-NEGOTIABLE)
+### Principle 4: Visual Excellence
+**MANDATORY:** All UI components MUST utilize Tailwind CSS utility classes exclusively, with shadcn/ui components as the primary design system. Visual enhancements MUST include sophisticated animations, micro-interactions, and modern design patterns that enhance user engagement without compromising performance.
 
-All code MUST pass ESLint 9, Prettier formatting, and TypeScript strict mode checks. No exceptions for "quick fixes" or "temporary code." Pre-commit hooks enforce quality gates. Code reviews must verify compliance before merge.
+**Rationale:** Visual excellence differentiates our brand and creates memorable user experiences that drive business growth and client satisfaction.
 
-### V. Performance & Accessibility (NON-NEGOTIABLE)
+### Principle 5: Internationalization
+**MANDATORY:** All content MUST support multiple languages (English, French, Spanish, Chinese) with proper i18n implementation, cultural considerations, and localized content management. Language switching MUST be seamless and preserve user context.
 
-All components MUST be accessible with proper ARIA attributes and semantic HTML. Use Tailwind CSS v4 for styling with mobile-first responsive design. Performance budgets must be maintained with Core Web Vitals compliance. All animations MUST respect prefers-reduced-motion and provide fallbacks for motion-sensitive users.
+**Rationale:** As a Canadian consulting firm, multilingual support is essential for serving diverse clients and expanding market reach.
 
-### VI. Animation & Visual Effects (NON-NEGOTIABLE)
+### Principle 6: Security and Privacy
+**MANDATORY:** All data handling MUST follow privacy-by-design principles with proper environment variable management, secure API endpoints, and GDPR compliance. No sensitive data MUST be exposed in frontend code.
 
-All animations MUST use Framer Motion with GSAP for complex timelines. Animations must be performance-optimized, accessible, and respect user motion preferences. Visual effects must enhance user experience without compromising performance or accessibility. All animated elements MUST have proper ARIA labels and keyboard navigation support.
+**Rationale:** Security breaches damage reputation and have legal consequences. Privacy compliance is essential for client trust and regulatory adherence.
 
-### VII. Mobile Optimization (NON-NEGOTIABLE)
+### Principle 7: Code Quality and Maintainability
+**MANDATORY:** All code MUST follow established patterns with comprehensive TypeScript typing, ESLint compliance, Prettier formatting, and meaningful documentation. Components MUST be reusable, testable, and follow single responsibility principles.
 
-All components MUST be optimized for mobile devices with responsive design, touch-friendly interactions, and performance considerations. Mobile-specific optimizations must be implemented for animations, images, and user interactions. Connection quality and device capabilities must be considered for optimal user experience.
+**Rationale:** High-quality code reduces bugs, accelerates development, and ensures long-term maintainability for team scalability.
 
-### VIII. Developer Experience
+### Principle 8: Animation and Interaction Standards
+**MANDATORY:** All animations MUST be performance-optimized with GPU acceleration, reduced motion support, and accessibility considerations. Complex animations MUST include fallbacks and performance monitoring with device-specific optimizations.
 
-Development environment MUST use Turbopack for fast builds and hot reload. All tooling must be configured for optimal developer productivity. Comprehensive scripts for linting, formatting, type checking, and quality assurance.
+**Rationale:** Well-crafted animations enhance user experience and brand perception while maintaining accessibility and performance standards.
 
-## Technology Stack Requirements
+## Technical Standards
 
-**Frontend**: Next.js 15.2.4, React 19, TypeScript 5, Tailwind CSS v4
-**UI Components**: shadcn/ui, Radix UI primitives, Lucide React icons
-**Animation**: Framer Motion 12.23.24, GSAP 3.13.0, tw-animate-css 1.3.2
-**Internationalization**: Custom i18n framework with support for 4+ languages
-**Development**: Turbopack, ESLint 9, Prettier, TypeScript strict mode
-**Deployment**: Vercel-compatible build settings, environment variable management
+### Development Environment
+- **Framework:** Next.js 15+ with App Router
+- **Language:** TypeScript with strict mode
+- **Styling:** Tailwind CSS with utility classes only
+- **UI Components:** shadcn/ui as primary design system
+- **Animations:** Framer Motion with performance optimization
+- **State Management:** React Context and hooks
+- **Internationalization:** Custom i18n implementation
 
-## Animation Standards
+### Performance Requirements
+- **Core Web Vitals:** LCP <2.5s, FID <100ms, CLS <0.1
+- **Lighthouse Score:** >90 across all categories
+- **Mobile Performance:** Optimized for 3G networks
+- **Bundle Size:** <250KB initial load
+- **Animation Performance:** 60fps on desktop, 30fps on mobile
 
-**Performance**: All animations MUST maintain 60fps and respect prefers-reduced-motion
-**Accessibility**: Animated elements MUST have proper ARIA labels and keyboard navigation
-**Mobile Optimization**: Animations MUST be optimized for mobile devices with reduced complexity
-**Library Usage**: Framer Motion for React components, GSAP for complex timeline animations
-**Fallbacks**: All animations MUST provide reduced-motion alternatives
+### Accessibility Requirements
+- **WCAG Compliance:** 2.1 AA standard
+- **Screen Reader Support:** Full compatibility
+- **Keyboard Navigation:** Complete functionality
+- **Color Contrast:** 4.5:1 minimum ratio
+- **Reduced Motion:** Respect user preferences
 
-## Visual Effects Guidelines
-
-**Professional Impact**: Visual effects MUST demonstrate technical expertise and build credibility
-**Performance Budget**: Effects MUST not impact Core Web Vitals or page load performance
-**Accessibility**: All visual effects MUST be accessible to users with different abilities
-**Consistency**: Visual effects MUST follow established design patterns and brand guidelines
-
-## Mobile Optimization Requirements
-
-**Responsive Design**: All components MUST work seamlessly across mobile, tablet, and desktop
-**Touch Interactions**: Mobile-specific touch gestures and interactions MUST be implemented
-**Performance**: Mobile components MUST be optimized for slower connections and limited resources
-**Accessibility**: Mobile accessibility features MUST be properly implemented and tested
-
-## Development Workflow
-
-**Code Quality**: All PRs must pass automated quality checks (lint, format, type-check)
-**Component Standards**: New components must follow established patterns and include proper TypeScript types
-**Animation Standards**: All animations must be tested for accessibility and performance
-**Mobile Testing**: All components must be tested on mobile devices and different screen sizes
-**Internationalization**: All new features must include translation keys and support multiple languages
-**Testing**: Components must be independently testable with clear interfaces
-**Documentation**: All exported functions and components must include JSDoc comments
+### Code Quality Standards
+- **TypeScript:** Strict mode enabled
+- **ESLint:** Zero warnings or errors
+- **Prettier:** Consistent formatting
+- **Testing:** Unit tests for utilities
+- **Documentation:** JSDoc for all exports
 
 ## Governance
 
-This constitution supersedes all other development practices. Amendments require documentation of impact, approval from technical lead, and migration plan for existing code. All PRs and reviews must verify compliance with these principles. Complexity must be justified with clear business value. Use established patterns and avoid reinventing solutions.
+### Amendment Procedure
+Constitution amendments require:
+1. **Proposal:** Detailed rationale and impact analysis
+2. **Review:** Technical team evaluation (48 hours minimum)
+3. **Approval:** Consensus from core team members
+4. **Implementation:** Version bump and template synchronization
+5. **Documentation:** Update all dependent artifacts
 
-**Version**: 1.1.0 | **Ratified**: 2025-01-27 | **Last Amended**: 2025-01-27
+### Versioning Policy
+- **MAJOR:** Backward incompatible changes to principles or architecture
+- **MINOR:** New principles, sections, or significant guidance additions
+- **PATCH:** Clarifications, wording improvements, or non-semantic refinements
+
+### Compliance Review
+- **Frequency:** Before each major release
+- **Scope:** All components and implementations
+- **Process:** Automated checks + manual review
+- **Documentation:** Compliance reports with remediation plans
+
+### Quality Assurance
+- **Code Reviews:** All changes require peer review
+- **Performance Testing:** Automated Core Web Vitals monitoring
+- **Accessibility Audits:** Regular WCAG compliance checks
+- **Security Reviews:** Quarterly security assessments
+
+## Implementation Guidelines
+
+### Component Development
+1. **Structure:** Functional components with TypeScript
+2. **Styling:** Tailwind CSS utility classes only
+3. **Accessibility:** ARIA labels and semantic HTML
+4. **Performance:** Optimized animations and lazy loading
+5. **Testing:** Unit tests for complex logic
+6. **Documentation:** JSDoc comments for all exports
+
+### Animation Standards
+1. **Performance:** GPU acceleration and reduced motion support
+2. **Accessibility:** Screen reader announcements and focus management
+3. **Responsiveness:** Device-specific optimizations
+4. **Fallbacks:** Static alternatives for reduced motion
+5. **Monitoring:** Performance impact tracking
+
+### Internationalization
+1. **Content:** All text must be translatable
+2. **Cultural:** Appropriate imagery and messaging
+3. **Technical:** Proper locale handling and routing
+4. **UX:** Seamless language switching
+5. **SEO:** Localized meta tags and structured data
+
+## Compliance and Enforcement
+
+### Development Workflow
+1. **Planning:** All features must align with constitution principles
+2. **Implementation:** Follow established patterns and standards
+3. **Review:** Peer review for compliance verification
+4. **Testing:** Automated and manual quality checks
+5. **Deployment:** Performance and accessibility validation
+
+### Quality Gates
+- **Code Quality:** ESLint, TypeScript, Prettier compliance
+- **Performance:** Core Web Vitals thresholds
+- **Accessibility:** WCAG 2.1 AA compliance
+- **Security:** No exposed secrets or vulnerabilities
+- **Internationalization:** Complete translation coverage
+
+### Remediation Process
+1. **Identification:** Automated detection or manual review
+2. **Assessment:** Impact analysis and priority assignment
+3. **Resolution:** Development team implementation
+4. **Verification:** Testing and validation
+5. **Documentation:** Lessons learned and prevention measures
+
+## Conclusion
+
+This constitution serves as the foundation for all development activities within the Best IT Consulting project. Adherence to these principles ensures consistent quality, maintainable code, and exceptional user experiences that reflect our professional standards and client expectations.
+
+All team members are responsible for understanding, implementing, and upholding these standards throughout the project lifecycle.

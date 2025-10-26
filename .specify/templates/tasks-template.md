@@ -1,254 +1,368 @@
----
-description: 'Task list template for feature implementation'
----
-
-# Tasks: [FEATURE NAME]
-
-**Input**: Design documents from `/specs/[###-feature-name]/`
-**Prerequisites**: plan.md (required), spec.md (required for user stories), research.md, data-model.md, contracts/
-
-**Tests**: The examples below include test tasks. Tests are OPTIONAL - only include them if explicitly requested in the feature specification.
-
-**Organization**: Tasks are grouped by user story to enable independent implementation and testing of each story.
-
-## Format: `[ID] [P?] [Story] Description`
-
-- **[P]**: Can run in parallel (different files, no dependencies)
-- **[Story]**: Which user story this task belongs to (e.g., US1, US2, US3)
-- Include exact file paths in descriptions
-
-## Path Conventions
-
-- **Single project**: `src/`, `tests/` at repository root
-- **Web app**: `backend/src/`, `frontend/src/`
-- **Mobile**: `api/src/`, `ios/src/` or `android/src/`
-- Paths shown below assume single project - adjust based on plan.md structure
-
-<!--
-  ============================================================================
-  IMPORTANT: The tasks below are SAMPLE TASKS for illustration purposes only.
-
-  The /speckit.tasks command MUST replace these with actual tasks based on:
-  - User stories from spec.md (with their priorities P1, P2, P3...)
-  - Feature requirements from plan.md
-  - Entities from data-model.md
-  - Endpoints from contracts/
-
-  Tasks MUST be organized by user story so each story can be:
-  - Implemented independently
-  - Tested independently
-  - Delivered as an MVP increment
-
-  DO NOT keep these sample tasks in the generated tasks.md file.
-  ============================================================================
--->
-
-## Phase 1: Setup (Shared Infrastructure)
-
-**Purpose**: Project initialization and basic structure
-
-- [ ] T001 Create project structure per implementation plan
-- [ ] T002 Initialize [language] project with [framework] dependencies
-- [ ] T003 [P] Configure linting and formatting tools
-
----
-
-## Phase 2: Foundational (Blocking Prerequisites)
-
-**Purpose**: Core infrastructure that MUST be complete before ANY user story can be implemented
-
-**⚠️ CRITICAL**: No user story work can begin until this phase is complete
-
-Examples of foundational tasks (adjust based on your project):
-
-- [ ] T004 Setup database schema and migrations framework
-- [ ] T005 [P] Implement authentication/authorization framework
-- [ ] T006 [P] Setup API routing and middleware structure
-- [ ] T007 Create base models/entities that all stories depend on
-- [ ] T008 Configure error handling and logging infrastructure
-- [ ] T009 Setup environment configuration management
-
-**Checkpoint**: Foundation ready - user story implementation can now begin in parallel
-
----
-
-## Phase 3: User Story 1 - [Title] (Priority: P1) 🎯 MVP
-
-**Goal**: [Brief description of what this story delivers]
-
-**Independent Test**: [How to verify this story works on its own]
-
-### Tests for User Story 1 (OPTIONAL - only if tests requested) ⚠️
-
-> **NOTE: Write these tests FIRST, ensure they FAIL before implementation**
-
-- [ ] T010 [P] [US1] Contract test for [endpoint] in tests/contract/test\_[name].py
-- [ ] T011 [P] [US1] Integration test for [user journey] in tests/integration/test\_[name].py
-
-### Implementation for User Story 1
-
-- [ ] T012 [P] [US1] Create [Entity1] model in src/models/[entity1].py
-- [ ] T013 [P] [US1] Create [Entity2] model in src/models/[entity2].py
-- [ ] T014 [US1] Implement [Service] in src/services/[service].py (depends on T012, T013)
-- [ ] T015 [US1] Implement [endpoint/feature] in src/[location]/[file].py
-- [ ] T016 [US1] Add validation and error handling
-- [ ] T017 [US1] Add logging for user story 1 operations
-
-**Checkpoint**: At this point, User Story 1 should be fully functional and testable independently
-
----
-
-## Phase 4: User Story 2 - [Title] (Priority: P2)
-
-**Goal**: [Brief description of what this story delivers]
-
-**Independent Test**: [How to verify this story works on its own]
-
-### Tests for User Story 2 (OPTIONAL - only if tests requested) ⚠️
-
-- [ ] T018 [P] [US2] Contract test for [endpoint] in tests/contract/test\_[name].py
-- [ ] T019 [P] [US2] Integration test for [user journey] in tests/integration/test\_[name].py
-
-### Implementation for User Story 2
-
-- [ ] T020 [P] [US2] Create [Entity] model in src/models/[entity].py
-- [ ] T021 [US2] Implement [Service] in src/services/[service].py
-- [ ] T022 [US2] Implement [endpoint/feature] in src/[location]/[file].py
-- [ ] T023 [US2] Integrate with User Story 1 components (if needed)
-
-**Checkpoint**: At this point, User Stories 1 AND 2 should both work independently
-
----
-
-## Phase 5: User Story 3 - [Title] (Priority: P3)
-
-**Goal**: [Brief description of what this story delivers]
-
-**Independent Test**: [How to verify this story works on its own]
-
-### Tests for User Story 3 (OPTIONAL - only if tests requested) ⚠️
-
-- [ ] T024 [P] [US3] Contract test for [endpoint] in tests/contract/test\_[name].py
-- [ ] T025 [P] [US3] Integration test for [user journey] in tests/integration/test\_[name].py
-
-### Implementation for User Story 3
-
-- [ ] T026 [P] [US3] Create [Entity] model in src/models/[entity].py
-- [ ] T027 [US3] Implement [Service] in src/services/[service].py
-- [ ] T028 [US3] Implement [endpoint/feature] in src/[location]/[file].py
-
-**Checkpoint**: All user stories should now be independently functional
-
----
-
-[Add more user story phases as needed, following the same pattern]
-
----
-
-## Phase N: Polish & Cross-Cutting Concerns
-
-**Purpose**: Improvements that affect multiple user stories
-
-- [ ] TXXX [P] Documentation updates in docs/
-- [ ] TXXX Code cleanup and refactoring
-- [ ] TXXX Performance optimization across all stories
-- [ ] TXXX [P] Additional unit tests (if requested) in tests/unit/
-- [ ] TXXX Security hardening
-- [ ] TXXX Animation accessibility testing and optimization
-- [ ] TXXX Mobile responsiveness testing across all components
-- [ ] TXXX Visual effects performance optimization
-- [ ] TXXX Accessibility audit and compliance verification
-- [ ] TXXX Run quickstart.md validation
-
----
-
-## Dependencies & Execution Order
-
-### Phase Dependencies
-
-- **Setup (Phase 1)**: No dependencies - can start immediately
-- **Foundational (Phase 2)**: Depends on Setup completion - BLOCKS all user stories
-- **User Stories (Phase 3+)**: All depend on Foundational phase completion
-  - User stories can then proceed in parallel (if staffed)
-  - Or sequentially in priority order (P1 → P2 → P3)
-- **Polish (Final Phase)**: Depends on all desired user stories being complete
-
-### User Story Dependencies
-
-- **User Story 1 (P1)**: Can start after Foundational (Phase 2) - No dependencies on other stories
-- **User Story 2 (P2)**: Can start after Foundational (Phase 2) - May integrate with US1 but should be independently testable
-- **User Story 3 (P3)**: Can start after Foundational (Phase 2) - May integrate with US1/US2 but should be independently testable
-
-### Within Each User Story
-
-- Tests (if included) MUST be written and FAIL before implementation
-- Models before services
-- Services before endpoints
-- Core implementation before integration
-- Story complete before moving to next priority
-
-### Parallel Opportunities
-
-- All Setup tasks marked [P] can run in parallel
-- All Foundational tasks marked [P] can run in parallel (within Phase 2)
-- Once Foundational phase completes, all user stories can start in parallel (if team capacity allows)
-- All tests for a user story marked [P] can run in parallel
-- Models within a story marked [P] can run in parallel
-- Different user stories can be worked on in parallel by different team members
-
----
-
-## Parallel Example: User Story 1
-
-```bash
-# Launch all tests for User Story 1 together (if tests requested):
-Task: "Contract test for [endpoint] in tests/contract/test_[name].py"
-Task: "Integration test for [user journey] in tests/integration/test_[name].py"
-
-# Launch all models for User Story 1 together:
-Task: "Create [Entity1] model in src/models/[entity1].py"
-Task: "Create [Entity2] model in src/models/[entity2].py"
+# Task Management Template
+
+## Constitution Check
+This task management system MUST align with the Best IT Consulting Project Constitution v1.0.0, ensuring all principles are upheld throughout implementation.
+
+## Task Categories
+
+### Architecture Tasks
+**Constitution Principle:** Modern Web Architecture
+- [ ] Next.js 15+ App Router implementation
+- [ ] TypeScript strict mode configuration
+- [ ] Server/Client component separation
+- [ ] Modern React patterns implementation
+
+### Accessibility Tasks
+**Constitution Principle:** Accessibility-First Development
+- [ ] WCAG 2.1 AA compliance implementation
+- [ ] Screen reader support development
+- [ ] Keyboard navigation implementation
+- [ ] ARIA labels and semantic HTML
+
+### Performance Tasks
+**Constitution Principle:** Performance Optimization
+- [ ] Core Web Vitals optimization
+- [ ] Mobile performance optimization
+- [ ] Bundle size optimization
+- [ ] Animation performance tuning
+
+### Visual Tasks
+**Constitution Principle:** Visual Excellence
+- [ ] Tailwind CSS utility implementation
+- [ ] shadcn/ui component integration
+- [ ] Animation and micro-interaction development
+- [ ] Brand consistency maintenance
+
+### Internationalization Tasks
+**Constitution Principle:** Internationalization
+- [ ] Multi-language support implementation
+- [ ] Cultural considerations
+- [ ] Localized content management
+- [ ] SEO optimization for all languages
+
+### Security Tasks
+**Constitution Principle:** Security and Privacy
+- [ ] Environment variable security
+- [ ] API endpoint security
+- [ ] GDPR compliance implementation
+- [ ] Data protection implementation
+
+### Code Quality Tasks
+**Constitution Principle:** Code Quality and Maintainability
+- [ ] TypeScript typing implementation
+- [ ] ESLint configuration
+- [ ] Prettier formatting setup
+- [ ] Documentation standards
+
+### Animation Tasks
+**Constitution Principle:** Animation and Interaction Standards
+- [ ] Performance-optimized animations
+- [ ] GPU acceleration implementation
+- [ ] Reduced motion support
+- [ ] Device-specific optimizations
+
+## Task Priority Levels
+
+### Critical (P0)
+- **Constitution Compliance:** Must be completed to meet constitution requirements
+- **Examples:** WCAG 2.1 AA compliance, Core Web Vitals optimization, Security implementation
+- **Timeline:** Immediate priority
+
+### High (P1)
+- **Constitution Compliance:** Important for maintaining constitution standards
+- **Examples:** Performance optimization, Accessibility improvements, Code quality
+- **Timeline:** Within current sprint
+
+### Medium (P2)
+- **Constitution Compliance:** Supports constitution principles
+- **Examples:** Visual enhancements, Animation improvements, Documentation
+- **Timeline:** Within next sprint
+
+### Low (P3)
+- **Constitution Compliance:** Nice to have for constitution alignment
+- **Examples:** Advanced features, Polish items, Future improvements
+- **Timeline:** Future sprints
+
+## Task Status
+
+### Planning
+- **Status:** Task identified and planned
+- **Requirements:** Constitution compliance verified
+- **Next Steps:** Ready for implementation
+
+### In Progress
+- **Status:** Active development
+- **Requirements:** Constitution principles being applied
+- **Next Steps:** Regular progress updates
+
+### Review
+- **Status:** Implementation complete, awaiting review
+- **Requirements:** Constitution compliance verification
+- **Next Steps:** Peer review and approval
+
+### Completed
+- **Status:** Fully implemented and verified
+- **Requirements:** Constitution compliance confirmed
+- **Next Steps:** Documentation and handoff
+
+### Blocked
+- **Status:** Cannot proceed due to dependencies
+- **Requirements:** Constitution compliance at risk
+- **Next Steps:** Dependency resolution
+
+## Task Templates
+
+### Architecture Task Template
+```
+**Task:** [TASK_NAME]
+**Constitution Principle:** Modern Web Architecture
+**Priority:** [PRIORITY_LEVEL]
+**Effort:** [EFFORT_ESTIMATE]
+**Dependencies:** [DEPENDENCIES]
+
+**Requirements:**
+- [ ] Next.js 15+ App Router implementation
+- [ ] TypeScript strict mode enabled
+- [ ] Server/Client component separation
+- [ ] Modern React patterns
+
+**Acceptance Criteria:**
+- [ ] Architecture follows constitution standards
+- [ ] TypeScript compilation successful
+- [ ] Performance requirements met
+- [ ] Code quality standards maintained
+
+**Constitution Compliance:** ✅ VERIFIED
 ```
 
----
+### Accessibility Task Template
+```
+**Task:** [TASK_NAME]
+**Constitution Principle:** Accessibility-First Development
+**Priority:** [PRIORITY_LEVEL]
+**Effort:** [EFFORT_ESTIMATE]
+**Dependencies:** [DEPENDENCIES]
 
-## Implementation Strategy
+**Requirements:**
+- [ ] WCAG 2.1 AA compliance
+- [ ] Screen reader support
+- [ ] Keyboard navigation
+- [ ] ARIA labels and semantic HTML
 
-### MVP First (User Story 1 Only)
+**Acceptance Criteria:**
+- [ ] WCAG 2.1 AA compliance verified
+- [ ] Screen reader testing passed
+- [ ] Keyboard navigation complete
+- [ ] Color contrast requirements met
 
-1. Complete Phase 1: Setup
-2. Complete Phase 2: Foundational (CRITICAL - blocks all stories)
-3. Complete Phase 3: User Story 1
-4. **STOP and VALIDATE**: Test User Story 1 independently
-5. Deploy/demo if ready
+**Constitution Compliance:** ✅ VERIFIED
+```
 
-### Incremental Delivery
+### Performance Task Template
+```
+**Task:** [TASK_NAME]
+**Constitution Principle:** Performance Optimization
+**Priority:** [PRIORITY_LEVEL]
+**Effort:** [EFFORT_ESTIMATE]
+**Dependencies:** [DEPENDENCIES]
 
-1. Complete Setup + Foundational → Foundation ready
-2. Add User Story 1 → Test independently → Deploy/Demo (MVP!)
-3. Add User Story 2 → Test independently → Deploy/Demo
-4. Add User Story 3 → Test independently → Deploy/Demo
-5. Each story adds value without breaking previous stories
+**Requirements:**
+- [ ] Core Web Vitals optimization
+- [ ] Mobile performance optimization
+- [ ] Bundle size optimization
+- [ ] Animation performance tuning
 
-### Parallel Team Strategy
+**Acceptance Criteria:**
+- [ ] Core Web Vitals thresholds met
+- [ ] Lighthouse score >90
+- [ ] Mobile performance optimized
+- [ ] Bundle size within limits
 
-With multiple developers:
+**Constitution Compliance:** ✅ VERIFIED
+```
 
-1. Team completes Setup + Foundational together
-2. Once Foundational is done:
-   - Developer A: User Story 1
-   - Developer B: User Story 2
-   - Developer C: User Story 3
-3. Stories complete and integrate independently
+### Visual Task Template
+```
+**Task:** [TASK_NAME]
+**Constitution Principle:** Visual Excellence
+**Priority:** [PRIORITY_LEVEL]
+**Effort:** [EFFORT_ESTIMATE]
+**Dependencies:** [DEPENDENCIES]
 
----
+**Requirements:**
+- [ ] Tailwind CSS utility implementation
+- [ ] shadcn/ui component integration
+- [ ] Animation and micro-interaction development
+- [ ] Brand consistency maintenance
 
-## Notes
+**Acceptance Criteria:**
+- [ ] Visual design meets requirements
+- [ ] Animations perform smoothly
+- [ ] Brand consistency maintained
+- [ ] Responsive design implemented
 
-- [P] tasks = different files, no dependencies
-- [Story] label maps task to specific user story for traceability
-- Each user story should be independently completable and testable
-- Verify tests fail before implementing
-- Commit after each task or logical group
-- Stop at any checkpoint to validate story independently
-- Avoid: vague tasks, same file conflicts, cross-story dependencies that break independence
+**Constitution Compliance:** ✅ VERIFIED
+```
+
+### Internationalization Task Template
+```
+**Task:** [TASK_NAME]
+**Constitution Principle:** Internationalization
+**Priority:** [PRIORITY_LEVEL]
+**Effort:** [EFFORT_ESTIMATE]
+**Dependencies:** [DEPENDENCIES]
+
+**Requirements:**
+- [ ] Multi-language support implementation
+- [ ] Cultural considerations
+- [ ] Localized content management
+- [ ] SEO optimization for all languages
+
+**Acceptance Criteria:**
+- [ ] All languages supported
+- [ ] Cultural appropriateness verified
+- [ ] Content properly localized
+- [ ] SEO requirements met
+
+**Constitution Compliance:** ✅ VERIFIED
+```
+
+### Security Task Template
+```
+**Task:** [TASK_NAME]
+**Constitution Principle:** Security and Privacy
+**Priority:** [PRIORITY_LEVEL]
+**Effort:** [EFFORT_ESTIMATE]
+**Dependencies:** [DEPENDENCIES]
+
+**Requirements:**
+- [ ] Environment variable security
+- [ ] API endpoint security
+- [ ] GDPR compliance implementation
+- [ ] Data protection implementation
+
+**Acceptance Criteria:**
+- [ ] No exposed secrets
+- [ ] Secure API endpoints
+- [ ] GDPR compliance verified
+- [ ] Security audit passed
+
+**Constitution Compliance:** ✅ VERIFIED
+```
+
+### Code Quality Task Template
+```
+**Task:** [TASK_NAME]
+**Constitution Principle:** Code Quality and Maintainability
+**Priority:** [PRIORITY_LEVEL]
+**Effort:** [EFFORT_ESTIMATE]
+**Dependencies:** [DEPENDENCIES]
+
+**Requirements:**
+- [ ] TypeScript typing implementation
+- [ ] ESLint configuration
+- [ ] Prettier formatting setup
+- [ ] Documentation standards
+
+**Acceptance Criteria:**
+- [ ] TypeScript compilation successful
+- [ ] ESLint compliance achieved
+- [ ] Prettier formatting applied
+- [ ] Documentation complete
+
+**Constitution Compliance:** ✅ VERIFIED
+```
+
+### Animation Task Template
+```
+**Task:** [TASK_NAME]
+**Constitution Principle:** Animation and Interaction Standards
+**Priority:** [PRIORITY_LEVEL]
+**Effort:** [EFFORT_ESTIMATE]
+**Dependencies:** [DEPENDENCIES]
+
+**Requirements:**
+- [ ] Performance-optimized animations
+- [ ] GPU acceleration implementation
+- [ ] Reduced motion support
+- [ ] Device-specific optimizations
+
+**Acceptance Criteria:**
+- [ ] Animations perform smoothly
+- [ ] GPU acceleration enabled
+- [ ] Reduced motion support working
+- [ ] Device-specific optimizations applied
+
+**Constitution Compliance:** ✅ VERIFIED
+```
+
+## Task Workflow
+
+### 1. Task Creation
+- [ ] Identify constitution principle alignment
+- [ ] Define requirements and acceptance criteria
+- [ ] Estimate effort and identify dependencies
+- [ ] Assign priority level
+- [ ] Verify constitution compliance
+
+### 2. Task Planning
+- [ ] Break down into subtasks if needed
+- [ ] Identify required resources
+- [ ] Plan implementation approach
+- [ ] Set timeline and milestones
+
+### 3. Task Implementation
+- [ ] Follow constitution principles
+- [ ] Implement according to requirements
+- [ ] Maintain code quality standards
+- [ ] Document progress and decisions
+
+### 4. Task Review
+- [ ] Verify constitution compliance
+- [ ] Test acceptance criteria
+- [ ] Peer review implementation
+- [ ] Performance and accessibility validation
+
+### 5. Task Completion
+- [ ] Final constitution compliance check
+- [ ] Documentation updates
+- [ ] Knowledge transfer
+- [ ] Lessons learned capture
+
+## Quality Gates
+
+### Constitution Compliance Gates
+- [ ] All 8 core principles addressed
+- [ ] Technical standards met
+- [ ] Governance requirements followed
+- [ ] Implementation guidelines adhered to
+
+### Technical Quality Gates
+- [ ] TypeScript compilation successful
+- [ ] ESLint compliance achieved
+- [ ] Prettier formatting applied
+- [ ] Performance requirements met
+
+### Accessibility Quality Gates
+- [ ] WCAG 2.1 AA compliance verified
+- [ ] Screen reader testing passed
+- [ ] Keyboard navigation complete
+- [ ] Color contrast requirements met
+
+### Performance Quality Gates
+- [ ] Core Web Vitals thresholds met
+- [ ] Lighthouse score >90
+- [ ] Mobile performance optimized
+- [ ] Bundle size within limits
+
+## Constitution Compliance Verification
+
+This task management system has been reviewed against the Best IT Consulting Project Constitution v1.0.0 and ensures:
+- [ ] All 8 core principles are addressed
+- [ ] Technical standards are met
+- [ ] Governance requirements are followed
+- [ ] Implementation guidelines are adhered to
+- [ ] Quality gates are established
+
+**Constitution Compliance:** ✅ VERIFIED
+**Last Updated:** [CURRENT_DATE]

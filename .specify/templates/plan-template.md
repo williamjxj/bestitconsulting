@@ -1,112 +1,227 @@
-# Implementation Plan: [FEATURE]
-
-**Branch**: `[###-feature-name]` | **Date**: [DATE] | **Spec**: [link]
-**Input**: Feature specification from `/specs/[###-feature-name]/spec.md`
-
-**Note**: This template is filled in by the `/speckit.plan` command. See `.specify/templates/commands/plan.md` for the execution workflow.
-
-## Summary
-
-[Extract from feature spec: primary requirement + technical approach from research]
-
-## Technical Context
-
-<!--
-  ACTION REQUIRED: Replace the content in this section with the technical details
-  for the project. The structure here is presented in advisory capacity to guide
-  the iteration process.
--->
-
-**Language/Version**: [e.g., Python 3.11, Swift 5.9, Rust 1.75 or NEEDS CLARIFICATION]
-**Primary Dependencies**: [e.g., FastAPI, UIKit, LLVM or NEEDS CLARIFICATION]
-**Storage**: [if applicable, e.g., PostgreSQL, CoreData, files or N/A]
-**Testing**: [e.g., pytest, XCTest, cargo test or NEEDS CLARIFICATION]
-**Target Platform**: [e.g., Linux server, iOS 15+, WASM or NEEDS CLARIFICATION]
-**Project Type**: [single/web/mobile - determines source structure]
-**Performance Goals**: [domain-specific, e.g., 1000 req/s, 10k lines/sec, 60 fps or NEEDS CLARIFICATION]
-**Constraints**: [domain-specific, e.g., <200ms p95, <100MB memory, offline-capable or NEEDS CLARIFICATION]
-**Scale/Scope**: [domain-specific, e.g., 10k users, 1M LOC, 50 screens or NEEDS CLARIFICATION]
+# Project Plan Template
 
 ## Constitution Check
+This plan MUST align with the Best IT Consulting Project Constitution v1.0.0, ensuring all principles are upheld throughout implementation.
 
-_GATE: Must pass before Phase 0 research. Re-check after Phase 1 design._
+## Project Overview
+- **Project Name:** [PROJECT_NAME]
+- **Version:** [VERSION]
+- **Start Date:** [START_DATE]
+- **Target Completion:** [TARGET_DATE]
+- **Priority Level:** [PRIORITY]
 
-**Modern Web Stack**: Feature MUST use Next.js 15.2.4, React 19, TypeScript 5
-**Component-First**: All UI elements MUST be React components with TypeScript
-**Internationalization**: All user-facing content MUST support i18n framework
-**Quality Standards**: Code MUST pass ESLint 9, Prettier, TypeScript strict mode
-**Performance & Accessibility**: Components MUST be accessible with ARIA attributes and respect prefers-reduced-motion
-**Animation & Visual Effects**: All animations MUST use Framer Motion/GSAP with accessibility support
-**Mobile Optimization**: All components MUST be optimized for mobile devices and touch interactions
-**Developer Experience**: MUST use Turbopack and established tooling patterns
+## Core Principles Compliance
 
-## Project Structure
+### Modern Web Architecture
+- [ ] Next.js 15+ App Router implementation
+- [ ] TypeScript strict mode enabled
+- [ ] Server/Client component separation
+- [ ] Modern React patterns (hooks, context)
 
-### Documentation (this feature)
+### Accessibility-First Development
+- [ ] WCAG 2.1 AA compliance planning
+- [ ] Screen reader support design
+- [ ] Keyboard navigation implementation
+- [ ] ARIA labels and semantic HTML
 
-```text
-specs/[###-feature]/
-├── plan.md              # This file (/speckit.plan command output)
-├── research.md          # Phase 0 output (/speckit.plan command)
-├── data-model.md        # Phase 1 output (/speckit.plan command)
-├── quickstart.md        # Phase 1 output (/speckit.plan command)
-├── contracts/           # Phase 1 output (/speckit.plan command)
-└── tasks.md             # Phase 2 output (/speckit.tasks command - NOT created by /speckit.plan)
-```
+### Performance Optimization
+- [ ] Core Web Vitals targets defined
+- [ ] Mobile performance optimization
+- [ ] Bundle size optimization
+- [ ] Animation performance planning
 
-### Source Code (repository root)
+### Visual Excellence
+- [ ] Tailwind CSS utility classes only
+- [ ] shadcn/ui component integration
+- [ ] Animation and micro-interaction design
+- [ ] Brand consistency maintenance
 
-<!--
-  ACTION REQUIRED: Replace the placeholder tree below with the concrete layout
-  for this feature. Delete unused options and expand the chosen structure with
-  real paths (e.g., apps/admin, packages/something). The delivered plan must
-  not include Option labels.
--->
+### Internationalization
+- [ ] Multi-language support planning
+- [ ] Cultural considerations
+- [ ] Localized content strategy
+- [ ] SEO optimization for all languages
 
-```text
-# [REMOVE IF UNUSED] Option 1: Single project (DEFAULT)
-src/
-├── models/
-├── services/
-├── cli/
-└── lib/
+### Security and Privacy
+- [ ] Environment variable security
+- [ ] API endpoint security
+- [ ] GDPR compliance planning
+- [ ] Data protection measures
 
-tests/
-├── contract/
-├── integration/
-└── unit/
+### Code Quality and Maintainability
+- [ ] TypeScript typing strategy
+- [ ] ESLint configuration
+- [ ] Prettier formatting
+- [ ] Documentation standards
 
-# [REMOVE IF UNUSED] Option 2: Web application (when "frontend" + "backend" detected)
-backend/
-├── src/
-│   ├── models/
-│   ├── services/
-│   └── api/
-└── tests/
+### Animation and Interaction Standards
+- [ ] Performance-optimized animations
+- [ ] GPU acceleration planning
+- [ ] Reduced motion support
+- [ ] Device-specific optimizations
 
-frontend/
-├── src/
-│   ├── components/
-│   ├── pages/
-│   └── services/
-└── tests/
+## Technical Requirements
 
-# [REMOVE IF UNUSED] Option 3: Mobile + API (when "iOS/Android" detected)
-api/
-└── [same as backend above]
+### Development Environment
+- **Framework:** Next.js 15+ with App Router
+- **Language:** TypeScript with strict mode
+- **Styling:** Tailwind CSS utility classes only
+- **UI Components:** shadcn/ui as primary design system
+- **Animations:** Framer Motion with performance optimization
+- **State Management:** React Context and hooks
+- **Internationalization:** Custom i18n implementation
 
-ios/ or android/
-└── [platform-specific structure: feature modules, UI flows, platform tests]
-```
+### Performance Targets
+- **Core Web Vitals:** LCP <2.5s, FID <100ms, CLS <0.1
+- **Lighthouse Score:** >90 across all categories
+- **Mobile Performance:** Optimized for 3G networks
+- **Bundle Size:** <250KB initial load
+- **Animation Performance:** 60fps on desktop, 30fps on mobile
 
-**Structure Decision**: [Document the selected structure and reference the real
-directories captured above]
+### Accessibility Requirements
+- **WCAG Compliance:** 2.1 AA standard
+- **Screen Reader Support:** Full compatibility
+- **Keyboard Navigation:** Complete functionality
+- **Color Contrast:** 4.5:1 minimum ratio
+- **Reduced Motion:** Respect user preferences
 
-## Complexity Tracking
+## Implementation Phases
 
-> **Fill ONLY if Constitution Check has violations that must be justified**
+### Phase 1: Foundation
+- [ ] Project setup and configuration
+- [ ] Core architecture implementation
+- [ ] Basic component structure
+- [ ] Development environment setup
 
-| Violation                  | Why Needed         | Simpler Alternative Rejected Because |
-| -------------------------- | ------------------ | ------------------------------------ |
-| [e.g., 4th project]        | [current need]     | [why 3 projects insufficient]        |
-| [e.g., Repository pattern] | [specific problem] | [why direct DB access insufficient]  |
+### Phase 2: Core Features
+- [ ] Main functionality implementation
+- [ ] Component development
+- [ ] Integration testing
+- [ ] Performance optimization
+
+### Phase 3: Enhancement
+- [ ] Advanced features
+- [ ] Animation implementation
+- [ ] Accessibility improvements
+- [ ] Performance tuning
+
+### Phase 4: Polish
+- [ ] Final testing and validation
+- [ ] Documentation completion
+- [ ] Performance verification
+- [ ] Accessibility audit
+
+## Quality Assurance
+
+### Code Quality Gates
+- [ ] TypeScript compilation without errors
+- [ ] ESLint compliance (zero warnings)
+- [ ] Prettier formatting consistency
+- [ ] Unit test coverage >80%
+
+### Performance Gates
+- [ ] Core Web Vitals thresholds met
+- [ ] Lighthouse score >90
+- [ ] Mobile performance optimized
+- [ ] Bundle size within limits
+
+### Accessibility Gates
+- [ ] WCAG 2.1 AA compliance
+- [ ] Screen reader compatibility
+- [ ] Keyboard navigation complete
+- [ ] Color contrast requirements met
+
+### Security Gates
+- [ ] No exposed secrets
+- [ ] Secure API endpoints
+- [ ] GDPR compliance verified
+- [ ] Security audit passed
+
+## Risk Assessment
+
+### Technical Risks
+- **Performance Impact:** [RISK_DESCRIPTION]
+- **Accessibility Compliance:** [RISK_DESCRIPTION]
+- **Browser Compatibility:** [RISK_DESCRIPTION]
+- **Mobile Optimization:** [RISK_DESCRIPTION]
+
+### Mitigation Strategies
+- **Performance:** [MITIGATION_PLAN]
+- **Accessibility:** [MITIGATION_PLAN]
+- **Compatibility:** [MITIGATION_PLAN]
+- **Mobile:** [MITIGATION_PLAN]
+
+## Success Criteria
+
+### Functional Requirements
+- [ ] All planned features implemented
+- [ ] User experience meets expectations
+- [ ] Cross-browser compatibility achieved
+- [ ] Mobile responsiveness confirmed
+
+### Non-Functional Requirements
+- [ ] Performance targets achieved
+- [ ] Accessibility standards met
+- [ ] Security requirements satisfied
+- [ ] Code quality standards maintained
+
+## Timeline and Milestones
+
+### Week 1-2: Foundation
+- [ ] Project setup
+- [ ] Architecture design
+- [ ] Core components
+
+### Week 3-4: Development
+- [ ] Feature implementation
+- [ ] Component integration
+- [ ] Basic testing
+
+### Week 5-6: Enhancement
+- [ ] Advanced features
+- [ ] Performance optimization
+- [ ] Accessibility improvements
+
+### Week 7-8: Finalization
+- [ ] Testing and validation
+- [ ] Documentation
+- [ ] Deployment preparation
+
+## Resources and Dependencies
+
+### Team Requirements
+- **Frontend Developer:** [REQUIREMENTS]
+- **UI/UX Designer:** [REQUIREMENTS]
+- **Accessibility Specialist:** [REQUIREMENTS]
+- **Performance Engineer:** [REQUIREMENTS]
+
+### External Dependencies
+- **Design System:** shadcn/ui components
+- **Animation Library:** Framer Motion
+- **Styling Framework:** Tailwind CSS
+- **Testing Framework:** [TESTING_TOOLS]
+
+## Review and Approval
+
+### Technical Review
+- **Architecture Review:** [REVIEWER_NAME] - [DATE]
+- **Code Review:** [REVIEWER_NAME] - [DATE]
+- **Performance Review:** [REVIEWER_NAME] - [DATE]
+- **Accessibility Review:** [REVIEWER_NAME] - [DATE]
+
+### Stakeholder Approval
+- **Product Owner:** [APPROVER_NAME] - [DATE]
+- **Technical Lead:** [APPROVER_NAME] - [DATE]
+- **Design Lead:** [APPROVER_NAME] - [DATE]
+
+## Constitution Compliance Verification
+
+This plan has been reviewed against the Best IT Consulting Project Constitution v1.0.0 and ensures:
+- [ ] All 8 core principles are addressed
+- [ ] Technical standards are met
+- [ ] Governance requirements are followed
+- [ ] Implementation guidelines are adhered to
+- [ ] Quality gates are established
+
+**Constitution Compliance:** ✅ VERIFIED
+**Last Updated:** [CURRENT_DATE]
