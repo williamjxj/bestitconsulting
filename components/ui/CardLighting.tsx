@@ -44,10 +44,7 @@ export const CardLighting: React.FC<CardLightingProps> = ({
   // Handle mouse move
   const handleMouseMove = useCallback(
     (event: React.MouseEvent<HTMLDivElement>) => {
-      if (
-        !cardRef.current ||
-        (respectReducedMotion && prefersReducedMotion)
-      )
+      if (!cardRef.current || (respectReducedMotion && prefersReducedMotion))
         return
 
       const rect = cardRef.current.getBoundingClientRect()

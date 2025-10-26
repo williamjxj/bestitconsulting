@@ -31,8 +31,8 @@ import { ScaleIn } from '@/components/animations/ScaleIn'
 // import { TypewriterHeadline } from '@/components/hero/TypewriterHeadline'
 // import { ScrollTextReveal } from '@/components/hero/ScrollTextReveal'
 // import { TextMorphing } from '@/components/hero/TextMorphing'
-// import { AnimatedButton } from '@/components/ui/AnimatedButton'
-// import { ButtonHoverEffects } from '@/components/ui/ButtonHoverEffects'
+import { AnimatedButton } from '@/components/ui/AnimatedButton'
+import { ButtonHoverEffects } from '@/components/ui/ButtonHoverEffects'
 // import LazyAnimation from '@/components/animations/LazyAnimation'
 
 export function HeroSection() {
@@ -48,79 +48,79 @@ export function HeroSection() {
         threshold={0.1}
         rootMargin='100px'
       > */}
-        <div className='absolute inset-0 overflow-hidden'>
-          {/* Primary gradient orbs */}
-          <div className='absolute -top-1/2 -right-1/2 w-full h-full bg-gradient-radial from-blue-500/20 to-transparent rounded-full animate-pulse-slow'></div>
-          <div className='absolute -bottom-1/2 -left-1/2 w-full h-full bg-gradient-radial from-cyan-400/15 to-transparent rounded-full animate-float'></div>
+      <div className='absolute inset-0 overflow-hidden'>
+        {/* Primary gradient orbs */}
+        <div className='absolute -top-1/2 -right-1/2 w-full h-full bg-gradient-radial from-blue-500/20 to-transparent rounded-full animate-pulse-slow'></div>
+        <div className='absolute -bottom-1/2 -left-1/2 w-full h-full bg-gradient-radial from-cyan-400/15 to-transparent rounded-full animate-float'></div>
 
-          {/* Secondary gradient layers */}
-          <div
-            className='absolute top-1/4 right-1/3 w-96 h-96 bg-gradient-radial from-purple-500/10 to-transparent rounded-full animate-pulse-slow'
-            style={{ animationDelay: '2s' }}
-          ></div>
-          <div
-            className='absolute bottom-1/4 left-1/3 w-80 h-80 bg-gradient-radial from-emerald-400/10 to-transparent rounded-full animate-float'
-            style={{ animationDelay: '4s' }}
-          ></div>
+        {/* Secondary gradient layers */}
+        <div
+          className='absolute top-1/4 right-1/3 w-96 h-96 bg-gradient-radial from-purple-500/10 to-transparent rounded-full animate-pulse-slow'
+          style={{ animationDelay: '2s' }}
+        ></div>
+        <div
+          className='absolute bottom-1/4 left-1/3 w-80 h-80 bg-gradient-radial from-emerald-400/10 to-transparent rounded-full animate-float'
+          style={{ animationDelay: '4s' }}
+        ></div>
 
-          {/* Enhanced floating geometric shapes */}
-          <div
-            className='absolute top-20 left-20 w-6 h-6 bg-cyan-300/40 rounded-full animate-float'
-            style={{ animationDelay: '0s' }}
-          ></div>
-          <div
-            className='absolute top-40 right-32 w-4 h-4 bg-blue-300/30 rounded-full animate-float'
-            style={{ animationDelay: '1s' }}
-          ></div>
-          <div
-            className='absolute top-60 left-1/2 w-8 h-8 bg-purple-300/25 rounded-full animate-float'
-            style={{ animationDelay: '2s' }}
-          ></div>
-          <div
-            className='absolute bottom-40 right-20 w-5 h-5 bg-emerald-300/35 rounded-full animate-float'
-            style={{ animationDelay: '3s' }}
-          ></div>
-          <div
-            className='absolute bottom-60 left-40 w-3 h-3 bg-pink-300/30 rounded-full animate-float'
-            style={{ animationDelay: '4s' }}
-          ></div>
+        {/* Enhanced floating geometric shapes */}
+        <div
+          className='absolute top-20 left-20 w-6 h-6 bg-cyan-300/40 rounded-full animate-float'
+          style={{ animationDelay: '0s' }}
+        ></div>
+        <div
+          className='absolute top-40 right-32 w-4 h-4 bg-blue-300/30 rounded-full animate-float'
+          style={{ animationDelay: '1s' }}
+        ></div>
+        <div
+          className='absolute top-60 left-1/2 w-8 h-8 bg-purple-300/25 rounded-full animate-float'
+          style={{ animationDelay: '2s' }}
+        ></div>
+        <div
+          className='absolute bottom-40 right-20 w-5 h-5 bg-emerald-300/35 rounded-full animate-float'
+          style={{ animationDelay: '3s' }}
+        ></div>
+        <div
+          className='absolute bottom-60 left-40 w-3 h-3 bg-pink-300/30 rounded-full animate-float'
+          style={{ animationDelay: '4s' }}
+        ></div>
 
-          {/* Tech-themed floating icons */}
-          <div
-            className='absolute top-32 right-1/4 opacity-20 animate-float'
-            style={{ animationDelay: '1s' }}
-          >
-            <Code2 className='h-8 w-8 text-cyan-300' />
-          </div>
-          <div
-            className='absolute bottom-32 left-1/4 opacity-20 animate-float'
-            style={{ animationDelay: '3s' }}
-          >
-            <Database className='h-6 w-6 text-blue-300' />
-          </div>
-          <div
-            className='absolute top-1/2 right-20 opacity-20 animate-float'
-            style={{ animationDelay: '5s' }}
-          >
-            <Cpu className='h-7 w-7 text-purple-300' />
-          </div>
-
-          {/* Animated mesh grid */}
-          <div className='absolute inset-0 opacity-10'>
-            <div
-              className='absolute inset-0'
-              style={{
-                backgroundImage: `linear-gradient(rgba(59, 130, 246, 0.3) 1px, transparent 1px),
-                              linear-gradient(90deg, rgba(59, 130, 246, 0.3) 1px, transparent 1px)`,
-                backgroundSize: '60px 60px',
-                animation: 'gradient-shift 20s ease infinite',
-              }}
-            ></div>
-          </div>
-
-          {/* Noise texture overlay for depth */}
-          <div className='absolute inset-0 opacity-[0.015] bg-gradient-to-br from-white to-transparent mix-blend-overlay'></div>
+        {/* Tech-themed floating icons */}
+        <div
+          className='absolute top-32 right-1/4 opacity-20 animate-float'
+          style={{ animationDelay: '1s' }}
+        >
+          <Code2 className='h-8 w-8 text-cyan-300' />
         </div>
+        <div
+          className='absolute bottom-32 left-1/4 opacity-20 animate-float'
+          style={{ animationDelay: '3s' }}
+        >
+          <Database className='h-6 w-6 text-blue-300' />
+        </div>
+        <div
+          className='absolute top-1/2 right-20 opacity-20 animate-float'
+          style={{ animationDelay: '5s' }}
+        >
+          <Cpu className='h-7 w-7 text-purple-300' />
+        </div>
+
+        {/* Animated mesh grid */}
+        <div className='absolute inset-0 opacity-10'>
+          <div
+            className='absolute inset-0'
+            style={{
+              backgroundImage: `linear-gradient(rgba(59, 130, 246, 0.3) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(59, 130, 246, 0.3) 1px, transparent 1px)`,
+              backgroundSize: '60px 60px',
+              animation: 'gradient-shift 20s ease infinite',
+            }}
+          ></div>
+        </div>
+
+        {/* Noise texture overlay for depth */}
+        <div className='absolute inset-0 opacity-[0.015] bg-gradient-to-br from-white to-transparent mix-blend-overlay'></div>
+      </div>
       {/* </ParticleBackground> */}
 
       <div className='container mx-auto px-4 relative z-10'>
@@ -154,14 +154,16 @@ export function HeroSection() {
                 animationDuration={3}
                 delay={0.6}
               /> */}
-              <span className="block mb-2">Transform Your Digital Future</span>
+              <span className='block mb-2'>Transform Your Digital Future</span>
               {/* <TextMorphing
                 words={['with Expert IT Solutions', 'with Cutting-Edge Technology', 'with Innovative Solutions']}
                 interval={4}
                 className="block text-4xl md:text-5xl lg:text-6xl mt-4 text-blue-100"
                 delay={1.0}
               /> */}
-              <span className="block text-4xl md:text-5xl lg:text-6xl mt-4 text-blue-100">with Expert IT Solutions</span>
+              <span className='block text-4xl md:text-5xl lg:text-6xl mt-4 text-blue-100'>
+                with Expert IT Solutions
+              </span>
             </h1>
           </SlideIn>
 
@@ -172,14 +174,16 @@ export function HeroSection() {
             delay={1.2}
             staggerChildren={0.02}
           /> */}
-          <p className="text-xl md:text-2xl text-blue-100/90 max-w-4xl mx-auto mb-12 leading-relaxed">
-            We deliver cutting-edge software solutions that drive business growth and digital transformation for enterprises across Canada. From startup to scale.
+          <p className='text-xl md:text-2xl text-blue-100/90 max-w-4xl mx-auto mb-12 leading-relaxed'>
+            We deliver cutting-edge software solutions that drive business
+            growth and digital transformation for enterprises across Canada.
+            From startup to scale.
           </p>
 
           {/* Enhanced CTA buttons */}
           <SlideIn direction='up' delay={1.4} duration={0.8}>
             <div className='flex flex-col sm:flex-row gap-6 justify-center items-center mb-16'>
-              {/* <AnimatedButton */}
+              <AnimatedButton
                 size='lg'
                 className='group text-lg px-8 py-4 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 shadow-lg hover:shadow-xl transition-all duration-300'
                 rippleColor='rgba(255, 255, 255, 0.3)'
@@ -191,8 +195,8 @@ export function HeroSection() {
                   Get Free Consultation
                   <ArrowRight className='ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform' />
                 </Link>
-              {/* </AnimatedButton> */}
-              {/* <ButtonHoverEffects */}
+              </AnimatedButton>
+              <ButtonHoverEffects
                 size='lg'
                 variant='outline'
                 className='text-lg px-8 py-4 bg-white/10 border-white/20 hover:bg-white/20 backdrop-blur-sm transition-all duration-300'
@@ -204,7 +208,7 @@ export function HeroSection() {
                   <Zap className='mr-2 h-5 w-5' />
                   View Our Work
                 </Link>
-              {/* </ButtonHoverEffects> */}
+              </ButtonHoverEffects>
             </div>
           </SlideIn>
 
