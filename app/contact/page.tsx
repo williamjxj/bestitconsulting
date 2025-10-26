@@ -7,7 +7,6 @@ import { AnimatedForm } from '@/components/ui/animated-form'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
-import SphereImageGrid from '@/components/ui/image-sphere'
 import {
   Phone,
   Mail,
@@ -21,111 +20,14 @@ import {
   Github,
   Youtube,
   MessageSquare,
-  Calendar,
-  Users,
-  Globe,
-  Rocket,
   ArrowRight,
   Building,
   Shield,
   Award,
   HeadphonesIcon,
+  Rocket,
 } from 'lucide-react'
 import Link from 'next/link'
-
-// High-quality images for the sphere component
-const BASE_IMAGES = [
-  {
-    src: 'https://res.cloudinary.com/dctgknnt7/image/upload/v1758731403/1_d8uozd.jpg',
-    alt: 'Web Development',
-    title: 'Web Development',
-    description: 'Modern web applications built with cutting-edge technologies',
-  },
-  {
-    src: 'https://res.cloudinary.com/dctgknnt7/image/upload/v1758731402/5_ionpyy.jpg',
-    alt: 'Mobile Apps',
-    title: 'Mobile Apps',
-    description: 'iOS and Android solutions for seamless user experiences',
-  },
-  {
-    src: 'https://res.cloudinary.com/dctgknnt7/image/upload/v1758731402/4_zeoqje.jpg',
-    alt: 'Cloud Solutions',
-    title: 'Cloud Solutions',
-    description: 'Scalable cloud infrastructure for modern businesses',
-  },
-  {
-    src: 'https://res.cloudinary.com/dctgknnt7/image/upload/v1758731402/2_hme6yu.jpg',
-    alt: 'AI & ML',
-    title: 'AI & ML',
-    description: 'Intelligent automation and machine learning solutions',
-  },
-  {
-    src: 'https://res.cloudinary.com/dctgknnt7/image/upload/v1758731402/3_nfdtim.jpg',
-    alt: 'DevOps',
-    title: 'DevOps',
-    description: 'Streamlined deployment and continuous integration',
-  },
-  {
-    src: 'https://res.cloudinary.com/dctgknnt7/image/upload/v1758823070/11_c9flg6.jpg',
-    alt: 'Consulting',
-    title: 'Consulting',
-    description: 'Strategic technology guidance and digital transformation',
-  },
-  {
-    src: 'https://res.cloudinary.com/dctgknnt7/image/upload/v1758823069/10_qujlpy.jpg',
-    alt: 'Data Analytics',
-    title: 'Data Analytics',
-    description: 'Advanced analytics and business intelligence solutions',
-  },
-  {
-    src: 'https://res.cloudinary.com/dctgknnt7/image/upload/v1758823070/8_hkn2jm.jpg',
-    alt: 'Cybersecurity',
-    title: 'Cybersecurity',
-    description: 'Enterprise-grade security solutions and protection',
-  },
-  {
-    src: 'https://res.cloudinary.com/dctgknnt7/image/upload/v1758823069/6_li3ger.jpg',
-    alt: 'IoT Solutions',
-    title: 'IoT Solutions',
-    description: 'Internet of Things integration and smart device connectivity',
-  },
-  {
-    src: 'https://res.cloudinary.com/dctgknnt7/image/upload/v1758823069/12_kitql2.jpg',
-    alt: 'Blockchain',
-    title: 'Blockchain',
-    description: 'Distributed ledger technology and cryptocurrency solutions',
-  },
-  {
-    src: 'https://res.cloudinary.com/dctgknnt7/image/upload/v1758823069/7_ojrozd.jpg',
-    alt: 'E-commerce',
-    title: 'E-commerce',
-    description: 'Online marketplace and digital commerce platforms',
-  },
-  {
-    src: 'https://res.cloudinary.com/dctgknnt7/image/upload/v1758823069/9_gkuidt.jpg',
-    alt: 'Digital Marketing',
-    title: 'Digital Marketing',
-    description: 'SEO, social media, and digital advertising solutions',
-  },
-]
-
-// Generate more images by repeating the base set for better sphere coverage
-const sampleImages: Array<{
-  id: string
-  src: string
-  alt: string
-  title: string
-  description: string
-}> = []
-for (let i = 0; i < 24; i++) {
-  const baseIndex = i % BASE_IMAGES.length
-  const baseImage = BASE_IMAGES[baseIndex]
-  sampleImages.push({
-    id: `img-${i + 1}`,
-    ...baseImage,
-    alt: `${baseImage.alt} (${Math.floor(i / BASE_IMAGES.length) + 1})`,
-  })
-}
 
 export default function ContactPage() {
   const formFields = [
@@ -182,7 +84,6 @@ export default function ContactPage() {
   ]
 
   const handleFormSubmit = async (data: Record<string, string>) => {
-    // Send form data to API
     try {
       const response = await fetch('/api/contact', {
         method: 'POST',
@@ -209,72 +110,15 @@ export default function ContactPage() {
     window.open(googleMapsUrl, '_blank')
   }
 
-  const contactMethods = [
-    {
-      icon: <Phone className='h-8 w-8 text-blue-500' />,
-      title: 'Phone',
-      description: 'Call us directly for immediate assistance',
-      contact: '+1 (555) 123-4567',
-      availability: 'Mon-Fri 9AM-6PM EST',
-      action: 'Call Now',
-      gradient: 'from-blue-500 to-cyan-500',
-    },
-    {
-      icon: <Mail className='h-8 w-8 text-green-500' />,
-      title: 'Email',
-      description: 'Send us a detailed message',
-      contact: 'hello@bestitconsulting.com',
-      availability: 'Response within 24 hours',
-      action: 'Send Email',
-      gradient: 'from-green-500 to-emerald-500',
-    },
-    {
-      icon: <MessageSquare className='h-8 w-8 text-purple-500' />,
-      title: 'Live Chat',
-      description: 'Chat with our team in real-time',
-      contact: 'Available on website',
-      availability: 'Mon-Fri 9AM-6PM EST',
-      action: 'Start Chat',
-      gradient: 'from-purple-500 to-pink-500',
-    },
-    {
-      icon: <Calendar className='h-8 w-8 text-orange-500' />,
-      title: 'Schedule Meeting',
-      description: 'Book a consultation call',
-      contact: 'Free 30-min consultation',
-      availability: 'Flexible scheduling',
-      action: 'Book Meeting',
-      gradient: 'from-orange-500 to-red-500',
-    },
-  ]
-
   const offices = [
     {
-      city: 'Surrey',
+      city: 'Surrey Guildford',
       country: 'Canada',
-      address: '9727 152b Street',
-      postal: 'Surrey, BC V3R 0G5',
-      phone: '+1 (604) 555-0123',
-      isHeadquarters: true,
-      coordinates: '49.1913,-122.8490', // Surrey coordinates
-    },
-    {
-      city: 'Vancouver',
-      country: 'Canada',
-      address: '456 Tech Ave, Floor 15',
-      postal: 'Vancouver, BC V6B 2W9',
-      phone: '+1 (604) 555-0456',
+      address: '10355 152 St',
+      postal: 'Surrey, BC V3R 7C3',
+      phone: '+1 (236) 992-3846',
       isHeadquarters: false,
-      coordinates: '49.2827,-123.1207', // Vancouver coordinates
-    },
-    {
-      city: 'Toronto',
-      country: 'Canada',
-      address: '123 Business St, Suite 400',
-      postal: 'Toronto, ON M5V 3A8',
-      phone: '+1 (416) 555-0123',
-      isHeadquarters: false,
-      coordinates: '43.6532,-79.3832', // Toronto coordinates
+      coordinates: '49.189201, -122.804169',
     },
   ]
 
@@ -294,31 +138,26 @@ export default function ContactPage() {
       answer:
         'Absolutely! We specialize in integrating with existing systems and can work with virtually any technology stack to enhance your current infrastructure.',
     },
-    {
-      question: 'What industries do you serve?',
-      answer:
-        'We serve clients across healthcare, finance, retail, manufacturing, transportation, and technology sectors, adapting our solutions to industry-specific requirements.',
-    },
   ]
 
   const benefits = [
     {
-      icon: <Rocket className='h-6 w-6' />,
+      icon: <Rocket className='h-5 w-5' />,
       title: 'Free Consultation',
       description: '30-minute strategy session',
     },
     {
-      icon: <Shield className='h-6 w-6' />,
+      icon: <Shield className='h-5 w-5' />,
       title: 'NDA Protection',
       description: 'Your ideas are safe with us',
     },
     {
-      icon: <Award className='h-6 w-6' />,
+      icon: <Award className='h-5 w-5' />,
       title: 'Expert Team',
       description: '50+ certified professionals',
     },
     {
-      icon: <HeadphonesIcon className='h-6 w-6' />,
+      icon: <HeadphonesIcon className='h-5 w-5' />,
       title: '24/7 Support',
       description: 'Round-the-clock assistance',
     },
@@ -327,93 +166,65 @@ export default function ContactPage() {
   return (
     <Layout>
       <div className='min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50'>
-        {/* Enhanced Hero Section */}
-        <section className='relative overflow-hidden bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 text-white py-24 md:py-32'>
-          {/* Animated background elements */}
-          <div className='absolute inset-0'>
-            <div className='absolute -top-1/2 -right-1/2 w-full h-full bg-gradient-radial from-blue-500/20 to-transparent rounded-full animate-pulse-slow'></div>
-            <div className='absolute -bottom-1/2 -left-1/2 w-full h-full bg-gradient-radial from-cyan-400/15 to-transparent rounded-full animate-float'></div>
-          </div>
-
+        {/* Compact Hero Section */}
+        <section className='relative overflow-hidden bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 text-white py-16'>
           <div className='container mx-auto px-4 relative z-10'>
-            <div className='grid lg:grid-cols-2 gap-8 items-center'>
-              <div className='text-center lg:text-left'>
-                <div className='inline-flex items-center gap-2 px-4 py-2 text-sm font-medium bg-blue-600/20 rounded-full mb-8 border border-blue-500/30'>
-                  <MessageSquare className='h-4 w-4 text-cyan-300' />
-                  <span>Free Consultation • Response within 24 hours</span>
-                </div>
-
-                <h1 className='text-5xl md:text-6xl lg:text-7xl font-bold leading-tight mb-8'>
-                  <span className='block'>Let's Start Your</span>
-                  <span className='block bg-clip-text text-transparent bg-gradient-to-r from-blue-300 via-cyan-300 to-purple-400'>
-                    Digital Journey
-                  </span>
-                </h1>
-
-                <p className='text-xl md:text-2xl text-blue-100/90 max-w-3xl mx-auto lg:mx-0 mb-12 leading-relaxed'>
-                  Ready to transform your business with cutting-edge technology?
-                  Our expert team is here to turn your vision into reality.
-                </p>
-
-                <div className='flex flex-col sm:flex-row gap-6 justify-center lg:justify-start items-center'>
-                  <Button
-                    size='lg'
-                    className='group text-lg px-8 py-4 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700'
-                    asChild
-                  >
-                    <Link href='#contact-form'>
-                      <Send className='mr-2 h-5 w-5' />
-                      Get Free Consultation
-                      <ArrowRight className='ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform' />
-                    </Link>
-                  </Button>
-                  <Button
-                    size='lg'
-                    variant='outline'
-                    className='text-lg px-8 py-4 bg-white/10 border-white/20 hover:bg-white/20'
-                    asChild
-                  >
-                    <Link href='#contact-methods'>
-                      <Phone className='mr-2 h-5 w-5' />
-                      Call Now
-                    </Link>
-                  </Button>
-                </div>
+            <div className='text-center max-w-4xl mx-auto'>
+              <div className='inline-flex items-center gap-2 px-4 py-2 text-sm font-medium bg-blue-600/20 rounded-full mb-6 border border-blue-500/30'>
+                <MessageSquare className='h-4 w-4 text-cyan-300' />
+                <span>Free Consultation • Response within 24 hours</span>
               </div>
 
-              {/* Image Sphere as Background Element */}
-              <div className='hidden lg:flex justify-center items-center relative'>
-                <div className='relative w-80 h-80 flex items-center justify-center'>
-                  <SphereImageGrid
-                    images={sampleImages}
-                    containerSize={400}
-                    sphereRadius={150}
-                    autoRotate={true}
-                    autoRotateSpeed={0.3}
-                    dragSensitivity={0.8}
-                    momentumDecay={0.96}
-                    maxRotationSpeed={6}
-                    baseImageScale={0.12}
-                    hoverScale={1.3}
-                    perspective={1000}
-                    className='opacity-90'
-                  />
-                </div>
+              <h1 className='text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6'>
+                <span className='block'>Let's Start Your</span>
+                <span className='block bg-clip-text text-transparent bg-gradient-to-r from-blue-300 via-cyan-300 to-purple-400'>
+                  Digital Journey
+                </span>
+              </h1>
+
+              <p className='text-lg md:text-xl text-blue-100/90 mb-8 max-w-2xl mx-auto'>
+                Ready to transform your business with cutting-edge technology?
+                Our expert team is here to turn your vision into reality.
+              </p>
+
+              <div className='flex flex-col sm:flex-row gap-4 justify-center items-center'>
+                <Button
+                  size='lg'
+                  className='group text-lg px-6 py-3 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700'
+                  asChild
+                >
+                  <Link href='#contact-form'>
+                    <Send className='mr-2 h-5 w-5' />
+                    Get Free Consultation
+                    <ArrowRight className='ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform' />
+                  </Link>
+                </Button>
+                <Button
+                  size='lg'
+                  variant='outline'
+                  className='text-lg px-6 py-3 bg-white/10 border-white/20 hover:bg-white/20'
+                  asChild
+                >
+                  <Link href='#contact-methods'>
+                    <Phone className='mr-2 h-5 w-5' />
+                    Call Now
+                  </Link>
+                </Button>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Benefits Banner */}
-        <section className='py-12 px-4 bg-white/50 border-b border-gray-200/50'>
+        {/* Compact Benefits Banner */}
+        <section className='py-8 px-4 bg-white/50 border-b border-gray-200/50'>
           <div className='max-w-6xl mx-auto'>
-            <div className='grid grid-cols-2 md:grid-cols-4 gap-6'>
+            <div className='grid grid-cols-2 md:grid-cols-4 gap-4'>
               {benefits.map((benefit, index) => (
                 <div
                   key={index}
-                  className='flex items-center gap-3 justify-center text-center md:text-left'
+                  className='flex items-center gap-3 justify-center text-center'
                 >
-                  <div className='w-10 h-10 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-lg flex items-center justify-center text-white flex-shrink-0'>
+                  <div className='w-8 h-8 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-lg flex items-center justify-center text-white flex-shrink-0'>
                     {benefit.icon}
                   </div>
                   <div>
@@ -430,69 +241,15 @@ export default function ContactPage() {
           </div>
         </section>
 
-        {/* Contact Methods */}
-        <section id='contact-methods' className='py-20 px-4'>
-          <div className='max-w-6xl mx-auto'>
-            <div className='text-center mb-16'>
-              <h2 className='text-4xl font-bold text-gray-900 mb-6'>
-                Get In Touch
-              </h2>
-              <p className='text-xl text-gray-600 max-w-3xl mx-auto'>
-                Choose the communication method that works best for you. Our
-                team is ready to discuss your project requirements.
-              </p>
-            </div>
-
-            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8'>
-              {contactMethods.map((method, index) => (
-                <Card
-                  key={index}
-                  className='group border-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2 bg-white text-center'
-                >
-                  <CardContent className='p-6'>
-                    <div
-                      className={`w-16 h-16 mx-auto rounded-xl bg-gradient-to-br ${method.gradient} p-0.5 mb-6 group-hover:scale-110 transition-transform duration-300`}
-                    >
-                      <div className='w-full h-full bg-white rounded-lg flex items-center justify-center'>
-                        {method.icon}
-                      </div>
-                    </div>
-                    <h3 className='text-xl font-bold text-gray-900 mb-2'>
-                      {method.title}
-                    </h3>
-                    <p className='text-gray-600 text-sm mb-4'>
-                      {method.description}
-                    </p>
-                    <div className='space-y-2 mb-6'>
-                      <p className='font-semibold text-gray-900'>
-                        {method.contact}
-                      </p>
-                      <p className='text-gray-500 text-sm'>
-                        {method.availability}
-                      </p>
-                    </div>
-                    <Button
-                      className={`w-full bg-gradient-to-r ${method.gradient} hover:shadow-lg transition-all duration-300`}
-                      size='sm'
-                    >
-                      {method.action}
-                    </Button>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Contact Form & Info */}
-        <section id='contact-form' className='py-20 px-4 bg-white/50'>
+        {/* Main Contact Section - Form + Info */}
+        <section id='contact-form' className='py-16 px-4'>
           <div className='max-w-7xl mx-auto'>
-            <div className='grid grid-cols-1 lg:grid-cols-3 gap-12'>
+            <div className='grid grid-cols-1 lg:grid-cols-3 gap-8'>
               {/* Contact Form */}
               <div className='lg:col-span-2'>
                 <Card className='border-0 shadow-xl bg-white'>
-                  <CardHeader className='pb-6'>
-                    <CardTitle className='text-3xl font-bold text-gray-900 mb-2'>
+                  <CardHeader className='pb-4'>
+                    <CardTitle className='text-2xl font-bold text-gray-900 mb-2'>
                       Start Your Project
                     </CardTitle>
                     <p className='text-gray-600'>
@@ -500,22 +257,17 @@ export default function ContactPage() {
                       to you within 24 hours with a detailed proposal.
                     </p>
                   </CardHeader>
-                  <CardContent className='p-8 pt-0'>
+                  <CardContent className='p-6 pt-0'>
                     {submitStatus === 'success' && (
-                      <div className='mb-6 p-6 bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-xl'>
+                      <div className='mb-4 p-4 bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-lg'>
                         <div className='flex items-center gap-3'>
-                          <CheckCircle className='h-6 w-6 text-green-600' />
+                          <CheckCircle className='h-5 w-5 text-green-600' />
                           <div>
                             <h4 className='font-semibold text-green-800'>
                               Message sent successfully!
                             </h4>
-                            <p className='text-green-700 text-sm mb-2'>
-                              We'll get back to you within 24 hours with a
-                              detailed response.
-                            </p>
-                            <p className='text-green-600 text-xs'>
-                              📧 Check your email for a confirmation message
-                              (including spam/junk folder)
+                            <p className='text-green-700 text-sm'>
+                              We'll get back to you within 24 hours.
                             </p>
                           </div>
                         </div>
@@ -523,16 +275,15 @@ export default function ContactPage() {
                     )}
 
                     {submitStatus === 'error' && (
-                      <div className='mb-6 p-6 bg-gradient-to-r from-red-50 to-pink-50 border border-red-200 rounded-xl'>
+                      <div className='mb-4 p-4 bg-gradient-to-r from-red-50 to-pink-50 border border-red-200 rounded-lg'>
                         <div className='flex items-center gap-3'>
-                          <AlertCircle className='h-6 w-6 text-red-600' />
+                          <AlertCircle className='h-5 w-5 text-red-600' />
                           <div>
                             <h4 className='font-semibold text-red-800'>
                               Error sending message
                             </h4>
                             <p className='text-red-700 text-sm'>
-                              Please try again or contact us directly at
-                              williamjxj@gmail.com
+                              Please try again or contact us directly.
                             </p>
                           </div>
                         </div>
@@ -548,107 +299,118 @@ export default function ContactPage() {
                 </Card>
               </div>
 
-              {/* Contact Information */}
-              <div className='space-y-8'>
-                {/* Office Locations */}
+              {/* Contact Information - Compact Sidebar */}
+              <div className='space-y-6'>
+                {/* Contact Methods */}
                 <Card className='border-0 shadow-xl bg-white'>
                   <CardHeader>
-                    <CardTitle className='flex items-center gap-2 text-xl font-bold text-gray-900'>
-                      <Building className='h-5 w-5 text-blue-600' />
-                      Our Offices
+                    <CardTitle className='text-lg font-bold text-gray-900'>
+                      Get In Touch
                     </CardTitle>
                   </CardHeader>
-                  <CardContent className='space-y-6'>
-                    {offices.map((office, index) => (
-                      <div key={index} className='relative'>
-                        <div className='flex items-start gap-4'>
-                          <div
-                            className='w-12 h-12 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-lg flex items-center justify-center flex-shrink-0 cursor-pointer hover:scale-110 transition-transform duration-300 group relative'
+                  <CardContent className='space-y-4'>
+                    <div className='flex items-center gap-3 p-3 bg-blue-50 rounded-lg'>
+                      <Phone className='h-5 w-5 text-blue-600' />
+                      <div>
+                        <p className='font-semibold text-gray-900'>
+                          +1 (236) 992-3846
+                        </p>
+                        <p className='text-sm text-gray-600'>
+                          Mon-Fri 9AM-6PM EST
+                        </p>
+                      </div>
+                    </div>
+                    <div className='flex items-center gap-3 p-3 bg-green-50 rounded-lg'>
+                      <Mail className='h-5 w-5 text-green-600' />
+                      <div>
+                        <p className='font-semibold text-gray-900'>
+                          contact@bestitconsulting.ca
+                        </p>
+                        <p className='text-sm text-gray-600'>
+                          Response within 24 hours
+                        </p>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                {/* Office Location */}
+                <Card className='border-0 shadow-xl bg-white'>
+                  <CardHeader>
+                    <CardTitle className='flex items-center gap-2 text-lg font-bold text-gray-900'>
+                      <Building className='h-5 w-5 text-blue-600' />
+                      Our Office
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className='flex items-start gap-3'>
+                      <div
+                        className='w-10 h-10 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-lg flex items-center justify-center flex-shrink-0 cursor-pointer hover:scale-110 transition-transform duration-300'
+                        onClick={() =>
+                          openGoogleMaps(offices[0].address, offices[0].postal)
+                        }
+                        title='Open in Google Maps'
+                      >
+                        <MapPin className='h-5 w-5 text-white' />
+                      </div>
+                      <div className='flex-1'>
+                        <h4 className='font-semibold text-gray-900 mb-1'>
+                          {offices[0].city}
+                        </h4>
+                        <p className='text-gray-600 text-sm leading-relaxed'>
+                          <span
+                            className='cursor-pointer hover:text-blue-600 transition-colors duration-300'
                             onClick={() =>
-                              openGoogleMaps(office.address, office.postal)
+                              openGoogleMaps(
+                                offices[0].address,
+                                offices[0].postal
+                              )
                             }
                             title='Open in Google Maps'
                           >
-                            <MapPin className='h-6 w-6 text-white' />
-                            {/* Tooltip */}
-                            <div className='absolute -top-12 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap pointer-events-none'>
-                              Open in Google Maps
-                              <div className='absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-900'></div>
-                            </div>
-                          </div>
-                          <div className='flex-1'>
-                            <div className='flex items-center gap-2 mb-1'>
-                              <h4 className='font-semibold text-gray-900'>
-                                {office.city}
-                              </h4>
-                              {office.isHeadquarters && (
-                                <Badge variant='secondary' className='text-xs'>
-                                  HQ
-                                </Badge>
-                              )}
-                            </div>
-                            <p className='text-gray-600 text-sm leading-relaxed'>
-                              <span
-                                className='cursor-pointer hover:text-blue-600 transition-colors duration-300'
-                                onClick={() =>
-                                  openGoogleMaps(office.address, office.postal)
-                                }
-                                title='Open in Google Maps'
-                              >
-                                {office.address}
-                                <br />
-                                {office.postal}
-                              </span>
-                              <br />
-                              <span className='text-blue-600'>
-                                {office.phone}
-                              </span>
-                            </p>
-                          </div>
-                        </div>
-                        {index < offices.length - 1 && (
-                          <div className='mt-6 border-b border-gray-100'></div>
-                        )}
+                            {offices[0].address}
+                            <br />
+                            {offices[0].postal}
+                          </span>
+                          <br />
+                          <span className='text-blue-600'>
+                            {offices[0].phone}
+                          </span>
+                        </p>
                       </div>
-                    ))}
+                    </div>
                   </CardContent>
                 </Card>
 
                 {/* Business Hours */}
                 <Card className='border-0 shadow-xl bg-white'>
                   <CardHeader>
-                    <CardTitle className='flex items-center gap-2 text-xl font-bold text-gray-900'>
+                    <CardTitle className='flex items-center gap-2 text-lg font-bold text-gray-900'>
                       <Clock className='h-5 w-5 text-green-600' />
                       Business Hours
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <div className='space-y-3'>
+                    <div className='space-y-2'>
                       <div className='flex justify-between items-center'>
-                        <span className='text-gray-600'>Monday - Friday</span>
-                        <span className='font-semibold text-gray-900'>
+                        <span className='text-gray-600 text-sm'>
+                          Monday - Friday
+                        </span>
+                        <span className='font-semibold text-gray-900 text-sm'>
                           9:00 AM - 6:00 PM
                         </span>
                       </div>
                       <div className='flex justify-between items-center'>
-                        <span className='text-gray-600'>Saturday</span>
-                        <span className='font-semibold text-gray-900'>
+                        <span className='text-gray-600 text-sm'>Saturday</span>
+                        <span className='font-semibold text-gray-900 text-sm'>
                           10:00 AM - 4:00 PM
                         </span>
                       </div>
                       <div className='flex justify-between items-center'>
-                        <span className='text-gray-600'>Sunday</span>
-                        <span className='font-semibold text-gray-900'>
+                        <span className='text-gray-600 text-sm'>Sunday</span>
+                        <span className='font-semibold text-gray-900 text-sm'>
                           Closed
                         </span>
-                      </div>
-                      <div className='pt-3 border-t border-gray-100'>
-                        <p className='text-sm text-gray-600'>
-                          <span className='font-medium'>
-                            Emergency Support:
-                          </span>{' '}
-                          24/7 for enterprise clients
-                        </p>
                       </div>
                     </div>
                   </CardContent>
@@ -657,31 +419,30 @@ export default function ContactPage() {
                 {/* Social Media */}
                 <Card className='border-0 shadow-xl bg-white'>
                   <CardHeader>
-                    <CardTitle className='flex items-center gap-2 text-xl font-bold text-gray-900'>
-                      <Globe className='h-5 w-5 text-purple-600' />
+                    <CardTitle className='text-lg font-bold text-gray-900'>
                       Follow Us
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <div className='grid grid-cols-2 gap-4'>
+                    <div className='grid grid-cols-2 gap-2'>
                       {[
                         {
-                          icon: <Linkedin className='h-5 w-5' />,
+                          icon: <Linkedin className='h-4 w-4' />,
                           name: 'LinkedIn',
                           gradient: 'from-blue-600 to-blue-700',
                         },
                         {
-                          icon: <Twitter className='h-5 w-5' />,
+                          icon: <Twitter className='h-4 w-4' />,
                           name: 'Twitter',
                           gradient: 'from-blue-400 to-blue-500',
                         },
                         {
-                          icon: <Github className='h-5 w-5' />,
+                          icon: <Github className='h-4 w-4' />,
                           name: 'GitHub',
                           gradient: 'from-gray-700 to-gray-800',
                         },
                         {
-                          icon: <Youtube className='h-5 w-5' />,
+                          icon: <Youtube className='h-4 w-4' />,
                           name: 'YouTube',
                           gradient: 'from-red-600 to-red-700',
                         },
@@ -689,7 +450,7 @@ export default function ContactPage() {
                         <Button
                           key={index}
                           variant='outline'
-                          className={`flex items-center gap-2 justify-center bg-gradient-to-r ${social.gradient} text-white border-0 hover:shadow-lg transition-all duration-300`}
+                          className={`flex items-center gap-2 justify-center bg-gradient-to-r ${social.gradient} text-white border-0 hover:shadow-lg transition-all duration-300 text-xs py-2`}
                           size='sm'
                         >
                           {social.icon}
@@ -704,27 +465,27 @@ export default function ContactPage() {
           </div>
         </section>
 
-        {/* Google Maps Section */}
-        <section className='py-20 px-4 bg-gradient-to-br from-blue-50 to-cyan-50'>
-          <div className='max-w-7xl mx-auto'>
-            <div className='text-center mb-16'>
-              <h2 className='text-4xl font-bold text-gray-900 mb-6'>
-                Find Our Offices
+        {/* Compact Google Maps Section */}
+        <section className='py-12 px-4 bg-gradient-to-br from-blue-50 to-cyan-50'>
+          <div className='max-w-6xl mx-auto'>
+            <div className='text-center mb-8'>
+              <h2 className='text-3xl font-bold text-gray-900 mb-4'>
+                Find Our Office
               </h2>
-              <p className='text-xl text-gray-600 max-w-3xl mx-auto'>
-                Visit us at any of our locations across Canada. Click on the
-                markers to get directions and contact information.
+              <p className='text-lg text-gray-600'>
+                Visit us at our Surrey Guildford location. Click on the map to
+                get directions.
               </p>
             </div>
 
-            <div className='grid grid-cols-1 lg:grid-cols-3 gap-8'>
+            <div className='grid grid-cols-1 lg:grid-cols-3 gap-6'>
               {/* Map */}
               <div className='lg:col-span-2'>
                 <Card className='border-0 shadow-xl bg-white overflow-hidden'>
                   <CardContent className='p-0'>
                     <SmartGoogleMap
                       addresses={offices}
-                      height='500px'
+                      height='400px'
                       className='w-full'
                     />
                   </CardContent>
@@ -732,89 +493,45 @@ export default function ContactPage() {
               </div>
 
               {/* Office Details */}
-              <div className='space-y-6'>
+              <div>
                 <Card className='border-0 shadow-xl bg-white'>
                   <CardHeader>
-                    <CardTitle className='flex items-center gap-2 text-xl font-bold text-gray-900'>
+                    <CardTitle className='flex items-center gap-2 text-lg font-bold text-gray-900'>
                       <MapPin className='h-5 w-5 text-blue-600' />
-                      Office Locations
+                      Office Details
                     </CardTitle>
                   </CardHeader>
-                  <CardContent className='space-y-6'>
-                    {offices.map((office, index) => (
-                      <div key={index} className='relative'>
-                        <div className='flex items-start gap-4'>
-                          <div
-                            className={`w-4 h-4 rounded-full flex-shrink-0 mt-1 ${
-                              office.isHeadquarters
-                                ? 'bg-green-500'
-                                : 'bg-blue-500'
-                            }`}
-                          ></div>
-                          <div className='flex-1'>
-                            <div className='flex items-center gap-2 mb-1'>
-                              <h4 className='font-semibold text-gray-900'>
-                                {office.city}
-                              </h4>
-                              {office.isHeadquarters && (
-                                <Badge variant='secondary' className='text-xs'>
-                                  HQ
-                                </Badge>
-                              )}
-                            </div>
-                            <p className='text-gray-600 text-sm leading-relaxed'>
-                              {office.address}
-                              <br />
-                              {office.postal}
-                              <br />
-                              <span className='text-blue-600 font-medium'>
-                                {office.phone}
-                              </span>
-                            </p>
-                            <Button
-                              variant='outline'
-                              size='sm'
-                              className='mt-3 text-xs'
-                              onClick={() =>
-                                window.open(
-                                  `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
-                                    office.address + ', ' + office.postal
-                                  )}`,
-                                  '_blank'
-                                )
-                              }
-                            >
-                              Get Directions
-                            </Button>
-                          </div>
-                        </div>
-                        {index < offices.length - 1 && (
-                          <div className='mt-6 border-b border-gray-100'></div>
-                        )}
+                  <CardContent>
+                    <div className='space-y-4'>
+                      <div>
+                        <h4 className='font-semibold text-gray-900 mb-2'>
+                          {offices[0].city}
+                        </h4>
+                        <p className='text-gray-600 text-sm leading-relaxed'>
+                          {offices[0].address}
+                          <br />
+                          {offices[0].postal}
+                          <br />
+                          <span className='text-blue-600 font-medium'>
+                            {offices[0].phone}
+                          </span>
+                        </p>
                       </div>
-                    ))}
-                  </CardContent>
-                </Card>
-
-                {/* Map Legend */}
-                <Card className='border-0 shadow-xl bg-white'>
-                  <CardHeader>
-                    <CardTitle className='text-lg font-bold text-gray-900'>
-                      Map Legend
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className='space-y-3'>
-                    <div className='flex items-center gap-3'>
-                      <div className='w-4 h-4 bg-green-500 rounded-full'></div>
-                      <span className='text-sm text-gray-600'>
-                        Headquarters
-                      </span>
-                    </div>
-                    <div className='flex items-center gap-3'>
-                      <div className='w-4 h-4 bg-blue-500 rounded-full'></div>
-                      <span className='text-sm text-gray-600'>
-                        Branch Office
-                      </span>
+                      <Button
+                        variant='outline'
+                        size='sm'
+                        className='w-full text-xs'
+                        onClick={() =>
+                          window.open(
+                            `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
+                              offices[0].address + ', ' + offices[0].postal
+                            )}`,
+                            '_blank'
+                          )
+                        }
+                      >
+                        Get Directions
+                      </Button>
                     </div>
                   </CardContent>
                 </Card>
@@ -823,26 +540,26 @@ export default function ContactPage() {
           </div>
         </section>
 
-        {/* FAQ Section */}
-        <section className='py-20 px-4'>
+        {/* Compact FAQ Section */}
+        <section className='py-12 px-4'>
           <div className='max-w-4xl mx-auto'>
-            <div className='text-center mb-16'>
-              <h2 className='text-4xl font-bold text-gray-900 mb-6'>
+            <div className='text-center mb-8'>
+              <h2 className='text-3xl font-bold text-gray-900 mb-4'>
                 Frequently Asked Questions
               </h2>
-              <p className='text-xl text-gray-600'>
-                Quick answers to common questions about our services and process
+              <p className='text-lg text-gray-600'>
+                Quick answers to common questions about our services
               </p>
             </div>
 
-            <div className='space-y-6'>
+            <div className='space-y-4'>
               {faqs.map((faq, index) => (
                 <Card
                   key={index}
                   className='border-0 shadow-lg hover:shadow-xl transition-all duration-300 bg-white'
                 >
-                  <CardContent className='p-6'>
-                    <h3 className='text-lg font-semibold text-gray-900 mb-3'>
+                  <CardContent className='p-4'>
+                    <h3 className='text-lg font-semibold text-gray-900 mb-2'>
                       {faq.question}
                     </h3>
                     <p className='text-gray-600 leading-relaxed'>
@@ -855,23 +572,23 @@ export default function ContactPage() {
           </div>
         </section>
 
-        {/* CTA Section */}
-        <section className='py-20 px-4 bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 text-white'>
+        {/* Compact CTA Section */}
+        <section className='py-12 px-4 bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 text-white'>
           <div className='max-w-4xl mx-auto text-center'>
-            <h2 className='text-4xl font-bold mb-6'>Ready to Get Started?</h2>
-            <p className='text-xl text-blue-100/90 mb-8 max-w-2xl mx-auto'>
+            <h2 className='text-3xl font-bold mb-4'>Ready to Get Started?</h2>
+            <p className='text-lg text-blue-100/90 mb-6 max-w-2xl mx-auto'>
               Don't let technology challenges hold your business back. Contact
               us today and let's build something amazing together.
             </p>
 
-            <div className='flex flex-col sm:flex-row gap-6 justify-center items-center'>
+            <div className='flex flex-col sm:flex-row gap-4 justify-center items-center'>
               <Button
                 size='lg'
-                className='text-lg px-8 py-4 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700'
+                className='text-lg px-6 py-3 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700'
                 asChild
               >
                 <Link href='#contact-form'>
-                  <Rocket className='mr-2 h-5 w-5' />
+                  <Send className='mr-2 h-5 w-5' />
                   Start Your Project
                   <ArrowRight className='ml-2 h-5 w-5' />
                 </Link>
@@ -879,11 +596,11 @@ export default function ContactPage() {
               <Button
                 size='lg'
                 variant='outline'
-                className='text-lg px-8 py-4 bg-white/10 border-white/20 hover:bg-white/20'
+                className='text-lg px-6 py-3 bg-white/10 border-white/20 hover:bg-white/20'
                 asChild
               >
                 <Link href='/portfolio'>
-                  <Users className='mr-2 h-5 w-5' />
+                  <Building className='mr-2 h-5 w-5' />
                   View Our Work
                 </Link>
               </Button>
