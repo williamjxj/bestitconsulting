@@ -5,20 +5,7 @@
 
 'use client'
 
-import { motion, AnimatePresence } from 'framer-motion'
-import { useState, useEffect } from 'react'
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-} from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
-import { FadeIn } from '@/components/animations/FadeIn'
-import { SlideIn } from '@/components/animations/SlideIn'
-import { ScaleIn } from '@/components/animations/ScaleIn'
-import { useReducedMotion } from '@/lib/accessibility'
-import { getDeviceType } from '@/lib/mobile-optimization'
+import React from 'react'
 
 interface Testimonial {
   id: string
@@ -27,8 +14,7 @@ interface Testimonial {
   company: string
   content: string
   rating: number
-  avatar: string
-  featured?: boolean
+  avatar?: string
 }
 
 interface TestimonialsSectionProps {
@@ -42,60 +28,31 @@ interface TestimonialsSectionProps {
 
 const defaultTestimonials: Testimonial[] = [
   {
-    id: 'sarah-johnson',
+    id: '1',
     name: 'Sarah Johnson',
-    role: 'CTO',
-    company: 'TechStart Inc.',
-    content:
-      'BestIT transformed our infrastructure and helped us scale from startup to enterprise. Outstanding work!',
-    rating: 5,
-    avatar:
-      'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face&auto=format',
-    featured: true,
-  },
-  {
-    id: 'michael-chen',
-    name: 'Michael Chen',
-    role: 'VP Engineering',
-    company: 'DataFlow',
-    content:
-      'Their cloud migration strategy saved us 40% in infrastructure costs while improving performance.',
-    rating: 5,
-    avatar:
-      'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face&auto=format',
-  },
-  {
-    id: 'emily-rodriguez',
-    name: 'Emily Rodriguez',
-    role: 'Founder',
-    company: 'InnovateLab',
-    content:
-      'The team delivered our MVP in record time. Professional, skilled, and reliable partners.',
-    rating: 5,
-    avatar:
-      'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face&auto=format',
-  },
-  {
-    id: 'david-kim',
-    name: 'David Kim',
-    role: 'Product Manager',
-    company: 'ScaleUp',
-    content:
-      'Exceptional quality and attention to detail. They understood our vision and brought it to life perfectly.',
-    rating: 5,
-    avatar:
-      'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face&auto=format',
-  },
-  {
-    id: 'lisa-wang',
-    name: 'Lisa Wang',
     role: 'CEO',
-    company: 'NextGen Solutions',
+    company: 'TechCorp',
     content:
-      "BestIT's expertise in modern technologies helped us stay ahead of the competition.",
+      'Best IT Consulting provided exceptional service and helped us modernize our infrastructure.',
     rating: 5,
-    avatar:
-      'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop&crop=face&auto=format',
+  },
+  {
+    id: '2',
+    name: 'Mike Chen',
+    role: 'CTO',
+    company: 'StartupXYZ',
+    content:
+      'Their expertise in cloud migration saved us months of work and countless headaches.',
+    rating: 5,
+  },
+  {
+    id: '3',
+    name: 'Emily Davis',
+    role: 'IT Director',
+    company: 'Enterprise Inc',
+    content:
+      'Professional, reliable, and always available when we need them. Highly recommended!',
+    rating: 5,
   },
 ]
 
@@ -103,214 +60,50 @@ export function TestimonialsSection({
   testimonials = defaultTestimonials,
   title = 'What Our Clients Say',
   description = "Don't just take our word for it. Here's what our clients have to say about working with us.",
-  autoPlay = true,
-  autoPlayInterval = 5000,
   className = '',
 }: TestimonialsSectionProps) {
-  const [currentIndex, setCurrentIndex] = useState(0)
-  const [isAutoPlaying, setIsAutoPlaying] = useState(autoPlay)
-  const reducedMotion = useReducedMotion()
-  const deviceType = getDeviceType()
-
-  // Auto-play functionality
-  useEffect(() => {
-    if (!isAutoPlaying || reducedMotion) return
-
-    const interval = setInterval(() => {
-      setCurrentIndex(prev => (prev + 1) % testimonials.length)
-    }, autoPlayInterval)
-
-    return () => clearInterval(interval)
-  }, [isAutoPlaying, autoPlayInterval, testimonials.length, reducedMotion])
-
-  const nextTestimonial = () => {
-    setCurrentIndex(prev => (prev + 1) % testimonials.length)
-  }
-
-  const prevTestimonial = () => {
-    setCurrentIndex(
-      prev => (prev - 1 + testimonials.length) % testimonials.length
-    )
-  }
-
-  const goToTestimonial = (index: number) => {
-    setCurrentIndex(index)
-  }
-
-  const currentTestimonial = testimonials[currentIndex]
-
   return (
     <section className={`py-20 bg-background ${className}`}>
       <div className='container mx-auto px-4'>
-        <FadeIn delay={0.2} duration={0.8}>
-          <div className='text-center mb-16'>
-            <h2 className='text-3xl md:text-4xl font-bold mb-4'>{title}</h2>
-            <p className='text-lg text-muted-foreground max-w-2xl mx-auto'>
-              {description}
-            </p>
-          </div>
-        </FadeIn>
-
-        <div className='max-w-4xl mx-auto'>
-          <AnimatePresence mode='wait'>
-            <motion.div
-              key={currentIndex}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.5 }}
-            >
-              <Card className='text-center p-8'>
-                <CardHeader>
-                  <div className='flex justify-center mb-4'>
-                    {[...Array(5)].map((_, i) => (
-                      <motion.svg
-                        key={i}
-                        className='w-5 h-5 text-yellow-400'
-                        fill='currentColor'
-                        viewBox='0 0 20 20'
-                        initial={{ scale: 0 }}
-                        animate={{ scale: 1 }}
-                        transition={{ delay: 0.1 + i * 0.1 }}
-                      >
-                        <path d='M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z' />
-                      </motion.svg>
-                    ))}
-                  </div>
-
-                  <CardDescription className='text-lg italic mb-6'>
-                    "{currentTestimonial.content}"
-                  </CardDescription>
-                </CardHeader>
-
-                <CardContent>
-                  <div className='flex items-center justify-center gap-4'>
-                    <div className='relative'>
-                      <div className='w-16 h-16 rounded-full overflow-hidden bg-gradient-to-r from-blue-500 to-purple-500 p-0.5'>
-                        <div className='w-full h-full rounded-full overflow-hidden bg-white flex items-center justify-center'>
-                          <img
-                            src={currentTestimonial.avatar}
-                            alt={`${currentTestimonial.name} avatar`}
-                            className='w-full h-full object-cover'
-                            onError={e => {
-                              const target = e.target as HTMLImageElement
-                              target.style.display = 'none'
-                              const fallback =
-                                target.nextElementSibling as HTMLElement
-                              if (fallback) fallback.style.display = 'flex'
-                            }}
-                          />
-                          <div className='w-full h-full bg-gradient-to-br from-blue-500 to-purple-500 items-center justify-center text-white font-semibold text-lg hidden'>
-                            {currentTestimonial.name
-                              .split(' ')
-                              .map(n => n[0])
-                              .join('')}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className='text-left'>
-                      <div className='font-semibold text-lg'>
-                        {currentTestimonial.name}
-                      </div>
-                      <div className='text-muted-foreground'>
-                        {currentTestimonial.role}, {currentTestimonial.company}
-                      </div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </motion.div>
-          </AnimatePresence>
-
-          {/* Navigation Controls */}
-          <div className='flex items-center justify-center gap-4 mt-8'>
-            <Button
-              variant='outline'
-              size='sm'
-              onClick={prevTestimonial}
-              onMouseEnter={() => setIsAutoPlaying(false)}
-              onMouseLeave={() => setIsAutoPlaying(autoPlay)}
-              animated={!reducedMotion}
-            >
-              <svg
-                className='w-4 h-4'
-                fill='none'
-                stroke='currentColor'
-                viewBox='0 0 24 24'
-              >
-                <path
-                  strokeLinecap='round'
-                  strokeLinejoin='round'
-                  strokeWidth={2}
-                  d='M15 19l-7-7 7-7'
-                />
-              </svg>
-            </Button>
-
-            <div className='flex gap-2'>
-              {testimonials.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => goToTestimonial(index)}
-                  className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                    index === currentIndex
-                      ? 'bg-primary scale-125'
-                      : 'bg-muted hover:bg-muted-foreground/50'
-                  }`}
-                  onMouseEnter={() => setIsAutoPlaying(false)}
-                  onMouseLeave={() => setIsAutoPlaying(autoPlay)}
-                />
-              ))}
-            </div>
-
-            <Button
-              variant='outline'
-              size='sm'
-              onClick={nextTestimonial}
-              onMouseEnter={() => setIsAutoPlaying(false)}
-              onMouseLeave={() => setIsAutoPlaying(autoPlay)}
-              animated={!reducedMotion}
-            >
-              <svg
-                className='w-4 h-4'
-                fill='none'
-                stroke='currentColor'
-                viewBox='0 0 24 24'
-              >
-                <path
-                  strokeLinecap='round'
-                  strokeLinejoin='round'
-                  strokeWidth={2}
-                  d='M9 5l7 7-7 7'
-                />
-              </svg>
-            </Button>
-          </div>
+        <div className='text-center mb-16'>
+          <h2 className='text-3xl md:text-4xl font-bold mb-4'>{title}</h2>
+          <p className='text-lg text-muted-foreground max-w-2xl mx-auto'>
+            {description}
+          </p>
         </div>
 
-        <FadeIn delay={1.0} duration={0.8}>
-          <div className='text-center mt-12'>
-            <Button size='lg' asChild>
-              <a href='/testimonials'>
-                Read More Testimonials
-                <svg
-                  className='w-4 h-4 ml-2'
-                  fill='none'
-                  stroke='currentColor'
-                  viewBox='0 0 24 24'
-                >
-                  <path
-                    strokeLinecap='round'
-                    strokeLinejoin='round'
-                    strokeWidth={2}
-                    d='M9 5l7 7-7 7'
-                  />
-                </svg>
-              </a>
-            </Button>
-          </div>
-        </FadeIn>
+        <div className='grid gap-6 md:grid-cols-2 lg:grid-cols-3'>
+          {testimonials.map(testimonial => (
+            <div
+              key={testimonial.id}
+              className='bg-card p-6 rounded-lg shadow-sm border'
+            >
+              <div className='flex items-center mb-4'>
+                <div className='w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mr-4'>
+                  <span className='text-primary font-semibold text-lg'>
+                    {testimonial.name.charAt(0)}
+                  </span>
+                </div>
+                <div>
+                  <h3 className='font-semibold'>{testimonial.name}</h3>
+                  <p className='text-sm text-muted-foreground'>
+                    {testimonial.role} at {testimonial.company}
+                  </p>
+                </div>
+              </div>
+              <p className='text-muted-foreground mb-4'>
+                {testimonial.content}
+              </p>
+              <div className='flex items-center'>
+                {[...Array(testimonial.rating)].map((_, i) => (
+                  <span key={i} className='text-yellow-400'>
+                    ★
+                  </span>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   )

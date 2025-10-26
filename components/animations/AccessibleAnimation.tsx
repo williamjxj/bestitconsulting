@@ -2,12 +2,9 @@
 
 import React from 'react'
 import { motion, HTMLMotionProps } from 'framer-motion'
-import {
-  useReducedMotion,
-  useAccessibility,
-} from '../../hooks/useAccessibility'
-import { useOptimizedAnimation } from '../../hooks/useAnimations'
-import { AccessibilityUtils } from '../../lib/accessibility'
+import { useReducedMotion, useAccessibility } from '@/hooks/useAccessibility'
+import { useOptimizedAnimation } from '@/hooks/useAnimations'
+import { AccessibilityUtils } from '@/lib/accessibility'
 
 interface AccessibleAnimationProps extends HTMLMotionProps<'div'> {
   children: React.ReactNode

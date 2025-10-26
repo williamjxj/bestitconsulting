@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { useState, useEffect } from 'react'
-import { useReducedMotion } from '@/lib/accessibility'
+import { useReducedMotion } from '@/hooks/useAccessibility'
 import { getDeviceType } from '@/lib/mobile-optimization'
 import { cn } from '@/lib/utils'
 

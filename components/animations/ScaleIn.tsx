@@ -2,9 +2,9 @@
 
 import React from 'react'
 import { motion } from 'framer-motion'
-import { AnimationProps } from '../../lib/types'
-import { useReducedMotion } from '../../hooks/useAccessibility'
-import { useOptimizedAnimation } from '../../hooks/useAnimations'
+import { AnimationProps } from '@/lib/types'
+import { useReducedMotion } from '@/hooks/useAccessibility'
+import { useOptimizedAnimation } from '@/hooks/useAnimations'
 
 interface ScaleInProps extends AnimationProps {
   scale?: number

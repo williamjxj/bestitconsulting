@@ -1,277 +1,169 @@
+/**
+ * Animated service icon component
+ * Integrates Lottie animations for service icons
+ */
+
 'use client'
 
-import React from 'react'
-import { motion, HTMLMotionProps } from 'framer-motion'
-import { useReducedMotion } from '../../hooks/useAccessibility'
-import { useOptimizedAnimation } from '../../hooks/useAnimations'
+import React, { useState, useRef, useCallback } from 'react'
+import { motion } from 'framer-motion'
+import { LottieIcon } from '@/components/animations/LottieIcon'
+import { useAccessibility } from '@/hooks/useAccessibility'
 
-interface AnimatedServiceIconProps extends HTMLMotionProps<'div'> {
+interface AnimatedServiceIconProps {
   icon: React.ReactNode
-  size?: 'sm' | 'md' | 'lg' | 'xl'
-  variant?: 'default' | 'gradient' | 'outline' | 'solid'
-  animation?: 'none' | 'pulse' | 'rotate' | 'bounce' | 'float' | 'glow'
+  lottieAnimationId?: string
+  size?: number
   color?: string
   className?: string
+  respectReducedMotion?: boolean
+  onHover?: () => void
+  onLeave?: () => void
 }
 
-const AnimatedServiceIcon: React.FC<AnimatedServiceIconProps> = ({
+export const AnimatedServiceIcon: React.FC<AnimatedServiceIconProps> = ({
   icon,
-  size = 'md',
-  variant = 'default',
-  animation = 'pulse',
-  color = '#3B82F6',
-  className,
-  ...rest
+  lottieAnimationId,
+  size = 24,
+  color = '#3b82f6',
+  className = '',
+  respectReducedMotion = true,
+  onHover,
+  onLeave,
 }) => {
-  const prefersReducedMotion = useReducedMotion()
-  const { optimizedConfig } = useOptimizedAnimation(
-    {
-      id: `service-icon-${animation}`,
-      name: `Service Icon ${animation}`,
-      type: 'interaction',
-      duration: 2000,
-      easing: 'ease-in-out',
-      reducedMotion: {
-        enabled: true,
-        alternativeAnimation: 'static-icon',
-        staticFallback: true,
-      },
-      performance: {
-        maxDuration: 2000,
-        targetFPS: 60,
-        memoryLimit: 5,
-        gpuAcceleration: true,
+  const [isHovered, setIsHovered] = useState(false)
+  const [isAnimating, setIsAnimating] = useState(false)
+  const iconRef = useRef<HTMLDivElement>(null)
+  const { preferences } = useAccessibility()
+
+  // Handle hover events
+  const handleMouseEnter = useCallback(() => {
+    setIsHovered(true)
+    onHover?.()
+  }, [onHover])
+
+  const handleMouseLeave = useCallback(() => {
+    setIsHovered(false)
+    onLeave?.()
+  }, [onLeave])
+
+  // Icon variants
+  const iconVariants = {
+    initial: {
+      scale: 1,
+      rotate: 0,
+      color: color,
+    },
+    hover: {
+      scale: 1.1,
+      rotate: 5,
+      color: color,
+      transition: {
+        duration: 0.3,
+        ease: 'easeOut',
       },
     },
-    'service-icon'
-  )
+    tap: {
+      scale: 0.95,
+      transition: {
+        duration: 0.1,
+        ease: 'easeOut',
+      },
+    },
+  }
 
-  // Reduced motion fallback
-  if (prefersReducedMotion) {
+  // Lottie animation variants
+  const lottieVariants = {
+    initial: {
+      scale: 1,
+      opacity: 0,
+    },
+    hover: {
+      scale: 1.1,
+      opacity: 1,
+      transition: {
+        duration: 0.3,
+        ease: 'easeOut',
+      },
+    },
+    tap: {
+      scale: 0.95,
+      transition: {
+        duration: 0.1,
+        ease: 'easeOut',
+      },
+    },
+  }
+
+  // Fallback for reduced motion
+  if (respectReducedMotion && preferences.reducedMotion) {
     return (
       <div
+        ref={iconRef}
         className={`flex items-center justify-center ${className}`}
-        {...rest}
+        style={{ width: size, height: size }}
       >
         {icon}
       </div>
     )
   }
 
-  const sizeClasses = {
-    sm: 'w-8 h-8',
-    md: 'w-12 h-12',
-    lg: 'w-16 h-16',
-    xl: 'w-20 h-20',
-  }
-
-  const variantClasses = {
-    default: 'bg-blue-500/10 text-blue-500',
-    gradient: 'bg-gradient-to-br from-blue-500 to-purple-600 text-white',
-    outline: 'border-2 border-blue-500 text-blue-500 bg-transparent',
-    solid: 'bg-blue-500 text-white',
-  }
-
-  const getAnimationVariants = () => {
-    switch (animation) {
-      case 'pulse':
-        return {
-          animate: {
-            scale: [1, 1.1, 1],
-            opacity: [0.8, 1, 0.8],
-          },
-          transition: {
-            duration: optimizedConfig.duration / 1000,
-            repeat: Infinity,
-            ease: 'ease-in-out',
-          },
-        }
-      case 'rotate':
-        return {
-          animate: {
-            rotate: [0, 360],
-          },
-          transition: {
-            duration: optimizedConfig.duration / 1000,
-            repeat: Infinity,
-            ease: 'linear',
-          },
-        }
-      case 'bounce':
-        return {
-          animate: {
-            y: [0, -10, 0],
-          },
-          transition: {
-            duration: optimizedConfig.duration / 1000,
-            repeat: Infinity,
-            ease: 'ease-in-out',
-          },
-        }
-      case 'float':
-        return {
-          animate: {
-            y: [0, -5, 0],
-            rotate: [0, 5, 0],
-          },
-          transition: {
-            duration: optimizedConfig.duration / 1000,
-            repeat: Infinity,
-            ease: 'ease-in-out',
-          },
-        }
-      case 'glow':
-        return {
-          animate: {
-            boxShadow: [
-              `0 0 0 ${color}20`,
-              `0 0 20px ${color}40`,
-              `0 0 0 ${color}20`,
-            ],
-          },
-          transition: {
-            duration: optimizedConfig.duration / 1000,
-            repeat: Infinity,
-            ease: 'ease-in-out',
-          },
-        }
-      default:
-        return {}
-    }
-  }
-
-  const animationVariants = getAnimationVariants()
-
   return (
     <motion.div
-      className={`
-        ${sizeClasses[size]}
-        ${variantClasses[variant]}
-        rounded-lg flex items-center justify-center
-        transition-all duration-300 hover:scale-110
-        ${className}
-      `}
-      style={{ color }}
-      {...animationVariants}
-      {...rest}
-    >
-      <div className='transition-transform duration-300 hover:rotate-12'>
-        {icon}
-      </div>
-    </motion.div>
-  )
-}
-
-// Specialized service icon components
-export const ServiceIconPulse: React.FC<
-  Omit<AnimatedServiceIconProps, 'animation'>
-> = props => <AnimatedServiceIcon {...props} animation='pulse' />
-
-export const ServiceIconRotate: React.FC<
-  Omit<AnimatedServiceIconProps, 'animation'>
-> = props => <AnimatedServiceIcon {...props} animation='rotate' />
-
-export const ServiceIconBounce: React.FC<
-  Omit<AnimatedServiceIconProps, 'animation'>
-> = props => <AnimatedServiceIcon {...props} animation='bounce' />
-
-export const ServiceIconFloat: React.FC<
-  Omit<AnimatedServiceIconProps, 'animation'>
-> = props => <AnimatedServiceIcon {...props} animation='float' />
-
-export const ServiceIconGlow: React.FC<
-  Omit<AnimatedServiceIconProps, 'animation'>
-> = props => <AnimatedServiceIcon {...props} animation='glow' />
-
-// Service icon with hover effects
-interface ServiceIconHoverProps extends AnimatedServiceIconProps {
-  onHover?: () => void
-  onLeave?: () => void
-}
-
-export const ServiceIconHover: React.FC<ServiceIconHoverProps> = ({
-  onHover,
-  onLeave,
-  ...props
-}) => {
-  const [isHovered, setIsHovered] = React.useState(false)
-
-  const handleMouseEnter = () => {
-    setIsHovered(true)
-    onHover?.()
-  }
-
-  const handleMouseLeave = () => {
-    setIsHovered(false)
-    onLeave?.()
-  }
-
-  return (
-    <motion.div
+      ref={iconRef}
+      className={`relative flex items-center justify-center ${className}`}
+      style={{ width: size, height: size }}
+      variants={iconVariants}
+      initial='initial'
+      whileHover='hover'
+      whileTap='tap'
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      animate={{
-        scale: isHovered ? 1.1 : 1,
-        rotate: isHovered ? 5 : 0,
-      }}
-      transition={{
-        duration: 0.3,
-        ease: 'ease-out',
-      }}
     >
-      <AnimatedServiceIcon {...props} />
-    </motion.div>
-  )
-}
+      {/* Static icon */}
+      <motion.div
+        className='absolute inset-0 flex items-center justify-center'
+        animate={{
+          opacity: isHovered && lottieAnimationId ? 0 : 1,
+        }}
+        transition={{ duration: 0.3 }}
+      >
+        {icon}
+      </motion.div>
 
-// Service icon grid
-interface ServiceIconGridProps {
-  icons: Array<{
-    icon: React.ReactNode
-    title: string
-    description?: string
-    color?: string
-    animation?: AnimatedServiceIconProps['animation']
-  }>
-  columns?: number
-  className?: string
-}
-
-export const ServiceIconGrid: React.FC<ServiceIconGridProps> = ({
-  icons,
-  columns = 3,
-  className,
-}) => {
-  const gridCols = {
-    2: 'grid-cols-2',
-    3: 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3',
-    4: 'grid-cols-2 md:grid-cols-4',
-    5: 'grid-cols-2 md:grid-cols-3 lg:grid-cols-5',
-  }
-
-  return (
-    <div
-      className={`grid ${gridCols[columns as keyof typeof gridCols]} gap-6 ${className}`}
-    >
-      {icons.map((item, index) => (
-        <div key={index} className='text-center group'>
-          <ServiceIconHover
-            icon={item.icon}
-            color={item.color}
-            animation={item.animation}
-            className='mx-auto mb-4'
+      {/* Lottie animation */}
+      {lottieAnimationId && (
+        <motion.div
+          className='absolute inset-0 flex items-center justify-center'
+          variants={lottieVariants}
+          initial='initial'
+          whileHover='hover'
+          whileTap='tap'
+        >
+          <LottieIcon
+            animationId={lottieAnimationId}
+            size={size}
+            color={color}
+            autoplay={isHovered}
+            loop={isHovered}
+            respectReducedMotion={respectReducedMotion}
+            onComplete={() => setIsAnimating(false)}
+            onEnterFrame={() => setIsAnimating(true)}
           />
-          <h3 className='text-lg font-semibold mb-2 group-hover:text-blue-600 transition-colors'>
-            {item.title}
-          </h3>
-          {item.description && (
-            <p className='text-sm text-muted-foreground group-hover:text-foreground/80 transition-colors'>
-              {item.description}
-            </p>
-          )}
-        </div>
-      ))}
-    </div>
+        </motion.div>
+      )}
+
+      {/* Hover glow effect */}
+      {isHovered && (
+        <motion.div
+          className='absolute inset-0 rounded-full bg-current opacity-20'
+          initial={{ scale: 0, opacity: 0 }}
+          animate={{ scale: 1.5, opacity: 0.2 }}
+          exit={{ scale: 0, opacity: 0 }}
+          transition={{ duration: 0.3, ease: 'easeOut' }}
+        />
+      )}
+    </motion.div>
   )
 }
 

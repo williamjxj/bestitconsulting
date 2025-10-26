@@ -1,0 +1,244 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Animation Registry API",
+    "version": "1.0.0",
+    "description": "API for managing animation configurations and instances"
+  },
+  "paths": {
+    "/api/animations": {
+      "get": {
+        "summary": "Get all animations",
+        "responses": {
+          "200": {
+            "description": "List of all animations",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AnimationConfig"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Create new animation",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AnimationConfig"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Animation created successfully"
+          }
+        }
+      }
+    },
+    "/api/animations/{id}": {
+      "get": {
+        "summary": "Get animation by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Animation configuration",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AnimationConfig"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Update animation",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AnimationConfig"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Animation updated successfully"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete animation",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Animation deleted successfully"
+          }
+        }
+      }
+    },
+    "/api/animations/{id}/start": {
+      "post": {
+        "summary": "Start animation",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Animation started successfully"
+          }
+        }
+      }
+    },
+    "/api/animations/{id}/stop": {
+      "post": {
+        "summary": "Stop animation",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Animation stopped successfully"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AnimationConfig": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "enum": ["transition", "interaction", "scroll", "loading"]
+          },
+          "duration": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 5000
+          },
+          "easing": {
+            "type": "string"
+          },
+          "delay": {
+            "type": "number",
+            "minimum": 0
+          },
+          "iterations": {
+            "type": "number",
+            "minimum": -1
+          },
+          "direction": {
+            "type": "string",
+            "enum": ["normal", "reverse", "alternate", "alternate-reverse"]
+          },
+          "fillMode": {
+            "type": "string",
+            "enum": ["none", "forwards", "backwards", "both"]
+          },
+          "reducedMotion": {
+            "$ref": "#/components/schemas/ReducedMotionConfig"
+          },
+          "performance": {
+            "$ref": "#/components/schemas/PerformanceConfig"
+          }
+        },
+        "required": ["id", "name", "type", "duration", "easing"]
+      },
+      "ReducedMotionConfig": {
+        "type": "object",
+        "properties": {
+          "enabled": {
+            "type": "boolean"
+          },
+          "alternativeAnimation": {
+            "type": "string"
+          },
+          "staticFallback": {
+            "type": "boolean"
+          }
+        },
+        "required": ["enabled"]
+      },
+      "PerformanceConfig": {
+        "type": "object",
+        "properties": {
+          "maxDuration": {
+            "type": "number"
+          },
+          "targetFPS": {
+            "type": "number",
+            "minimum": 30,
+            "maximum": 120
+          },
+          "memoryLimit": {
+            "type": "number"
+          },
+          "gpuAcceleration": {
+            "type": "boolean"
+          }
+        },
+        "required": ["maxDuration", "targetFPS", "memoryLimit", "gpuAcceleration"]
+      }
+    }
+  }
+}

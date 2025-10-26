@@ -19,6 +19,8 @@ import { AnimatedCounter } from '@/components/animations/AnimatedCounter'
 import { CredibilitySection } from '@/components/sections/CredibilitySection'
 import TechnologyShowcase from '@/components/sections/TechnologyShowcase'
 import { DemoVideo } from '@/components/DemoVideo'
+import { TestimonialsSection } from '@/components/sections/TestimonialsSection'
+import AnimationTestSuite from '@/components/animations/AnimationTestSuite'
 
 export default function HomePage() {
   const features = [
@@ -266,60 +268,22 @@ export default function HomePage() {
         </ScrollTrigger>
 
         {/* Testimonials */}
-        <section className='py-12 bg-background'>
-          <div className='container mx-auto px-4'>
-            <div className='text-center mb-16'>
-              <span className='inline-block px-4 py-1.5 text-sm font-medium bg-blue-100 text-blue-800 rounded-full mb-4'>
-                Client Success Stories
-              </span>
-              <h2 className='text-3xl md:text-4xl font-bold mb-4'>
-                What Our Clients Say
-              </h2>
-              <p className='text-lg text-muted-foreground max-w-2xl mx-auto'>
-                Don't just take our word for it. Here's what our clients have to
-                say about working with us.
-              </p>
-            </div>
-
-            <div className='grid md:grid-cols-3 gap-8'>
-              {testimonials.map((testimonial, index) => (
-                <div
-                  key={index}
-                  className='bg-card p-6 rounded-xl border border-border/40 hover:border-blue-500/30 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg'
-                >
-                  <div className='flex items-center gap-1 mb-4'>
-                    {[...Array(testimonial.rating)].map((_, i) => (
-                      <Star
-                        key={i}
-                        className='h-4 w-4 text-yellow-400 fill-current'
-                      />
-                    ))}
-                  </div>
-                  <Quote className='h-8 w-8 text-blue-500/30 mb-4' />
-                  <p className='text-muted-foreground mb-6 italic'>
-                    "{testimonial.content}"
-                  </p>
-                  <div className='flex items-center gap-3'>
-                    <div className='w-12 h-12 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full flex items-center justify-center'>
-                      <span className='text-white font-semibold text-sm'>
-                        {testimonial.name
-                          .split(' ')
-                          .map(n => n[0])
-                          .join('')}
-                      </span>
-                    </div>
-                    <div>
-                      <div className='font-semibold'>{testimonial.name}</div>
-                      <div className='text-sm text-muted-foreground'>
-                        {testimonial.role}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
+        <TestimonialsSection
+          testimonials={testimonials.map((testimonial, index) => ({
+            id: `testimonial-${index}`,
+            name: testimonial.name,
+            role: testimonial.role,
+            company: 'BestIT Consulting',
+            content: testimonial.content,
+            rating: testimonial.rating,
+            avatar: testimonial.avatar,
+            featured: index === 0,
+          }))}
+          title='What Our Clients Say'
+          description="Don't just take our word for it. Here's what our clients have to say about working with us."
+          autoPlay={true}
+          autoPlayInterval={5000}
+        />
 
         {/* Technology Showcase */}
         <TechnologyShowcase />
@@ -354,6 +318,15 @@ export default function HomePage() {
           </div>
         </section>
       </div>
+
+      {/* Development Test Suite */}
+      {process.env.NODE_ENV === 'development' && (
+        <AnimationTestSuite
+          showPerformance={true}
+          showAccessibility={true}
+          showTestControls={true}
+        />
+      )}
     </Layout>
   )
 }

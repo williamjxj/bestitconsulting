@@ -2,6 +2,8 @@ import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 import './globals.css'
 import { I18nProvider } from '@/lib/i18n'
+// import { AnimationPerformanceProvider } from '@/lib/animations/performance'
+// import { AnimationAccessibilityProvider } from '@/lib/animations/accessibility'
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -30,7 +32,13 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         suppressHydrationWarning={true}
       >
-        <I18nProvider>{children}</I18nProvider>
+        <I18nProvider>
+          {/* <AnimationAccessibilityProvider>
+            <AnimationPerformanceProvider> */}
+          {children}
+          {/* </AnimationPerformanceProvider>
+          </AnimationAccessibilityProvider> */}
+        </I18nProvider>
       </body>
     </html>
   )

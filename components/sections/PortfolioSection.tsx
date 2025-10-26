@@ -18,8 +18,23 @@ import { Button } from '@/components/ui/button'
 import { FadeIn } from '@/components/animations/FadeIn'
 import { SlideIn } from '@/components/animations/SlideIn'
 import { ScaleIn } from '@/components/animations/ScaleIn'
-import { useReducedMotion } from '@/lib/accessibility'
+import { useReducedMotion } from '@/hooks/useAccessibility'
 import { getDeviceType } from '@/lib/mobile-optimization'
+import { MasonryGrid } from '@/components/portfolio/MasonryGrid'
+import { ResponsiveGrid } from '@/components/portfolio/ResponsiveGrid'
+import { GridAnimations } from '@/components/portfolio/GridAnimations'
+import { ScrollGridReveal } from '@/components/portfolio/ScrollGridReveal'
+import { InteractiveLightbox } from '@/components/portfolio/InteractiveLightbox'
+import { ImageZoom } from '@/components/portfolio/ImageZoom'
+import { GalleryNavigation } from '@/components/portfolio/GalleryNavigation'
+import { CardExpansion } from '@/components/portfolio/CardExpansion'
+import { AnimatedFilter } from '@/components/portfolio/AnimatedFilter'
+import { StaggerFilter } from '@/components/portfolio/StaggerFilter'
+import { FilterTransitions } from '@/components/portfolio/FilterTransitions'
+import { FilterLoading } from '@/components/portfolio/FilterLoading'
+import { GalleryLoading } from '@/components/portfolio/GalleryLoading'
+import { CardLoading } from '@/components/portfolio/CardLoading'
+import { CardInteractions } from '@/components/portfolio/CardInteractions'
 
 interface Project {
   id: string
@@ -138,28 +153,21 @@ export function PortfolioSection({
           </div>
         </FadeIn>
 
-        <SlideIn direction='up' delay={0.4} duration={0.8}>
-          <div className='flex flex-wrap justify-center gap-4 mb-12'>
-            {categories.map(category => (
-              <Button
-                key={category}
-                variant={selectedCategory === category ? 'default' : 'outline'}
-                onClick={() => setSelectedCategory(category)}
-                className='transition-all duration-300'
-                animated={!reducedMotion}
-              >
-                {category}
-              </Button>
-            ))}
-          </div>
-        </SlideIn>
-
-        <div className='grid md:grid-cols-2 lg:grid-cols-3 gap-8'>
+        <AnimatedFilter
+          filters={categories.map(category => ({
+            id: category.toLowerCase().replace(/\s+/g, '-'),
+            label: category,
+            value: category,
+          }))}
+          activeFilter={selectedCategory}
+          onFilterChange={setSelectedCategory}
+          className='mb-12'
+        >
           {filteredProjects.map((project, index) => (
-            <ScaleIn
+            <CardInteractions
               key={project.id}
-              delay={0.6 + index * 0.1}
-              duration={0.6}
+              project={project}
+              index={index}
               className='h-full'
             >
               <Card
@@ -243,9 +251,9 @@ export function PortfolioSection({
                   </div>
                 </CardContent>
               </Card>
-            </ScaleIn>
+            </CardInteractions>
           ))}
-        </div>
+        </AnimatedFilter>
 
         <FadeIn delay={1.2} duration={0.8}>
           <div className='text-center mt-12'>
