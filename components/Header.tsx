@@ -47,12 +47,12 @@ export default function Header() {
           <div className='flex items-center'>
             <div className='flex-shrink-0'>
               <Link href='/' className='group flex items-center'>
-                <div className='w-48 h-32 relative group-hover:scale-105 transition-all duration-300'>
+                <div className='w-[320px] h-[120px] relative group-hover:scale-105 transition-all duration-300'>
                   <Image
                     src='/bitc-logo-transparent.png'
                     alt='BestIT Consulting Logo'
-                    width={192}
-                    height={128}
+                    width={320}
+                    height={120}
                     className='w-full h-full object-contain'
                     priority
                   />
