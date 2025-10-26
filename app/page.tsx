@@ -5,9 +5,7 @@ import {
   Users,
   Cloud,
   Shield,
-  Play,
   Star,
-  Quote,
   Building,
   Trophy,
 } from 'lucide-react'
@@ -317,7 +315,6 @@ export default function HomePage() {
           </div>
         </section>
       </div>
-
     </Layout>
   )
 }

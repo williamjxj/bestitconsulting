@@ -5,12 +5,6 @@ import { cn } from '@/lib/utils'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { ChevronRight } from 'lucide-react'
-import {
-  HoverEffects,
-  HoverLift,
-  HoverGlow,
-} from '@/components/animations/HoverEffects'
-import { AccessibleAnimatedCard } from '@/components/animations/AccessibleAnimation'
 import { ServiceCard3D } from '@/components/ui/ServiceCard3D'
 import { CardDepthEffects } from '@/components/ui/CardDepthEffects'
 import { CardLighting } from '@/components/ui/CardLighting'
