@@ -36,11 +36,11 @@ export const TypewriterHeadline: React.FC<TypewriterHeadlineProps> = ({
   const timeoutRef = useRef<NodeJS.Timeout | null>(null)
   const cursorTimeoutRef = useRef<NodeJS.Timeout | null>(null)
 
-  const { preferences } = useAccessibility()
+  const { prefersReducedMotion } = useAccessibility()
 
   // Typewriter effect
   useEffect(() => {
-    if (respectReducedMotion && preferences.reducedMotion) {
+    if (respectReducedMotion && prefersReducedMotion) {
       setDisplayedText(text)
       onComplete?.()
       return
@@ -78,7 +78,7 @@ export const TypewriterHeadline: React.FC<TypewriterHeadlineProps> = ({
     delay,
     onComplete,
     respectReducedMotion,
-    preferences.reducedMotion,
+    prefersReducedMotion,
   ])
 
   // Cursor blink effect
@@ -86,7 +86,7 @@ export const TypewriterHeadline: React.FC<TypewriterHeadlineProps> = ({
     if (
       !cursor ||
       !cursorBlink ||
-      (respectReducedMotion && preferences.reducedMotion)
+      (respectReducedMotion && prefersReducedMotion)
     ) {
       setShowCursor(true)
       return
@@ -104,7 +104,7 @@ export const TypewriterHeadline: React.FC<TypewriterHeadlineProps> = ({
         clearTimeout(cursorTimeoutRef.current)
       }
     }
-  }, [cursor, cursorBlink, respectReducedMotion, preferences.reducedMotion])
+  }, [cursor, cursorBlink, respectReducedMotion, prefersReducedMotion])
 
   // Cleanup timeouts
   useEffect(() => {

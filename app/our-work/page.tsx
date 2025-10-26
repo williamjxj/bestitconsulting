@@ -41,16 +41,16 @@ import Image from 'next/image'
 
 export default function OurWorkPage() {
   // Refs for animated beam nodes
-  const containerRef = useRef<HTMLDivElement>(null)
-  const node1Ref = useRef<HTMLDivElement>(null)
-  const node2Ref = useRef<HTMLDivElement>(null)
-  const node3Ref = useRef<HTMLDivElement>(null)
-  const node4Ref = useRef<HTMLDivElement>(null)
-  const node5Ref = useRef<HTMLDivElement>(null)
-  const node6Ref = useRef<HTMLDivElement>(null)
-  const node7Ref = useRef<HTMLDivElement>(null)
-  const node8Ref = useRef<HTMLDivElement>(null)
-  const centerNodeRef = useRef<HTMLDivElement>(null)
+  const containerRef = useRef<HTMLDivElement>(null!)
+  const node1Ref = useRef<HTMLDivElement>(null!)
+  const node2Ref = useRef<HTMLDivElement>(null!)
+  const node3Ref = useRef<HTMLDivElement>(null!)
+  const node4Ref = useRef<HTMLDivElement>(null!)
+  const node5Ref = useRef<HTMLDivElement>(null!)
+  const node6Ref = useRef<HTMLDivElement>(null!)
+  const node7Ref = useRef<HTMLDivElement>(null!)
+  const node8Ref = useRef<HTMLDivElement>(null!)
+  const centerNodeRef = useRef<HTMLDivElement>(null!)
 
   const projects = [
     {

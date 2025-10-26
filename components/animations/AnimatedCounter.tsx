@@ -12,7 +12,7 @@ import { useReducedMotion } from '@/lib/accessibility'
 import { getDeviceType } from '@/lib/mobile-optimization'
 
 interface AnimatedCounterProps {
-  children: ReactNode
+  children?: ReactNode
   value: number
   duration?: number
   delay?: number

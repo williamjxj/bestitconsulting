@@ -99,8 +99,8 @@ export function FadeIn({
         delay: (delay + stagger) / 1000,
         ease: optimizedConfig.easing,
         onComplete: onComplete,
-        onStart: onStart,
       }}
+      onAnimationStart={onStart}
       className={className}
       {...props}
     >
@@ -167,7 +167,7 @@ export function ScrollFadeIn({
       viewport={{ once: triggerOnce, amount: threshold }}
       transition={{
         duration: 0.6,
-        ease: 'ease-out',
+        ease: 'easeOut',
       }}
       className={className}
       {...props}

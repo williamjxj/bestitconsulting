@@ -34,7 +34,7 @@ export function SlideIn({
       name: 'Slide In',
       type: 'transition',
       duration,
-      easing: [0.4, 0, 0.2, 1],
+      easing: 'easeInOut',
       reducedMotion: {
         enabled: true,
         alternativeAnimation: 'slide-in-static',
@@ -88,8 +88,8 @@ export function SlideIn({
         delay: (delay + stagger) / 1000,
         ease: optimizedConfig.easing,
         onComplete: onComplete,
-        onStart: onStart,
       }}
+      onAnimationStart={onStart}
       className={className}
       {...props}
     >

@@ -56,7 +56,7 @@ export const animationPresets = {
     name: 'Slide In Up',
     type: 'transition' as const,
     duration: 600,
-    easing: [0.4, 0, 0.2, 1],
+    easing: 'easeInOut',
     reducedMotion: {
       enabled: true,
       alternativeAnimation: 'slide-in-up-static',
@@ -75,7 +75,7 @@ export const animationPresets = {
     name: 'Slide In Down',
     type: 'transition' as const,
     duration: 600,
-    easing: [0.4, 0, 0.2, 1],
+    easing: 'easeInOut',
     reducedMotion: {
       enabled: true,
       alternativeAnimation: 'slide-in-down-static',
@@ -95,7 +95,7 @@ export const animationPresets = {
     name: 'Scale In',
     type: 'interaction' as const,
     duration: 400,
-    easing: [0.34, 1.56, 0.64, 1],
+    easing: 'easeOutBack',
     reducedMotion: {
       enabled: true,
       alternativeAnimation: 'scale-in-static',
@@ -114,7 +114,7 @@ export const animationPresets = {
     name: 'Scale Out',
     type: 'interaction' as const,
     duration: 300,
-    easing: [0.4, 0, 0.2, 1],
+    easing: 'easeInOut',
     reducedMotion: {
       enabled: true,
       alternativeAnimation: 'scale-out-static',
@@ -195,7 +195,7 @@ export const animationPresets = {
     duration: 1500,
     easing: 'ease-in-out',
     iterations: -1,
-    direction: 'alternate',
+    direction: 'alternate' as const,
     reducedMotion: {
       enabled: true,
       alternativeAnimation: 'pulse-static',
@@ -234,7 +234,7 @@ export const animationPresets = {
     name: 'Reveal',
     type: 'scroll' as const,
     duration: 800,
-    easing: [0.4, 0, 0.2, 1],
+    easing: 'easeInOut',
     reducedMotion: {
       enabled: true,
       alternativeAnimation: 'reveal-static',
@@ -272,7 +272,7 @@ export class AnimationConfigurator {
       easing,
       delay: 0,
       iterations: 1,
-      direction: 'normal',
+      direction: 'normal' as const,
       fillMode: 'both',
       reducedMotion: {
         enabled: true,
@@ -411,9 +411,9 @@ export class AnimationConfigurator {
   ): string {
     const easingMap = {
       high: {
-        transition: [0.4, 0, 0.2, 1],
-        interaction: [0.34, 1.56, 0.64, 1],
-        scroll: [0.4, 0, 0.2, 1],
+        transition: 'easeInOut',
+        interaction: 'easeOutBack',
+        scroll: 'easeInOut',
         loading: 'linear',
       },
       medium: {
@@ -515,7 +515,7 @@ export const animationPerformance = {
     // Iterations factor
     if (animation.iterations === -1) {
       complexity += 2
-    } else if (animation.iterations > 1) {
+    } else if (animation.iterations && animation.iterations > 1) {
       complexity += animation.iterations * 0.5
     }
 

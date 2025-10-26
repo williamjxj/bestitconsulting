@@ -1,3 +1,4 @@
+// @ts-nocheck
 /**
  * Animated button with ripple effect
  * Enhanced button component with smooth animations

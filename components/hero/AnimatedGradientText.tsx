@@ -16,6 +16,7 @@ interface AnimatedGradientTextProps {
   direction?: 'horizontal' | 'vertical' | 'diagonal'
   className?: string
   respectReducedMotion?: boolean
+  animated?: boolean
 }
 
 export const AnimatedGradientText: React.FC<AnimatedGradientTextProps> = ({
@@ -25,6 +26,7 @@ export const AnimatedGradientText: React.FC<AnimatedGradientTextProps> = ({
   direction = 'horizontal',
   className = '',
   respectReducedMotion = true,
+  animated = true,
 }) => {
   const [gradientStyle, setGradientStyle] = useState<string>('')
   const [animationKey, setAnimationKey] = useState(0)
@@ -74,10 +76,6 @@ export const AnimatedGradientText: React.FC<AnimatedGradientTextProps> = ({
     },
     animate: {
       background: gradientStyle,
-      transition: {
-        duration: 0.1,
-        ease: 'linear',
-      },
     },
   }
 
@@ -95,6 +93,7 @@ export const AnimatedGradientText: React.FC<AnimatedGradientTextProps> = ({
       }
       initial='initial'
       animate='animate'
+      transition={{ duration: 0.1, ease: 'linear' }}
       key={animationKey}
     >
       {children}

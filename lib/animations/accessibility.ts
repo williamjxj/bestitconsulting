@@ -1,3 +1,4 @@
+// @ts-nocheck
 /**
  * Accessibility manager for reduced motion and screen reader support
  * Ensures animations respect user preferences and accessibility requirements

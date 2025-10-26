@@ -31,7 +31,7 @@ export const MasonryGrid: React.FC<MasonryGridProps> = ({
   const [itemPositions, setItemPositions] = useState<
     Array<{ x: number; y: number; width: number; height: number }>
   >([])
-  const { preferences } = useAccessibility()
+  const { prefersReducedMotion } = useAccessibility()
 
   // Calculate item positions
   const calculatePositions = useCallback(() => {
@@ -111,7 +111,7 @@ export const MasonryGrid: React.FC<MasonryGridProps> = ({
   }
 
   // Fallback for reduced motion
-  if (respectReducedMotion && preferences.reducedMotion) {
+  if (respectReducedMotion && prefersReducedMotion) {
     return (
       <div
         ref={containerRef}

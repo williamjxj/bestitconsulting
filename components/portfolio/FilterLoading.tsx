@@ -5,7 +5,7 @@
 
 'use client'
 
-import React, { useState, useRef, useCallback } from 'react'
+import React, { useState, useRef, useCallback, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useAccessibility } from '@/hooks/useAccessibility'
 
@@ -28,7 +28,7 @@ export const FilterLoading: React.FC<FilterLoadingProps> = ({
 }) => {
   const [isLoading, setIsLoading] = useState(loading)
   const filterRef = useRef<HTMLDivElement>(null)
-  const { preferences } = useAccessibility()
+  const { prefersReducedMotion } = useAccessibility()
 
   // Handle loading state changes
   useEffect(() => {
@@ -122,7 +122,7 @@ export const FilterLoading: React.FC<FilterLoadingProps> = ({
   }
 
   // Fallback for reduced motion
-  if (respectReducedMotion && preferences.reducedMotion) {
+  if (respectReducedMotion && prefersReducedMotion) {
     return (
       <div ref={filterRef} className={`relative ${className}`}>
         {isLoading ? getLoadingContent() : children}

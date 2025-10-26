@@ -47,7 +47,7 @@ export const EnhancedParticleBackground: React.FC<
   const [isLoaded, setIsLoaded] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
-  const { preferences } = useAccessibility()
+  const { prefersReducedMotion } = useAccessibility()
 
   // Get device capabilities for performance optimization
   const deviceCapabilities = getDeviceCapabilities()
@@ -71,7 +71,7 @@ export const EnhancedParticleBackground: React.FC<
     }
 
     // Check for reduced motion
-    if (respectReducedMotion && preferences.reducedMotion) {
+    if (respectReducedMotion && prefersReducedMotion) {
       setIsLoaded(true)
       return
     }
@@ -122,7 +122,9 @@ export const EnhancedParticleBackground: React.FC<
         const width = containerRef.current.clientWidth
         const height = containerRef.current.clientHeight
 
+        // @ts-expect-error - Three.js Camera properties
         scene.camera.aspect = width / height
+        // @ts-expect-error - Three.js Camera methods
         scene.camera.updateProjectionMatrix()
         scene.renderer.setSize(width, height)
       }
@@ -149,11 +151,11 @@ export const EnhancedParticleBackground: React.FC<
     particleColor,
     actualPerformanceMode,
     respectReducedMotion,
-    preferences.reducedMotion,
+    prefersReducedMotion,
   ])
 
   // Fallback for reduced motion or WebGL unavailable
-  if (respectReducedMotion && preferences.reducedMotion) {
+  if (respectReducedMotion && prefersReducedMotion) {
     return (
       <div
         className={`absolute inset-0 ${className}`}

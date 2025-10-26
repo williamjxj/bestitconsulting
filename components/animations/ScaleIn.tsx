@@ -34,7 +34,7 @@ export function ScaleIn({
       name: 'Scale In',
       type: 'interaction',
       duration,
-      easing: [0.34, 1.56, 0.64, 1],
+      easing: 'easeOutBack',
       reducedMotion: {
         enabled: true,
         alternativeAnimation: 'scale-in-static',
@@ -91,8 +91,8 @@ export function ScaleIn({
         delay: (delay + stagger) / 1000,
         ease: optimizedConfig.easing,
         onComplete: onComplete,
-        onStart: onStart,
       }}
+      onAnimationStart={onStart}
       className={className}
       {...props}
     >

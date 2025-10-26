@@ -43,7 +43,7 @@ export const CaseStudyCard: React.FC<CaseStudyCardProps> = ({
 }) => {
   const [isHovered, setIsHovered] = useState(false)
   const cardRef = useRef<HTMLDivElement>(null)
-  const { preferences } = useAccessibility()
+  const { prefersReducedMotion } = useAccessibility()
 
   // Handle hover events
   const handleMouseEnter = useCallback(() => {
@@ -81,7 +81,7 @@ export const CaseStudyCard: React.FC<CaseStudyCardProps> = ({
   }
 
   // Fallback for reduced motion
-  if (respectReducedMotion && preferences.reducedMotion) {
+  if (respectReducedMotion && prefersReducedMotion) {
     return (
       <Card ref={cardRef} className={`relative overflow-hidden ${className}`}>
         <CardHeader>

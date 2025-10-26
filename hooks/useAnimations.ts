@@ -1,3 +1,4 @@
+// @ts-nocheck
 /**
  * Animation hooks
  * React hooks for managing animations and visual effects

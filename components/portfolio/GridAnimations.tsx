@@ -30,11 +30,11 @@ export const GridAnimations: React.FC<GridAnimationsProps> = ({
 }) => {
   const [isAnimating, setIsAnimating] = useState(false)
   const gridRef = useRef<HTMLDivElement>(null)
-  const { preferences } = useAccessibility()
+  const { prefersReducedMotion } = useAccessibility()
 
   // Get animation variants based on type
   const getAnimationVariants = () => {
-    if (respectReducedMotion && preferences.reducedMotion) {
+    if (respectReducedMotion && prefersReducedMotion) {
       return {
         initial: { opacity: 0 },
         animate: { opacity: 1 },

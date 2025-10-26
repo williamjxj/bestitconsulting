@@ -36,7 +36,7 @@ export const GalleryNavigation: React.FC<GalleryNavigationProps> = ({
 }) => {
   const [isHovered, setIsHovered] = useState(false)
   const navRef = useRef<HTMLDivElement>(null)
-  const { preferences } = useAccessibility()
+  const { prefersReducedMotion } = useAccessibility()
 
   // Handle keyboard navigation
   const handleKeyDown = useCallback(
@@ -81,7 +81,7 @@ export const GalleryNavigation: React.FC<GalleryNavigationProps> = ({
   }
 
   // Fallback for reduced motion
-  if (respectReducedMotion && preferences.reducedMotion) {
+  if (respectReducedMotion && prefersReducedMotion) {
     return (
       <div
         ref={navRef}

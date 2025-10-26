@@ -32,7 +32,7 @@ export const InteractiveLightbox: React.FC<InteractiveLightboxProps> = ({
 }) => {
   const lightboxRef = useRef<HTMLDivElement>(null)
   const [isAnimating, setIsAnimating] = useState(false)
-  const { preferences } = useAccessibility()
+  const { prefersReducedMotion } = useAccessibility()
 
   // Handle keyboard navigation
   useEffect(() => {
@@ -93,7 +93,7 @@ export const InteractiveLightbox: React.FC<InteractiveLightboxProps> = ({
   }
 
   // Fallback for reduced motion
-  if (respectReducedMotion && preferences.reducedMotion) {
+  if (respectReducedMotion && prefersReducedMotion) {
     return (
       <AnimatePresence>
         {isOpen && (

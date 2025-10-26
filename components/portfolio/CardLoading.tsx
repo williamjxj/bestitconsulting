@@ -5,7 +5,7 @@
 
 'use client'
 
-import React, { useState, useRef, useCallback } from 'react'
+import React, { useState, useRef, useCallback, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useAccessibility } from '@/hooks/useAccessibility'
 
@@ -28,7 +28,7 @@ export const CardLoading: React.FC<CardLoadingProps> = ({
 }) => {
   const [isLoading, setIsLoading] = useState(loading)
   const cardRef = useRef<HTMLDivElement>(null)
-  const { preferences } = useAccessibility()
+  const { prefersReducedMotion } = useAccessibility()
 
   // Handle loading state changes
   useEffect(() => {
@@ -121,7 +121,7 @@ export const CardLoading: React.FC<CardLoadingProps> = ({
   }
 
   // Fallback for reduced motion
-  if (respectReducedMotion && preferences.reducedMotion) {
+  if (respectReducedMotion && prefersReducedMotion) {
     return (
       <div ref={cardRef} className={`relative ${className}`}>
         {isLoading ? getLoadingContent() : children}

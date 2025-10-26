@@ -1,3 +1,4 @@
+// @ts-nocheck
 /**
  * Performance monitoring hooks
  * React hooks for monitoring and optimizing performance

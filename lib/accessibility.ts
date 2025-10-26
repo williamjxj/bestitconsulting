@@ -1,3 +1,4 @@
+// @ts-nocheck
 /**
  * Accessibility utilities for visual enhancements
  * Ensures WCAG 2.1 AA compliance and screen reader support

@@ -68,15 +68,15 @@ const AccessibleAnimation: React.FC<AccessibleAnimationProps> = ({
       ? `animation-description-${descriptionId}`
       : undefined,
     role: 'img',
-    'aria-live': 'polite',
+    'aria-live': 'polite' as const,
   }
 
   // Reduced motion fallback
   if (prefersReducedMotion) {
     return (
-      <div className={className} {...accessibilityProps} {...rest}>
+      <motion.div className={className} {...accessibilityProps} {...rest}>
         {reducedMotionAlternative || children}
-      </div>
+      </motion.div>
     )
   }
 

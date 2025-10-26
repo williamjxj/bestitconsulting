@@ -52,7 +52,7 @@ export const OptimizedParticles: React.FC<OptimizedParticlesProps> = ({
   const lastEmissionRef = useRef<number>(0)
   const [isLoaded, setIsLoaded] = useState(false)
 
-  const { preferences } = useAccessibility()
+  const { prefersReducedMotion } = useAccessibility()
 
   // Get device capabilities for performance optimization
   const deviceCapabilities = getDeviceCapabilities()
@@ -187,7 +187,7 @@ export const OptimizedParticles: React.FC<OptimizedParticlesProps> = ({
   // Animation loop
   const animate = useCallback(
     (currentTime: number) => {
-      if (respectReducedMotion && preferences.reducedMotion) return
+      if (respectReducedMotion && prefersReducedMotion) return
 
       const deltaTime = currentTime - (animationRef.current || currentTime)
       updateParticles(deltaTime)
@@ -199,7 +199,7 @@ export const OptimizedParticles: React.FC<OptimizedParticlesProps> = ({
       updateParticles,
       renderParticles,
       respectReducedMotion,
-      preferences.reducedMotion,
+      prefersReducedMotion,
     ]
   )
 
@@ -251,7 +251,7 @@ export const OptimizedParticles: React.FC<OptimizedParticlesProps> = ({
   }, [])
 
   // Fallback for reduced motion
-  if (respectReducedMotion && preferences.reducedMotion) {
+  if (respectReducedMotion && prefersReducedMotion) {
     return (
       <div className={`absolute inset-0 ${className}`}>
         <div className='absolute inset-0 bg-gradient-to-br from-blue-900/20 to-indigo-900/20' />

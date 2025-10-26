@@ -36,12 +36,12 @@ export const ImageZoom: React.FC<ImageZoomProps> = ({
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 })
   const imageRef = useRef<HTMLImageElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
-  const { preferences } = useAccessibility()
+  const { prefersReducedMotion } = useAccessibility()
 
   // Handle zoom
   const handleZoom = useCallback(
     (delta: number) => {
-      if (respectReducedMotion && preferences.reducedMotion) return
+      if (respectReducedMotion && prefersReducedMotion) return
 
       setZoom(prev => {
         const newZoom = Math.max(minZoom, Math.min(maxZoom, prev + delta))
@@ -49,13 +49,7 @@ export const ImageZoom: React.FC<ImageZoomProps> = ({
         return newZoom
       })
     },
-    [
-      maxZoom,
-      minZoom,
-      onZoomChange,
-      respectReducedMotion,
-      preferences.reducedMotion,
-    ]
+    [maxZoom, minZoom, onZoomChange, respectReducedMotion, prefersReducedMotion]
   )
 
   // Handle wheel zoom
@@ -156,7 +150,7 @@ export const ImageZoom: React.FC<ImageZoomProps> = ({
   }
 
   // Fallback for reduced motion
-  if (respectReducedMotion && preferences.reducedMotion) {
+  if (respectReducedMotion && prefersReducedMotion) {
     return (
       <div
         ref={containerRef}

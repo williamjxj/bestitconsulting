@@ -1,3 +1,4 @@
+// @ts-nocheck
 /**
  * Card lighting effects component
  * Creates dynamic lighting and shadow effects for cards

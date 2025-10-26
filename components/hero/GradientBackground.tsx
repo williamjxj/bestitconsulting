@@ -40,7 +40,7 @@ export const GradientBackground: React.FC<GradientBackgroundProps> = ({
   const [gradientStyle, setGradientStyle] = useState<string>('')
   const [animationKey, setAnimationKey] = useState(0)
 
-  const { preferences } = useAccessibility()
+  const { prefersReducedMotion } = useAccessibility()
 
   // Create gradient string
   const createGradient = (colorStops: string[]) => {
@@ -49,7 +49,7 @@ export const GradientBackground: React.FC<GradientBackgroundProps> = ({
 
   // Generate animated gradient
   useEffect(() => {
-    if (!animated || (respectReducedMotion && preferences.reducedMotion)) {
+    if (!animated || (respectReducedMotion && prefersReducedMotion)) {
       setGradientStyle(createGradient(colors))
       return
     }
@@ -77,7 +77,7 @@ export const GradientBackground: React.FC<GradientBackgroundProps> = ({
     animated,
     speed,
     respectReducedMotion,
-    preferences.reducedMotion,
+    prefersReducedMotion,
   ])
 
   const gradientVariants = {
@@ -86,10 +86,6 @@ export const GradientBackground: React.FC<GradientBackgroundProps> = ({
     },
     animate: {
       background: gradientStyle,
-      transition: {
-        duration: 0.1,
-        ease: 'linear',
-      },
     },
   }
 
@@ -98,12 +94,13 @@ export const GradientBackground: React.FC<GradientBackgroundProps> = ({
       <motion.div
         className='absolute inset-0 w-full h-full'
         variants={
-          animated && !(respectReducedMotion && preferences.reducedMotion)
+          animated && !(respectReducedMotion && prefersReducedMotion)
             ? gradientVariants
             : undefined
         }
         initial='initial'
         animate='animate'
+        transition={{ duration: 0.1, ease: 'linear' }}
         style={{
           background: gradientStyle || createGradient(colors),
         }}
@@ -114,7 +111,7 @@ export const GradientBackground: React.FC<GradientBackgroundProps> = ({
       <div className='absolute inset-0 bg-gradient-to-tl from-black/10 to-transparent' />
 
       {/* Animated gradient orbs */}
-      {animated && !(respectReducedMotion && preferences.reducedMotion) && (
+      {animated && !(respectReducedMotion && prefersReducedMotion) && (
         <>
           <motion.div
             className='absolute -top-1/2 -right-1/2 w-full h-full rounded-full opacity-20'

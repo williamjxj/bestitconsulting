@@ -5,7 +5,7 @@
 
 'use client'
 
-import React, { useState, useRef, useCallback } from 'react'
+import React, { useState, useRef, useCallback, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useAccessibility } from '@/hooks/useAccessibility'
 
@@ -26,11 +26,11 @@ export const StaggerFilter: React.FC<StaggerFilterProps> = ({
 }) => {
   const [isAnimating, setIsAnimating] = useState(false)
   const filterRef = useRef<HTMLDivElement>(null)
-  const { preferences } = useAccessibility()
+  const { prefersReducedMotion } = useAccessibility()
 
   // Handle stagger animation
   const handleStaggerAnimation = useCallback(() => {
-    if (respectReducedMotion && preferences.reducedMotion) return
+    if (respectReducedMotion && prefersReducedMotion) return
 
     setIsAnimating(true)
 
@@ -45,7 +45,7 @@ export const StaggerFilter: React.FC<StaggerFilterProps> = ({
     staggerDelay,
     onStaggerComplete,
     respectReducedMotion,
-    preferences.reducedMotion,
+    prefersReducedMotion,
   ])
 
   // Start stagger animation when component mounts
@@ -77,7 +77,7 @@ export const StaggerFilter: React.FC<StaggerFilterProps> = ({
   }
 
   // Fallback for reduced motion
-  if (respectReducedMotion && preferences.reducedMotion) {
+  if (respectReducedMotion && prefersReducedMotion) {
     return (
       <div ref={filterRef} className={className}>
         {children}

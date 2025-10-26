@@ -30,11 +30,11 @@ export const FilterTransitions: React.FC<FilterTransitionsProps> = ({
 }) => {
   const [isTransitioning, setIsTransitioning] = useState(false)
   const filterRef = useRef<HTMLDivElement>(null)
-  const { preferences } = useAccessibility()
+  const { prefersReducedMotion } = useAccessibility()
 
   // Get transition variants based on type
   const getTransitionVariants = () => {
-    if (respectReducedMotion && preferences.reducedMotion) {
+    if (respectReducedMotion && prefersReducedMotion) {
       return {
         initial: { opacity: 0 },
         animate: { opacity: 1 },
@@ -103,7 +103,7 @@ export const FilterTransitions: React.FC<FilterTransitionsProps> = ({
   }
 
   // Fallback for reduced motion
-  if (respectReducedMotion && preferences.reducedMotion) {
+  if (respectReducedMotion && prefersReducedMotion) {
     return (
       <div ref={filterRef} className={className}>
         {children}

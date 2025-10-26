@@ -36,14 +36,13 @@ export function ServiceCard({
       className={cn('h-full', className)}
     >
       <CardDepthEffects depth={20} perspective={1000}>
-        <CardLighting
-          lightColor='rgba(59, 130, 246, 0.15)'
-          lightIntensity={0.5}
-        >
+        <CardLighting lightColor='rgba(59, 130, 246, 0.15)' intensity={0.5}>
           <ServiceCard3D
             icon={icon}
             title={title}
             description={description}
+            features={[]}
+            technologies={[]}
             perspective={1000}
             rotationRange={10}
             className='h-full'

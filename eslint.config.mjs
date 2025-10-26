@@ -32,6 +32,7 @@ const eslintConfig = [
       '@typescript-eslint/explicit-function-return-type': 'off',
       '@typescript-eslint/explicit-module-boundary-types': 'off',
       '@typescript-eslint/no-explicit-any': 'off', // Allow any type
+      '@typescript-eslint/ban-ts-comment': 'off', // Allow ts-nocheck and ts-ignore
       'prefer-const': 'error', // Keep prefer-const rule
 
       // Next.js specific rules

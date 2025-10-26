@@ -50,7 +50,7 @@ export const InteractiveParticles: React.FC<InteractiveParticlesProps> = ({
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
   const [isHovering, setIsHovering] = useState(false)
 
-  const { preferences } = useAccessibility()
+  const { prefersReducedMotion } = useAccessibility()
 
   // Initialize particles
   const initializeParticles = useCallback(() => {
@@ -122,11 +122,11 @@ export const InteractiveParticles: React.FC<InteractiveParticlesProps> = ({
 
   // Animation loop
   const animate = useCallback(() => {
-    if (respectReducedMotion && preferences.reducedMotion) return
+    if (respectReducedMotion && prefersReducedMotion) return
 
     updateParticles()
     animationRef.current = requestAnimationFrame(animate)
-  }, [updateParticles, respectReducedMotion, preferences.reducedMotion])
+  }, [updateParticles, respectReducedMotion, prefersReducedMotion])
 
   // Mouse event handlers
   const handleMouseMove = useCallback((e: React.MouseEvent) => {
@@ -171,7 +171,7 @@ export const InteractiveParticles: React.FC<InteractiveParticlesProps> = ({
 
   // Render particles
   const renderParticles = () => {
-    if (respectReducedMotion && preferences.reducedMotion) {
+    if (respectReducedMotion && prefersReducedMotion) {
       return null
     }
 
@@ -210,7 +210,7 @@ export const InteractiveParticles: React.FC<InteractiveParticlesProps> = ({
       {renderParticles()}
 
       {/* Connection lines between nearby particles */}
-      {!respectReducedMotion && !preferences.reducedMotion && (
+      {!respectReducedMotion && !prefersReducedMotion && (
         <svg className='absolute inset-0 w-full h-full pointer-events-none'>
           {particlesRef.current.map(particle => {
             const nearbyParticles = particlesRef.current.filter(other => {

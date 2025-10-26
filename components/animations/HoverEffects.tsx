@@ -54,9 +54,9 @@ const HoverEffects: React.FC<HoverEffectsProps> = ({
   // Reduced motion fallback
   if (prefersReducedMotion) {
     return (
-      <div className={className} {...rest}>
+      <motion.div className={className} {...rest}>
         {children}
-      </div>
+      </motion.div>
     )
   }
 
@@ -266,9 +266,9 @@ export const MagneticHover: React.FC<MagneticHoverProps> = ({
 
   if (prefersReducedMotion) {
     return (
-      <div className={className} {...rest}>
+      <motion.div className={className} {...rest}>
         {children}
-      </div>
+      </motion.div>
     )
   }
 
@@ -318,7 +318,6 @@ export const InteractiveCard: React.FC<InteractiveCardProps> = ({
       y: -8,
       scale: 1.02,
       boxShadow: '0 20px 40px rgba(0, 0, 0, 0.1)',
-      transition: { duration: 0.3, ease: 'ease-out' },
     },
   }
 
@@ -328,6 +327,7 @@ export const InteractiveCard: React.FC<InteractiveCardProps> = ({
       initial='initial'
       animate='animate'
       whileHover='hover'
+      transition={{ duration: 0.3, ease: 'easeOut' }}
       className={`
         group relative overflow-hidden rounded-xl border border-border/40 bg-card p-6
         transition-all duration-300 hover:border-blue-500/30 hover:shadow-lg

@@ -32,14 +32,14 @@ export const CardExpansion: React.FC<CardExpansionProps> = ({
 }) => {
   const [internalExpanded, setInternalExpanded] = useState(false)
   const cardRef = useRef<HTMLDivElement>(null)
-  const { preferences } = useAccessibility()
+  const { prefersReducedMotion } = useAccessibility()
 
   const isExpanded =
     controlledExpanded !== undefined ? controlledExpanded : internalExpanded
 
   // Handle toggle
   const handleToggle = useCallback(() => {
-    if (respectReducedMotion && preferences.reducedMotion) return
+    if (respectReducedMotion && prefersReducedMotion) return
 
     const newState = !isExpanded
     if (controlledExpanded === undefined) {
@@ -51,12 +51,12 @@ export const CardExpansion: React.FC<CardExpansionProps> = ({
     controlledExpanded,
     onToggle,
     respectReducedMotion,
-    preferences.reducedMotion,
+    prefersReducedMotion,
   ])
 
   // Get expand variants based on direction
   const getExpandVariants = () => {
-    if (respectReducedMotion && preferences.reducedMotion) {
+    if (respectReducedMotion && prefersReducedMotion) {
       return {
         collapsed: { opacity: 0, height: 0 },
         expanded: { opacity: 1, height: 'auto' },
@@ -102,7 +102,7 @@ export const CardExpansion: React.FC<CardExpansionProps> = ({
   }
 
   // Fallback for reduced motion
-  if (respectReducedMotion && preferences.reducedMotion) {
+  if (respectReducedMotion && prefersReducedMotion) {
     return (
       <div ref={cardRef} className={`relative ${className}`}>
         <div onClick={handleToggle} className='cursor-pointer'>
