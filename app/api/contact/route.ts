@@ -144,7 +144,7 @@ export async function POST(request: NextRequest) {
                 <strong>Need immediate assistance?</strong>
               </p>
               <p style="color: #64748b; font-size: 14px; margin: 0;">
-                📞 Call us: +1 (555) 123-4567<br>
+                📞 Call us: +1 (236) 992-3846<br>
                 📧 Email: contact@bestitconsulting.com<br>
                 🌐 Website: bestitconsulting.vercel.app
               </p>

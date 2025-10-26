@@ -88,7 +88,7 @@ export function useComponentPerformance(
     if (!enabled) return
 
     startTimeRef.current = performance.now()
-  })
+  }, [enabled])
 
   useEffect(() => {
     if (!enabled) return
@@ -105,7 +105,7 @@ export function useComponentPerformance(
         `Component ${componentId} render time: ${duration.toFixed(2)}ms`
       )
     }
-  })
+  }, [enabled, componentId])
 
   return {
     renderTime,
@@ -147,7 +147,8 @@ export function useAnimationPerformance(
     lastTimeRef.current = performance.now()
 
     const measureFPS = () => {
-      if (!isAnimating) return
+      // Use ref to check animation state instead of state variable
+      if (!animationIdRef.current) return
 
       frameCountRef.current++
       const currentTime = performance.now()
@@ -169,7 +170,7 @@ export function useAnimationPerformance(
     }
 
     animationIdRef.current = requestAnimationFrame(measureFPS)
-  }, [enabled, isAnimating])
+  }, [enabled])
 
   const stopAnimation = useCallback(() => {
     setIsAnimating(false)

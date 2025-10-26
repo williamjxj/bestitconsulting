@@ -338,7 +338,7 @@ const ContactSuccessAnimation: React.FC<ContactSuccessAnimationProps> = ({
           </div>
           <div className='flex items-center gap-1'>
             <Phone className='h-4 w-4' />
-            <span>+1 (555) 123-4567</span>
+            <span>+1 (236) 992-3846</span>
           </div>
         </div>
       </motion.div>

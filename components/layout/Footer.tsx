@@ -106,11 +106,11 @@ export function Footer() {
               <div className='space-y-3 mb-6'>
                 <div className='flex items-center space-x-3 text-gray-300'>
                   <Mail className='h-4 w-4 text-blue-400' />
-                  <span className='text-sm'>hello@bestitconsulting.com</span>
+                  <span className='text-sm'>contact@bestitconsulting.ca</span>
                 </div>
                 <div className='flex items-center space-x-3 text-gray-300'>
                   <Phone className='h-4 w-4 text-blue-400' />
-                  <span className='text-sm'>+1 (555) 123-4567</span>
+                  <span className='text-sm'>+1 (236) 992-3846</span>
                 </div>
                 <div className='flex items-center space-x-3 text-gray-300'>
                   <MapPin className='h-4 w-4 text-blue-400' />

@@ -245,7 +245,7 @@ const AnimatedContactForm: React.FC<AnimatedContactFormProps> = ({
               onFocus={() => handleFieldFocus('phone')}
               onBlur={() => handleFieldBlur('phone')}
               className='w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent'
-              placeholder='+1 (555) 123-4567'
+              placeholder='+1 (236) 992-3846'
             />
           </div>
 
@@ -551,7 +551,7 @@ const AnimatedContactForm: React.FC<AnimatedContactFormProps> = ({
             onFocus={() => handleFieldFocus('phone')}
             onBlur={() => handleFieldBlur('phone')}
             className='w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200'
-            placeholder='+1 (555) 123-4567'
+            placeholder='+1 (236) 992-3846'
           />
         </motion.div>
 
