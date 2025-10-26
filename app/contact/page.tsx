@@ -1,12 +1,14 @@
 'use client'
 
 import { useState } from 'react'
+import { motion } from 'framer-motion'
 import Layout from '@/components/Layout'
 import SmartGoogleMap from '@/components/SmartGoogleMap'
 import { AnimatedForm } from '@/components/ui/animated-form'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
+import { AnimatedFAQ } from '@/components/ui/AnimatedFAQ'
 import {
   Phone,
   Mail,
@@ -124,19 +126,39 @@ export default function ContactPage() {
 
   const faqs = [
     {
+      id: 'timeline',
       question: 'What is your typical project timeline?',
-      answer:
-        'Project timelines vary based on complexity, but most projects range from 2-6 months. We provide detailed timelines during our initial consultation.',
+      answer: 'Depends on the project requirements and details.',
     },
     {
+      id: 'support',
       question: 'Do you offer ongoing support and maintenance?',
       answer:
         'Yes, we provide comprehensive support packages including 24/7 monitoring, regular updates, and technical assistance to ensure your solution runs smoothly.',
     },
     {
+      id: 'technology',
       question: 'Can you work with our existing technology stack?',
       answer:
         'Absolutely! We specialize in integrating with existing systems and can work with virtually any technology stack to enhance your current infrastructure.',
+    },
+    {
+      id: 'industries',
+      question: 'What industries do you serve?',
+      answer:
+        'We serve clients across healthcare, finance, retail, manufacturing, transportation, education, and technology sectors, adapting our solutions to industry-specific requirements.',
+    },
+    {
+      id: 'pricing',
+      question: 'How do you structure your pricing?',
+      answer:
+        'We offer flexible pricing models including fixed-price projects, time and materials, and retainer agreements. Pricing is based on project scope, complexity, and timeline requirements.',
+    },
+    {
+      id: 'consultation',
+      question: 'Is the initial consultation really free?',
+      answer:
+        'Yes! We offer a completely free 30-minute consultation to discuss your project requirements, provide initial recommendations, and answer any questions you may have.',
     },
   ]
 
@@ -540,35 +562,26 @@ export default function ContactPage() {
           </div>
         </section>
 
-        {/* Compact FAQ Section */}
-        <section className='py-12 px-4'>
+        {/* Enhanced FAQ Section */}
+        <section className='py-16 px-4 bg-gradient-to-br from-slate-50 to-blue-50'>
           <div className='max-w-4xl mx-auto'>
-            <div className='text-center mb-8'>
-              <h2 className='text-3xl font-bold text-gray-900 mb-4'>
-                Frequently Asked Questions
-              </h2>
-              <p className='text-lg text-gray-600'>
-                Quick answers to common questions about our services
-              </p>
+            <div className='text-center mb-12'>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+              >
+                <h2 className='text-4xl font-bold text-gray-900 mb-4'>
+                  Frequently Asked Questions
+                </h2>
+                <p className='text-xl text-gray-600 max-w-2xl mx-auto'>
+                  Quick answers to common questions about our services and
+                  process. Click on any question to expand the answer.
+                </p>
+              </motion.div>
             </div>
 
-            <div className='space-y-4'>
-              {faqs.map((faq, index) => (
-                <Card
-                  key={index}
-                  className='border-0 shadow-lg hover:shadow-xl transition-all duration-300 bg-white'
-                >
-                  <CardContent className='p-4'>
-                    <h3 className='text-lg font-semibold text-gray-900 mb-2'>
-                      {faq.question}
-                    </h3>
-                    <p className='text-gray-600 leading-relaxed'>
-                      {faq.answer}
-                    </p>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
+            <AnimatedFAQ faqs={faqs} />
           </div>
         </section>
 

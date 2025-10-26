@@ -1,7 +1,6 @@
 'use client'
 
-import { Header } from '@/components/layout/Header'
-import { Footer } from '@/components/layout/Footer'
+import Layout from '@/components/Layout'
 import { motion } from 'framer-motion'
 import { brandClasses } from '@/lib/branding'
 import { useReducedMotion } from '@/lib/accessibility'
@@ -162,9 +161,7 @@ export default function AboutPage() {
   const shouldAnimate = !reducedMotion && deviceType !== 'mobile'
 
   return (
-    <div className='min-h-screen bg-white'>
-      <Header />
-
+    <Layout>
       {/* Hero Section */}
       <section className='relative overflow-hidden bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 text-white py-24 md:py-32'>
         {/* Animated background elements */}
@@ -514,8 +511,6 @@ export default function AboutPage() {
           </motion.div>
         </div>
       </section>
-
-      <Footer />
-    </div>
+    </Layout>
   )
 }

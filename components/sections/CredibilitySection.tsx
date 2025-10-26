@@ -122,7 +122,7 @@ export function CredibilitySection({
 
   return (
     <section
-      className={`py-20 bg-gradient-to-br from-slate-50 to-blue-50 ${className}`}
+      className={`py-12 bg-gradient-to-br from-slate-50 to-blue-50 ${className}`}
     >
       <div className='container mx-auto px-4'>
         <ScrollTrigger animation='fade' direction='up' duration={0.8}>

@@ -104,7 +104,7 @@ export default function HomePage() {
 
         {/* Video/Demo Section */}
         <ScrollTrigger animation='fade' direction='up' duration={0.8}>
-          <section className='py-20 bg-background'>
+          <section className='py-12 bg-background'>
             <div className='container mx-auto px-4'>
               <div className='max-w-6xl mx-auto'>
                 <div className='grid lg:grid-cols-2 gap-12 items-center'>
@@ -153,7 +153,7 @@ export default function HomePage() {
 
         {/* Features Overview */}
         <ScrollTrigger animation='fade' direction='up' duration={0.8}>
-          <section className='py-20 bg-muted/30'>
+          <section className='py-12 bg-muted/30'>
             <div className='container mx-auto px-4'>
               <ScrollTrigger animation='slide' direction='up' delay={0.2}>
                 <div className='text-center mb-16'>
@@ -216,7 +216,7 @@ export default function HomePage() {
 
         {/* Stats Section */}
         <ScrollTrigger animation='fade' direction='up' duration={0.8}>
-          <section className='py-20 bg-gradient-to-r from-blue-600 to-indigo-700 text-white'>
+          <section className='py-12 bg-gradient-to-r from-blue-600 to-indigo-700 text-white'>
             <div className='container mx-auto px-4'>
               <ScrollTrigger animation='slide' direction='up' delay={0.2}>
                 <div className='text-center mb-16'>
@@ -266,7 +266,7 @@ export default function HomePage() {
         </ScrollTrigger>
 
         {/* Testimonials */}
-        <section className='py-20 bg-background'>
+        <section className='py-12 bg-background'>
           <div className='container mx-auto px-4'>
             <div className='text-center mb-16'>
               <span className='inline-block px-4 py-1.5 text-sm font-medium bg-blue-100 text-blue-800 rounded-full mb-4'>
@@ -325,7 +325,7 @@ export default function HomePage() {
         <TechnologyShowcase />
 
         {/* CTA Section */}
-        <section className='py-20 bg-gradient-to-r from-blue-600 to-indigo-700 text-white'>
+        <section className='py-12 bg-gradient-to-r from-blue-600 to-indigo-700 text-white'>
           <div className='container mx-auto px-4 text-center'>
             <h2 className='text-3xl md:text-4xl font-bold mb-6'>
               Ready to Start Your Project?

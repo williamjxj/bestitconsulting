@@ -237,52 +237,6 @@ export function HeroSection() {
               ))}
             </div>
           </FadeIn>
-
-          {/* Professional Visual Section */}
-          <FadeIn delay={2.0} duration={1.0}>
-            <div className='mt-16 max-w-4xl mx-auto'>
-              <div className='grid grid-cols-1 lg:grid-cols-2 gap-8 items-center'>
-                <div className='space-y-6'>
-                  <h3 className='text-2xl font-bold text-white mb-4'>
-                    Trusted by Industry Leaders
-                  </h3>
-                  <div className='space-y-4'>
-                    <div className='flex items-center gap-3'>
-                      <CheckCircle className='h-5 w-5 text-green-400' />
-                      <span className='text-blue-100'>
-                        ISO 9001:2015 Certified
-                      </span>
-                    </div>
-                    <div className='flex items-center gap-3'>
-                      <CheckCircle className='h-5 w-5 text-green-400' />
-                      <span className='text-blue-100'>AWS Partner Network</span>
-                    </div>
-                    <div className='flex items-center gap-3'>
-                      <CheckCircle className='h-5 w-5 text-green-400' />
-                      <span className='text-blue-100'>
-                        Microsoft Gold Partner
-                      </span>
-                    </div>
-                    <div className='flex items-center gap-3'>
-                      <CheckCircle className='h-5 w-5 text-green-400' />
-                      <span className='text-blue-100'>
-                        24/7 Technical Support
-                      </span>
-                    </div>
-                  </div>
-                </div>
-                <div className='relative'>
-                  <HeroVisual
-                    variant='tech'
-                    className='h-64 rounded-xl overflow-hidden'
-                    animated={true}
-                    particles={true}
-                    gradient={true}
-                  />
-                </div>
-              </div>
-            </div>
-          </FadeIn>
         </div>
       </div>
     </section>
