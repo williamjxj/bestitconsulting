@@ -142,7 +142,7 @@
 
 **Purpose**: Improvements that affect multiple user stories
 
-- [ ] T051 [P] Documentation updates in docs/
+- [ ] T051 [P] Documentation updates in bing-docs/
 - [x] T052 Code cleanup and refactoring across all animation components
 - [x] T053 Performance optimization across all stories
 - [ ] T054 [P] Additional unit tests (if requested) in components/animations/**tests**/
