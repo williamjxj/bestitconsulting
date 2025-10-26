@@ -25,6 +25,10 @@ interface ButtonHoverEffectsProps
   children: React.ReactNode
   className?: string
   respectReducedMotion?: boolean
+  asChild?: boolean
+  // Custom props that should not be passed to DOM
+  hoverScale?: number
+  hoverBgColor?: string
 }
 
 export const ButtonHoverEffects: React.FC<ButtonHoverEffectsProps> = ({
@@ -35,6 +39,10 @@ export const ButtonHoverEffects: React.FC<ButtonHoverEffectsProps> = ({
   children,
   className = '',
   respectReducedMotion = true,
+  asChild = false,
+  // Custom props - destructure to prevent them from being passed to DOM
+  hoverScale = 1.05,
+  hoverBgColor = 'rgba(255, 255, 255, 0.2)',
   ...props
 }) => {
   const [isHovered, setIsHovered] = useState(false)
@@ -44,9 +52,9 @@ export const ButtonHoverEffects: React.FC<ButtonHoverEffectsProps> = ({
   // Get effect intensity
   const getIntensityValues = () => {
     const values = {
-      low: { scale: 1.02, glow: 0.1, lift: 2 },
-      medium: { scale: 1.05, glow: 0.2, lift: 4 },
-      high: { scale: 1.08, glow: 0.3, lift: 6 },
+      low: { scale: hoverScale * 0.95, glow: 0.1, lift: 2 },
+      medium: { scale: hoverScale, glow: 0.2, lift: 4 },
+      high: { scale: hoverScale * 1.05, glow: 0.3, lift: 6 },
     }
     return values[intensity]
   }
@@ -118,6 +126,24 @@ export const ButtonHoverEffects: React.FC<ButtonHoverEffectsProps> = ({
 
   const effectVariants = getEffectVariants()
 
+  // When asChild is true, we need to pass the children directly to avoid breaking Slot
+  if (asChild) {
+    return (
+      <Button
+        ref={buttonRef}
+        variant={variant}
+        size={size}
+        className={`relative overflow-hidden ${className}`}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        asChild={asChild}
+        {...props}
+      >
+        {children}
+      </Button>
+    )
+  }
+
   return (
     <motion.div
       className='inline-block'
@@ -142,7 +168,8 @@ export const ButtonHoverEffects: React.FC<ButtonHoverEffectsProps> = ({
           isHovered &&
           !(respectReducedMotion && prefersReducedMotion) && (
             <motion.div
-              className='absolute inset-0 rounded-md bg-blue-500/20'
+              className='absolute inset-0 rounded-md'
+              style={{ backgroundColor: hoverBgColor }}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}

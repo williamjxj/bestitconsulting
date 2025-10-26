@@ -63,6 +63,10 @@ export const ScrollTextReveal: React.FC<ScrollTextRevealProps> = ({
   const x = useTransform(scrollYProgress, [0, 1], [distance, 0])
   const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 0, 1, 1])
 
+  // Additional transforms for different directions
+  const yDown = useTransform(scrollYProgress, [0, 1], [-distance, 0])
+  const xRight = useTransform(scrollYProgress, [0, 1], [-distance, 0])
+
   // Get transform values based on direction
   const getScrollTransform = () => {
     switch (direction) {
@@ -70,14 +74,14 @@ export const ScrollTextReveal: React.FC<ScrollTextRevealProps> = ({
         return { y, opacity }
       case 'down':
         return {
-          y: useTransform(scrollYProgress, [0, 1], [-distance, 0]),
+          y: yDown,
           opacity,
         }
       case 'left':
         return { x, opacity }
       case 'right':
         return {
-          x: useTransform(scrollYProgress, [0, 1], [-distance, 0]),
+          x: xRight,
           opacity,
         }
       default:

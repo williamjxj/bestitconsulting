@@ -458,7 +458,7 @@ export function createAnimationFromPreset(
   return { ...baseConfig, ...overrides }
 }
 
-export default {
+const animationUtils = {
   getDeviceCapabilities,
   getOptimizedAnimationConfig,
   prefersReducedMotion,
@@ -481,3 +481,5 @@ export default {
   validateAnimationConfig,
   createAnimationFromPreset,
 }
+
+export default animationUtils

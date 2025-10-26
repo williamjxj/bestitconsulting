@@ -421,9 +421,11 @@ export function cleanupAccessibilityManager(): void {
   }
 }
 
-export default {
+const accessibilityUtils = {
   getAccessibilityManager,
   useAccessibility,
   createAccessibleAnimationComponent,
   cleanupAccessibilityManager,
 }
+
+export default accessibilityUtils

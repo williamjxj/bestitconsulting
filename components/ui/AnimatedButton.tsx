@@ -26,6 +26,10 @@ interface AnimatedButtonProps
   children: React.ReactNode
   className?: string
   respectReducedMotion?: boolean
+  asChild?: boolean
+  // Custom props that should not be passed to DOM
+  rippleColor?: string
+  duration?: number
 }
 
 export const AnimatedButton: React.FC<AnimatedButtonProps> = ({
@@ -37,6 +41,10 @@ export const AnimatedButton: React.FC<AnimatedButtonProps> = ({
   children,
   className = '',
   respectReducedMotion = true,
+  asChild = false,
+  // Custom props - destructure to prevent them from being passed to DOM
+  rippleColor = 'rgba(255, 255, 255, 0.3)',
+  duration = 0.6,
   onClick,
   ...props
 }) => {
@@ -69,9 +77,9 @@ export const AnimatedButton: React.FC<AnimatedButtonProps> = ({
       // Remove ripple after animation
       setTimeout(() => {
         setRipples(prev => prev.filter(ripple => ripple.id !== newRipple.id))
-      }, 600)
+      }, duration * 1000)
     },
-    [ripple, respectReducedMotion, prefersReducedMotion]
+    [ripple, respectReducedMotion, prefersReducedMotion, duration]
   )
 
   // Handle click
@@ -109,10 +117,28 @@ export const AnimatedButton: React.FC<AnimatedButtonProps> = ({
       scale: 4,
       opacity: 0,
       transition: {
-        duration: 0.6,
+        duration: duration,
         ease: 'easeOut',
       },
     },
+  }
+
+  // When asChild is true, we need to pass the children directly to avoid breaking Slot
+  if (asChild) {
+    return (
+      <Button
+        ref={buttonRef}
+        variant={variant}
+        size={size}
+        className={`relative ${className}`}
+        onClick={handleClick}
+        disabled={loading}
+        asChild={asChild}
+        {...props}
+      >
+        {children}
+      </Button>
+    )
   }
 
   return (
@@ -158,12 +184,13 @@ export const AnimatedButton: React.FC<AnimatedButtonProps> = ({
         {ripples.map(ripple => (
           <motion.div
             key={ripple.id}
-            className='absolute pointer-events-none rounded-full bg-white/30'
+            className='absolute pointer-events-none rounded-full'
             style={{
               left: ripple.x - 10,
               top: ripple.y - 10,
               width: 20,
               height: 20,
+              backgroundColor: rippleColor,
             }}
             variants={rippleVariants}
             initial='initial'

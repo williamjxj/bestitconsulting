@@ -409,7 +409,7 @@ export function cleanupPerformanceMonitoring(): void {
   }
 }
 
-export default {
+const performanceUtils = {
   getPerformanceMonitor,
   useAnimationPerformance,
   createOptimizedAnimation,
@@ -417,3 +417,5 @@ export default {
   createPerformanceAwareAnimation,
   cleanupPerformanceMonitoring,
 }
+
+export default performanceUtils

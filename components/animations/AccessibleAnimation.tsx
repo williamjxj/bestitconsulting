@@ -57,12 +57,15 @@ const AccessibleAnimation: React.FC<AccessibleAnimationProps> = ({
     'accessible-animation'
   )
 
+  // Generate unique IDs for accessibility
+  const descriptionId = React.useId()
+
   // Generate accessibility attributes
   const accessibilityProps = {
     'aria-label':
       ariaLabel || AccessibilityUtils.generateAriaLabel('content', animation),
     'aria-describedby': ariaDescription
-      ? `animation-description-${React.useId()}`
+      ? `animation-description-${descriptionId}`
       : undefined,
     role: 'img',
     'aria-live': 'polite',
@@ -329,6 +332,9 @@ export const AccessibleAnimatedCard: React.FC<AccessibleAnimatedCardProps> = ({
   const { prefersReducedMotion, announceToScreenReader } = useAccessibility()
   const [isFocused, setIsFocused] = React.useState(false)
 
+  // Generate unique IDs for accessibility
+  const cardDescriptionId = React.useId()
+
   const handleClick = () => {
     announceToScreenReader(`Card ${title || 'interactive element'} clicked`)
     onClick?.()
@@ -382,7 +388,7 @@ export const AccessibleAnimatedCard: React.FC<AccessibleAnimatedCardProps> = ({
       role={href ? 'link' : 'button'}
       aria-label={title}
       aria-describedby={
-        description ? `card-description-${React.useId()}` : undefined
+        description ? `card-description-${cardDescriptionId}` : undefined
       }
     >
       {title && (
@@ -392,7 +398,7 @@ export const AccessibleAnimatedCard: React.FC<AccessibleAnimatedCardProps> = ({
       )}
       {description && (
         <p
-          id={`card-description-${React.useId()}`}
+          id={`card-description-${cardDescriptionId}`}
           className='text-muted-foreground group-hover:text-foreground/80 transition-colors'
         >
           {description}

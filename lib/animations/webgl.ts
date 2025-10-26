@@ -310,7 +310,7 @@ export function getWebGLCapabilities(): {
   }
 }
 
-export default {
+const webglUtils = {
   createWebGLRenderer,
   createParticleSystem,
   createGradientBackground,
@@ -323,3 +323,5 @@ export default {
   isWebGLAvailable,
   getWebGLCapabilities,
 }
+
+export default webglUtils
