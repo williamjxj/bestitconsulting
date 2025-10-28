@@ -19,14 +19,17 @@ import {
   Shield,
   Award,
   Users,
+  Smartphone,
 } from 'lucide-react'
+import { QRCodeCompact } from '@/components/ui/qr-code'
+import { FAQDialogCompact } from '@/components/ui/faq-dialog'
 
 const footerLinks = {
   company: [
     { name: 'About Us', href: '/about' },
     { name: 'Our Team', href: '/about#team' },
     { name: 'Careers', href: '/careers' },
-    { name: 'News', href: '/news' },
+    { name: 'FAQ', href: '/faq' },
   ],
   services: [
     { name: 'Web Development', href: '/services#web-development' },
@@ -58,10 +61,42 @@ const socialLinks = [
   { name: 'GitHub', href: '#', icon: Github },
 ]
 
-const certifications = [
-  { name: 'ISO 9001:2015', icon: Shield },
-  { name: 'AWS Partner', icon: Award },
-  { name: 'Microsoft Gold', icon: Award },
+const faqs = [
+  {
+    id: 'timeline',
+    question: 'What is your typical project timeline?',
+    answer: 'Depends on the project requirements and details.',
+  },
+  {
+    id: 'support',
+    question: 'Do you offer ongoing support and maintenance?',
+    answer:
+      'Yes, we provide comprehensive support packages including 24/7 monitoring, regular updates, and technical assistance to ensure your solution runs smoothly.',
+  },
+  {
+    id: 'technology',
+    question: 'Can you work with our existing technology stack?',
+    answer:
+      'Absolutely! We specialize in integrating with existing systems and can work with virtually any technology stack to enhance your current infrastructure.',
+  },
+  {
+    id: 'industries',
+    question: 'What industries do you serve?',
+    answer:
+      'We serve clients across healthcare, finance, retail, manufacturing, transportation, education, and technology sectors, adapting our solutions to industry-specific requirements.',
+  },
+  {
+    id: 'pricing',
+    question: 'How do you structure your pricing?',
+    answer:
+      'We offer flexible pricing models including fixed-price projects, time and materials, and retainer agreements. Pricing is based on project scope, complexity, and timeline requirements.',
+  },
+  {
+    id: 'consultation',
+    question: 'Is the initial consultation really free?',
+    answer:
+      'Yes! We offer a completely free 30-minute consultation to discuss your project requirements, provide initial recommendations, and answer any questions you may have.',
+  },
 ]
 
 export function Footer() {
@@ -74,10 +109,10 @@ export function Footer() {
       {/* Main Footer Content */}
       <div className={brandClasses.container}>
         <div className='py-16 lg:py-20'>
-          <div className='grid grid-cols-1 lg:grid-cols-4 gap-8 lg:gap-12'>
+          <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 lg:gap-6'>
             {/* Company Info */}
             <motion.div
-              className='lg:col-span-1'
+              className='sm:col-span-2 md:col-span-1'
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
@@ -106,7 +141,7 @@ export function Footer() {
               <div className='space-y-3 mb-6'>
                 <div className='flex items-center space-x-3 text-gray-300'>
                   <Mail className='h-4 w-4 text-blue-400' />
-                  <span className='text-sm'>contact@bestitconsulting.ca</span>
+                  <span className='text-sm'>service@bestitconsulting.ca</span>
                 </div>
                 <div className='flex items-center space-x-3 text-gray-300'>
                   <Phone className='h-4 w-4 text-blue-400' />
@@ -114,7 +149,7 @@ export function Footer() {
                 </div>
                 <div className='flex items-center space-x-3 text-gray-300'>
                   <MapPin className='h-4 w-4 text-blue-400' />
-                  <span className='text-sm'>San Francisco, CA</span>
+                  <span className='text-sm'>Great Vancouver, Canada 🇨🇦</span>
                 </div>
               </div>
 
@@ -163,81 +198,63 @@ export function Footer() {
                         transition={{ duration: 0.3, delay: index * 0.05 }}
                         viewport={{ once: true }}
                       >
-                        <Link
-                          href={link.href}
-                          className='text-gray-300 hover:text-white transition-colors duration-200 flex items-center group'
-                        >
-                          <span>{link.name}</span>
-                          <ArrowRight className='ml-2 h-3 w-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200' />
-                        </Link>
+                        {link.name === 'FAQ' ? (
+                          <FAQDialogCompact
+                            faqs={faqs}
+                            triggerText={link.name}
+                            className='text-gray-300 hover:text-white transition-colors duration-200 p-0 h-auto font-normal justify-start'
+                          />
+                        ) : (
+                          <Link
+                            href={link.href}
+                            className='text-gray-300 hover:text-white transition-colors duration-200 flex items-center group'
+                          >
+                            <span>{link.name}</span>
+                            <ArrowRight className='ml-2 h-3 w-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200' />
+                          </Link>
+                        )}
                       </motion.li>
                     ))}
                   </ul>
                 </motion.div>
               )
             )}
+
+            {/* Mobile Access Section */}
+            <motion.div
+              className='lg:col-span-1'
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.5 }}
+              viewport={{ once: true }}
+            >
+              <h3 className='font-semibold text-white mb-4 flex items-center gap-2'>
+                <Smartphone className='h-4 w-4 text-blue-400' />
+                Mobile Access
+              </h3>
+              <div className='flex flex-col items-center space-y-3'>
+                <QRCodeCompact
+                  url='https://bestitconsulting.vercel.app'
+                  size={80}
+                />
+                <p className='text-gray-300 text-xs text-center'>
+                  Scan to visit our website
+                </p>
+              </div>
+            </motion.div>
           </div>
         </div>
 
-        {/* Certifications Section */}
-        <motion.div
-          className='py-8 border-t border-gray-800'
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-        >
-          <div className='flex flex-col lg:flex-row items-center justify-between'>
-            <div className='mb-6 lg:mb-0'>
-              <h4 className='font-semibold text-white mb-4'>
-                Certified & Trusted
-              </h4>
-              <div className='flex flex-wrap gap-4'>
-                {certifications.map((cert, index) => (
-                  <motion.div
-                    key={cert.name}
-                    className='flex items-center space-x-2 bg-gray-800 px-4 py-2 rounded-lg'
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.3, delay: index * 0.1 }}
-                    viewport={{ once: true }}
-                  >
-                    <cert.icon className='h-4 w-4 text-blue-400' />
-                    <span className='text-sm text-gray-300'>{cert.name}</span>
-                  </motion.div>
-                ))}
-              </div>
-            </div>
-
-            <div className='text-center lg:text-right'>
-              <div className='flex items-center justify-center lg:justify-end space-x-6 mb-4'>
-                <div className='text-center'>
-                  <div className='text-2xl font-bold text-blue-400'>500+</div>
-                  <div className='text-xs text-gray-400'>Happy Clients</div>
-                </div>
-                <div className='text-center'>
-                  <div className='text-2xl font-bold text-green-400'>98%</div>
-                  <div className='text-xs text-gray-400'>Success Rate</div>
-                </div>
-                <div className='text-center'>
-                  <div className='text-2xl font-bold text-purple-400'>10+</div>
-                  <div className='text-xs text-gray-400'>Years Experience</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </motion.div>
-
         {/* Bottom Bar */}
         <motion.div
-          className='py-6 border-t border-gray-800 flex flex-col lg:flex-row items-center justify-between'
+          className='pt-4 pb-6 border-t border-gray-800 flex flex-col lg:flex-row items-center justify-between'
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
         >
           <div className='text-gray-400 text-sm mb-4 lg:mb-0'>
-            © 2024 Best IT Consulting. All rights reserved.
+            © 2025 Best IT Consulting. All rights reserved.
           </div>
           <div className='flex items-center space-x-6 text-sm text-gray-400'>
             <Link

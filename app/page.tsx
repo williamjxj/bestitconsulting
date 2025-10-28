@@ -1,3 +1,5 @@
+'use client'
+
 import { Button } from '@/components/ui/button'
 import {
   ArrowRight,
@@ -18,8 +20,26 @@ import { CredibilitySection } from '@/components/sections/CredibilitySection'
 import TechnologyShowcase from '@/components/sections/TechnologyShowcase'
 import { DemoVideo } from '@/components/DemoVideo'
 import { TestimonialsSection } from '@/components/sections/TestimonialsSection'
+import {
+  R2Image,
+  R2Video,
+  R2HeroImage,
+  R2CardImage,
+} from '@/components/R2Image'
+import { useR2Assets, R2_ASSET_MAPPINGS } from '@/hooks/useR2Assets'
 
 export default function HomePage() {
+  const { getImages, getVideos, getAssetByFilename } = useR2Assets()
+
+  // Get R2 assets for home page
+  const images = getImages()
+  const videos = getVideos()
+  const heroImage = getAssetByFilename(R2_ASSET_MAPPINGS.home.hero)
+  const demoVideo = getAssetByFilename(R2_ASSET_MAPPINGS.home.demo)
+  const demoPoster = getAssetByFilename(R2_ASSET_MAPPINGS.home.demoPoster)
+  const techImage = getAssetByFilename(R2_ASSET_MAPPINGS.home.technology)
+  const teamImage = getAssetByFilename(R2_ASSET_MAPPINGS.home.team)
+
   const features = [
     {
       icon: <Code2 className='h-8 w-8' />,
@@ -140,8 +160,25 @@ export default function HomePage() {
                   </ScrollTrigger>
 
                   <ScrollTrigger animation='slide' direction='left' delay={0.4}>
-                    <div className='relative'>
-                      <DemoVideo />
+                    <div className='relative group'>
+                      {demoVideo ? (
+                        <R2Video
+                          src={demoVideo.url}
+                          poster={demoPoster?.url}
+                          className='w-full h-full rounded-xl overflow-hidden shadow-2xl'
+                          controls={true}
+                          autoPlay={false}
+                          loop={true}
+                          muted={true}
+                          playsInline={true}
+                          animation='scale'
+                          delay={0.6}
+                        />
+                      ) : (
+                        <DemoVideo />
+                      )}
+                      {/* Overlay for better visual appeal */}
+                      <div className='absolute inset-0 bg-gradient-to-t from-black/20 to-transparent rounded-xl pointer-events-none'></div>
                     </div>
                   </ScrollTrigger>
                 </div>
@@ -284,6 +321,92 @@ export default function HomePage() {
 
         {/* Technology Showcase */}
         <TechnologyShowcase />
+
+        {/* Enhanced Technology Visual Section */}
+        <ScrollTrigger animation='fade' direction='up' duration={0.8}>
+          <section className='py-20 bg-gradient-to-br from-slate-50 to-blue-50'>
+            <div className='container mx-auto px-4'>
+              <div className='max-w-6xl mx-auto'>
+                <ScrollTrigger animation='slide' direction='up' delay={0.2}>
+                  <div className='text-center mb-16'>
+                    <span className='inline-block px-4 py-1.5 text-sm font-medium bg-blue-100 text-blue-800 rounded-full mb-4'>
+                      Technology Excellence
+                    </span>
+                    <h2 className='text-3xl md:text-4xl font-bold mb-4'>
+                      Cutting-Edge Technology Stack
+                    </h2>
+                    <p className='text-lg text-muted-foreground max-w-2xl mx-auto'>
+                      We leverage the latest technologies to build scalable,
+                      secure, and high-performance solutions.
+                    </p>
+                  </div>
+                </ScrollTrigger>
+
+                <div className='grid lg:grid-cols-2 gap-12 items-center'>
+                  <ScrollTrigger
+                    animation='slide'
+                    direction='right'
+                    delay={0.4}
+                  >
+                    <div className='space-y-6'>
+                      <div className='grid grid-cols-2 gap-4'>
+                        {[
+                          { name: 'React/Next.js', icon: '⚛️' },
+                          { name: 'TypeScript', icon: '🔷' },
+                          { name: 'Node.js', icon: '🟢' },
+                          { name: 'Cloud AWS', icon: '☁️' },
+                        ].map((tech, index) => (
+                          <div
+                            key={tech.name}
+                            className='bg-white p-4 rounded-xl shadow-sm border border-gray-200 hover:shadow-md transition-shadow'
+                          >
+                            <div className='text-2xl mb-2'>{tech.icon}</div>
+                            <h3 className='font-semibold text-gray-900'>
+                              {tech.name}
+                            </h3>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </ScrollTrigger>
+
+                  <ScrollTrigger animation='slide' direction='left' delay={0.6}>
+                    <div className='relative'>
+                      {techImage ? (
+                        <R2CardImage
+                          src={techImage.url}
+                          alt='Technology showcase'
+                          className='w-full h-80 rounded-xl shadow-xl'
+                          animation='scale'
+                          delay={0.8}
+                          hover={true}
+                          overlay={true}
+                          overlayContent={
+                            <div className='text-white text-center'>
+                              <div className='w-12 h-12 mx-auto mb-2 bg-white/20 rounded-full flex items-center justify-center'>
+                                <Code2 className='w-6 h-6' />
+                              </div>
+                              <p className='text-sm font-medium'>
+                                View Details
+                              </p>
+                            </div>
+                          }
+                        />
+                      ) : (
+                        <div className='w-full h-80 bg-gradient-to-br from-blue-100 to-cyan-100 rounded-xl flex items-center justify-center'>
+                          <div className='text-center'>
+                            <Code2 className='w-16 h-16 text-blue-400 mx-auto mb-4' />
+                            <p className='text-gray-600'>Technology Showcase</p>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </ScrollTrigger>
+                </div>
+              </div>
+            </div>
+          </section>
+        </ScrollTrigger>
 
         {/* CTA Section */}
         <section className='py-12 bg-gradient-to-r from-blue-600 to-indigo-700 text-white'>

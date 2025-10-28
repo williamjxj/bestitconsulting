@@ -21,8 +21,23 @@ import {
   Database,
   Cloud,
 } from 'lucide-react'
+import {
+  R2Image,
+  R2CardImage,
+  R2GalleryImage,
+  R2HeroImage,
+} from '@/components/R2Image'
+import { useR2Assets, R2_ASSET_MAPPINGS } from '@/hooks/useR2Assets'
 
 export default function PortfolioPage() {
+  const { getImages, getAssetByFilename } = useR2Assets()
+
+  // Get R2 assets for portfolio page
+  const heroImage = getAssetByFilename(R2_ASSET_MAPPINGS.portfolio.hero)
+  const gallery1Image = getAssetByFilename(R2_ASSET_MAPPINGS.portfolio.gallery1)
+  const gallery2Image = getAssetByFilename(R2_ASSET_MAPPINGS.portfolio.gallery2)
+  const gallery3Image = getAssetByFilename(R2_ASSET_MAPPINGS.portfolio.gallery3)
+
   return (
     <Layout>
       <div className='min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50'>
@@ -185,6 +200,74 @@ export default function PortfolioPage() {
           title='Featured Projects'
           description="Discover how we've helped businesses across various industries achieve their digital transformation goals"
         />
+
+        {/* Portfolio Gallery Section */}
+        <ScrollTrigger animation='fade' direction='up' duration={0.8}>
+          <section className='py-20 px-4 bg-gradient-to-br from-slate-50 to-blue-50'>
+            <div className='max-w-6xl mx-auto'>
+              <div className='text-center mb-16'>
+                <h2 className='text-4xl font-bold text-gray-900 mb-6'>
+                  Portfolio Gallery
+                </h2>
+                <p className='text-xl text-gray-600 max-w-3xl mx-auto'>
+                  A visual showcase of our work across different industries and
+                  technologies
+                </p>
+              </div>
+
+              <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
+                {[
+                  {
+                    image: gallery1Image,
+                    title: 'E-Commerce Platform',
+                    description: 'Modern online shopping experience',
+                  },
+                  {
+                    image: gallery2Image,
+                    title: 'Healthcare Management',
+                    description: 'Patient care optimization system',
+                  },
+                  {
+                    image: gallery3Image,
+                    title: 'Financial Analytics',
+                    description: 'Real-time data visualization dashboard',
+                  },
+                ].map((item, index) => (
+                  <ScaleIn key={index} delay={0.2 + index * 0.1} duration={0.6}>
+                    <div className='group'>
+                      {item.image ? (
+                        <R2GalleryImage
+                          src={item.image.url}
+                          alt={item.title}
+                          className='w-full h-64 rounded-xl shadow-lg'
+                          animation='scale'
+                          delay={0.4 + index * 0.1}
+                        />
+                      ) : (
+                        <div className='w-full h-64 bg-gradient-to-br from-blue-100 to-cyan-100 rounded-xl flex items-center justify-center'>
+                          <div className='text-center'>
+                            <Monitor className='w-12 h-12 text-blue-400 mx-auto mb-2' />
+                            <p className='text-gray-600 text-sm'>
+                              {item.title}
+                            </p>
+                          </div>
+                        </div>
+                      )}
+                      <div className='mt-4 text-center'>
+                        <h3 className='text-lg font-semibold text-gray-900 mb-1'>
+                          {item.title}
+                        </h3>
+                        <p className='text-gray-600 text-sm'>
+                          {item.description}
+                        </p>
+                      </div>
+                    </div>
+                  </ScaleIn>
+                ))}
+              </div>
+            </div>
+          </section>
+        </ScrollTrigger>
 
         {/* Technologies Section */}
         <section className='py-20 px-4 bg-gradient-to-br from-blue-50 to-cyan-50'>

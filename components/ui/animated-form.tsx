@@ -12,10 +12,11 @@ import { CheckCircle, AlertCircle, Send, Loader2 } from 'lucide-react'
 interface FormField {
   name: string
   label: string
-  type: 'text' | 'email' | 'tel' | 'textarea' | 'select'
+  type: 'text' | 'email' | 'tel' | 'textarea' | 'select' | 'multiselect'
   placeholder: string
   required?: boolean
   options?: Array<{ value: string; label: string }>
+  width?: 'full' | 'half'
 }
 
 interface AnimatedFormProps {
@@ -31,7 +32,9 @@ export function AnimatedForm({
   submitText = 'Send Message',
   className,
 }: AnimatedFormProps) {
-  const [formData, setFormData] = useState<Record<string, string>>({})
+  const [formData, setFormData] = useState<Record<string, string | string[]>>(
+    {}
+  )
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
@@ -41,8 +44,21 @@ export function AnimatedForm({
   const deviceType = getDeviceType()
   const shouldAnimate = !reducedMotion && deviceType !== 'mobile'
 
-  const handleInputChange = (name: string, value: string) => {
+  const handleInputChange = (name: string, value: string | string[]) => {
     setFormData(prev => ({ ...prev, [name]: value }))
+    if (errors[name]) {
+      setErrors(prev => ({ ...prev, [name]: '' }))
+    }
+  }
+
+  const handleMultiselectChange = (name: string, value: string) => {
+    setFormData(prev => {
+      const currentValues = (prev[name] as string[]) || []
+      const newValues = currentValues.includes(value)
+        ? currentValues.filter(v => v !== value)
+        : [...currentValues, value]
+      return { ...prev, [name]: newValues }
+    })
     if (errors[name]) {
       setErrors(prev => ({ ...prev, [name]: '' }))
     }
@@ -52,13 +68,23 @@ export function AnimatedForm({
     const newErrors: Record<string, string> = {}
 
     fields.forEach(field => {
-      if (field.required && !formData[field.name]) {
-        newErrors[field.name] = `${field.label} is required`
+      const value = formData[field.name]
+      if (field.required) {
+        if (field.type === 'multiselect') {
+          if (!value || (Array.isArray(value) && value.length === 0)) {
+            newErrors[field.name] = `${field.label} is required`
+          }
+        } else {
+          if (!value || (typeof value === 'string' && value.trim() === '')) {
+            newErrors[field.name] = `${field.label} is required`
+          }
+        }
       }
       if (
         field.type === 'email' &&
-        formData[field.name] &&
-        !/\S+@\S+\.\S+/.test(formData[field.name])
+        value &&
+        typeof value === 'string' &&
+        !/\S+@\S+\.\S+/.test(value)
       ) {
         newErrors[field.name] = 'Please enter a valid email address'
       }
@@ -75,7 +101,17 @@ export function AnimatedForm({
 
     setIsSubmitting(true)
     try {
-      await onSubmit(formData)
+      // Convert multiselect arrays to comma-separated strings for API
+      const submitData: Record<string, string> = {}
+      Object.entries(formData).forEach(([key, value]) => {
+        if (Array.isArray(value)) {
+          submitData[key] = value.join(', ')
+        } else {
+          submitData[key] = value || ''
+        }
+      })
+
+      await onSubmit(submitData)
       setIsSubmitted(true)
     } catch (error) {
       console.error('Form submission error:', error)
@@ -120,113 +156,289 @@ export function AnimatedForm({
         transition={{ duration: 0.6 }}
         viewport={{ once: true }}
       >
-        {fields.map((field, index) => (
-          <motion.div
-            key={field.name}
-            className='space-y-2'
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.4, delay: index * 0.1 }}
-          >
-            <label className='block text-sm font-medium text-gray-700'>
-              {field.label}
-              {field.required && <span className='text-red-500 ml-1'>*</span>}
-            </label>
+        <div className='space-y-6'>
+          {/* Name field - full width */}
+          {fields
+            .filter(f => f.name === 'name')
+            .map((field, index) => (
+              <motion.div
+                key={field.name}
+                className='space-y-2 w-full'
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.4, delay: index * 0.1 }}
+              >
+                <label className='block text-sm font-medium text-gray-700'>
+                  {field.label}
+                  {field.required && (
+                    <span className='text-red-500 ml-1'>*</span>
+                  )}
+                </label>
+                <div className='relative'>
+                  <motion.input
+                    type={field.type}
+                    value={formData[field.name] || ''}
+                    onChange={e =>
+                      handleInputChange(field.name, e.target.value)
+                    }
+                    onFocus={() => setFocusedField(field.name)}
+                    onBlur={() => setFocusedField(null)}
+                    placeholder={field.placeholder}
+                    className={cn(
+                      'w-full px-4 py-3 border rounded-lg transition-all duration-200',
+                      'focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500',
+                      errors[field.name]
+                        ? 'border-red-300 focus:ring-red-500/50 focus:border-red-500'
+                        : 'border-gray-300'
+                    )}
+                  />
+                </div>
+                <AnimatePresence>
+                  {errors[field.name] && (
+                    <motion.div
+                      className='flex items-center space-x-2 text-red-600 text-sm'
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -10 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      <AlertCircle className='h-4 w-4' />
+                      <span>{errors[field.name]}</span>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </motion.div>
+            ))}
 
-            <div className='relative'>
-              {field.type === 'textarea' ? (
-                <motion.textarea
-                  value={formData[field.name] || ''}
-                  onChange={e => handleInputChange(field.name, e.target.value)}
-                  onFocus={() => setFocusedField(field.name)}
-                  onBlur={() => setFocusedField(null)}
-                  placeholder={field.placeholder}
-                  rows={4}
-                  className={cn(
-                    'w-full px-4 py-3 border rounded-lg transition-all duration-200 resize-none',
-                    'focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent',
-                    errors[field.name]
-                      ? 'border-red-300 focus:ring-red-500'
-                      : 'border-gray-300',
-                    focusedField === field.name && shouldAnimate
-                      ? 'transform scale-105 shadow-lg'
-                      : ''
-                  )}
-                />
-              ) : field.type === 'select' ? (
-                <motion.select
-                  value={formData[field.name] || ''}
-                  onChange={e => handleInputChange(field.name, e.target.value)}
-                  onFocus={() => setFocusedField(field.name)}
-                  onBlur={() => setFocusedField(null)}
-                  className={cn(
-                    'w-full px-4 py-3 border rounded-lg transition-all duration-200',
-                    'focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent',
-                    errors[field.name]
-                      ? 'border-red-300 focus:ring-red-500'
-                      : 'border-gray-300',
-                    focusedField === field.name && shouldAnimate
-                      ? 'transform scale-105 shadow-lg'
-                      : ''
-                  )}
-                >
-                  <option value=''>{field.placeholder}</option>
-                  {field.options?.map(option => (
-                    <option key={option.value} value={option.value}>
-                      {option.label}
-                    </option>
-                  ))}
-                </motion.select>
-              ) : (
-                <motion.input
-                  type={field.type}
-                  value={formData[field.name] || ''}
-                  onChange={e => handleInputChange(field.name, e.target.value)}
-                  onFocus={() => setFocusedField(field.name)}
-                  onBlur={() => setFocusedField(null)}
-                  placeholder={field.placeholder}
-                  className={cn(
-                    'w-full px-4 py-3 border rounded-lg transition-all duration-200',
-                    'focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent',
-                    errors[field.name]
-                      ? 'border-red-300 focus:ring-red-500'
-                      : 'border-gray-300',
-                    focusedField === field.name && shouldAnimate
-                      ? 'transform scale-105 shadow-lg'
-                      : ''
-                  )}
-                />
-              )}
-
-              {/* Focus indicator */}
-              {focusedField === field.name && shouldAnimate && (
+          {/* Email and Phone - same row */}
+          <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
+            {fields
+              .filter(f => f.name === 'email' || f.name === 'phone')
+              .map((field, index) => (
                 <motion.div
-                  className='absolute inset-0 border-2 border-blue-500 rounded-lg pointer-events-none'
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.8 }}
-                  transition={{ duration: 0.2 }}
-                />
-              )}
-            </div>
-
-            {/* Error message */}
-            <AnimatePresence>
-              {errors[field.name] && (
-                <motion.div
-                  className='flex items-center space-x-2 text-red-600 text-sm'
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  transition={{ duration: 0.2 }}
+                  key={field.name}
+                  className='space-y-2'
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.4, delay: (index + 1) * 0.1 }}
                 >
-                  <AlertCircle className='h-4 w-4' />
-                  <span>{errors[field.name]}</span>
+                  <label className='block text-sm font-medium text-gray-700'>
+                    {field.label}
+                    {field.required && (
+                      <span className='text-red-500 ml-1'>*</span>
+                    )}
+                  </label>
+                  <div className='relative'>
+                    <motion.input
+                      type={field.type}
+                      value={formData[field.name] || ''}
+                      onChange={e =>
+                        handleInputChange(field.name, e.target.value)
+                      }
+                      onFocus={() => setFocusedField(field.name)}
+                      onBlur={() => setFocusedField(null)}
+                      placeholder={field.placeholder}
+                      className={cn(
+                        'w-full px-4 py-3 border rounded-lg transition-all duration-200',
+                        'focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500',
+                        errors[field.name]
+                          ? 'border-red-300 focus:ring-red-500/50 focus:border-red-500'
+                          : 'border-gray-300'
+                      )}
+                    />
+                  </div>
+                  <AnimatePresence>
+                    {errors[field.name] && (
+                      <motion.div
+                        className='flex items-center space-x-2 text-red-600 text-sm'
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -10 }}
+                        transition={{ duration: 0.2 }}
+                      >
+                        <AlertCircle className='h-4 w-4' />
+                        <span>{errors[field.name]}</span>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </motion.div>
-              )}
-            </AnimatePresence>
-          </motion.div>
-        ))}
+              ))}
+          </div>
+
+          {/* Company field - full width */}
+          {fields
+            .filter(f => f.name === 'company')
+            .map((field, index) => (
+              <motion.div
+                key={field.name}
+                className='space-y-2 w-full'
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.4, delay: (index + 3) * 0.1 }}
+              >
+                <label className='block text-sm font-medium text-gray-700'>
+                  {field.label}
+                  {field.required && (
+                    <span className='text-red-500 ml-1'>*</span>
+                  )}
+                </label>
+                <div className='relative'>
+                  <motion.input
+                    type={field.type}
+                    value={formData[field.name] || ''}
+                    onChange={e =>
+                      handleInputChange(field.name, e.target.value)
+                    }
+                    onFocus={() => setFocusedField(field.name)}
+                    onBlur={() => setFocusedField(null)}
+                    placeholder={field.placeholder}
+                    className={cn(
+                      'w-full px-4 py-3 border rounded-lg transition-all duration-200',
+                      'focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500',
+                      errors[field.name]
+                        ? 'border-red-300 focus:ring-red-500/50 focus:border-red-500'
+                        : 'border-gray-300'
+                    )}
+                  />
+                </div>
+                <AnimatePresence>
+                  {errors[field.name] && (
+                    <motion.div
+                      className='flex items-center space-x-2 text-red-600 text-sm'
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -10 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      <AlertCircle className='h-4 w-4' />
+                      <span>{errors[field.name]}</span>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </motion.div>
+            ))}
+
+          {/* Service and Message fields - full width */}
+          {fields
+            .filter(f => f.name === 'service' || f.name === 'message')
+            .map((field, index) => (
+              <motion.div
+                key={field.name}
+                className='space-y-2 w-full'
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.4, delay: (index + 4) * 0.1 }}
+              >
+                <label className='block text-sm font-medium text-gray-700'>
+                  {field.label}
+                  {field.required && (
+                    <span className='text-red-500 ml-1'>*</span>
+                  )}
+                </label>
+
+                <div className='relative'>
+                  {field.type === 'textarea' ? (
+                    <motion.textarea
+                      value={formData[field.name] || ''}
+                      onChange={e =>
+                        handleInputChange(field.name, e.target.value)
+                      }
+                      onFocus={() => setFocusedField(field.name)}
+                      onBlur={() => setFocusedField(null)}
+                      placeholder={field.placeholder}
+                      rows={4}
+                      className={cn(
+                        'w-full px-4 py-3 border rounded-lg transition-all duration-200 resize-none',
+                        'focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500',
+                        errors[field.name]
+                          ? 'border-red-300 focus:ring-red-500/50 focus:border-red-500'
+                          : 'border-gray-300'
+                      )}
+                    />
+                  ) : field.type === 'multiselect' ? (
+                    <div className='space-y-2'>
+                      <div className='grid grid-cols-1 sm:grid-cols-2 gap-2'>
+                        {field.options?.map(option => {
+                          const isSelected =
+                            (formData[field.name] as string[])?.includes(
+                              option.value
+                            ) || false
+                          return (
+                            <motion.label
+                              key={option.value}
+                              className={cn(
+                                'flex items-center space-x-3 p-3 border rounded-lg cursor-pointer transition-all duration-200',
+                                'hover:bg-blue-50 hover:border-blue-300',
+                                isSelected
+                                  ? 'bg-blue-100 border-blue-500 text-blue-900'
+                                  : 'bg-white border-gray-300 text-gray-700'
+                              )}
+                            >
+                              <input
+                                type='checkbox'
+                                checked={isSelected}
+                                onChange={() =>
+                                  handleMultiselectChange(
+                                    field.name,
+                                    option.value
+                                  )
+                                }
+                                onFocus={() => setFocusedField(field.name)}
+                                onBlur={() => setFocusedField(null)}
+                                className='w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2'
+                              />
+                              <span className='text-sm font-medium'>
+                                {option.label}
+                              </span>
+                            </motion.label>
+                          )
+                        })}
+                      </div>
+                      {(formData[field.name] as string[])?.length > 0 && (
+                        <div className='text-sm text-gray-600'>
+                          Selected:{' '}
+                          {(formData[field.name] as string[]).join(', ')}
+                        </div>
+                      )}
+                    </div>
+                  ) : (
+                    <motion.input
+                      type={field.type}
+                      value={formData[field.name] || ''}
+                      onChange={e =>
+                        handleInputChange(field.name, e.target.value)
+                      }
+                      onFocus={() => setFocusedField(field.name)}
+                      onBlur={() => setFocusedField(null)}
+                      placeholder={field.placeholder}
+                      className={cn(
+                        'w-full px-4 py-3 border rounded-lg transition-all duration-200',
+                        'focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500',
+                        errors[field.name]
+                          ? 'border-red-300 focus:ring-red-500/50 focus:border-red-500'
+                          : 'border-gray-300'
+                      )}
+                    />
+                  )}
+                </div>
+
+                <AnimatePresence>
+                  {errors[field.name] && (
+                    <motion.div
+                      className='flex items-center space-x-2 text-red-600 text-sm'
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -10 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      <AlertCircle className='h-4 w-4' />
+                      <span>{errors[field.name]}</span>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </motion.div>
+            ))}
+        </div>
 
         <motion.div
           className='pt-4'

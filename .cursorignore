@@ -12,10 +12,8 @@ package-lock.json
 
 # Environment variables
 .env
-.env.local
-.env.production
-.env.development
-.env.test
+# .env.local
+
 
 # Editor/IDE folders
 .vscode/
@@ -45,9 +43,7 @@ supabase/migrations/
 *.log
 
 # Optional docs and test outputs
-docs/
-documentation/
-*.md
+# docs/*.md
 
 # Shadcn generated component cache (update paths as needed)
 components.json

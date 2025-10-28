@@ -18,9 +18,17 @@ import {
   Briefcase,
   Lightbulb,
   Zap,
+  Building,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import DisplayCards from '@/components/ui/display-cards'
+import {
+  R2Image,
+  R2ProfileImage,
+  R2CardImage,
+  R2HeroImage,
+} from '@/components/R2Image'
+import { useR2Assets, R2_ASSET_MAPPINGS } from '@/hooks/useR2Assets'
 
 const teamMembers = [
   {
@@ -91,6 +99,14 @@ export default function AboutPage() {
   const reducedMotion = useReducedMotion()
   const deviceType = getDeviceType()
   const shouldAnimate = !reducedMotion && deviceType !== 'mobile'
+
+  const { getImages, getAssetByFilename } = useR2Assets()
+
+  // Get R2 assets for about page
+  const heroImage = getAssetByFilename(R2_ASSET_MAPPINGS.about.hero)
+  const teamImage = getAssetByFilename(R2_ASSET_MAPPINGS.about.team)
+  const officeImage = getAssetByFilename(R2_ASSET_MAPPINGS.about.office)
+  const cultureImage = getAssetByFilename(R2_ASSET_MAPPINGS.about.culture)
 
   return (
     <Layout>
@@ -403,6 +419,176 @@ export default function AboutPage() {
                 </div>
               </motion.div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Company Culture & Office Section */}
+      <section className='py-16 lg:py-24 bg-white'>
+        <div className={brandClasses.container}>
+          <motion.div
+            className='text-center mb-16'
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+          >
+            <h2 className='text-3xl lg:text-4xl font-bold text-gray-900 mb-6'>
+              Our Culture & Environment
+            </h2>
+            <p className='text-xl text-gray-600 max-w-3xl mx-auto'>
+              Discover what makes Best IT Consulting a great place to work and
+              partner with.
+            </p>
+          </motion.div>
+
+          <div className='grid lg:grid-cols-2 gap-12 lg:gap-16'>
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+            >
+              <h3 className='text-2xl font-bold text-gray-900 mb-6'>
+                Our Office Environment
+              </h3>
+              <p className='text-lg text-gray-600 leading-relaxed mb-6'>
+                Our modern office space in Surrey Guildford provides the perfect
+                environment for innovation and collaboration. We've designed our
+                workspace to foster creativity, productivity, and teamwork.
+              </p>
+              <div className='space-y-4'>
+                {[
+                  'Open-concept collaborative spaces',
+                  'State-of-the-art meeting rooms',
+                  'Relaxation and break areas',
+                  'Modern technology infrastructure',
+                ].map((feature, index) => (
+                  <motion.div
+                    key={feature}
+                    className='flex items-center space-x-3'
+                    initial={{ opacity: 0, x: -10 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.3, delay: index * 0.1 }}
+                    viewport={{ once: true }}
+                  >
+                    <CheckCircle className='h-5 w-5 text-green-500 flex-shrink-0' />
+                    <span className='text-gray-600'>{feature}</span>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+            >
+              {officeImage ? (
+                <R2CardImage
+                  src={officeImage.url}
+                  alt='Our office environment'
+                  className='w-full h-80 rounded-xl shadow-xl'
+                  animation='scale'
+                  delay={0.2}
+                  hover={true}
+                  overlay={true}
+                  overlayContent={
+                    <div className='text-white text-center'>
+                      <div className='w-12 h-12 mx-auto mb-2 bg-white/20 rounded-full flex items-center justify-center'>
+                        <Building className='w-6 h-6' />
+                      </div>
+                      <p className='text-sm font-medium'>View Office</p>
+                    </div>
+                  }
+                />
+              ) : (
+                <div className='w-full h-80 bg-gradient-to-br from-blue-100 to-cyan-100 rounded-xl flex items-center justify-center'>
+                  <div className='text-center'>
+                    <Building className='w-16 h-16 text-blue-400 mx-auto mb-4' />
+                    <p className='text-gray-600'>Our Office</p>
+                  </div>
+                </div>
+              )}
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Company Culture Visual Section */}
+      <section className='py-16 lg:py-24 bg-gray-50'>
+        <div className={brandClasses.container}>
+          <div className='grid lg:grid-cols-2 gap-12 lg:gap-16'>
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+            >
+              {cultureImage ? (
+                <R2CardImage
+                  src={cultureImage.url}
+                  alt='Company culture'
+                  className='w-full h-80 rounded-xl shadow-xl'
+                  animation='scale'
+                  delay={0.2}
+                  hover={true}
+                  overlay={true}
+                  overlayContent={
+                    <div className='text-white text-center'>
+                      <div className='w-12 h-12 mx-auto mb-2 bg-white/20 rounded-full flex items-center justify-center'>
+                        <Users className='w-6 h-6' />
+                      </div>
+                      <p className='text-sm font-medium'>Our Culture</p>
+                    </div>
+                  }
+                />
+              ) : (
+                <div className='w-full h-80 bg-gradient-to-br from-green-100 to-emerald-100 rounded-xl flex items-center justify-center'>
+                  <div className='text-center'>
+                    <Users className='w-16 h-16 text-green-400 mx-auto mb-4' />
+                    <p className='text-gray-600'>Company Culture</p>
+                  </div>
+                </div>
+              )}
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+            >
+              <h3 className='text-2xl font-bold text-gray-900 mb-6'>
+                Our Company Culture
+              </h3>
+              <p className='text-lg text-gray-600 leading-relaxed mb-6'>
+                We believe that great technology comes from great people. Our
+                culture is built on collaboration, continuous learning, and a
+                shared passion for solving complex problems.
+              </p>
+              <div className='space-y-4'>
+                {[
+                  'Collaborative and inclusive environment',
+                  'Continuous learning and development',
+                  'Work-life balance and flexibility',
+                  'Innovation and creative freedom',
+                ].map((value, index) => (
+                  <motion.div
+                    key={value}
+                    className='flex items-center space-x-3'
+                    initial={{ opacity: 0, x: 10 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.3, delay: index * 0.1 }}
+                    viewport={{ once: true }}
+                  >
+                    <CheckCircle className='h-5 w-5 text-green-500 flex-shrink-0' />
+                    <span className='text-gray-600'>{value}</span>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
           </div>
         </div>
       </section>

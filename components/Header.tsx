@@ -63,13 +63,13 @@ export default function Header() {
           </div>
 
           {/* Desktop Navigation */}
-          <div className='hidden md:block'>
-            <div className='ml-10 flex items-center space-x-1'>
+          <div className='hidden lg:block'>
+            <div className='ml-10 flex items-center space-x-0.5'>
               {navItems.map(({ key, href }) => (
                 <Link
                   key={key}
                   href={href}
-                  className={`relative px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
+                  className={`relative px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300 whitespace-nowrap ${
                     isActive(href)
                       ? 'text-blue-600 bg-blue-50'
                       : 'text-gray-700 hover:text-blue-600 hover:bg-gray-50'
@@ -85,7 +85,7 @@ export default function Header() {
           </div>
 
           {/* Language Selector & CTA */}
-          <div className='hidden md:flex items-center space-x-3'>
+          <div className='hidden lg:flex items-center space-x-3'>
             <LanguageSelector showNativeName={true} />
             <Link
               href='/contact'
@@ -101,7 +101,7 @@ export default function Header() {
           </div>
 
           {/* Mobile menu button */}
-          <div className='md:hidden flex items-center space-x-1 sm:space-x-2'>
+          <div className='lg:hidden flex items-center space-x-1 sm:space-x-2'>
             <LanguageSelector showNativeName={true} />
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -119,7 +119,7 @@ export default function Header() {
 
       {/* Mobile Navigation */}
       {mobileMenuOpen && (
-        <div className='md:hidden'>
+        <div className='lg:hidden'>
           <div className='px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-t border-gray-200 shadow-lg'>
             {navItems.map(({ key, href }) => (
               <Link

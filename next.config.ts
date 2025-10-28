@@ -8,6 +8,11 @@ const nextConfig: NextConfig = {
         hostname: 'www.google.com',
         pathname: '/s2/favicons**',
       },
+      {
+        protocol: 'https',
+        hostname: 'pub-3b3f23afc5404f20b2081d34fa4c87b8.r2.dev',
+        pathname: '/**',
+      },
     ],
   },
   experimental: {

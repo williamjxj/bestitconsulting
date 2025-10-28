@@ -8,7 +8,6 @@ import { AnimatedForm } from '@/components/ui/animated-form'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
-import { AnimatedFAQ } from '@/components/ui/AnimatedFAQ'
 import { AnimatedHeadline } from '@/components/animations/AnimatedHeadline'
 import {
   Phone,
@@ -29,6 +28,7 @@ import {
   Award,
   HeadphonesIcon,
   Rocket,
+  Users,
 } from 'lucide-react'
 import Link from 'next/link'
 
@@ -40,6 +40,7 @@ export default function ContactPage() {
       type: 'text' as const,
       placeholder: 'Enter your full name',
       required: true,
+      width: 'full' as const,
     },
     {
       name: 'email',
@@ -47,6 +48,7 @@ export default function ContactPage() {
       type: 'email' as const,
       placeholder: 'Enter your email address',
       required: true,
+      width: 'half' as const,
     },
     {
       name: 'phone',
@@ -54,6 +56,7 @@ export default function ContactPage() {
       type: 'tel' as const,
       placeholder: 'Enter your phone number',
       required: false,
+      width: 'half' as const,
     },
     {
       name: 'company',
@@ -61,12 +64,13 @@ export default function ContactPage() {
       type: 'text' as const,
       placeholder: 'Enter your company name',
       required: false,
+      width: 'full' as const,
     },
     {
       name: 'service',
       label: 'Service Interest',
-      type: 'select' as const,
-      placeholder: 'Select a service',
+      type: 'multiselect' as const,
+      placeholder: 'Select services (multiple allowed)',
       required: true,
       options: [
         { value: 'web-development', label: 'Web Development' },
@@ -75,7 +79,9 @@ export default function ContactPage() {
         { value: 'ai-ml', label: 'AI & Machine Learning' },
         { value: 'devops', label: 'DevOps' },
         { value: 'consulting', label: 'Consulting' },
+        { value: 'other', label: 'Other (specify in message)' },
       ],
+      width: 'full' as const,
     },
     {
       name: 'message',
@@ -83,6 +89,7 @@ export default function ContactPage() {
       type: 'textarea' as const,
       placeholder: 'Tell us about your project requirements...',
       required: true,
+      width: 'full' as const,
     },
   ]
 
@@ -122,44 +129,6 @@ export default function ContactPage() {
       phone: '+1 (236) 992-3846',
       isHeadquarters: false,
       coordinates: '49.189201, -122.804169',
-    },
-  ]
-
-  const faqs = [
-    {
-      id: 'timeline',
-      question: 'What is your typical project timeline?',
-      answer: 'Depends on the project requirements and details.',
-    },
-    {
-      id: 'support',
-      question: 'Do you offer ongoing support and maintenance?',
-      answer:
-        'Yes, we provide comprehensive support packages including 24/7 monitoring, regular updates, and technical assistance to ensure your solution runs smoothly.',
-    },
-    {
-      id: 'technology',
-      question: 'Can you work with our existing technology stack?',
-      answer:
-        'Absolutely! We specialize in integrating with existing systems and can work with virtually any technology stack to enhance your current infrastructure.',
-    },
-    {
-      id: 'industries',
-      question: 'What industries do you serve?',
-      answer:
-        'We serve clients across healthcare, finance, retail, manufacturing, transportation, education, and technology sectors, adapting our solutions to industry-specific requirements.',
-    },
-    {
-      id: 'pricing',
-      question: 'How do you structure your pricing?',
-      answer:
-        'We offer flexible pricing models including fixed-price projects, time and materials, and retainer agreements. Pricing is based on project scope, complexity, and timeline requirements.',
-    },
-    {
-      id: 'consultation',
-      question: 'Is the initial consultation really free?',
-      answer:
-        'Yes! We offer a completely free 30-minute consultation to discuss your project requirements, provide initial recommendations, and answer any questions you may have.',
     },
   ]
 
@@ -347,7 +316,7 @@ export default function ContactPage() {
                       <Mail className='h-5 w-5 text-green-600' />
                       <div>
                         <p className='font-semibold text-gray-900'>
-                          contact@bestitconsulting.ca
+                          service@bestitconsulting.ca
                         </p>
                         <p className='text-sm text-gray-600'>
                           Response within 24 hours
@@ -488,31 +457,29 @@ export default function ContactPage() {
           </div>
         </section>
 
-        {/* Compact Google Maps Section */}
-        <section className='py-12 px-4 bg-gradient-to-br from-blue-50 to-cyan-50'>
+        {/* Find Our Office Section */}
+        <section className='py-16 px-4 bg-gradient-to-br from-blue-50 to-cyan-50'>
           <div className='max-w-6xl mx-auto'>
-            <div className='text-center mb-8'>
+            <div className='text-center mb-12'>
               <h2 className='text-3xl font-bold text-gray-900 mb-4'>
                 Find Our Office
               </h2>
               <p className='text-lg text-gray-600'>
-                Visit us at our Surrey Guildford location. Click on the map to
-                get directions.
+                Visit us at our location in Great Vancouver, Canada
               </p>
             </div>
 
+            {/* Google Maps Section */}
             <div className='grid grid-cols-1 lg:grid-cols-3 gap-6'>
               {/* Map */}
               <div className='lg:col-span-2'>
-                <Card className='border-0 shadow-xl bg-white overflow-hidden'>
-                  <CardContent className='p-0'>
-                    <SmartGoogleMap
-                      addresses={offices}
-                      height='400px'
-                      className='w-full'
-                    />
-                  </CardContent>
-                </Card>
+                <div className='border-0 shadow-xl bg-white overflow-hidden rounded-lg'>
+                  <SmartGoogleMap
+                    addresses={offices}
+                    height='400px'
+                    className='w-full'
+                  />
+                </div>
               </div>
 
               {/* Office Details */}
@@ -560,29 +527,6 @@ export default function ContactPage() {
                 </Card>
               </div>
             </div>
-          </div>
-        </section>
-
-        {/* Enhanced FAQ Section */}
-        <section className='py-16 px-4 bg-gradient-to-br from-slate-50 to-blue-50'>
-          <div className='max-w-4xl mx-auto'>
-            <div className='text-center mb-12'>
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
-              >
-                <h2 className='text-4xl font-bold text-gray-900 mb-4'>
-                  Frequently Asked Questions
-                </h2>
-                <p className='text-xl text-gray-600 max-w-2xl mx-auto'>
-                  Quick answers to common questions about our services and
-                  process. Click on any question to expand the answer.
-                </p>
-              </motion.div>
-            </div>
-
-            <AnimatedFAQ faqs={faqs} />
           </div>
         </section>
 

@@ -38,8 +38,29 @@ import {
 } from 'lucide-react'
 import Link from 'next/link'
 import Image from 'next/image'
+import {
+  R2Image,
+  R2CardImage,
+  R2GalleryImage,
+  R2HeroImage,
+} from '@/components/R2Image'
+import { useR2Assets, R2_ASSET_MAPPINGS } from '@/hooks/useR2Assets'
 
 export default function OurWorkPage() {
+  const { getImages, getAssetByFilename } = useR2Assets()
+
+  // Get R2 assets for our work page
+  const heroImage = getAssetByFilename(R2_ASSET_MAPPINGS['our-work'].hero)
+  const project1Image = getAssetByFilename(
+    R2_ASSET_MAPPINGS['our-work'].project1
+  )
+  const project2Image = getAssetByFilename(
+    R2_ASSET_MAPPINGS['our-work'].project2
+  )
+  const project3Image = getAssetByFilename(
+    R2_ASSET_MAPPINGS['our-work'].project3
+  )
+
   // Refs for animated beam nodes
   const containerRef = useRef<HTMLDivElement>(null!)
   const node1Ref = useRef<HTMLDivElement>(null!)
@@ -431,6 +452,51 @@ export default function OurWorkPage() {
                         </CardTitle>
                       </CardHeader>
                       <CardContent>
+                        {/* Project Image */}
+                        <div className='mb-4'>
+                          {(() => {
+                            const projectImage =
+                              project.id === 1
+                                ? project1Image
+                                : project.id === 2
+                                  ? project2Image
+                                  : project.id === 3
+                                    ? project3Image
+                                    : null
+
+                            return projectImage ? (
+                              <R2CardImage
+                                src={projectImage.url}
+                                alt={project.title}
+                                className='w-full h-48 rounded-lg'
+                                animation='fade'
+                                delay={0.2}
+                                hover={true}
+                                overlay={true}
+                                overlayContent={
+                                  <div className='text-white text-center'>
+                                    <div className='w-8 h-8 mx-auto mb-2 bg-white/20 rounded-full flex items-center justify-center'>
+                                      <ArrowRight className='w-4 h-4' />
+                                    </div>
+                                    <p className='text-xs font-medium'>
+                                      View Project
+                                    </p>
+                                  </div>
+                                }
+                              />
+                            ) : (
+                              <div className='w-full h-48 bg-gradient-to-br from-blue-100 to-cyan-100 rounded-lg flex items-center justify-center'>
+                                <div className='text-center'>
+                                  <Code2 className='w-8 h-8 text-blue-400 mx-auto mb-2' />
+                                  <p className='text-gray-600 text-sm'>
+                                    {project.title}
+                                  </p>
+                                </div>
+                              </div>
+                            )
+                          })()}
+                        </div>
+
                         <p className='text-gray-600 mb-4 leading-relaxed'>
                           {project.description}
                         </p>

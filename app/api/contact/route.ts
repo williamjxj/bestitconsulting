@@ -37,8 +37,8 @@ export async function POST(request: NextRequest) {
 
     // Send email to your business email
     const businessEmailResult = await resend.emails.send({
-      from: 'Best IT Consulting <onboarding@resend.dev>',
-      to: [process.env.BUSINESS_EMAIL || 'contact@bestitconsulting.com'],
+      from: 'Best IT Consulting <service@bestitconsulting.ca>',
+      to: [process.env.BUSINESS_EMAIL || 'service@bestitconsulting.ca'],
       subject: `New Contact Form Submission from ${name}`,
       html: `
         <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f8fafc;">
@@ -93,7 +93,7 @@ export async function POST(request: NextRequest) {
 
     // Send confirmation email to the customer
     const customerEmailResult = await resend.emails.send({
-      from: 'Best IT Consulting <onboarding@resend.dev>',
+      from: 'Best IT Consulting <service@bestitconsulting.ca>',
       to: [email],
       subject: 'Thank you for contacting Best IT Consulting',
       html: `
@@ -145,7 +145,7 @@ export async function POST(request: NextRequest) {
               </p>
               <p style="color: #64748b; font-size: 14px; margin: 0;">
                 📞 Call us: +1 (236) 992-3846<br>
-                📧 Email: contact@bestitconsulting.com<br>
+                📧 Email: service@bestitconsulting.ca<br>
                 🌐 Website: bestitconsulting.vercel.app
               </p>
             </div>

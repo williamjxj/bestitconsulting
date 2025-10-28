@@ -116,11 +116,6 @@ export async function listR2Assets(): Promise<string[]> {
     const assetFilenames =
       response.Contents?.map(obj => obj.Key || '').filter(key => key) || []
 
-    console.log(
-      `Found ${assetFilenames.length} assets in R2 bucket:`,
-      assetFilenames
-    )
-
     return assetFilenames
   } catch (error: any) {
     console.error('Error listing R2 assets:', error)
