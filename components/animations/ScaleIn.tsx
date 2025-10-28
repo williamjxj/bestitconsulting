@@ -34,7 +34,7 @@ export function ScaleIn({
       name: 'Scale In',
       type: 'interaction',
       duration,
-      easing: 'easeOutBack',
+      easing: 'easeOut',
       reducedMotion: {
         enabled: true,
         alternativeAnimation: 'scale-in-static',

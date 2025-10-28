@@ -2,6 +2,8 @@
  * Cloudflare R2 utility functions for fetching and managing assets
  */
 
+import { S3Client, ListObjectsV2Command } from '@aws-sdk/client-s3'
+
 interface R2Config {
   accountId: string
   accessKeyId: string
@@ -73,4 +75,128 @@ export function isR2Configured(): boolean {
  */
 export function getDemoVideoUrl(): string {
   return getR2VideoUrl('jimeng-5.mp4')
+}
+
+/**
+ * List all assets in the R2 bucket using AWS SDK
+ */
+export async function listR2Assets(): Promise<string[]> {
+  const config = getR2Config()
+
+  console.log('R2 Config:', {
+    accountId: config.accountId,
+    bucketName: config.bucketName,
+    hasAccessKey: !!config.accessKeyId,
+    hasSecretKey: !!config.secretAccessKey,
+    publicUrl: config.publicUrl,
+  })
+
+  try {
+    // Create S3 client for R2
+    const s3Client = new S3Client({
+      region: 'auto',
+      endpoint: `https://${config.accountId}.r2.cloudflarestorage.com`,
+      credentials: {
+        accessKeyId: config.accessKeyId,
+        secretAccessKey: config.secretAccessKey,
+      },
+    })
+
+    console.log('S3 Client created, listing objects...')
+
+    // List all objects in the bucket
+    const command = new ListObjectsV2Command({
+      Bucket: config.bucketName,
+    })
+
+    const response = await s3Client.send(command)
+    console.log('S3 Response:', response)
+
+    // Extract object keys (filenames) from the response
+    const assetFilenames =
+      response.Contents?.map(obj => obj.Key || '').filter(key => key) || []
+
+    console.log(
+      `Found ${assetFilenames.length} assets in R2 bucket:`,
+      assetFilenames
+    )
+
+    return assetFilenames
+  } catch (error: any) {
+    console.error('Error listing R2 assets:', error)
+    console.error('Error details:', {
+      name: error?.name,
+      message: error?.message,
+      code: error?.code,
+      statusCode: error?.$metadata?.httpStatusCode,
+    })
+
+    // Fallback to hardcoded list if AWS SDK fails
+    console.log('Falling back to hardcoded asset list')
+    return ['jimeng-5.mp4', 'jimeng-5-poster.jpg']
+  }
+}
+
+/**
+ * Add a new asset to the known assets list
+ * This is a helper function for testing
+ */
+export function addKnownAsset(filename: string): void {
+  // This would typically update a database or configuration
+  // For now, just log it
+  console.log(`Adding asset: ${filename}`)
+}
+
+/**
+ * Test if an asset exists in R2 bucket
+ * This is a helper function to discover assets
+ */
+export async function testAssetExists(filename: string): Promise<boolean> {
+  try {
+    const url = getR2AssetUrl(filename)
+    const response = await fetch(url, { method: 'HEAD' })
+    return response.ok
+  } catch {
+    return false
+  }
+}
+
+/**
+ * Get asset type based on file extension
+ */
+export function getAssetType(
+  filename: string
+): 'image' | 'video' | 'document' | 'other' {
+  const ext = filename.toLowerCase().split('.').pop()
+
+  if (['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg'].includes(ext || '')) {
+    return 'image'
+  }
+
+  if (['mp4', 'webm', 'mov', 'avi', 'mkv'].includes(ext || '')) {
+    return 'video'
+  }
+
+  if (['pdf', 'doc', 'docx', 'txt'].includes(ext || '')) {
+    return 'document'
+  }
+
+  return 'other'
+}
+
+/**
+ * Get asset metadata
+ */
+export function getAssetMetadata(filename: string) {
+  const type = getAssetType(filename)
+  const url = getR2AssetUrl(filename)
+
+  return {
+    filename,
+    type,
+    url,
+    isVideo: type === 'video',
+    isImage: type === 'image',
+    isDocument: type === 'document',
+  }
 }

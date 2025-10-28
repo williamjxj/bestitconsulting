@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
-import { Menu, X } from 'lucide-react'
+import { Menu, X, ArrowRight, Sparkles } from 'lucide-react'
 import { useNavTranslation } from '@/lib/i18n/hooks'
 import { LanguageSelector } from './LanguageSelector'
 
@@ -43,18 +43,19 @@ export default function Header() {
       }`}
     >
       <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
-        <div className='flex justify-between items-center h-16'>
+        <div className='flex justify-between items-center h-14 sm:h-16'>
           <div className='flex items-center'>
             <div className='flex-shrink-0'>
-              <Link href='/' className='group flex items-center'>
-                <div className='w-[320px] h-[120px] relative group-hover:scale-105 transition-all duration-300'>
-                  <Image
-                    src='/bitc-logo-transparent.png'
-                    alt='BestIT Consulting Logo'
-                    width={320}
-                    height={120}
-                    className='w-full h-full object-contain'
-                    priority
+              <Link
+                href='/'
+                className='group flex items-center'
+                title='BestIT Consulting - Technology Solutions'
+              >
+                <div className='h-12 sm:h-14 md:h-16 w-auto relative group-hover:scale-105 transition-all duration-300'>
+                  <img
+                    src='/bitc-logo.svg'
+                    alt='BestIT Consulting - Technology Solutions'
+                    className='h-full w-auto object-contain'
                   />
                 </div>
               </Link>
@@ -84,27 +85,32 @@ export default function Header() {
           </div>
 
           {/* Language Selector & CTA */}
-          <div className='hidden md:flex items-center space-x-4'>
-            <LanguageSelector />
+          <div className='hidden md:flex items-center space-x-3'>
+            <LanguageSelector showNativeName={true} />
             <Link
               href='/contact'
-              className='bg-gradient-to-r from-blue-600 to-cyan-600 text-white px-6 py-2 rounded-lg font-medium hover:shadow-lg transition-all duration-300 hover:scale-105'
+              className='group relative bg-gradient-to-r from-blue-600 to-cyan-600 text-white px-4 py-2 rounded-lg font-medium hover:shadow-xl transition-all duration-300 hover:scale-105 overflow-hidden whitespace-nowrap'
             >
-              Get Started
+              <div className='absolute inset-0 bg-gradient-to-r from-blue-700 to-cyan-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300'></div>
+              <div className='relative flex items-center gap-1.5'>
+                <Sparkles className='w-4 h-4 group-hover:rotate-12 transition-transform duration-300' />
+                <span>Get Started</span>
+                <ArrowRight className='w-4 h-4 group-hover:translate-x-1 transition-transform duration-300' />
+              </div>
             </Link>
           </div>
 
           {/* Mobile menu button */}
-          <div className='md:hidden flex items-center space-x-2'>
-            <LanguageSelector />
+          <div className='md:hidden flex items-center space-x-1 sm:space-x-2'>
+            <LanguageSelector showNativeName={true} />
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className='text-gray-700 hover:text-blue-600 p-2'
+              className='text-gray-700 hover:text-blue-600 p-1 sm:p-2'
             >
               {mobileMenuOpen ? (
-                <X className='h-6 w-6' />
+                <X className='h-5 w-5 sm:h-6 sm:w-6' />
               ) : (
-                <Menu className='h-6 w-6' />
+                <Menu className='h-5 w-5 sm:h-6 sm:w-6' />
               )}
             </button>
           </div>
@@ -131,10 +137,15 @@ export default function Header() {
             ))}
             <Link
               href='/contact'
-              className='block w-full text-center bg-gradient-to-r from-blue-600 to-cyan-600 text-white px-3 py-2 rounded-md font-medium mt-4'
+              className='group relative block w-full text-center bg-gradient-to-r from-blue-600 to-cyan-600 text-white px-3 py-2 rounded-md font-medium mt-4 overflow-hidden whitespace-nowrap'
               onClick={() => setMobileMenuOpen(false)}
             >
-              Get Started
+              <div className='absolute inset-0 bg-gradient-to-r from-blue-700 to-cyan-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300'></div>
+              <div className='relative flex items-center justify-center gap-1.5'>
+                <Sparkles className='w-4 h-4 group-hover:rotate-12 transition-transform duration-300' />
+                <span>Get Started</span>
+                <ArrowRight className='w-4 h-4 group-hover:translate-x-1 transition-transform duration-300' />
+              </div>
             </Link>
           </div>
         </div>

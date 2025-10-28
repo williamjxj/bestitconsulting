@@ -95,7 +95,7 @@ export const animationPresets = {
     name: 'Scale In',
     type: 'interaction' as const,
     duration: 400,
-    easing: 'easeOutBack',
+    easing: 'easeOut',
     reducedMotion: {
       enabled: true,
       alternativeAnimation: 'scale-in-static',
@@ -412,7 +412,7 @@ export class AnimationConfigurator {
     const easingMap = {
       high: {
         transition: 'easeInOut',
-        interaction: 'easeOutBack',
+        interaction: 'easeOut',
         scroll: 'easeInOut',
         loading: 'linear',
       },
