@@ -102,7 +102,7 @@ export async function listR2Assets(): Promise<string[]> {
       },
     })
 
-    console.log('S3 Client created, listing objects...')
+    // console.log('S3 Client created, listing objects...')
 
     // List all objects in the bucket
     const command = new ListObjectsV2Command({

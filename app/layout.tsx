@@ -20,9 +20,7 @@ export const metadata: Metadata = {
   description:
     'We provide top-notch IT consulting services to help your business thrive.',
   icons: {
-    icon: [
-      { url: '/favicon.svg', type: 'image/svg+xml' },
-    ],
+    icon: [{ url: '/favicon.svg', type: 'image/svg+xml' }],
     apple: '/favicon.svg',
   },
   manifest: '/site.webmanifest',
