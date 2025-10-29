@@ -110,7 +110,7 @@ export async function listR2Assets(): Promise<string[]> {
     })
 
     const response = await s3Client.send(command)
-    console.log('S3 Response:', response)
+    // console.log('S3 Response:', response)
 
     // Extract object keys (filenames) from the response
     const assetFilenames =

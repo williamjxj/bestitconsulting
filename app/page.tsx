@@ -124,8 +124,8 @@ export default function HomePage() {
         {/* Video/Demo Section */}
         <ScrollTrigger animation='fade' direction='up' duration={0.8}>
           <section className='py-12 bg-background'>
-            <div className='container mx-auto px-4'>
-              <div className='max-w-6xl mx-auto'>
+            <div className='w-full px-4 sm:px-6 lg:px-8'>
+              <div className='w-full lg:max-w-7xl lg:mx-auto'>
                 <div className='grid lg:grid-cols-2 gap-12 items-center'>
                   <ScrollTrigger
                     animation='slide'
@@ -190,7 +190,7 @@ export default function HomePage() {
         {/* Features Overview */}
         <ScrollTrigger animation='fade' direction='up' duration={0.8}>
           <section className='py-12 bg-muted/30'>
-            <div className='container mx-auto px-4'>
+            <div className='w-full px-4 sm:px-6 lg:px-8'>
               <ScrollTrigger animation='slide' direction='up' delay={0.2}>
                 <div className='text-center mb-16'>
                   <span className='inline-block px-4 py-1.5 text-sm font-medium bg-blue-100 text-blue-800 rounded-full mb-4'>
@@ -253,7 +253,7 @@ export default function HomePage() {
         {/* Stats Section */}
         <ScrollTrigger animation='fade' direction='up' duration={0.8}>
           <section className='py-12 bg-gradient-to-r from-blue-600 to-indigo-700 text-white'>
-            <div className='container mx-auto px-4'>
+            <div className='w-full px-4 sm:px-6 lg:px-8'>
               <ScrollTrigger animation='slide' direction='up' delay={0.2}>
                 <div className='text-center mb-16'>
                   <h2 className='text-3xl md:text-4xl font-bold mb-4'>
@@ -325,8 +325,8 @@ export default function HomePage() {
         {/* Enhanced Technology Visual Section */}
         <ScrollTrigger animation='fade' direction='up' duration={0.8}>
           <section className='py-20 bg-gradient-to-br from-slate-50 to-blue-50'>
-            <div className='container mx-auto px-4'>
-              <div className='max-w-6xl mx-auto'>
+            <div className='w-full px-4 sm:px-6 lg:px-8'>
+              <div className='w-full lg:max-w-7xl lg:mx-auto'>
                 <ScrollTrigger animation='slide' direction='up' delay={0.2}>
                   <div className='text-center mb-16'>
                     <span className='inline-block px-4 py-1.5 text-sm font-medium bg-blue-100 text-blue-800 rounded-full mb-4'>
@@ -410,7 +410,7 @@ export default function HomePage() {
 
         {/* CTA Section */}
         <section className='py-12 bg-gradient-to-r from-blue-600 to-indigo-700 text-white'>
-          <div className='container mx-auto px-4 text-center'>
+          <div className='w-full px-4 sm:px-6 lg:px-8 text-center'>
             <h2 className='text-3xl md:text-4xl font-bold mb-6'>
               Ready to Start Your Project?
             </h2>

@@ -126,7 +126,7 @@ export default function Header() {
           </div>
 
           {/* Desktop Navigation */}
-          <div className='hidden lg:block'>
+          <div className='hidden lg:flex'>
             <div className='ml-10 flex items-center space-x-0.5'>
               {navItems.map(({ key, href }) => (
                 <Link
@@ -212,7 +212,8 @@ export default function Header() {
             <LanguageSelector showNativeName={true} />
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className='text-gray-700 hover:text-blue-600 p-1 sm:p-2'
+              className='text-gray-700 hover:text-blue-600 p-1 sm:p-2 rounded-md hover:bg-gray-100 transition-colors'
+              aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
             >
               {mobileMenuOpen ? (
                 <X className='h-5 w-5 sm:h-6 sm:w-6' />
@@ -226,8 +227,8 @@ export default function Header() {
 
       {/* Mobile Navigation */}
       {mobileMenuOpen && (
-        <div className='lg:hidden'>
-          <div className='px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-t border-gray-200 shadow-lg'>
+        <div className='lg:hidden absolute top-full left-0 right-0 z-50 bg-white shadow-lg border-t border-gray-200'>
+          <div className='px-2 pt-2 pb-3 space-y-1 sm:px-3'>
             {navItems.map(({ key, href }) => (
               <Link
                 key={key}

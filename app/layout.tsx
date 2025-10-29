@@ -19,6 +19,14 @@ export const metadata: Metadata = {
   title: 'Best IT Consulting',
   description:
     'We provide top-notch IT consulting services to help your business thrive.',
+  icons: {
+    icon: [
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+      { url: '/favicon.ico', sizes: 'any' },
+    ],
+    apple: '/favicon.svg',
+  },
+  manifest: '/site.webmanifest',
 }
 
 export default function RootLayout({

@@ -14,7 +14,8 @@
     "lint:md": "markdownlint-cli2 \"*.md\" || true",
     "lint:md:fix": "markdownlint-cli2 --fix \"*.md\" || true",
     "quality": "npm run lint:fix && npm run format && npm run type-check && npm run lint:md",
-    "setup:email": "./scripts/setup-email.sh"
+    "setup:email": "./scripts/setup-email.sh",
+    "generate:favicon": "node scripts/generate-favicon.js"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.918.0",

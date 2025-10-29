@@ -203,7 +203,7 @@ export const getBrandAnimation = (
 // Brand theme classes
 export const brandClasses = {
   // Layout
-  container: 'max-w-7xl mx-auto px-4 sm:px-6 lg:px-8',
+  container: 'w-full lg:max-w-7xl lg:mx-auto px-4 sm:px-6 lg:px-8',
   section: 'py-16 sm:py-20 lg:py-24',
 
   // Typography

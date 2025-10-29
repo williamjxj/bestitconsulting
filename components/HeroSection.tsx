@@ -123,8 +123,8 @@ export function HeroSection() {
       </div>
       {/* </ParticleBackground> */}
 
-      <div className='container mx-auto px-4 relative z-10'>
-        <div className='max-w-5xl mx-auto text-center'>
+      <div className='w-full px-4 sm:px-6 lg:px-8 relative z-10'>
+        <div className='w-full lg:max-w-7xl lg:mx-auto text-center'>
           {/* Enhanced trust badge */}
           <FadeIn delay={0.2} duration={0.8}>
             <div className='inline-flex items-center gap-3 px-4 py-2 text-sm font-medium bg-gradient-to-r from-blue-600/20 to-purple-600/20 rounded-full mb-8 border border-blue-500/30 backdrop-blur-sm animate-scale-pulse'>
@@ -214,7 +214,7 @@ export function HeroSection() {
 
           {/* Enhanced stats with modern cards */}
           <FadeIn delay={1.6} duration={1.0}>
-            <div className='grid grid-cols-2 md:grid-cols-4 gap-6 max-w-5xl mx-auto'>
+            <div className='grid grid-cols-2 md:grid-cols-4 gap-6 w-full lg:max-w-7xl lg:mx-auto'>
               {[
                 {
                   icon: <Award className='h-8 w-8 text-yellow-400' />,
