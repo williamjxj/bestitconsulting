@@ -279,24 +279,6 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Testimonials */}
-        <TestimonialsSection
-          testimonials={testimonials.map((testimonial, index) => ({
-            id: `testimonial-${index}`,
-            name: testimonial.name,
-            role: testimonial.role,
-            company: 'BestIT Consulting',
-            content: testimonial.content,
-            rating: testimonial.rating,
-            avatar: testimonial.avatar,
-            featured: index === 0,
-          }))}
-          title='What Our Clients Say'
-          description="Don't just take our word for it. Here's what our clients have to say about working with us."
-          autoPlay={true}
-          autoPlayInterval={5000}
-        />
-
         {/* Technology Showcase */}
         <TechnologyShowcase />
 
