@@ -12,6 +12,7 @@ interface AvatarCirclesProps {
   numPeople?: number
   size?: number // container size in px
   radius?: number // ring radius in px
+  spinDurationMs?: number // rotation duration
 }
 
 /**
@@ -21,8 +22,9 @@ interface AvatarCirclesProps {
 export function AvatarCircles({
   avatarUrls,
   numPeople = 99,
-  size = 220,
-  radius = 76,
+  size = 300,
+  radius = 110,
+  spinDurationMs = 32000,
 }: AvatarCirclesProps) {
   const center = size / 2
   const count = avatarUrls.length
@@ -36,7 +38,7 @@ export function AvatarCircles({
       {/* ring background */}
       <div className='absolute inset-0 rounded-full bg-white/50 backdrop-blur-md border border-gray-200 shadow-inner' />
       {/* spinning avatars */}
-      <div className='absolute inset-0 animate-spin-slow' style={{ animationDuration: '36s' }}>
+      <div className='absolute inset-0 animate-spin' style={{ animationDuration: `${spinDurationMs}ms` }}>
         {avatarUrls.map((item, i) => {
           const angle = (i / count) * Math.PI * 2
           const x = center + radius * Math.cos(angle)
