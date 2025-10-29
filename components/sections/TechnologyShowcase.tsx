@@ -435,14 +435,14 @@ const TechnologyShowcase = () => {
                   zIndex = 1
                 }
 
+                const transformFull = `${transform} scale(${scale})`
                 return (
                   <div
                     key={index}
                     className='absolute inset-0 transition-all duration-700 ease-out'
                     style={{
-                      transform,
+                      transform: transformFull,
                       opacity,
-                      scale,
                       zIndex,
                       transformStyle: 'preserve-3d',
                     }}
