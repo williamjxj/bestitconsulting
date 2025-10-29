@@ -25,7 +25,7 @@ import { AnimatedHeadline } from '@/components/animations/AnimatedHeadline'
 import { PageHeader } from '@/components/ui/page-header'
 import { Section } from '@/components/ui/section'
 import { AnimatedBeam } from '@/components/ui/animated-beam'
-import { R2Image, R2CardImage, R2HeroImage } from '@/components/R2Image'
+import { R2Image, R2HeroImage } from '@/components/R2Image'
 import { useR2Assets, R2_ASSET_MAPPINGS } from '@/hooks/useR2Assets'
 
 export default function ServicesPage() {
@@ -34,8 +34,6 @@ export default function ServicesPage() {
 
   // Get R2 assets for services page
   const heroImage = getAssetByFilename(R2_ASSET_MAPPINGS.services.hero)
-  const processImage = getAssetByFilename(R2_ASSET_MAPPINGS.services.process)
-  const techImage = getAssetByFilename(R2_ASSET_MAPPINGS.services.technology)
   const teamImage = getAssetByFilename(R2_ASSET_MAPPINGS.services.team)
 
   // Refs for animated beam nodes
@@ -383,186 +381,6 @@ export default function ServicesPage() {
                     </div>
                   </SlideIn>
                 ))}
-              </div>
-            </div>
-          </section>
-        </ScrollTrigger>
-
-        {/* Technology & Process Visual Section */}
-        <ScrollTrigger animation='fade' direction='up' duration={0.8}>
-          <section className='py-20 bg-gradient-to-br from-blue-50 to-cyan-50'>
-            <div className='container mx-auto px-4'>
-              <div className='max-w-6xl mx-auto'>
-                <ScrollTrigger animation='slide' direction='up' delay={0.2}>
-                  <div className='text-center mb-16'>
-                    <span className='inline-block px-4 py-1.5 text-sm font-medium bg-blue-100 text-blue-800 rounded-full mb-4'>
-                      Our Approach
-                    </span>
-                    <h2 className='text-3xl md:text-4xl font-bold mb-4'>
-                      Technology-Driven Solutions
-                    </h2>
-                    <p className='text-lg text-muted-foreground max-w-2xl mx-auto'>
-                      We combine cutting-edge technology with proven
-                      methodologies to deliver exceptional results.
-                    </p>
-                  </div>
-                </ScrollTrigger>
-
-                <div className='grid lg:grid-cols-2 gap-12 items-center mb-16'>
-                  <ScrollTrigger
-                    animation='slide'
-                    direction='right'
-                    delay={0.4}
-                  >
-                    <div className='space-y-6'>
-                      <h3 className='text-2xl font-bold text-gray-900 mb-4'>
-                        Our Technology Stack
-                      </h3>
-                      <div className='grid grid-cols-2 gap-4'>
-                        {[
-                          {
-                            name: 'Frontend',
-                            tech: 'React, Next.js, TypeScript',
-                          },
-                          { name: 'Backend', tech: 'Node.js, Python, Java' },
-                          { name: 'Database', tech: 'PostgreSQL, MongoDB' },
-                          { name: 'Cloud', tech: 'AWS, Azure, GCP' },
-                        ].map((item, index) => (
-                          <div
-                            key={item.name}
-                            className='bg-white p-4 rounded-xl shadow-sm border border-gray-200 hover:shadow-md transition-shadow'
-                          >
-                            <h4 className='font-semibold text-gray-900 mb-2'>
-                              {item.name}
-                            </h4>
-                            <p className='text-sm text-gray-600'>{item.tech}</p>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </ScrollTrigger>
-
-                  <ScrollTrigger animation='slide' direction='left' delay={0.6}>
-                    <div className='relative'>
-                      {techImage ? (
-                        <R2CardImage
-                          src={techImage.url}
-                          alt='Technology stack'
-                          className='w-full h-80 rounded-xl shadow-xl'
-                          animation='scale'
-                          delay={0.8}
-                          hover={true}
-                          overlay={true}
-                          overlayContent={
-                            <div className='text-white text-center'>
-                              <div className='w-12 h-12 mx-auto mb-2 bg-white/20 rounded-full flex items-center justify-center'>
-                                <Code2 className='w-6 h-6' />
-                              </div>
-                              <p className='text-sm font-medium'>
-                                View Tech Stack
-                              </p>
-                            </div>
-                          }
-                        />
-                      ) : (
-                        <div className='w-full h-80 bg-gradient-to-br from-blue-100 to-cyan-100 rounded-xl flex items-center justify-center'>
-                          <div className='text-center'>
-                            <Code2 className='w-16 h-16 text-blue-400 mx-auto mb-4' />
-                            <p className='text-gray-600'>Technology Stack</p>
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                  </ScrollTrigger>
-                </div>
-
-                <div className='grid lg:grid-cols-2 gap-12 items-center'>
-                  <ScrollTrigger animation='slide' direction='left' delay={0.4}>
-                    <div className='relative'>
-                      {processImage ? (
-                        <R2CardImage
-                          src={processImage.url}
-                          alt='Our process'
-                          className='w-full h-80 rounded-xl shadow-xl'
-                          animation='scale'
-                          delay={0.6}
-                          hover={true}
-                          overlay={true}
-                          overlayContent={
-                            <div className='text-white text-center'>
-                              <div className='w-12 h-12 mx-auto mb-2 bg-white/20 rounded-full flex items-center justify-center'>
-                                <Target className='w-6 h-6' />
-                              </div>
-                              <p className='text-sm font-medium'>
-                                View Process
-                              </p>
-                            </div>
-                          }
-                        />
-                      ) : (
-                        <div className='w-full h-80 bg-gradient-to-br from-green-100 to-emerald-100 rounded-xl flex items-center justify-center'>
-                          <div className='text-center'>
-                            <Target className='w-16 h-16 text-green-400 mx-auto mb-4' />
-                            <p className='text-gray-600'>Our Process</p>
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                  </ScrollTrigger>
-
-                  <ScrollTrigger
-                    animation='slide'
-                    direction='right'
-                    delay={0.6}
-                  >
-                    <div className='space-y-6'>
-                      <h3 className='text-2xl font-bold text-gray-900 mb-4'>
-                        Proven Methodology
-                      </h3>
-                      <div className='space-y-4'>
-                        {[
-                          {
-                            step: '01',
-                            title: 'Discovery & Analysis',
-                            desc: 'Understanding your business needs',
-                          },
-                          {
-                            step: '02',
-                            title: 'Strategy & Planning',
-                            desc: 'Creating detailed project roadmap',
-                          },
-                          {
-                            step: '03',
-                            title: 'Implementation',
-                            desc: 'Agile development and testing',
-                          },
-                          {
-                            step: '04',
-                            title: 'Support & Optimization',
-                            desc: 'Ongoing maintenance and improvements',
-                          },
-                        ].map((item, index) => (
-                          <div
-                            key={item.step}
-                            className='flex items-start gap-4'
-                          >
-                            <div className='w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0'>
-                              {item.step}
-                            </div>
-                            <div>
-                              <h4 className='font-semibold text-gray-900 mb-1'>
-                                {item.title}
-                              </h4>
-                              <p className='text-sm text-gray-600'>
-                                {item.desc}
-                              </p>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </ScrollTrigger>
-                </div>
               </div>
             </div>
           </section>

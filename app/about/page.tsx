@@ -30,36 +30,28 @@ import {
 } from '@/components/R2Image'
 import { useR2Assets, R2_ASSET_MAPPINGS } from '@/hooks/useR2Assets'
 
-const teamMembers = [
-  {
-    name: 'Sarah Johnson',
-    role: 'CEO & Founder',
-    image: '/placeholder.svg',
-    bio: '15+ years in tech leadership, former Google engineer',
-    expertise: ['Strategy', 'Leadership', 'Innovation'],
-  },
-  {
-    name: 'Michael Chen',
-    role: 'CTO',
-    image: '/placeholder.svg',
-    bio: 'Full-stack architect with expertise in cloud solutions',
-    expertise: ['Architecture', 'Cloud', 'DevOps'],
-  },
-  {
-    name: 'Emily Rodriguez',
-    role: 'Lead Designer',
-    image: '/placeholder.svg',
-    bio: 'UX/UI specialist focused on user-centered design',
-    expertise: ['Design', 'UX', 'Branding'],
-  },
-  {
-    name: 'David Kim',
-    role: 'Senior Developer',
-    image: '/placeholder.svg',
-    bio: 'React and Node.js expert with mobile development skills',
-    expertise: ['Frontend', 'Mobile', 'JavaScript'],
-  },
-]
+const founderInfo = {
+  name: 'William Jiang',
+  role: 'Founder & Lead Developer',
+  image: '/william.jpg',
+  bio: 'Full-stack developer with 10+ years of experience building scalable web applications and digital solutions.',
+  expertise: [
+    'Full-Stack Development',
+    'Cloud Architecture',
+    'DevOps',
+    'UI/UX Design',
+  ],
+  experience: '10+ years',
+  education: 'Computer Science & Software Engineering',
+  specialties: [
+    'React/Next.js',
+    'Node.js',
+    'Python',
+    'AWS',
+    'Docker',
+    'TypeScript',
+  ],
+}
 
 const values = [
   {
@@ -141,10 +133,10 @@ export default function AboutPage() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.2 }}
               >
-                We're a team of passionate technologists dedicated to
-                transforming businesses through innovative digital solutions.
-                With over a decade of experience, we've helped hundreds of
-                companies scale, innovate, and succeed in the digital era.
+                I'm a passionate full-stack developer dedicated to transforming
+                businesses through innovative digital solutions. With over a
+                decade of experience, I've helped numerous companies scale,
+                innovate, and succeed in the digital era.
               </motion.p>
               <motion.div
                 className='flex flex-col sm:flex-row gap-6 justify-center mb-12'
@@ -365,7 +357,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Team Section */}
+      {/* Founder Section */}
       <section className='py-16 lg:py-24 bg-gray-50'>
         <div className={brandClasses.container}>
           <motion.div
@@ -376,54 +368,92 @@ export default function AboutPage() {
             viewport={{ once: true }}
           >
             <h2 className='text-3xl lg:text-4xl font-bold text-gray-900 mb-6'>
-              Meet Our Team
+              About the Founder
             </h2>
             <p className='text-xl text-gray-600 max-w-3xl mx-auto'>
-              Our diverse team of experts brings together decades of experience
-              in technology, design, and business strategy.
+              Meet the developer behind Best IT Consulting and learn about the
+              expertise that drives our success.
             </p>
           </motion.div>
 
-          <div className='grid md:grid-cols-2 lg:grid-cols-4 gap-8'>
-            {teamMembers.map((member, index) => (
-              <motion.div
-                key={member.name}
-                className='bg-white rounded-xl p-6 shadow-sm hover:shadow-lg transition-shadow duration-300'
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                whileHover={shouldAnimate ? { y: -5 } : undefined}
-              >
-                <div className='w-20 h-20 bg-gray-200 rounded-full mx-auto mb-4 flex items-center justify-center'>
-                  <Users className='h-10 w-10 text-gray-400' />
+          <div className='max-w-4xl mx-auto'>
+            <motion.div
+              className='bg-white rounded-2xl p-8 lg:p-12 shadow-lg hover:shadow-xl transition-shadow duration-300'
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+              whileHover={shouldAnimate ? { y: -5 } : undefined}
+            >
+              <div className='grid lg:grid-cols-3 gap-8 items-center'>
+                <div className='lg:col-span-1 text-center lg:text-left'>
+                  <div className='w-32 h-32 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-full mx-auto lg:mx-0 mb-6 flex items-center justify-center'>
+                    <img
+                      src={founderInfo.image}
+                      alt={founderInfo.name}
+                      className='w-28 h-28 rounded-full object-cover'
+                    />
+                  </div>
+                  <h3 className='text-2xl font-bold text-gray-900 mb-2'>
+                    {founderInfo.name}
+                  </h3>
+                  <p className='text-blue-600 font-semibold text-lg mb-4'>
+                    {founderInfo.role}
+                  </p>
+                  <div className='space-y-2 text-sm text-gray-600'>
+                    <p>
+                      <strong>Experience:</strong> {founderInfo.experience}
+                    </p>
+                    <p>
+                      <strong>Education:</strong> {founderInfo.education}
+                    </p>
+                  </div>
                 </div>
-                <h3 className='text-xl font-semibold text-gray-900 text-center mb-2'>
-                  {member.name}
-                </h3>
-                <p className='text-blue-600 font-medium text-center mb-3'>
-                  {member.role}
-                </p>
-                <p className='text-gray-600 text-sm text-center mb-4'>
-                  {member.bio}
-                </p>
-                <div className='flex flex-wrap gap-2 justify-center'>
-                  {member.expertise.map(skill => (
-                    <span
-                      key={skill}
-                      className='px-3 py-1 bg-blue-100 text-blue-600 text-xs rounded-full'
-                    >
-                      {skill}
-                    </span>
-                  ))}
+
+                <div className='lg:col-span-2'>
+                  <p className='text-lg text-gray-600 leading-relaxed mb-6'>
+                    {founderInfo.bio}
+                  </p>
+
+                  <div className='mb-6'>
+                    <h4 className='text-lg font-semibold text-gray-900 mb-3'>
+                      Core Expertise
+                    </h4>
+                    <div className='flex flex-wrap gap-2'>
+                      {founderInfo.expertise.map(skill => (
+                        <span
+                          key={skill}
+                          className='px-4 py-2 bg-blue-100 text-blue-700 text-sm rounded-full font-medium'
+                        >
+                          {skill}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div>
+                    <h4 className='text-lg font-semibold text-gray-900 mb-3'>
+                      Technical Specialties
+                    </h4>
+                    <div className='flex flex-wrap gap-2'>
+                      {founderInfo.specialties.map(tech => (
+                        <span
+                          key={tech}
+                          className='px-3 py-1 bg-gray-100 text-gray-700 text-sm rounded-full'
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
                 </div>
-              </motion.div>
-            ))}
+              </div>
+            </motion.div>
           </div>
         </div>
       </section>
 
-      {/* Company Culture & Office Section */}
+      {/* Work Philosophy & Approach Section */}
       <section className='py-16 lg:py-24 bg-white'>
         <div className={brandClasses.container}>
           <motion.div
@@ -434,11 +464,11 @@ export default function AboutPage() {
             viewport={{ once: true }}
           >
             <h2 className='text-3xl lg:text-4xl font-bold text-gray-900 mb-6'>
-              Our Culture & Environment
+              My Work Philosophy & Approach
             </h2>
             <p className='text-xl text-gray-600 max-w-3xl mx-auto'>
-              Discover what makes Best IT Consulting a great place to work and
-              partner with.
+              Discover what drives my commitment to delivering exceptional
+              technology solutions and building lasting client relationships.
             </p>
           </motion.div>
 
@@ -450,19 +480,20 @@ export default function AboutPage() {
               viewport={{ once: true }}
             >
               <h3 className='text-2xl font-bold text-gray-900 mb-6'>
-                Our Office Environment
+                My Development Environment
               </h3>
               <p className='text-lg text-gray-600 leading-relaxed mb-6'>
-                Our modern office space in Surrey Guildford provides the perfect
-                environment for innovation and collaboration. We've designed our
-                workspace to foster creativity, productivity, and teamwork.
+                I work from a modern, well-equipped home office that's designed
+                for maximum productivity and creativity. This setup allows me to
+                focus entirely on your project while maintaining the flexibility
+                to adapt to your schedule and needs.
               </p>
               <div className='space-y-4'>
                 {[
-                  'Open-concept collaborative spaces',
-                  'State-of-the-art meeting rooms',
-                  'Relaxation and break areas',
-                  'Modern technology infrastructure',
+                  'Dedicated workspace with dual monitors',
+                  'High-speed internet and cloud infrastructure',
+                  'Professional development tools and software',
+                  'Quiet environment for deep focus work',
                 ].map((feature, index) => (
                   <motion.div
                     key={feature}
@@ -488,7 +519,7 @@ export default function AboutPage() {
               {officeImage ? (
                 <R2CardImage
                   src={officeImage.url}
-                  alt='Our office environment'
+                  alt='Development workspace'
                   className='w-full h-80 rounded-xl shadow-xl'
                   animation='scale'
                   delay={0.2}
@@ -499,7 +530,7 @@ export default function AboutPage() {
                       <div className='w-12 h-12 mx-auto mb-2 bg-white/20 rounded-full flex items-center justify-center'>
                         <Building className='w-6 h-6' />
                       </div>
-                      <p className='text-sm font-medium'>View Office</p>
+                      <p className='text-sm font-medium'>My Workspace</p>
                     </div>
                   }
                 />
@@ -507,7 +538,7 @@ export default function AboutPage() {
                 <div className='w-full h-80 bg-gradient-to-br from-blue-100 to-cyan-100 rounded-xl flex items-center justify-center'>
                   <div className='text-center'>
                     <Building className='w-16 h-16 text-blue-400 mx-auto mb-4' />
-                    <p className='text-gray-600'>Our Office</p>
+                    <p className='text-gray-600'>Development Workspace</p>
                   </div>
                 </div>
               )}
@@ -516,7 +547,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Company Culture Visual Section */}
+      {/* Work Values & Commitment Section */}
       <section className='py-16 lg:py-24 bg-gray-50'>
         <div className={brandClasses.container}>
           <div className='grid lg:grid-cols-2 gap-12 lg:gap-16'>
@@ -529,7 +560,7 @@ export default function AboutPage() {
               {cultureImage ? (
                 <R2CardImage
                   src={cultureImage.url}
-                  alt='Company culture'
+                  alt='Work values and commitment'
                   className='w-full h-80 rounded-xl shadow-xl'
                   animation='scale'
                   delay={0.2}
@@ -540,7 +571,7 @@ export default function AboutPage() {
                       <div className='w-12 h-12 mx-auto mb-2 bg-white/20 rounded-full flex items-center justify-center'>
                         <Users className='w-6 h-6' />
                       </div>
-                      <p className='text-sm font-medium'>Our Culture</p>
+                      <p className='text-sm font-medium'>My Values</p>
                     </div>
                   }
                 />
@@ -548,7 +579,7 @@ export default function AboutPage() {
                 <div className='w-full h-80 bg-gradient-to-br from-green-100 to-emerald-100 rounded-xl flex items-center justify-center'>
                   <div className='text-center'>
                     <Users className='w-16 h-16 text-green-400 mx-auto mb-4' />
-                    <p className='text-gray-600'>Company Culture</p>
+                    <p className='text-gray-600'>Work Values</p>
                   </div>
                 </div>
               )}
@@ -561,19 +592,20 @@ export default function AboutPage() {
               viewport={{ once: true }}
             >
               <h3 className='text-2xl font-bold text-gray-900 mb-6'>
-                Our Company Culture
+                My Work Values & Commitment
               </h3>
               <p className='text-lg text-gray-600 leading-relaxed mb-6'>
-                We believe that great technology comes from great people. Our
-                culture is built on collaboration, continuous learning, and a
-                shared passion for solving complex problems.
+                I believe that exceptional technology solutions come from a deep
+                commitment to quality, continuous learning, and genuine
+                partnership with clients. Every project is an opportunity to
+                create something meaningful.
               </p>
               <div className='space-y-4'>
                 {[
-                  'Collaborative and inclusive environment',
-                  'Continuous learning and development',
-                  'Work-life balance and flexibility',
-                  'Innovation and creative freedom',
+                  'Direct communication and transparency',
+                  'Continuous learning and skill development',
+                  'Flexible scheduling to meet your needs',
+                  'Innovation and creative problem-solving',
                 ].map((value, index) => (
                   <motion.div
                     key={value}
@@ -604,11 +636,11 @@ export default function AboutPage() {
             viewport={{ once: true }}
           >
             <h2 className='text-3xl lg:text-4xl font-bold mb-6'>
-              Ready to Work With Us?
+              Ready to Work Together?
             </h2>
             <p className='text-xl text-blue-100 mb-8 max-w-2xl mx-auto'>
-              Let's discuss how we can help transform your business with
-              innovative technology solutions.
+              Let's discuss how I can help transform your business with
+              innovative technology solutions tailored to your needs.
             </p>
             <div className='flex flex-col sm:flex-row gap-4 justify-center'>
               <Button

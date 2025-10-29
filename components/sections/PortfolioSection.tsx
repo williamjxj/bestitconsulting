@@ -5,8 +5,9 @@
 
 'use client'
 
-import { motion } from 'framer-motion'
-import { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { useState, useEffect } from 'react'
+import { MoreHorizontal } from 'lucide-react'
 import {
   Card,
   CardContent,
@@ -41,6 +42,7 @@ interface Project {
   title: string
   description: string
   image: string
+  image2?: string
   technologies: string[]
   category: string
   link?: string
@@ -55,13 +57,25 @@ interface PortfolioSectionProps {
   className?: string
 }
 
+// Helper function to get R2 URL safely
+function getR2ImageUrl(imagePath: string): string {
+  try {
+    // Use the known R2 public URL directly
+    return `https://pub-3b3f23afc5404f20b2081d34fa4c87b8.r2.dev/${imagePath}`
+  } catch {
+    // Fallback to placeholder if R2 is not configured
+    return '/api/placeholder/400/300'
+  }
+}
+
 const defaultProjects: Project[] = [
   {
     id: 'ecommerce',
     title: 'E-Commerce Platform',
     description:
       'Full-stack e-commerce solution with advanced features and modern design.',
-    image: '/api/placeholder/400/300',
+    image: getR2ImageUrl('portfolio/g-11.jpg'),
+    image2: getR2ImageUrl('portfolio/g-12.jpg'),
     technologies: ['React', 'Node.js', 'MongoDB', 'Stripe'],
     category: 'Web Development',
     link: '#',
@@ -73,7 +87,8 @@ const defaultProjects: Project[] = [
     title: 'Mobile Banking App',
     description:
       'Secure mobile banking application with biometric authentication.',
-    image: '/api/placeholder/400/300',
+    image: getR2ImageUrl('portfolio/g-21.jpg'),
+    image2: getR2ImageUrl('portfolio/g-22.jpg'),
     technologies: ['React Native', 'Node.js', 'PostgreSQL', 'AWS'],
     category: 'Mobile Development',
     link: '#',
@@ -84,7 +99,8 @@ const defaultProjects: Project[] = [
     title: 'Analytics Dashboard',
     description:
       'Real-time analytics dashboard with interactive data visualization.',
-    image: '/api/placeholder/400/300',
+    image: getR2ImageUrl('portfolio/g-31.jpg'),
+    image2: getR2ImageUrl('portfolio/g-32.jpg'),
     technologies: ['Vue.js', 'Python', 'D3.js', 'Docker'],
     category: 'Data Visualization',
     link: '#',
@@ -93,7 +109,8 @@ const defaultProjects: Project[] = [
     id: 'api-platform',
     title: 'API Management Platform',
     description: 'Comprehensive API management and monitoring platform.',
-    image: '/api/placeholder/400/300',
+    image: getR2ImageUrl('portfolio/g-41.jpg'),
+    image2: getR2ImageUrl('portfolio/g-42.jpg'),
     technologies: ['Next.js', 'TypeScript', 'Redis', 'Kubernetes'],
     category: 'Backend Development',
     link: '#',
@@ -104,12 +121,85 @@ const defaultProjects: Project[] = [
     title: 'AI Customer Support',
     description:
       'Intelligent chatbot with natural language processing capabilities.',
-    image: '/api/placeholder/400/300',
+    image: getR2ImageUrl('portfolio/g-51.jpg'),
+    image2: getR2ImageUrl('portfolio/g-52.jpg'),
     technologies: ['Python', 'TensorFlow', 'FastAPI', 'OpenAI'],
     category: 'AI/ML',
     link: '#',
   },
 ]
+
+// Carousel component for project images
+function ProjectImageCarousel({ project }: { project: Project }) {
+  const [currentImageIndex, setCurrentImageIndex] = useState(0)
+  const [isHovered, setIsHovered] = useState(false)
+  const [imageError, setImageError] = useState(false)
+  const reducedMotion = useReducedMotion()
+
+  const images = [project.image, project.image2].filter(Boolean)
+  const placeholderUrl = '/api/placeholder/400/300'
+
+  useEffect(() => {
+    if (images.length <= 1 || reducedMotion || isHovered || imageError) return
+
+    const getRandomInterval = () => Math.random() * 3000 + 5000 // 5-8 seconds
+
+    const interval = setInterval(() => {
+      setCurrentImageIndex(prev => (prev + 1) % images.length)
+    }, getRandomInterval())
+
+    return () => clearInterval(interval)
+  }, [images.length, reducedMotion, isHovered, imageError])
+
+  // Handle image load error
+  const handleImageError = () => {
+    setImageError(true)
+  }
+
+  // If there's an error or no images, show placeholder
+  if (imageError || images.length === 0) {
+    return (
+      <img
+        src={placeholderUrl}
+        alt={project.title}
+        className='w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110'
+      />
+    )
+  }
+
+  if (images.length <= 1) {
+    return (
+      <img
+        src={project.image}
+        alt={project.title}
+        className='w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110'
+        onError={handleImageError}
+      />
+    )
+  }
+
+  return (
+    <div
+      className='relative w-full h-64 overflow-hidden'
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      <AnimatePresence mode='wait'>
+        <motion.img
+          key={currentImageIndex}
+          src={images[currentImageIndex]}
+          alt={project.title}
+          className='w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110'
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 1.2 }}
+          onError={handleImageError}
+        />
+      </AnimatePresence>
+    </div>
+  )
+}
 
 export function PortfolioSection({
   projects = defaultProjects,
@@ -142,16 +232,23 @@ export function PortfolioSection({
           </div>
         </FadeIn>
 
-        <AnimatedFilter
-          filters={categories.map(category => ({
-            id: category.toLowerCase().replace(/\s+/g, '-'),
-            label: category,
-            value: category,
-          }))}
-          activeFilter={selectedCategory}
-          onFilterChange={setSelectedCategory}
-          className='mb-12'
-        >
+        <div className='flex flex-wrap justify-center gap-2 mb-12'>
+          {categories.map(category => (
+            <button
+              key={category}
+              onClick={() => setSelectedCategory(category)}
+              className={`px-6 py-3 rounded-full font-medium transition-all duration-300 ${
+                selectedCategory === category
+                  ? 'bg-primary text-primary-foreground shadow-lg transform scale-105'
+                  : 'bg-muted text-muted-foreground hover:bg-muted/80 hover:text-foreground'
+              }`}
+            >
+              {category}
+            </button>
+          ))}
+        </div>
+
+        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
           {filteredProjects.map((project, index) => (
             <CardInteractions
               key={project.id}
@@ -160,16 +257,12 @@ export function PortfolioSection({
               className='h-full'
             >
               <Card
-                className='group h-full overflow-hidden hover:shadow-xl transition-all duration-300'
+                className='group h-full overflow-hidden p-0 transform-gpu'
                 animated={!reducedMotion}
                 hover={deviceType !== 'mobile'}
               >
                 <div className='relative overflow-hidden'>
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    className='w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105'
-                  />
+                  <ProjectImageCarousel project={project} />
                   {project.featured && (
                     <div className='absolute top-4 left-4 bg-primary text-primary-foreground px-2 py-1 rounded-full text-xs font-medium'>
                       Featured
@@ -178,20 +271,50 @@ export function PortfolioSection({
                   <div className='absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300' />
                 </div>
 
-                <CardHeader>
+                <div className='p-6'>
                   <div className='flex items-center justify-between mb-2'>
                     <CardTitle className='text-xl'>{project.title}</CardTitle>
-                    <span className='text-sm text-muted-foreground bg-muted px-2 py-1 rounded'>
-                      {project.category}
-                    </span>
+                    <div className='flex items-center gap-2'>
+                      <span className='text-sm text-muted-foreground bg-muted px-2 py-1 rounded'>
+                        {project.category}
+                      </span>
+                      <div className='flex gap-1'>
+                        {project.link && (
+                          <Button size='sm' variant='outline' asChild>
+                            <a
+                              href={project.link}
+                              target='_blank'
+                              rel='noopener noreferrer'
+                            >
+                              View Project
+                            </a>
+                          </Button>
+                        )}
+                        {project.github && (
+                          <Button size='sm' variant='ghost' asChild>
+                            <a
+                              href={project.github}
+                              target='_blank'
+                              rel='noopener noreferrer'
+                            >
+                              <svg
+                                className='w-4 h-4'
+                                fill='currentColor'
+                                viewBox='0 0 24 24'
+                              >
+                                <path d='M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z' />
+                              </svg>
+                            </a>
+                          </Button>
+                        )}
+                      </div>
+                    </div>
                   </div>
-                  <CardDescription className='text-base'>
+                  <CardDescription className='text-base mb-4'>
                     {project.description}
                   </CardDescription>
-                </CardHeader>
 
-                <CardContent>
-                  <div className='flex flex-wrap gap-2 mb-4'>
+                  <div className='flex flex-wrap items-center gap-2'>
                     {project.technologies.map((tech, techIndex) => (
                       <motion.span
                         key={tech}
@@ -206,43 +329,27 @@ export function PortfolioSection({
                         {tech}
                       </motion.span>
                     ))}
+                    <motion.div
+                      className='text-muted-foreground'
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{
+                        delay:
+                          0.8 +
+                          index * 0.1 +
+                          project.technologies.length * 0.05 +
+                          0.1,
+                        duration: 0.3,
+                      }}
+                    >
+                      <MoreHorizontal className='w-3 h-3' />
+                    </motion.div>
                   </div>
-
-                  <div className='flex gap-2'>
-                    {project.link && (
-                      <Button size='sm' variant='outline' asChild>
-                        <a
-                          href={project.link}
-                          target='_blank'
-                          rel='noopener noreferrer'
-                        >
-                          View Project
-                        </a>
-                      </Button>
-                    )}
-                    {project.github && (
-                      <Button size='sm' variant='ghost' asChild>
-                        <a
-                          href={project.github}
-                          target='_blank'
-                          rel='noopener noreferrer'
-                        >
-                          <svg
-                            className='w-4 h-4'
-                            fill='currentColor'
-                            viewBox='0 0 24 24'
-                          >
-                            <path d='M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z' />
-                          </svg>
-                        </a>
-                      </Button>
-                    )}
-                  </div>
-                </CardContent>
+                </div>
               </Card>
             </CardInteractions>
           ))}
-        </AnimatedFilter>
+        </div>
 
         <FadeIn delay={1.2} duration={0.8}>
           <div className='text-center mt-12'>

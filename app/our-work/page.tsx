@@ -409,7 +409,7 @@ export default function OurWorkPage() {
         {/* Projects Section */}
         <ScrollTrigger animation='fade' direction='up' duration={0.8}>
           <section className='py-20 px-4 bg-gradient-to-br from-blue-50 to-cyan-50'>
-            <div className='max-w-6xl mx-auto'>
+            <div className='max-w-7xl mx-auto'>
               <div className='text-center mb-16'>
                 <FadeIn delay={0.2} duration={0.8}>
                   <h2 className='text-4xl font-bold text-gray-900 mb-6'>
@@ -423,7 +423,7 @@ export default function OurWorkPage() {
                 </FadeIn>
               </div>
 
-              <div className='grid md:grid-cols-2 lg:grid-cols-3 gap-8'>
+              <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
                 {projects.map((project, index) => (
                   <SlideIn
                     key={project.id}
@@ -431,7 +431,7 @@ export default function OurWorkPage() {
                     delay={index * 0.1}
                     duration={0.6}
                   >
-                    <Card className='group hover:shadow-xl transition-all duration-300 hover:-translate-y-2 border-0 bg-white/80 backdrop-blur-sm'>
+                    <Card className='group hover:shadow-xl transition-all duration-300 hover:-translate-y-2 border-0 bg-white/80 backdrop-blur-sm h-full w-full'>
                       <CardHeader className='pb-4'>
                         <div className='flex items-center justify-between mb-4'>
                           <Badge
@@ -451,7 +451,7 @@ export default function OurWorkPage() {
                           {project.title}
                         </CardTitle>
                       </CardHeader>
-                      <CardContent>
+                      <CardContent className='flex flex-col h-full'>
                         {/* Project Image */}
                         <div className='mb-4'>
                           {(() => {
@@ -468,7 +468,7 @@ export default function OurWorkPage() {
                               <R2CardImage
                                 src={projectImage.url}
                                 alt={project.title}
-                                className='w-full h-48 rounded-lg'
+                                className='w-full h-40 rounded-lg object-cover'
                                 animation='fade'
                                 delay={0.2}
                                 hover={true}
@@ -485,7 +485,7 @@ export default function OurWorkPage() {
                                 }
                               />
                             ) : (
-                              <div className='w-full h-48 bg-gradient-to-br from-blue-100 to-cyan-100 rounded-lg flex items-center justify-center'>
+                              <div className='w-full h-40 bg-gradient-to-br from-blue-100 to-cyan-100 rounded-lg flex items-center justify-center'>
                                 <div className='text-center'>
                                   <Code2 className='w-8 h-8 text-blue-400 mx-auto mb-2' />
                                   <p className='text-gray-600 text-sm'>
@@ -497,7 +497,7 @@ export default function OurWorkPage() {
                           })()}
                         </div>
 
-                        <p className='text-gray-600 mb-4 leading-relaxed'>
+                        <p className='text-gray-600 mb-4 leading-relaxed flex-grow'>
                           {project.description}
                         </p>
                         <div className='flex flex-wrap gap-2 mb-4'>

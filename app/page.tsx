@@ -20,12 +20,7 @@ import { CredibilitySection } from '@/components/sections/CredibilitySection'
 import TechnologyShowcase from '@/components/sections/TechnologyShowcase'
 import { DemoVideo } from '@/components/DemoVideo'
 import { TestimonialsSection } from '@/components/sections/TestimonialsSection'
-import {
-  R2Image,
-  R2Video,
-  R2HeroImage,
-  R2CardImage,
-} from '@/components/R2Image'
+import { R2Image, R2Video, R2HeroImage } from '@/components/R2Image'
 import { useR2Assets, R2_ASSET_MAPPINGS } from '@/hooks/useR2Assets'
 
 export default function HomePage() {
@@ -37,7 +32,6 @@ export default function HomePage() {
   const heroImage = getAssetByFilename(R2_ASSET_MAPPINGS.home.hero)
   const demoVideo = getAssetByFilename(R2_ASSET_MAPPINGS.home.demo)
   const demoPoster = getAssetByFilename(R2_ASSET_MAPPINGS.home.demoPoster)
-  const techImage = getAssetByFilename(R2_ASSET_MAPPINGS.home.technology)
   const teamImage = getAssetByFilename(R2_ASSET_MAPPINGS.home.team)
 
   const features = [
@@ -110,7 +104,7 @@ export default function HomePage() {
       icon: <Star className='h-6 w-6' />,
     },
     {
-      number: '24/7',
+      number: '247',
       label: 'Support Available',
       icon: <Shield className='h-6 w-6' />,
     },
@@ -165,7 +159,7 @@ export default function HomePage() {
                         <R2Video
                           src={demoVideo.url}
                           poster={demoPoster?.url}
-                          className='w-full h-full rounded-xl overflow-hidden shadow-2xl'
+                          className='w-full aspect-video rounded-xl overflow-hidden shadow-2xl'
                           controls={true}
                           autoPlay={false}
                           loop={true}
@@ -175,7 +169,9 @@ export default function HomePage() {
                           delay={0.6}
                         />
                       ) : (
-                        <DemoVideo />
+                        <div className='w-full aspect-video'>
+                          <DemoVideo className='w-full h-full' />
+                        </div>
                       )}
                       {/* Overlay for better visual appeal */}
                       <div className='absolute inset-0 bg-gradient-to-t from-black/20 to-transparent rounded-xl pointer-events-none'></div>
@@ -188,118 +184,100 @@ export default function HomePage() {
         </ScrollTrigger>
 
         {/* Features Overview */}
-        <ScrollTrigger animation='fade' direction='up' duration={0.8}>
-          <section className='py-12 bg-muted/30'>
-            <div className='w-full px-4 sm:px-6 lg:px-8'>
-              <ScrollTrigger animation='slide' direction='up' delay={0.2}>
-                <div className='text-center mb-16'>
-                  <span className='inline-block px-4 py-1.5 text-sm font-medium bg-blue-100 text-blue-800 rounded-full mb-4'>
-                    Our Expertise
-                  </span>
-                  <h2 className='text-3xl md:text-4xl font-bold mb-4'>
-                    Comprehensive IT Solutions
-                  </h2>
-                  <p className='text-lg text-muted-foreground max-w-2xl mx-auto'>
-                    From concept to deployment, we provide end-to-end technology
-                    services that drive innovation.
-                  </p>
-                </div>
-              </ScrollTrigger>
+        <section className='py-12 bg-muted/30'>
+          <div className='w-full px-4 sm:px-6 lg:px-8'>
+            <div className='w-full lg:max-w-7xl lg:mx-auto'>
+              <div className='text-center mb-16'>
+                <span className='inline-block px-4 py-1.5 text-sm font-medium bg-blue-100 text-blue-800 rounded-full mb-4'>
+                  Our Expertise
+                </span>
+                <h2 className='text-3xl md:text-4xl font-bold mb-4'>
+                  Comprehensive IT Solutions
+                </h2>
+                <p className='text-lg text-muted-foreground max-w-2xl mx-auto'>
+                  From concept to deployment, we provide end-to-end technology
+                  services that drive innovation.
+                </p>
+              </div>
 
               <div className='grid md:grid-cols-2 lg:grid-cols-4 gap-8'>
                 {features.map((feature, index) => (
-                  <ScrollTrigger
+                  <div
                     key={index}
-                    animation='scale'
-                    delay={0.4 + index * 0.1}
+                    className='group bg-card p-6 rounded-xl border border-border/40 hover:border-blue-500/30 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg'
                   >
-                    <div
-                      key={index}
-                      className='group bg-card p-6 rounded-xl border border-border/40 hover:border-blue-500/30 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg'
-                    >
-                      <div className='w-12 h-12 bg-blue-500/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-blue-500/20 transition-colors'>
-                        <div className='text-blue-500 group-hover:scale-110 transition-transform'>
-                          {feature.icon}
-                        </div>
+                    <div className='w-12 h-12 bg-blue-500/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-blue-500/20 transition-colors'>
+                      <div className='text-blue-500 group-hover:scale-110 transition-transform'>
+                        {feature.icon}
                       </div>
-                      <h3 className='text-xl font-semibold mb-2'>
-                        {feature.title}
-                      </h3>
-                      <p className='text-muted-foreground'>
-                        {feature.description}
-                      </p>
                     </div>
-                  </ScrollTrigger>
+                    <h3 className='text-xl font-semibold mb-2'>
+                      {feature.title}
+                    </h3>
+                    <p className='text-muted-foreground'>
+                      {feature.description}
+                    </p>
+                  </div>
                 ))}
               </div>
 
-              <ScrollTrigger animation='fade' direction='up' delay={0.8}>
-                <div className='text-center mt-12'>
-                  <Button size='lg' asChild>
-                    <Link href='/services' className='group'>
-                      Explore All Services
-                      <ArrowRight className='ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform' />
-                    </Link>
-                  </Button>
-                </div>
-              </ScrollTrigger>
+              <div className='text-center mt-12'>
+                <Button size='lg' asChild>
+                  <Link href='/services' className='group'>
+                    Explore All Services
+                    <ArrowRight className='ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform' />
+                  </Link>
+                </Button>
+              </div>
             </div>
-          </section>
-        </ScrollTrigger>
+          </div>
+        </section>
 
         {/* Credibility Section */}
         <CredibilitySection />
 
         {/* Stats Section */}
-        <ScrollTrigger animation='fade' direction='up' duration={0.8}>
-          <section className='py-12 bg-gradient-to-r from-blue-600 to-indigo-700 text-white'>
-            <div className='w-full px-4 sm:px-6 lg:px-8'>
-              <ScrollTrigger animation='slide' direction='up' delay={0.2}>
-                <div className='text-center mb-16'>
-                  <h2 className='text-3xl md:text-4xl font-bold mb-4'>
-                    Proven Track Record
-                  </h2>
-                  <p className='text-xl text-blue-100 max-w-2xl mx-auto'>
-                    Numbers that showcase our commitment to excellence and
-                    client success.
-                  </p>
-                </div>
-              </ScrollTrigger>
+        <section className='py-12 bg-gradient-to-r from-blue-600 to-indigo-700 text-white'>
+          <div className='w-full px-4 sm:px-6 lg:px-8'>
+            <div className='w-full lg:max-w-7xl lg:mx-auto'>
+              <div className='text-center mb-16'>
+                <h2 className='text-3xl md:text-4xl font-bold mb-4'>
+                  Proven Track Record
+                </h2>
+                <p className='text-xl text-blue-100 max-w-2xl mx-auto'>
+                  Numbers that showcase our commitment to excellence and client
+                  success.
+                </p>
+              </div>
 
               <div className='grid grid-cols-2 lg:grid-cols-4 gap-8'>
                 {stats.map((stat, index) => (
-                  <ScrollTrigger
-                    key={index}
-                    animation='scale'
-                    delay={0.4 + index * 0.1}
-                  >
-                    <div className='text-center group'>
-                      <div className='w-16 h-16 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-white/20 transition-colors'>
-                        <div className='text-cyan-300'>{stat.icon}</div>
-                      </div>
-                      <AnimatedCounter
-                        value={parseInt(stat.number.replace(/[^\d]/g, ''))}
-                        duration={2}
-                        delay={0.6 + index * 0.2}
-                        suffix={
-                          stat.number.includes('%')
-                            ? '%'
-                            : stat.number.includes('+')
-                              ? '+'
-                              : ''
-                        }
-                        className='text-3xl md:text-4xl font-bold mb-2'
-                      >
-                        <></>
-                      </AnimatedCounter>
-                      <div className='text-blue-100'>{stat.label}</div>
+                  <div key={index} className='text-center group'>
+                    <div className='w-16 h-16 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-white/20 transition-colors'>
+                      <div className='text-cyan-300'>{stat.icon}</div>
                     </div>
-                  </ScrollTrigger>
+                    <AnimatedCounter
+                      value={parseInt(stat.number.replace(/[^\d]/g, ''))}
+                      duration={2}
+                      delay={0.6 + index * 0.2}
+                      suffix={
+                        stat.number.includes('%')
+                          ? '%'
+                          : stat.number.includes('+')
+                            ? '+'
+                            : ''
+                      }
+                      className='text-3xl md:text-4xl font-bold mb-2'
+                    >
+                      <></>
+                    </AnimatedCounter>
+                    <div className='text-blue-100'>{stat.label}</div>
+                  </div>
                 ))}
               </div>
             </div>
-          </section>
-        </ScrollTrigger>
+          </div>
+        </section>
 
         {/* Testimonials */}
         <TestimonialsSection
@@ -321,92 +299,6 @@ export default function HomePage() {
 
         {/* Technology Showcase */}
         <TechnologyShowcase />
-
-        {/* Enhanced Technology Visual Section */}
-        <ScrollTrigger animation='fade' direction='up' duration={0.8}>
-          <section className='py-20 bg-gradient-to-br from-slate-50 to-blue-50'>
-            <div className='w-full px-4 sm:px-6 lg:px-8'>
-              <div className='w-full lg:max-w-7xl lg:mx-auto'>
-                <ScrollTrigger animation='slide' direction='up' delay={0.2}>
-                  <div className='text-center mb-16'>
-                    <span className='inline-block px-4 py-1.5 text-sm font-medium bg-blue-100 text-blue-800 rounded-full mb-4'>
-                      Technology Excellence
-                    </span>
-                    <h2 className='text-3xl md:text-4xl font-bold mb-4'>
-                      Cutting-Edge Technology Stack
-                    </h2>
-                    <p className='text-lg text-muted-foreground max-w-2xl mx-auto'>
-                      We leverage the latest technologies to build scalable,
-                      secure, and high-performance solutions.
-                    </p>
-                  </div>
-                </ScrollTrigger>
-
-                <div className='grid lg:grid-cols-2 gap-12 items-center'>
-                  <ScrollTrigger
-                    animation='slide'
-                    direction='right'
-                    delay={0.4}
-                  >
-                    <div className='space-y-6'>
-                      <div className='grid grid-cols-2 gap-4'>
-                        {[
-                          { name: 'React/Next.js', icon: '⚛️' },
-                          { name: 'TypeScript', icon: '🔷' },
-                          { name: 'Node.js', icon: '🟢' },
-                          { name: 'Cloud AWS', icon: '☁️' },
-                        ].map((tech, index) => (
-                          <div
-                            key={tech.name}
-                            className='bg-white p-4 rounded-xl shadow-sm border border-gray-200 hover:shadow-md transition-shadow'
-                          >
-                            <div className='text-2xl mb-2'>{tech.icon}</div>
-                            <h3 className='font-semibold text-gray-900'>
-                              {tech.name}
-                            </h3>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </ScrollTrigger>
-
-                  <ScrollTrigger animation='slide' direction='left' delay={0.6}>
-                    <div className='relative'>
-                      {techImage ? (
-                        <R2CardImage
-                          src={techImage.url}
-                          alt='Technology showcase'
-                          className='w-full h-80 rounded-xl shadow-xl'
-                          animation='scale'
-                          delay={0.8}
-                          hover={true}
-                          overlay={true}
-                          overlayContent={
-                            <div className='text-white text-center'>
-                              <div className='w-12 h-12 mx-auto mb-2 bg-white/20 rounded-full flex items-center justify-center'>
-                                <Code2 className='w-6 h-6' />
-                              </div>
-                              <p className='text-sm font-medium'>
-                                View Details
-                              </p>
-                            </div>
-                          }
-                        />
-                      ) : (
-                        <div className='w-full h-80 bg-gradient-to-br from-blue-100 to-cyan-100 rounded-xl flex items-center justify-center'>
-                          <div className='text-center'>
-                            <Code2 className='w-16 h-16 text-blue-400 mx-auto mb-4' />
-                            <p className='text-gray-600'>Technology Showcase</p>
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                  </ScrollTrigger>
-                </div>
-              </div>
-            </div>
-          </section>
-        </ScrollTrigger>
 
         {/* CTA Section */}
         <section className='py-12 bg-gradient-to-r from-blue-600 to-indigo-700 text-white'>

@@ -1,6 +1,5 @@
 'use client'
 import Link from 'next/link'
-import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { PortfolioSection } from '@/components/sections/PortfolioSection'
 import Layout from '@/components/Layout'
@@ -18,8 +17,6 @@ import {
   CheckCircle,
   Globe,
   Monitor,
-  Database,
-  Cloud,
 } from 'lucide-react'
 import {
   R2Image,
@@ -268,99 +265,6 @@ export default function PortfolioPage() {
             </div>
           </section>
         </ScrollTrigger>
-
-        {/* Technologies Section */}
-        <section className='py-20 px-4 bg-gradient-to-br from-blue-50 to-cyan-50'>
-          <div className='max-w-6xl mx-auto'>
-            <div className='text-center mb-16'>
-              <h2 className='text-4xl font-bold text-gray-900 mb-6'>
-                Technologies We Use
-              </h2>
-              <p className='text-xl text-gray-600 max-w-3xl mx-auto'>
-                We leverage cutting-edge technologies to build scalable, secure,
-                and high-performance solutions
-              </p>
-            </div>
-
-            <div className='grid grid-cols-1 md:grid-cols-3 gap-8'>
-              <div className='bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300'>
-                <div className='w-12 h-12 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-lg flex items-center justify-center mb-6'>
-                  <Monitor className='h-6 w-6 text-white' />
-                </div>
-                <h3 className='text-xl font-bold text-gray-900 mb-4'>
-                  Frontend Development
-                </h3>
-                <div className='space-y-2'>
-                  {[
-                    'React',
-                    'Next.js',
-                    'Vue.js',
-                    'Angular',
-                    'TypeScript',
-                    'Tailwind CSS',
-                  ].map((tech, index) => (
-                    <Badge
-                      key={index}
-                      variant='secondary'
-                      className='mr-2 mb-2'
-                    >
-                      {tech}
-                    </Badge>
-                  ))}
-                </div>
-              </div>
-
-              <div className='bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300'>
-                <div className='w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-500 rounded-lg flex items-center justify-center mb-6'>
-                  <Database className='h-6 w-6 text-white' />
-                </div>
-                <h3 className='text-xl font-bold text-gray-900 mb-4'>
-                  Backend Development
-                </h3>
-                <div className='space-y-2'>
-                  {[
-                    'Node.js',
-                    'Python',
-                    'Java',
-                    '.NET',
-                    'PostgreSQL',
-                    'MongoDB',
-                  ].map((tech, index) => (
-                    <Badge
-                      key={index}
-                      variant='secondary'
-                      className='mr-2 mb-2'
-                    >
-                      {tech}
-                    </Badge>
-                  ))}
-                </div>
-              </div>
-
-              <div className='bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300'>
-                <div className='w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg flex items-center justify-center mb-6'>
-                  <Cloud className='h-6 w-6 text-white' />
-                </div>
-                <h3 className='text-xl font-bold text-gray-900 mb-4'>
-                  Cloud & DevOps
-                </h3>
-                <div className='space-y-2'>
-                  {['AWS', 'Azure', 'GCP', 'Docker', 'Kubernetes', 'CI/CD'].map(
-                    (tech, index) => (
-                      <Badge
-                        key={index}
-                        variant='secondary'
-                        className='mr-2 mb-2'
-                      >
-                        {tech}
-                      </Badge>
-                    )
-                  )}
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
 
         {/* CTA Section */}
         <section className='py-20 px-4 bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 text-white'>

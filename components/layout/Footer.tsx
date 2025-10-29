@@ -132,11 +132,6 @@ export function Footer() {
                 </div>
               </Link>
 
-              <p className='text-gray-300 mb-6 leading-relaxed'>
-                We deliver cutting-edge technology solutions that help
-                businesses scale, innovate, and succeed in the digital era.
-              </p>
-
               {/* Contact Info */}
               <div className='space-y-3 mb-6'>
                 <div className='flex items-center space-x-3 text-gray-300'>

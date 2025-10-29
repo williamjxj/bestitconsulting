@@ -419,95 +419,6 @@ export default function TestimonialsPage() {
           </div>
         </section>
 
-        {/* Success Stories Visual Section */}
-        <section className='py-20 px-4 bg-gradient-to-br from-blue-50 to-cyan-50'>
-          <div className='max-w-6xl mx-auto'>
-            <div className='text-center mb-16'>
-              <h2 className='text-4xl font-bold text-gray-900 mb-6'>
-                Success Stories
-              </h2>
-              <p className='text-xl text-gray-600 max-w-3xl mx-auto'>
-                Visual proof of our impact through real client transformations
-              </p>
-            </div>
-
-            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
-              {[
-                {
-                  image: client1Image,
-                  title: 'TechFlow Solutions',
-                  description: 'Cloud Migration Success',
-                  results: '60% cost reduction',
-                },
-                {
-                  image: client2Image,
-                  title: 'HealthVital Medical',
-                  description: 'Healthcare Platform',
-                  results: '30% efficiency gain',
-                },
-                {
-                  image: successImage,
-                  title: 'RetailMax Enterprise',
-                  description: 'E-commerce Transformation',
-                  results: '40% conversion increase',
-                },
-              ].map((story, index) => (
-                <div
-                  key={index}
-                  className='group relative bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300'
-                >
-                  {story.image ? (
-                    <R2CardImage
-                      src={story.image.url}
-                      alt={story.title}
-                      className='w-full h-48'
-                      animation='scale'
-                      delay={0.2 + index * 0.1}
-                      hover={true}
-                      overlay={true}
-                      overlayContent={
-                        <div className='text-white text-center'>
-                          <div className='w-12 h-12 mx-auto mb-2 bg-white/20 rounded-full flex items-center justify-center'>
-                            <ThumbsUp className='w-6 h-6' />
-                          </div>
-                          <p className='text-sm font-medium'>
-                            View Success Story
-                          </p>
-                        </div>
-                      }
-                    />
-                  ) : (
-                    <div className='w-full h-48 bg-gradient-to-br from-blue-100 to-cyan-100 flex items-center justify-center'>
-                      <div className='text-center'>
-                        <ThumbsUp className='w-12 h-12 text-blue-400 mx-auto mb-2' />
-                        <p className='text-gray-600 text-sm'>{story.title}</p>
-                      </div>
-                    </div>
-                  )}
-                  <div className='p-6'>
-                    <h4 className='font-semibold text-gray-900 mb-2'>
-                      {story.title}
-                    </h4>
-                    <p className='text-gray-600 text-sm mb-3'>
-                      {story.description}
-                    </p>
-                    <div className='flex items-center justify-between'>
-                      <span className='text-green-600 font-medium text-sm'>
-                        {story.results}
-                      </span>
-                      <div className='flex text-yellow-400'>
-                        {[...Array(5)].map((_, i) => (
-                          <Star key={i} className='w-4 h-4 fill-current' />
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
         {/* Video Testimonials Section */}
         <section className='py-20 px-4 bg-white'>
           <div className='max-w-6xl mx-auto'>
@@ -522,23 +433,60 @@ export default function TestimonialsPage() {
             </div>
 
             <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
-              {[1, 2, 3].map(index => (
+              {[
+                {
+                  image: client1Image,
+                  title: 'TechFlow Solutions',
+                  description: 'Cloud Migration Success',
+                },
+                {
+                  image: client2Image,
+                  title: 'HealthVital Medical',
+                  description: 'Healthcare Platform',
+                },
+                {
+                  image: successImage,
+                  title: 'RetailMax Enterprise',
+                  description: 'E-commerce Transformation',
+                },
+              ].map((video, index) => (
                 <div
                   key={index}
-                  className='group relative bg-gradient-to-br from-blue-100 to-cyan-100 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300'
+                  className='group relative bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300'
                 >
-                  <div className='aspect-video bg-gradient-to-br from-blue-500/20 to-cyan-500/20 flex items-center justify-center'>
-                    <div className='w-16 h-16 bg-white/90 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300 cursor-pointer'>
-                      <div className='w-0 h-0 border-l-[12px] border-l-blue-600 border-t-[8px] border-t-transparent border-b-[8px] border-b-transparent ml-1'></div>
+                  {video.image ? (
+                    <R2CardImage
+                      src={video.image.url}
+                      alt={video.title}
+                      className='w-full aspect-video'
+                      animation='scale'
+                      delay={0.2 + index * 0.1}
+                      hover={true}
+                      overlay={true}
+                      overlayContent={
+                        <div className='text-white text-center'>
+                          <div className='w-16 h-16 mx-auto mb-2 bg-white/20 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300'>
+                            <div className='w-0 h-0 border-l-[12px] border-l-white border-t-[8px] border-t-transparent border-b-[8px] border-b-transparent ml-1'></div>
+                          </div>
+                          <p className='text-sm font-medium'>Play Video</p>
+                        </div>
+                      }
+                    />
+                  ) : (
+                    <div className='aspect-video bg-gradient-to-br from-blue-100 to-cyan-100 flex items-center justify-center'>
+                      <div className='text-center'>
+                        <div className='w-16 h-16 mx-auto mb-2 bg-white/90 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300'>
+                          <div className='w-0 h-0 border-l-[12px] border-l-blue-600 border-t-[8px] border-t-transparent border-b-[8px] border-b-transparent ml-1'></div>
+                        </div>
+                        <p className='text-gray-600 text-sm'>{video.title}</p>
+                      </div>
                     </div>
-                  </div>
+                  )}
                   <div className='p-4'>
                     <h4 className='font-semibold text-gray-900 mb-1'>
-                      Client Success Story #{index}
+                      {video.title}
                     </h4>
-                    <p className='text-gray-600 text-sm'>
-                      See how we transformed their business
-                    </p>
+                    <p className='text-gray-600 text-sm'>{video.description}</p>
                   </div>
                 </div>
               ))}

@@ -37,7 +37,7 @@ import { ButtonHoverEffects } from '@/components/ui/ButtonHoverEffects'
 
 export function HeroSection() {
   return (
-    <section className='relative overflow-hidden bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 text-white py-24 md:py-32 lg:py-40'>
+    <section className='relative overflow-hidden bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 text-white h-screen flex items-center'>
       {/* Enhanced animated background with particle system */}
       {/* <LazyAnimation
         component={EnhancedParticleBackground}
@@ -123,7 +123,7 @@ export function HeroSection() {
       </div>
       {/* </ParticleBackground> */}
 
-      <div className='w-full px-4 sm:px-6 lg:px-8 relative z-10'>
+      <div className='w-full px-4 sm:px-6 lg:px-8 relative z-10 pt-16 sm:pt-20'>
         <div className='w-full lg:max-w-7xl lg:mx-auto text-center'>
           {/* Enhanced trust badge */}
           <FadeIn delay={0.2} duration={0.8}>
@@ -147,20 +147,10 @@ export function HeroSection() {
           {/* Enhanced main headline with better typography */}
           <SlideIn direction='up' delay={0.4} duration={1.0}>
             <h1 className='text-5xl md:text-6xl lg:text-7xl font-bold leading-tight mb-8 tracking-tight'>
-              {/* <AnimatedGradientText
-                text="Transform Your Digital Future"
-                className="block mb-2"
-                gradientColors={['#60A5FA', '#34D399', '#A78BFA']}
-                animationDuration={3}
-                delay={0.6}
-              /> */}
-              <span className='block mb-2'>Transform Your Digital Future</span>
-              {/* <TextMorphing
-                words={['with Expert IT Solutions', 'with Cutting-Edge Technology', 'with Innovative Solutions']}
-                interval={4}
-                className="block text-4xl md:text-5xl lg:text-6xl mt-4 text-blue-100"
-                delay={1.0}
-              /> */}
+              <span className='block mb-2'>Transform Your</span>
+              <span className='block mb-2 bg-gradient-to-r from-blue-400 via-cyan-400 to-blue-500 bg-clip-text text-transparent'>
+                Digital Future
+              </span>
               <span className='block text-4xl md:text-5xl lg:text-6xl mt-4 text-blue-100'>
                 with Expert IT Solutions
               </span>
