@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { Button } from '@/components/ui/button'
+import { IconCloudDemo } from '@/components/ui/IconCloudDemo'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
@@ -24,15 +25,17 @@ interface TechCardProps {
 
 const TechCard = ({ name, icon, color }: TechCardProps) => (
   <div className='flex-shrink-0 mx-2'>
-    <div className='relative w-20 h-20 bg-white rounded-xl border border-gray-200/50 flex flex-col items-center justify-center hover:border-blue-300/50 transition-all duration-300 hover:scale-105 hover:shadow-lg group'>
-      <div
-        className={`text-white bg-gradient-to-br ${color} p-2 rounded-lg mb-1 group-hover:scale-110 transition-transform duration-300`}
-      >
-        {icon}
+    <div className='relative w-20 h-20 rounded-xl p-[1px] bg-gradient-to-br from-gray-200 to-gray-100 shadow-sm hover:shadow-md transition-shadow duration-300'>
+      <div className='w-full h-full bg-white rounded-[10px] border border-gray-200/70 flex flex-col items-center justify-center hover:border-blue-300/60 transition-all duration-300 group'>
+        <div
+          className={`text-white bg-gradient-to-br ${color} p-2 rounded-lg mb-1 group-hover:scale-110 transition-transform duration-300`}
+        >
+          {icon}
+        </div>
+        <span className='text-xs font-medium text-gray-700 group-hover:text-blue-600 transition-colors text-center leading-tight'>
+          {name}
+        </span>
       </div>
-      <span className='text-xs font-medium text-gray-700 group-hover:text-blue-600 transition-colors text-center leading-tight'>
-        {name}
-      </span>
     </div>
   </div>
 )
@@ -380,12 +383,14 @@ const TechnologyShowcase = () => {
           </p>
         </div>
 
-        {/* 3D Carousel Container */}
-        <div
-          className='relative max-w-6xl mx-auto'
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
-        >
+        {/* Layout: carousel + icon cloud aside */}
+        <div className='relative mx-auto max-w-6xl grid lg:grid-cols-12 gap-8 items-center'>
+          {/* 3D Carousel Container */}
+          <div
+            className='relative lg:col-span-7'
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+          >
           {/* 3D Carousel Track */}
           <div
             ref={carouselRef}
@@ -496,79 +501,11 @@ const TechnologyShowcase = () => {
               })}
             </div>
           </div>
-
-          {/* Navigation Controls */}
-          <div className='flex justify-center items-center mt-8 space-x-4'>
-            <Button
-              onClick={prevSlide}
-              variant='ghost'
-              className='h-12 w-12 p-0 rounded-full bg-white/80 backdrop-blur border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110'
-              aria-label='Previous slide'
-            >
-              <svg
-                className='w-6 h-6 text-gray-700 group-hover:text-blue-600 transition-colors'
-                fill='none'
-                stroke='currentColor'
-                viewBox='0 0 24 24'
-              >
-                <path
-                  strokeLinecap='round'
-                  strokeLinejoin='round'
-                  strokeWidth={2}
-                  d='M15 19l-7-7 7-7'
-                />
-              </svg>
-            </Button>
-
-            {/* Slide Indicators */}
-            <div className='flex space-x-3'>
-              {categories.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => goToSlide(index)}
-                  className={`h-2 rounded-full transition-all duration-300 ${
-                    currentSlide === index
-                      ? 'w-8 bg-gradient-to-r from-blue-500 to-cyan-500 shadow-lg'
-                      : 'w-2 bg-gray-300 hover:bg-gray-400'
-                  }`}
-                  aria-label={`Go to slide ${index + 1}`}
-                />
-              ))}
+          {/* Icon Cloud Aside */}
+          <div className='lg:col-span-5'>
+            <div className='rounded-2xl border border-white/30 bg-white/10 backdrop-blur-md p-4 shadow-xl'>
+              <IconCloudDemo />
             </div>
-
-            <Button
-              onClick={nextSlide}
-              variant='ghost'
-              className='h-12 w-12 p-0 rounded-full bg-white/80 backdrop-blur border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110'
-              aria-label='Next slide'
-            >
-              <svg
-                className='w-6 h-6 text-gray-700 group-hover:text-blue-600 transition-colors'
-                fill='none'
-                stroke='currentColor'
-                viewBox='0 0 24 24'
-              >
-                <path
-                  strokeLinecap='round'
-                  strokeLinejoin='round'
-                  strokeWidth={2}
-                  d='M9 5l7 7-7 7'
-                />
-              </svg>
-            </Button>
-          </div>
-
-          {/* Auto-play indicator */}
-          <div className='mt-6 max-w-4xl mx-auto'>
-            <div className='h-1 w-full bg-gray-200/60 rounded-full overflow-hidden'>
-              <div
-                className='h-full bg-gradient-to-r from-blue-500 to-cyan-500 transition-[width] duration-100 ease-linear'
-                style={{ width: `${Math.round(progress * 100)}%` }}
-              />
-            </div>
-            <p className='text-center mt-2 text-xs text-gray-500'>
-              Auto-rotating technology showcase • Hover to pause
-            </p>
           </div>
         </div>
       </div>
