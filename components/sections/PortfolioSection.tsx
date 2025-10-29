@@ -109,17 +109,6 @@ const defaultProjects: Project[] = [
     category: 'AI/ML',
     link: '#',
   },
-  {
-    id: 'blockchain',
-    title: 'Blockchain Voting System',
-    description:
-      'Secure and transparent voting system built on blockchain technology.',
-    image: '/api/placeholder/400/300',
-    technologies: ['Solidity', 'Web3.js', 'React', 'Ethereum'],
-    category: 'Blockchain',
-    link: '#',
-    github: '#',
-  },
 ]
 
 export function PortfolioSection({
