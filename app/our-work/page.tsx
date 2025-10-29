@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import Layout from '@/components/Layout'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -35,6 +35,8 @@ import {
   GitBranch,
   Settings,
   Cpu,
+  Github,
+  MoreHorizontal,
 } from 'lucide-react'
 import Link from 'next/link'
 import Image from 'next/image'
@@ -86,7 +88,7 @@ export default function OurWorkPage() {
     },
     {
       id: 2,
-      title: 'NextJS Supabase',
+      title: 'Images Synthesis & Online Subscription',
       description: 'Full-stack web application with authentication',
       url: 'https://nextjs-supabase-kappa-nine.vercel.app',
       category: 'Development',
@@ -96,7 +98,7 @@ export default function OurWorkPage() {
     },
     {
       id: 3,
-      title: 'Manus AI Shop',
+      title: 'AI Images Cart & Purchase',
       description: 'AI-powered e-commerce platform',
       url: 'https://manus-ai-shop.vercel.app',
       category: 'E-commerce',
@@ -116,7 +118,7 @@ export default function OurWorkPage() {
     },
     {
       id: 5,
-      title: 'NextJS MCP Template',
+      title: 'Cart & Online Payment',
       description: 'Model Context Protocol template application',
       url: 'https://nextjs-mcp-template.vercel.app',
       category: 'Development',
@@ -135,6 +137,41 @@ export default function OurWorkPage() {
       image: '/placeholder.svg',
     },
   ]
+
+  function LocalImageCarousel({
+    images,
+    alt,
+  }: {
+    images: string[]
+    alt: string
+  }) {
+    const [index, setIndex] = useState(0)
+    const validImages = images.filter(Boolean)
+
+    useEffect(() => {
+      if (validImages.length <= 1) return
+      const id = setInterval(() => {
+        setIndex(prev => (prev + 1) % validImages.length)
+      }, 4000)
+      return () => clearInterval(id)
+    }, [validImages.length])
+
+    if (validImages.length === 0) {
+      return (
+        <div className='w-full h-64 bg-gradient-to-br from-blue-100 to-cyan-100 rounded-lg' />
+      )
+    }
+
+    return (
+      <div className='relative w-full h-64 overflow-hidden rounded-lg'>
+        <img
+          src={validImages[index]}
+          alt={alt}
+          className='w-full h-64 object-cover transition-opacity duration-700'
+        />
+      </div>
+    )
+  }
 
   const stats = [
     {
@@ -432,43 +469,146 @@ export default function OurWorkPage() {
                     duration={0.6}
                   >
                     <Card className='group hover:shadow-xl transition-all duration-300 hover:-translate-y-2 border-0 bg-white/80 backdrop-blur-sm h-full w-full'>
-                      <CardHeader className='pb-4'>
-                        <div className='flex items-center justify-between mb-4'>
-                          <Badge
-                            variant='secondary'
-                            className='bg-blue-100 text-blue-800 border-blue-200'
-                          >
-                            {project.category}
-                          </Badge>
-                          <div className='flex items-center gap-2 text-green-600'>
+                      <CardHeader className='pb-2'>
+                        <div className='flex items-center justify-between gap-2'>
+                          <div className='flex items-center gap-3 min-w-0'>
+                            <CardTitle className='text-base md:text-lg font-bold text-gray-900 group-hover:text-blue-600 transition-colors leading-snug line-clamp-2 break-words'>
+                              <Link
+                                href={project.url}
+                                target='_blank'
+                                rel='noopener noreferrer'
+                                className='hover:underline'
+                                title={project.url}
+                                onClick={e => {
+                                  e.preventDefault()
+                                }}
+                                onKeyDown={e => {
+                                  if (e.key === 'Enter' || e.key === ' ') {
+                                    e.preventDefault()
+                                  }
+                                }}
+                              >
+                                {project.title}
+                              </Link>
+                            </CardTitle>
+                            <Badge
+                              variant='secondary'
+                              className='bg-blue-100 text-blue-800 border-blue-200 whitespace-nowrap'
+                            >
+                              {project.category}
+                            </Badge>
+                          </div>
+                          <div className='flex items-center gap-2 text-green-600 shrink-0'>
                             <div className='w-2 h-2 bg-green-500 rounded-full animate-pulse'></div>
                             <span className='text-sm font-medium'>
                               {project.status}
                             </span>
                           </div>
                         </div>
-                        <CardTitle className='text-xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors'>
-                          {project.title}
-                        </CardTitle>
                       </CardHeader>
                       <CardContent className='flex flex-col h-full'>
                         {/* Project Image */}
                         <div className='mb-4'>
                           {(() => {
-                            const projectImage =
-                              project.id === 1
-                                ? project1Image
-                                : project.id === 2
-                                  ? project2Image
-                                  : project.id === 3
-                                    ? project3Image
-                                    : null
+                            // Local folder carousels by project id
+                            const idToLocalImages: Record<number, string[]> = {
+                              1: [
+                                '/face-fusion-agent/f1.png',
+                                '/face-fusion-agent/f2.png',
+                                '/face-fusion-agent/f3.png',
+                                '/face-fusion-agent/f5.png',
+                                '/face-fusion-agent/f6.png',
+                              ],
+                              2: [
+                                '/nextjs-supabase-kappa-nine/n1.png',
+                                '/nextjs-supabase-kappa-nine/n2.png',
+                                '/nextjs-supabase-kappa-nine/n3.png',
+                                '/nextjs-supabase-kappa-nine/n4.png',
+                                '/nextjs-supabase-kappa-nine/n5.png',
+                                '/nextjs-supabase-kappa-nine/n6.png',
+                                '/nextjs-supabase-kappa-nine/n7.png',
+                                '/nextjs-supabase-kappa-nine/n8.png',
+                              ],
+                              3: [
+                                '/manus-ai-shop/m1.png',
+                                '/manus-ai-shop/m2.png',
+                                '/manus-ai-shop/m3.png',
+                                '/manus-ai-shop/m4.png',
+                                '/manus-ai-shop/m5.png',
+                                '/manus-ai-shop/m6.png',
+                                '/manus-ai-shop/m7.png',
+                              ],
+                              6: [
+                                '/friendshipdaycare/f1.png',
+                                '/friendshipdaycare/f10.png',
+                              ],
+                            }
 
-                            return projectImage ? (
+                            const carouselImages =
+                              idToLocalImages[project.id as number]
+
+                            if (carouselImages && carouselImages.length > 0) {
+                              return (
+                                <LocalImageCarousel
+                                  images={carouselImages}
+                                  alt={project.title}
+                                />
+                              )
+                            }
+
+                            const jimengImages = getImages()
+                              .filter(a => a.filename.startsWith('jimeng-'))
+                              .map(a => a.url)
+
+                            // Use specific 4-image carousels for BidMaster Hub (id 4) and NextJS MCP Template (id 5)
+                            if (project.id === 4 || project.id === 5) {
+                              const assets = getImages()
+                              const wantedFilenames =
+                                project.id === 4
+                                  ? [
+                                      'jimeng-1.png',
+                                      'jimeng-2.png',
+                                      'jimeng-3.png',
+                                      'jimeng-4.png',
+                                    ]
+                                  : [
+                                      'jimeng-6.png',
+                                      'jimeng-7.png',
+                                      'jimeng-8.png',
+                                      'jimeng-9.png',
+                                    ]
+
+                              const selected = wantedFilenames
+                                .map(
+                                  name =>
+                                    assets.find(a => a.filename === name)?.url
+                                )
+                                .filter(Boolean) as string[]
+
+                              if (selected.length > 0) {
+                                return (
+                                  <LocalImageCarousel
+                                    images={selected}
+                                    alt={project.title}
+                                  />
+                                )
+                              }
+                            }
+
+                            const randomJimeng =
+                              jimengImages.length > 0
+                                ? jimengImages[
+                                    (project.id + project.title).length %
+                                      jimengImages.length >>>
+                                      0
+                                  ]
+                                : null
+
+                            return randomJimeng ? (
                               <R2CardImage
-                                src={projectImage.url}
+                                src={randomJimeng}
                                 alt={project.title}
-                                className='w-full h-40 rounded-lg object-cover'
+                                className='w-full h-64 rounded-lg object-cover'
                                 animation='fade'
                                 delay={0.2}
                                 hover={true}
@@ -485,7 +625,7 @@ export default function OurWorkPage() {
                                 }
                               />
                             ) : (
-                              <div className='w-full h-40 bg-gradient-to-br from-blue-100 to-cyan-100 rounded-lg flex items-center justify-center'>
+                              <div className='w-full h-64 bg-gradient-to-br from-blue-100 to-cyan-100 rounded-lg flex items-center justify-center'>
                                 <div className='text-center'>
                                   <Code2 className='w-8 h-8 text-blue-400 mx-auto mb-2' />
                                   <p className='text-gray-600 text-sm'>
@@ -500,18 +640,21 @@ export default function OurWorkPage() {
                         <p className='text-gray-600 mb-4 leading-relaxed flex-grow'>
                           {project.description}
                         </p>
-                        <div className='flex flex-wrap gap-2 mb-4'>
-                          {project.technologies
-                            .slice(0, 3)
-                            .map((tech, techIndex) => (
-                              <Badge
-                                key={techIndex}
-                                variant='outline'
-                                className='text-xs bg-gray-50 text-gray-700 border-gray-200'
-                              >
-                                {tech}
-                              </Badge>
-                            ))}
+                        <div className='flex items-center justify-between mb-4'>
+                          <div className='flex flex-wrap gap-2'>
+                            {project.technologies
+                              .slice(0, 3)
+                              .map((tech, techIndex) => (
+                                <Badge
+                                  key={techIndex}
+                                  variant='outline'
+                                  className='text-xs bg-gray-50 text-gray-700 border-gray-200'
+                                >
+                                  {tech}
+                                </Badge>
+                              ))}
+                          </div>
+                          <MoreHorizontal className='w-5 h-5 text-gray-400' />
                         </div>
                         <Button
                           asChild
@@ -522,7 +665,17 @@ export default function OurWorkPage() {
                             target='_blank'
                             rel='noopener noreferrer'
                             className='flex items-center justify-center gap-2'
+                            title={project.url}
+                            onClick={e => {
+                              e.preventDefault()
+                            }}
+                            onKeyDown={e => {
+                              if (e.key === 'Enter' || e.key === ' ') {
+                                e.preventDefault()
+                              }
+                            }}
                           >
+                            <Github className='h-4 w-4' />
                             <span>View Project</span>
                             <ArrowRight className='h-4 w-4 group-hover:translate-x-1 transition-transform' />
                           </Link>
