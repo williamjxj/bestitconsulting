@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import { Button } from '@/components/ui/button'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
@@ -42,6 +43,12 @@ const TechnologyShowcase = () => {
   const cardsRef = useRef<HTMLDivElement[]>([])
   const [currentSlide, setCurrentSlide] = useState(0)
   const autoPlayRef = useRef<NodeJS.Timeout | null>(null)
+  const [progress, setProgress] = useState(0) // 0..1 autoplay progress
+  const rafRef = useRef<number | null>(null)
+  const autoplayDurationMs = 4000
+
+  // Parallax tilt state for active slide
+  const [tilt, setTilt] = useState({ rotateX: 0, rotateY: 0 })
 
   // Technology data
   const frontendTechs: Technology[] = [
@@ -258,16 +265,24 @@ const TechnologyShowcase = () => {
   // Auto-play functionality
   useEffect(() => {
     const startAutoPlay = () => {
-      autoPlayRef.current = setInterval(() => {
-        setCurrentSlide(prev => (prev + 1) % categories.length)
-      }, 4000) // Change slide every 4 seconds
+      const start = performance.now()
+      const tick = (now: number) => {
+        const elapsed = now - start
+        const p = Math.min(1, elapsed / autoplayDurationMs)
+        setProgress(p)
+        if (p >= 1) {
+          setCurrentSlide(prev => (prev + 1) % categories.length)
+        } else {
+          rafRef.current = requestAnimationFrame(tick)
+        }
+      }
+      rafRef.current = requestAnimationFrame(tick)
     }
 
     const stopAutoPlay = () => {
-      if (autoPlayRef.current) {
-        clearInterval(autoPlayRef.current)
-        autoPlayRef.current = null
-      }
+      if (rafRef.current) cancelAnimationFrame(rafRef.current)
+      rafRef.current = null
+      setProgress(0)
     }
 
     startAutoPlay()
@@ -276,6 +291,28 @@ const TechnologyShowcase = () => {
       stopAutoPlay()
     }
   }, [categories.length])
+
+  // Restart progress when slide changes (if autoplay running)
+  useEffect(() => {
+    if (rafRef.current) {
+      // already running; stop and start to reset progress
+      cancelAnimationFrame(rafRef.current)
+      rafRef.current = null
+      setProgress(0)
+      const start = performance.now()
+      const tick = (now: number) => {
+        const elapsed = now - start
+        const p = Math.min(1, elapsed / autoplayDurationMs)
+        setProgress(p)
+        if (p >= 1) {
+          setCurrentSlide(prev => (prev + 1) % categories.length)
+        } else {
+          rafRef.current = requestAnimationFrame(tick)
+        }
+      }
+      rafRef.current = requestAnimationFrame(tick)
+    }
+  }, [currentSlide, categories.length])
 
   const nextSlide = () => {
     setCurrentSlide(prev => (prev + 1) % categories.length)
@@ -291,17 +328,38 @@ const TechnologyShowcase = () => {
 
   // Pause auto-play on hover
   const handleMouseEnter = () => {
-    if (autoPlayRef.current) {
-      clearInterval(autoPlayRef.current)
-      autoPlayRef.current = null
-    }
+    if (rafRef.current) cancelAnimationFrame(rafRef.current)
+    rafRef.current = null
   }
 
   const handleMouseLeave = () => {
-    autoPlayRef.current = setInterval(() => {
-      setCurrentSlide(prev => (prev + 1) % categories.length)
-    }, 4000)
+    if (!rafRef.current) {
+      const start = performance.now()
+      const tick = (now: number) => {
+        const elapsed = now - start
+        const p = Math.min(1, elapsed / autoplayDurationMs)
+        setProgress(p)
+        if (p >= 1) {
+          setCurrentSlide(prev => (prev + 1) % categories.length)
+        } else {
+          rafRef.current = requestAnimationFrame(tick)
+        }
+      }
+      rafRef.current = requestAnimationFrame(tick)
+    }
   }
+
+  // Mouse move parallax for active slide
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = (e.currentTarget as HTMLDivElement).getBoundingClientRect()
+    const x = e.clientX - rect.left
+    const y = e.clientY - rect.top
+    const pctX = (x / rect.width) * 2 - 1 // -1..1
+    const pctY = (y / rect.height) * 2 - 1 // -1..1
+    const maxTilt = 6 // degrees
+    setTilt({ rotateX: -pctY * maxTilt, rotateY: pctX * maxTilt })
+  }
+  const handleMouseOut = () => setTilt({ rotateX: 0, rotateY: 0 })
 
   return (
     <section
@@ -393,6 +451,16 @@ const TechnologyShowcase = () => {
                           ? 'bg-white/20 border-white/30 backdrop-blur-md ring-1 ring-white/30'
                           : 'bg-white/10 border-white/20 backdrop-blur-md'
                       }`}
+                      onMouseMove={isActive ? handleMouseMove : undefined}
+                      onMouseLeave={isActive ? handleMouseOut : undefined}
+                      style={
+                        isActive
+                          ? {
+                              transform: `rotateX(${tilt.rotateX}deg) rotateY(${tilt.rotateY}deg)`,
+                              transition: 'transform 120ms ease-out',
+                            }
+                          : undefined
+                      }
                     >
                       <div className='text-center mb-3'>
                         <h3 className='text-xl font-bold text-gray-900 mb-1'>
@@ -423,9 +491,10 @@ const TechnologyShowcase = () => {
 
           {/* Navigation Controls */}
           <div className='flex justify-center items-center mt-8 space-x-4'>
-            <button
+            <Button
               onClick={prevSlide}
-              className='p-3 rounded-full bg-white/80 backdrop-blur border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 group'
+              variant='ghost'
+              className='h-12 w-12 p-0 rounded-full bg-white/80 backdrop-blur border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110'
               aria-label='Previous slide'
             >
               <svg
@@ -441,7 +510,7 @@ const TechnologyShowcase = () => {
                   d='M15 19l-7-7 7-7'
                 />
               </svg>
-            </button>
+            </Button>
 
             {/* Slide Indicators */}
             <div className='flex space-x-3'>
@@ -459,9 +528,10 @@ const TechnologyShowcase = () => {
               ))}
             </div>
 
-            <button
+            <Button
               onClick={nextSlide}
-              className='p-3 rounded-full bg-white/80 backdrop-blur border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 group'
+              variant='ghost'
+              className='h-12 w-12 p-0 rounded-full bg-white/80 backdrop-blur border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110'
               aria-label='Next slide'
             >
               <svg
@@ -477,12 +547,18 @@ const TechnologyShowcase = () => {
                   d='M9 5l7 7-7 7'
                 />
               </svg>
-            </button>
+            </Button>
           </div>
 
           {/* Auto-play indicator */}
-          <div className='text-center mt-3'>
-            <p className='text-xs text-gray-500'>
+          <div className='mt-6 max-w-4xl mx-auto'>
+            <div className='h-1 w-full bg-gray-200/60 rounded-full overflow-hidden'>
+              <div
+                className='h-full bg-gradient-to-r from-blue-500 to-cyan-500 transition-[width] duration-100 ease-linear'
+                style={{ width: `${Math.round(progress * 100)}%` }}
+              />
+            </div>
+            <p className='text-center mt-2 text-xs text-gray-500'>
               Auto-rotating technology showcase • Hover to pause
             </p>
           </div>
