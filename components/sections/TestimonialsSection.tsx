@@ -9,6 +9,7 @@ import React from 'react'
 import { Card, CardContent } from '@/components/ui/card'
 import { Star, Quote, CheckCircle } from 'lucide-react'
 import { FadeIn } from '@/components/animations/FadeIn'
+import { AvatarCirclesDemo } from '@/components/ui/AvatarCirclesDemo'
 
 interface Testimonial {
   id: string
@@ -208,11 +209,22 @@ export function TestimonialsSection({
       className={`py-20 bg-gradient-to-br from-blue-50 to-cyan-50 ${className}`}
     >
       <div className='container mx-auto px-4'>
-        <div className='text-center mb-16'>
-          <h2 className='text-4xl font-bold text-gray-900 mb-6'>{title}</h2>
-          <p className='text-xl text-gray-600 max-w-3xl mx-auto'>
-            {description}
-          </p>
+        <div className='mb-12'>
+          <div className='grid lg:grid-cols-12 gap-8 items-center'>
+            <div className='lg:col-span-7 text-center lg:text-left'>
+              <h2 className='text-4xl font-bold text-gray-900 mb-4'>{title}</h2>
+              <p className='text-xl text-gray-600 max-w-3xl mx-auto lg:mx-0'>
+                {description}
+              </p>
+            </div>
+            <div className='lg:col-span-5'>
+              <div className='flex justify-center lg:justify-end'>
+                <div className='rounded-2xl border border-white/30 bg-white/40 backdrop-blur-md p-3 shadow-xl'>
+                  <AvatarCirclesDemo />
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* Testimonials Grid */}
