@@ -111,7 +111,8 @@ export default function R2TestPage() {
   const handleAddAsset = async () => {
     if (!newAssetName.trim()) return
 
-    const testUrl = `https://pub-3b3f23afc5404f20b2081d34fa4c87b8.r2.dev/${newAssetName}`
+    const base = process.env.NEXT_PUBLIC_R2_BASE_URL || ''
+    const testUrl = `${base}/${newAssetName}`
 
     try {
       const response = await fetch(testUrl, { method: 'HEAD' })

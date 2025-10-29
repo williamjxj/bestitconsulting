@@ -1,5 +1,8 @@
 import type { NextConfig } from 'next'
 
+const r2Base = process.env.NEXT_PUBLIC_R2_BASE_URL
+const r2Hostname = r2Base ? new URL(r2Base).hostname : undefined
+
 const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
@@ -8,11 +11,15 @@ const nextConfig: NextConfig = {
         hostname: 'www.google.com',
         pathname: '/s2/favicons**',
       },
-      {
-        protocol: 'https',
-        hostname: 'pub-3b3f23afc5404f20b2081d34fa4c87b8.r2.dev',
-        pathname: '/**',
-      },
+      ...(r2Hostname
+        ? [
+            {
+              protocol: 'https' as const,
+              hostname: r2Hostname,
+              pathname: '/**',
+            },
+          ]
+        : []),
     ],
   },
   experimental: {

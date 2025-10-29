@@ -50,6 +50,7 @@ import { useR2Assets, R2_ASSET_MAPPINGS } from '@/hooks/useR2Assets'
 
 export default function OurWorkPage() {
   const { getImages, getAssetByFilename } = useR2Assets()
+  const BASE_URL = process.env.NEXT_PUBLIC_R2_BASE_URL || ''
 
   // Get R2 assets for our work page
   const heroImage = getAssetByFilename(R2_ASSET_MAPPINGS['our-work'].hero)
@@ -513,34 +514,34 @@ export default function OurWorkPage() {
                             // Local folder carousels by project id
                             const idToLocalImages: Record<number, string[]> = {
                               1: [
-                                '/face-fusion-agent/f1.png',
-                                '/face-fusion-agent/f2.png',
-                                '/face-fusion-agent/f3.png',
-                                '/face-fusion-agent/f5.png',
-                                '/face-fusion-agent/f6.png',
+                                `${BASE_URL}/face-fusion-agent/f1.png`,
+                                `${BASE_URL}/face-fusion-agent/f2.png`,
+                                `${BASE_URL}/face-fusion-agent/f3.png`,
+                                `${BASE_URL}/face-fusion-agent/f5.png`,
+                                `${BASE_URL}/face-fusion-agent/f6.png`,
                               ],
                               2: [
-                                '/nextjs-supabase-kappa-nine/n1.png',
-                                '/nextjs-supabase-kappa-nine/n2.png',
-                                '/nextjs-supabase-kappa-nine/n3.png',
-                                '/nextjs-supabase-kappa-nine/n4.png',
-                                '/nextjs-supabase-kappa-nine/n5.png',
-                                '/nextjs-supabase-kappa-nine/n6.png',
-                                '/nextjs-supabase-kappa-nine/n7.png',
-                                '/nextjs-supabase-kappa-nine/n8.png',
+                                `${BASE_URL}/nextjs-supabase-kappa-nine/n1.png`,
+                                `${BASE_URL}/nextjs-supabase-kappa-nine/n2.png`,
+                                `${BASE_URL}/nextjs-supabase-kappa-nine/n3.png`,
+                                `${BASE_URL}/nextjs-supabase-kappa-nine/n4.png`,
+                                `${BASE_URL}/nextjs-supabase-kappa-nine/n5.png`,
+                                `${BASE_URL}/nextjs-supabase-kappa-nine/n6.png`,
+                                `${BASE_URL}/nextjs-supabase-kappa-nine/n7.png`,
+                                `${BASE_URL}/nextjs-supabase-kappa-nine/n8.png`,
                               ],
                               3: [
-                                '/manus-ai-shop/m1.png',
-                                '/manus-ai-shop/m2.png',
-                                '/manus-ai-shop/m3.png',
-                                '/manus-ai-shop/m4.png',
-                                '/manus-ai-shop/m5.png',
-                                '/manus-ai-shop/m6.png',
-                                '/manus-ai-shop/m7.png',
+                                `${BASE_URL}/manus-ai-shop/m1.png`,
+                                `${BASE_URL}/manus-ai-shop/m2.png`,
+                                `${BASE_URL}/manus-ai-shop/m3.png`,
+                                `${BASE_URL}/manus-ai-shop/m4.png`,
+                                `${BASE_URL}/manus-ai-shop/m5.png`,
+                                `${BASE_URL}/manus-ai-shop/m6.png`,
+                                `${BASE_URL}/manus-ai-shop/m7.png`,
                               ],
                               6: [
-                                '/friendshipdaycare/f1.png',
-                                '/friendshipdaycare/f10.png',
+                                `${BASE_URL}/friendshipdaycare/f1.png`,
+                                `${BASE_URL}/friendshipdaycare/f10.png`,
                               ],
                             }
 

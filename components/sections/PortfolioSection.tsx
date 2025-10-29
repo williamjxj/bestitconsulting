@@ -60,12 +60,14 @@ interface PortfolioSectionProps {
 // Helper function to get R2 URL safely
 function getR2ImageUrl(imagePath: string): string {
   try {
-    // Use the known R2 public URL directly
-    return `https://pub-3b3f23afc5404f20b2081d34fa4c87b8.r2.dev/${imagePath}`
+    const base = process.env.NEXT_PUBLIC_R2_BASE_URL
+    if (base) return `${base}/${imagePath}`
   } catch {
     // Fallback to placeholder if R2 is not configured
     return '/api/placeholder/400/300'
   }
+  // Fallback when no base configured
+  return '/api/placeholder/400/300'
 }
 
 const defaultProjects: Project[] = [
