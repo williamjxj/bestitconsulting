@@ -51,8 +51,8 @@ export function createWebGLRenderer(config: WebGLConfig): THREE.WebGLRenderer {
  * Create particle system for background effects
  */
 export function createParticleSystem(
-  config: ParticleSystemConfig,
-  scene: THREE.Scene
+  scene: THREE.Scene,
+  config: ParticleSystemConfig
 ): THREE.Points {
   const geometry = new THREE.BufferGeometry()
   const positions = new Float32Array(config.count * 3)

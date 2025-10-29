@@ -1,18 +1,30 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
-import { Menu, X, ArrowRight, Sparkles } from 'lucide-react'
+import {
+  Menu,
+  X,
+  ArrowRight,
+  Sparkles,
+  ChevronDown,
+  Box,
+  FlaskConical,
+  Settings,
+  HelpCircle,
+} from 'lucide-react'
 import { useNavTranslation } from '@/lib/i18n/hooks'
 import { LanguageSelector } from './LanguageSelector'
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [dropdownOpen, setDropdownOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const { t } = useNavTranslation()
   const pathname = usePathname()
+  const dropdownRef = useRef<HTMLDivElement>(null)
 
   const navItems = [
     { key: 'home', href: '/' },
@@ -24,6 +36,37 @@ export default function Header() {
     { key: 'contact', href: '/contact' },
   ]
 
+  const dropdownItems = [
+    {
+      key: '3d-effects',
+      href: '/3d-effects',
+      label: '3D Effects',
+      icon: Box,
+      description: 'WebGL & Three.js demos',
+    },
+    {
+      key: 'r2-test',
+      href: '/r2-test',
+      label: 'R2 Test',
+      icon: FlaskConical,
+      description: 'Asset management testing',
+    },
+    {
+      key: 'admin',
+      href: '/admin',
+      label: 'Admin',
+      icon: Settings,
+      description: 'Language management',
+    },
+    {
+      key: 'faq',
+      href: '/faq',
+      label: 'FAQ',
+      icon: HelpCircle,
+      description: 'Frequently asked questions',
+    },
+  ]
+
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20)
@@ -31,6 +74,26 @@ export default function Header() {
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setDropdownOpen(false)
+      }
+    }
+
+    if (dropdownOpen) {
+      document.addEventListener('mousedown', handleClickOutside)
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [dropdownOpen])
 
   const isActive = (href: string) => pathname === href
 
@@ -86,6 +149,50 @@ export default function Header() {
 
           {/* Language Selector & CTA */}
           <div className='hidden lg:flex items-center space-x-3'>
+            {/* Dropdown Menu - Only in Development */}
+            {process.env.NODE_ENV === 'development' && (
+              <div className='relative' ref={dropdownRef}>
+                <button
+                  onClick={() => setDropdownOpen(!dropdownOpen)}
+                  className='flex items-center gap-1 px-3 py-2 rounded-lg text-sm font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50 transition-all duration-300'
+                >
+                  <span>Tools</span>
+                  <ChevronDown
+                    className={`w-4 h-4 transition-transform duration-200 ${dropdownOpen ? 'rotate-180' : ''}`}
+                  />
+                </button>
+
+                {/* Dropdown Content */}
+                {dropdownOpen && (
+                  <div className='absolute right-0 mt-2 w-64 bg-white rounded-lg shadow-xl border border-gray-200 py-2 z-50'>
+                    {dropdownItems.map(item => {
+                      const IconComponent = item.icon
+                      return (
+                        <Link
+                          key={item.key}
+                          href={item.href}
+                          className='flex items-center gap-3 px-4 py-3 hover:bg-gray-50 transition-colors duration-200 group'
+                          onClick={() => setDropdownOpen(false)}
+                        >
+                          <div className='flex-shrink-0 w-8 h-8 bg-blue-50 rounded-lg flex items-center justify-center group-hover:bg-blue-100 transition-colors duration-200'>
+                            <IconComponent className='w-4 h-4 text-blue-600' />
+                          </div>
+                          <div className='flex-1 min-w-0'>
+                            <div className='text-sm font-medium text-gray-900 group-hover:text-blue-600 transition-colors duration-200'>
+                              {item.label}
+                            </div>
+                            <div className='text-xs text-gray-500 group-hover:text-blue-500 transition-colors duration-200'>
+                              {item.description}
+                            </div>
+                          </div>
+                        </Link>
+                      )
+                    })}
+                  </div>
+                )}
+              </div>
+            )}
+
             <LanguageSelector showNativeName={true} />
             <Link
               href='/contact'
@@ -135,6 +242,37 @@ export default function Header() {
                 {t(key)}
               </Link>
             ))}
+
+            {/* Mobile Dropdown Items - Only in Development */}
+            {process.env.NODE_ENV === 'development' && (
+              <div className='border-t border-gray-200 pt-2 mt-2'>
+                <div className='px-3 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wider'>
+                  Tools
+                </div>
+                {dropdownItems.map(item => {
+                  const IconComponent = item.icon
+                  return (
+                    <Link
+                      key={item.key}
+                      href={item.href}
+                      className='flex items-center gap-3 px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50 transition-colors'
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      <div className='flex-shrink-0 w-6 h-6 bg-blue-50 rounded-md flex items-center justify-center'>
+                        <IconComponent className='w-4 h-4 text-blue-600' />
+                      </div>
+                      <div>
+                        <div className='font-medium'>{item.label}</div>
+                        <div className='text-xs text-gray-500'>
+                          {item.description}
+                        </div>
+                      </div>
+                    </Link>
+                  )
+                })}
+              </div>
+            )}
+
             <Link
               href='/contact'
               className='group relative block w-full text-center bg-gradient-to-r from-blue-600 to-cyan-600 text-white px-3 py-2 rounded-md font-medium mt-4 overflow-hidden whitespace-nowrap'
