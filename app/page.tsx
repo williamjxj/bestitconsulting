@@ -60,33 +60,6 @@ export default function HomePage() {
     },
   ]
 
-  const testimonials = [
-    {
-      name: 'Sarah Johnson',
-      role: 'CTO, TechStart Inc.',
-      content:
-        'BestIT transformed our infrastructure and helped us scale from startup to enterprise. Outstanding work!',
-      avatar: '/api/placeholder/60/60',
-      rating: 5,
-    },
-    {
-      name: 'Michael Chen',
-      role: 'VP Engineering, DataFlow',
-      content:
-        'Their cloud migration strategy saved us 40% in infrastructure costs while improving performance.',
-      avatar: '/api/placeholder/60/60',
-      rating: 5,
-    },
-    {
-      name: 'Emily Rodriguez',
-      role: 'Founder, InnovateLab',
-      content:
-        'The team delivered our MVP in record time. Professional, skilled, and reliable partners.',
-      avatar: '/api/placeholder/60/60',
-      rating: 5,
-    },
-  ]
-
   const stats = [
     {
       number: '500+',

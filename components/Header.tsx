@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
-import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import {
   Menu,
@@ -14,6 +13,7 @@ import {
   FlaskConical,
   Settings,
   HelpCircle,
+  Zap,
 } from 'lucide-react'
 import { useNavTranslation } from '@/lib/i18n/hooks'
 import { LanguageSelector } from './LanguageSelector'
@@ -111,16 +111,15 @@ export default function Header() {
             <div className='flex-shrink-0'>
               <Link
                 href='/'
-                className='group flex items-center'
+                className='group flex items-center space-x-2'
                 title='BestIT Consulting - Technology Solutions'
               >
-                <div className='h-12 sm:h-14 md:h-16 w-auto relative group-hover:scale-105 transition-all duration-300'>
-                  <img
-                    src='/bitc-logo.svg'
-                    alt='BestIT Consulting - Technology Solutions'
-                    className='h-full w-auto object-contain'
-                  />
+                <div className='w-8 h-8 bg-gradient-to-br from-blue-600 to-cyan-600 rounded-lg flex items-center justify-center group-hover:shadow-lg transition-all duration-300'>
+                  <Zap className='h-5 w-5 text-white' aria-hidden='true' />
                 </div>
+                <h1 className='text-2xl font-bold bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent'>
+                  BestIT
+                </h1>
               </Link>
             </div>
           </div>

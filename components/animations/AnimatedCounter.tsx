@@ -24,6 +24,7 @@ interface AnimatedCounterProps {
   once?: boolean
   amount?: number
   fallback?: ReactNode
+  decimals?: number
 }
 
 export const AnimatedCounter = forwardRef<HTMLDivElement, AnimatedCounterProps>(
@@ -41,6 +42,7 @@ export const AnimatedCounter = forwardRef<HTMLDivElement, AnimatedCounterProps>(
       once = true,
       amount = 0.1,
       fallback,
+      decimals = 0,
     },
     ref
   ) => {
@@ -56,7 +58,8 @@ export const AnimatedCounter = forwardRef<HTMLDivElement, AnimatedCounterProps>(
 
     useEffect(() => {
       if (!isInView || reducedMotion) {
-        setCount(value)
+        const rounded = Number(value.toFixed(decimals))
+        setCount(rounded)
         return
       }
 
@@ -77,7 +80,7 @@ export const AnimatedCounter = forwardRef<HTMLDivElement, AnimatedCounterProps>(
 
         // Easing function for smooth animation
         const easeOut = 1 - Math.pow(1 - progress, 3)
-        const currentValue = Math.floor(value * easeOut)
+        const currentValue = Number((value * easeOut).toFixed(decimals))
 
         setCount(currentValue)
 
@@ -96,7 +99,7 @@ export const AnimatedCounter = forwardRef<HTMLDivElement, AnimatedCounterProps>(
           cancelAnimationFrame(animationFrame)
         }
       }
-    }, [isInView, value, duration, delay, reducedMotion, deviceType])
+    }, [isInView, value, duration, delay, reducedMotion, deviceType, decimals])
 
     // If reduced motion and fallback is provided, show fallback
     if (reducedMotion && fallback) {
@@ -112,7 +115,10 @@ export const AnimatedCounter = forwardRef<HTMLDivElement, AnimatedCounterProps>(
         {children}
         <span className='inline-block'>
           {prefix}
-          {count.toLocaleString()}
+          {count.toLocaleString(undefined, {
+            minimumFractionDigits: decimals,
+            maximumFractionDigits: decimals,
+          })}
           {suffix}
         </span>
       </motion.div>

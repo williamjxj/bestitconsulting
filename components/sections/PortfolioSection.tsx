@@ -7,7 +7,16 @@
 
 import { motion, AnimatePresence } from 'framer-motion'
 import { useState, useEffect } from 'react'
-import { MoreHorizontal } from 'lucide-react'
+import {
+  CheckCircle,
+  ArrowRight,
+  Monitor,
+  Shield,
+  TrendingUp,
+  Smartphone,
+  Cloud,
+  Zap,
+} from 'lucide-react'
 import {
   Card,
   CardContent,
@@ -15,6 +24,13 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
 import { FadeIn } from '@/components/animations/FadeIn'
 import { SlideIn } from '@/components/animations/SlideIn'
@@ -48,6 +64,13 @@ interface Project {
   link?: string
   github?: string
   featured?: boolean
+  client?: string
+  results?: string[]
+  features?: string[]
+  icon?: React.ReactNode
+  gradient?: string
+  industry?: string
+  benefits?: string[]
 }
 
 interface PortfolioSectionProps {
@@ -71,6 +94,41 @@ function getR2ImageUrl(imagePath: string): string {
 }
 
 const defaultProjects: Project[] = [
+  {
+    id: 'legacy-modernization',
+    title: 'Legacy System Modernization',
+    client: 'Enterprise Clients',
+    description:
+      'Modernize your legacy enterprise software with AI-driven solutions. Reduce operational costs, enhance efficiency, and unlock new opportunities for innovation. Transform outdated systems into intelligent, future-ready platforms that power business growth.',
+    image: getR2ImageUrl('portfolio/g-01.jpg'),
+    image2: getR2ImageUrl('portfolio/g-02.jpg'),
+    technologies: [
+      'AI/ML',
+      'Cloud Migration',
+      'Microservices',
+      'API Integration',
+    ],
+    category: 'Digital Transformation',
+    industry: 'Enterprise',
+    results: [
+      '60% reduction in operational costs',
+      '80% improvement in system performance',
+      '100% data migration success rate',
+      'Zero downtime during transition',
+    ],
+    features: [
+      'AI-powered process automation',
+      'Cloud-native architecture',
+      'Real-time data synchronization',
+      'Legacy system integration',
+      'Advanced security protocols',
+      'Scalable microservices design',
+    ],
+    icon: <Zap className='h-6 w-6' />,
+    gradient: 'from-purple-500 to-indigo-500',
+    link: '#',
+    featured: true,
+  },
   {
     id: 'ecommerce',
     title: 'E-Commerce Platform',
@@ -129,7 +187,270 @@ const defaultProjects: Project[] = [
     category: 'AI/ML',
     link: '#',
   },
+  {
+    id: 'ecommerce-platform',
+    title: 'E-Commerce Platform',
+    client: 'Online Retail Chain',
+    description:
+      'A comprehensive e-commerce solution with advanced inventory management, payment processing, and real-time analytics. Built for scalability to handle millions of transactions.',
+    image: getR2ImageUrl('portfolio/g-61.jpg'),
+    image2: getR2ImageUrl('portfolio/g-62.jpg'),
+    technologies: [
+      'Next.js',
+      'TypeScript',
+      'Node.js',
+      'PostgreSQL',
+      'Stripe',
+      'Redis',
+      'AWS',
+    ],
+    category: 'Web Application',
+    industry: 'Retail',
+    results: [
+      '40% increase in conversion rates',
+      '60% improvement in page load speed',
+      '500K+ users served monthly',
+      '99.9% uptime achieved',
+    ],
+    features: [
+      'Multi-vendor marketplace',
+      'Real-time inventory tracking',
+      'Advanced search & filtering',
+      'Mobile-responsive design',
+      'Integrated payment gateway',
+      'Admin dashboard with analytics',
+    ],
+    icon: <Monitor className='h-6 w-6' />,
+    gradient: 'from-blue-500 to-cyan-500',
+    link: '#',
+  },
+  {
+    id: 'healthcare-management',
+    title: 'Healthcare Management System',
+    client: 'Regional Healthcare Provider',
+    description:
+      'HIPAA-compliant patient management system with appointment scheduling, electronic health records, and telemedicine capabilities.',
+    image: getR2ImageUrl('portfolio/g-71.jpg'),
+    image2: getR2ImageUrl('portfolio/g-72.jpg'),
+    technologies: [
+      'React',
+      'Node.js',
+      'Express',
+      'MongoDB',
+      'Socket.io',
+      'Docker',
+      'Azure',
+    ],
+    category: 'Healthcare Software',
+    industry: 'Healthcare',
+    results: [
+      '30% reduction in appointment no-shows',
+      '50% faster patient check-in process',
+      '25% increase in patient satisfaction',
+      '100% HIPAA compliance achieved',
+    ],
+    features: [
+      'Patient portal with secure messaging',
+      'Telemedicine video consultations',
+      'Electronic health records (EHR)',
+      'Appointment scheduling system',
+      'Prescription management',
+      'Insurance claim processing',
+    ],
+    icon: <Shield className='h-6 w-6' />,
+    gradient: 'from-green-500 to-emerald-500',
+    link: '#',
+  },
+  {
+    id: 'financial-analytics',
+    title: 'Financial Analytics Dashboard',
+    client: 'Investment Firm',
+    description:
+      'Real-time financial data visualization platform with advanced analytics, portfolio tracking, and automated reporting capabilities.',
+    image: getR2ImageUrl('portfolio/g-81.jpg'),
+    image2: getR2ImageUrl('portfolio/g-82.jpg'),
+    technologies: [
+      'Vue.js',
+      'Python',
+      'Django',
+      'PostgreSQL',
+      'Redis',
+      'D3.js',
+      'AWS',
+    ],
+    category: 'Data Visualization',
+    industry: 'Finance',
+    results: [
+      '70% faster data processing',
+      '90% reduction in report generation time',
+      '45% improvement in decision-making speed',
+      '$2M+ in cost savings annually',
+    ],
+    features: [
+      'Real-time market data integration',
+      'Interactive charts and graphs',
+      'Portfolio performance tracking',
+      'Risk assessment algorithms',
+      'Automated compliance reporting',
+      'Multi-currency support',
+    ],
+    icon: <TrendingUp className='h-6 w-6' />,
+    gradient: 'from-purple-500 to-pink-500',
+    link: '#',
+  },
+  {
+    id: 'iot-fleet-management',
+    title: 'IoT Fleet Management',
+    client: 'Logistics Company',
+    description:
+      'IoT-powered fleet management system with real-time vehicle tracking, predictive maintenance, and route optimization.',
+    image: getR2ImageUrl('portfolio/g-91.jpg'),
+    image2: getR2ImageUrl('portfolio/g-92.jpg'),
+    technologies: [
+      'React Native',
+      'Node.js',
+      'IoT Sensors',
+      'MongoDB',
+      'GraphQL',
+      'AWS IoT',
+      'Machine Learning',
+    ],
+    category: 'IoT Application',
+    industry: 'Transportation',
+    results: [
+      '35% reduction in fuel costs',
+      '50% decrease in maintenance expenses',
+      '25% improvement in delivery times',
+      '99.5% vehicle uptime achieved',
+    ],
+    features: [
+      'Real-time GPS tracking',
+      'Predictive maintenance alerts',
+      'Route optimization algorithms',
+      'Driver behavior monitoring',
+      'Fuel consumption analytics',
+      'Mobile driver app',
+    ],
+    icon: <Smartphone className='h-6 w-6' />,
+    gradient: 'from-orange-500 to-red-500',
+    link: '#',
+  },
+  {
+    id: 'cloud-migration-platform',
+    title: 'Cloud Migration Platform',
+    client: 'Manufacturing Enterprise',
+    description:
+      'Enterprise-grade cloud migration platform with automated workload assessment, migration planning, and monitoring.',
+    image: getR2ImageUrl('portfolio/g-101.jpg'),
+    image2: getR2ImageUrl('portfolio/g-102.jpg'),
+    technologies: [
+      'Angular',
+      'Spring Boot',
+      'Java',
+      'MySQL',
+      'Kubernetes',
+      'Docker',
+      'Google Cloud',
+    ],
+    category: 'Cloud Platform',
+    industry: 'Manufacturing',
+    results: [
+      '60% reduction in infrastructure costs',
+      '80% improvement in system reliability',
+      '40% faster deployment cycles',
+      'Zero-downtime migration achieved',
+    ],
+    features: [
+      'Automated workload discovery',
+      'Migration planning dashboard',
+      'Cost optimization recommendations',
+      'Security compliance monitoring',
+      'Performance analytics',
+      'Multi-cloud support',
+    ],
+    icon: <Cloud className='h-6 w-6' />,
+    gradient: 'from-indigo-500 to-blue-500',
+    link: '#',
+  },
+  {
+    id: 'ai-customer-service',
+    title: 'AI-Powered Customer Service',
+    client: 'Telecommunications Company',
+    description:
+      'Intelligent customer service platform with AI chatbots, sentiment analysis, and automated ticket routing.',
+    image: getR2ImageUrl('portfolio/g-111.jpg'),
+    image2: getR2ImageUrl('portfolio/g-112.jpg'),
+    technologies: [
+      'Next.js',
+      'Python',
+      'TensorFlow',
+      'Natural Language Processing',
+      'Redis',
+      'PostgreSQL',
+      'AWS',
+    ],
+    category: 'AI Application',
+    industry: 'Telecommunications',
+    results: [
+      '75% reduction in response time',
+      '50% decrease in support tickets',
+      '90% customer satisfaction rate',
+      '24/7 automated support coverage',
+    ],
+    features: [
+      'AI-powered chatbot',
+      'Sentiment analysis',
+      'Automated ticket routing',
+      'Knowledge base integration',
+      'Multi-language support',
+      'Performance analytics dashboard',
+    ],
+    icon: <Zap className='h-6 w-6' />,
+    gradient: 'from-yellow-500 to-orange-500',
+    link: '#',
+  },
+  {
+    id: 'legacy-upgrade-maintenance',
+    title: 'Legacy Software Upgrade & Maintenance',
+    client: 'Global Enterprise Suite',
+    description:
+      'Comprehensive modernization and ongoing maintenance of mission-critical legacy systems with minimal disruption and measurable ROI.',
+    image: getR2ImageUrl('portfolio/g-121.jpg'),
+    image2: getR2ImageUrl('portfolio/g-122.jpg'),
+    technologies: ['Java', '.NET', 'PostgreSQL', 'Kubernetes', 'AWS', 'CI/CD'],
+    category: 'Modernization',
+    industry: 'Enterprise',
+    results: [
+      'Stability improvements and reduced incidents',
+      'Performance boosts with targeted refactors',
+      'Smooth cutovers with zero major outages',
+    ],
+    features: [
+      'Strangler-fig migration patterns',
+      'Automated test coverage and CI gating',
+      '24/7 observability & SLOs',
+      'Security hardening & dependency audits',
+    ],
+    benefits: [
+      'Lower TCO via phased migration and optimization',
+      'Rapid risk mitigation with progressive rollouts',
+      'Future-ready architecture without full rewrites',
+    ],
+    icon: <Zap className='h-6 w-6' />,
+    gradient: 'from-slate-700 to-indigo-600',
+    link: '#',
+  },
 ]
+
+// Remove newer duplicates and prefer original items
+const dedupedProjects: Project[] = defaultProjects.filter(
+  p =>
+    ![
+      'ecommerce-platform',
+      'financial-analytics',
+      'ai-customer-service',
+    ].includes(p.id)
+)
 
 // Carousel component for project images
 function ProjectImageCarousel({ project }: { project: Project }) {
@@ -161,28 +482,32 @@ function ProjectImageCarousel({ project }: { project: Project }) {
   // If there's an error or no images, show placeholder
   if (imageError || images.length === 0) {
     return (
-      <img
-        src={placeholderUrl}
-        alt={project.title}
-        className='w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110'
-      />
+      <div className='w-full h-64 rounded-lg overflow-hidden bg-gray-200'>
+        <img
+          src={placeholderUrl}
+          alt={project.title}
+          className='w-full h-full object-cover'
+        />
+      </div>
     )
   }
 
   if (images.length <= 1) {
     return (
-      <img
-        src={project.image}
-        alt={project.title}
-        className='w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110'
-        onError={handleImageError}
-      />
+      <div className='w-full h-64 rounded-lg overflow-hidden bg-gray-200'>
+        <img
+          src={project.image}
+          alt={project.title}
+          className='w-full h-full object-cover'
+          onError={handleImageError}
+        />
+      </div>
     )
   }
 
   return (
     <div
-      className='relative w-full h-64 overflow-hidden'
+      className='relative w-full h-64 rounded-lg overflow-hidden bg-gray-200'
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -191,7 +516,7 @@ function ProjectImageCarousel({ project }: { project: Project }) {
           key={currentImageIndex}
           src={images[currentImageIndex]}
           alt={project.title}
-          className='w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110'
+          className='w-full h-full object-cover'
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -204,7 +529,7 @@ function ProjectImageCarousel({ project }: { project: Project }) {
 }
 
 export function PortfolioSection({
-  projects = defaultProjects,
+  projects = dedupedProjects,
   title = 'Our Portfolio',
   description = 'Showcasing our latest projects and technical expertise',
   className = '',
@@ -212,6 +537,7 @@ export function PortfolioSection({
   const [selectedCategory, setSelectedCategory] = useState<string>('All')
   const reducedMotion = useReducedMotion()
   const deviceType = getDeviceType()
+  const [openProjectId, setOpenProjectId] = useState<string | null>(null)
 
   const categories = [
     'All',
@@ -251,107 +577,186 @@ export function PortfolioSection({
         </div>
 
         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
-          {filteredProjects.map((project, index) => (
-            <CardInteractions
-              key={project.id}
-              project={project}
-              index={index}
-              className='h-full'
-            >
-              <Card
-                className='group h-full overflow-hidden p-0 transform-gpu'
-                animated={!reducedMotion}
-                hover={deviceType !== 'mobile'}
+          {filteredProjects.map((project, index) => {
+            const displayResults = project.results?.slice(0, 2) || []
+            const displayTechs = project.technologies.slice(0, 4)
+            const remainingTechs = project.technologies.length - 4
+
+            return (
+              <FadeIn
+                key={project.id}
+                direction='up'
+                delay={index * 0.1}
+                duration={0.6}
               >
-                <div className='relative overflow-hidden'>
-                  <ProjectImageCarousel project={project} />
-                  {project.featured && (
-                    <div className='absolute top-4 left-4 bg-primary text-primary-foreground px-2 py-1 rounded-full text-xs font-medium'>
-                      Featured
+                <Card className='group h-full overflow-hidden rounded-xl bg-white border-0 shadow-lg hover:shadow-xl transition-all duration-300'>
+                  {/* Header with Icon and Category Tag */}
+                  <div className='relative p-4 flex items-start justify-between'>
+                    {/* Icon */}
+                    {project.icon && (
+                      <div
+                        className={`w-12 h-12 rounded-lg bg-gradient-to-br ${
+                          project.gradient || 'from-blue-500 to-cyan-500'
+                        } flex items-center justify-center text-white shadow-md`}
+                      >
+                        {project.icon}
+                      </div>
+                    )}
+                    {/* Category Tag */}
+                    <span className='px-3 py-1 bg-black text-white text-xs font-medium rounded-full'>
+                      {project.category}
+                    </span>
+                  </div>
+
+                  {/* Image */}
+                  <div className='relative px-4'>
+                    <ProjectImageCarousel project={project} />
+                  </div>
+
+                  {/* Industry Tag */}
+                  {project.industry && (
+                    <div className='px-4 mt-4'>
+                      <span className='px-3 py-1 bg-blue-600 text-white text-xs font-medium rounded-full'>
+                        {project.industry}
+                      </span>
                     </div>
                   )}
-                  <div className='absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300' />
-                </div>
 
-                <div className='p-6'>
-                  <div className='flex items-center justify-between mb-2'>
-                    <CardTitle className='text-xl'>{project.title}</CardTitle>
-                    <div className='flex items-center gap-2'>
-                      <span className='text-sm text-muted-foreground bg-muted px-2 py-1 rounded'>
-                        {project.category}
-                      </span>
-                      <div className='flex gap-1'>
-                        {project.link && (
-                          <Button size='sm' variant='outline' asChild>
-                            <a
-                              href={project.link}
-                              target='_blank'
-                              rel='noopener noreferrer'
-                            >
-                              View Project
-                            </a>
-                          </Button>
-                        )}
-                        {project.github && (
-                          <Button size='sm' variant='ghost' asChild>
-                            <a
-                              href={project.github}
-                              target='_blank'
-                              rel='noopener noreferrer'
-                            >
-                              <svg
-                                className='w-4 h-4'
-                                fill='currentColor'
-                                viewBox='0 0 24 24'
-                              >
-                                <path d='M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z' />
-                              </svg>
-                            </a>
-                          </Button>
-                        )}
-                      </div>
+                  {/* Content */}
+                  <CardContent className='p-6 pt-4'>
+                    {/* Title and Client */}
+                    <div className='mb-3'>
+                      <CardTitle className='text-xl font-bold mb-1'>
+                        {project.title}
+                      </CardTitle>
+                      {project.client && (
+                        <p className='text-sm text-gray-600'>
+                          {project.client}
+                        </p>
+                      )}
                     </div>
-                  </div>
-                  <CardDescription className='text-base mb-4'>
-                    {project.description}
-                  </CardDescription>
 
-                  <div className='flex flex-wrap items-center gap-2'>
-                    {project.technologies.map((tech, techIndex) => (
-                      <motion.span
-                        key={tech}
-                        className='text-xs bg-muted px-2 py-1 rounded'
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{
-                          delay: 0.8 + index * 0.1 + techIndex * 0.05,
-                          duration: 0.3,
-                        }}
-                      >
-                        {tech}
-                      </motion.span>
-                    ))}
-                    <motion.div
-                      className='text-muted-foreground'
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{
-                        delay:
-                          0.8 +
-                          index * 0.1 +
-                          project.technologies.length * 0.05 +
-                          0.1,
-                        duration: 0.3,
-                      }}
+                    {/* Description */}
+                    <CardDescription className='text-sm text-gray-700 mb-4 leading-relaxed line-clamp-3'>
+                      {project.description}
+                    </CardDescription>
+
+                    {/* Technologies */}
+                    <div className='flex flex-wrap items-center gap-2 mb-6'>
+                      {displayTechs.map((tech, techIndex) => (
+                        <span
+                          key={techIndex}
+                          className='px-3 py-1 bg-black text-white text-xs font-medium rounded-full'
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                      {remainingTechs > 0 && (
+                        <span className='px-3 py-1 bg-black text-white text-xs font-medium rounded-full'>
+                          +{remainingTechs}
+                        </span>
+                      )}
+                    </div>
+
+                    {/* View Case Study Button opens modal */}
+                    <Button
+                      className='w-full bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white'
+                      onClick={() => setOpenProjectId(project.id)}
                     >
-                      <MoreHorizontal className='w-3 h-3' />
-                    </motion.div>
-                  </div>
-                </div>
-              </Card>
-            </CardInteractions>
-          ))}
+                      View Case Study
+                      <ArrowRight className='ml-2 h-4 w-4' />
+                    </Button>
+                  </CardContent>
+                </Card>
+              </FadeIn>
+            )
+          })}
         </div>
+
+        {/* Centralized Dialog for reliability */}
+        <Dialog
+          open={!!openProjectId}
+          onOpenChange={v => !v && setOpenProjectId(null)}
+        >
+          <DialogContent className='sm:max-w-xl md:max-w-2xl max-h-[85vh] overflow-y-auto'>
+            {(() => {
+              const project = projects.find(p => p.id === openProjectId)
+              if (!project) return null
+              return (
+                <>
+                  <DialogHeader>
+                    <DialogTitle>{project.title}</DialogTitle>
+                  </DialogHeader>
+
+                  <div className='mb-4 flex items-center gap-2'>
+                    {project.industry && (
+                      <span className='px-2 py-1 text-xs rounded-full bg-blue-600 text-white'>
+                        {project.industry}
+                      </span>
+                    )}
+                    {project.client && (
+                      <span className='text-xs text-muted-foreground'>
+                        Client: {project.client}
+                      </span>
+                    )}
+                  </div>
+
+                  <p className='text-sm text-gray-700 mb-4'>
+                    {project.description}
+                  </p>
+
+                  <div className='mb-4'>
+                    <h4 className='font-semibold text-sm mb-2'>
+                      Why our implementation
+                    </h4>
+                    <ul className='list-disc pl-5 space-y-1 text-sm text-gray-700'>
+                      {(project.benefits && project.benefits.length > 0
+                        ? project.benefits
+                        : [
+                            'Faster time‑to‑value using proven delivery playbooks',
+                            'Security-by-default with compliance-ready pipelines',
+                            'Performance-first architecture that scales efficiently',
+                          ]
+                      ).map((b, i) => (
+                        <li key={i}>{b}</li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  {project.results && project.results.length > 0 && (
+                    <div className='mb-4'>
+                      <h4 className='font-semibold text-sm mb-2'>
+                        Key Results
+                      </h4>
+                      <ul className='space-y-2'>
+                        {project.results.map((r, i) => (
+                          <li
+                            key={i}
+                            className='flex items-center gap-2 text-sm'
+                          >
+                            <CheckCircle className='h-4 w-4 text-green-500' />
+                            <span>{r}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+
+                  {project.features && project.features.length > 0 && (
+                    <div className='mb-2'>
+                      <h4 className='font-semibold text-sm mb-2'>Highlights</h4>
+                      <ul className='list-disc pl-5 space-y-1 text-sm text-gray-700'>
+                        {project.features.map((f, i) => (
+                          <li key={i}>{f}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </>
+              )
+            })()}
+          </DialogContent>
+        </Dialog>
 
         <FadeIn delay={1.2} duration={0.8}>
           <div className='text-center mt-12'>

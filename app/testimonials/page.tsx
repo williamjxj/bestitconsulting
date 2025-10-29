@@ -44,179 +44,33 @@ export default function TestimonialsPage() {
     R2_ASSET_MAPPINGS.testimonials.success
   )
 
-  const testimonials = [
-    {
-      id: 1,
-      name: 'Sarah Johnson',
-      role: 'CEO',
-      company: 'TechFlow Solutions',
-      industry: 'Software',
-      image:
-        'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face&auto=format',
-      rating: 5,
-      content:
-        'Best IT Consulting transformed our entire digital infrastructure. Their expertise in cloud migration saved us 60% on operational costs while improving our system reliability dramatically. The team was professional, responsive, and delivered beyond our expectations.',
-      project: 'Cloud Migration & Infrastructure Modernization',
-      results: [
-        '60% cost reduction',
-        '99.9% uptime achieved',
-        '3x faster deployment',
-      ],
-      date: '2024',
-    },
-    {
-      id: 2,
-      name: 'Michael Chen',
-      role: 'CTO',
-      company: 'HealthVital Medical',
-      industry: 'Healthcare',
-      image:
-        'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face&auto=format',
-      rating: 5,
-      content:
-        'The healthcare management system BestIT developed for us has revolutionized our patient care process. The HIPAA-compliant solution streamlined our operations and significantly improved patient satisfaction scores.',
-      project: 'Healthcare Management System',
-      results: [
-        '30% faster check-ins',
-        '25% higher satisfaction',
-        '100% HIPAA compliance',
-      ],
-      date: '2024',
-    },
-    {
-      id: 3,
-      name: 'Emily Rodriguez',
-      role: 'Director of Operations',
-      company: 'RetailMax Enterprise',
-      industry: 'Retail',
-      image:
-        'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face&auto=format',
-      rating: 5,
-      content:
-        'Our e-commerce platform built by BestIT has exceeded all performance expectations. The scalable architecture handles millions of transactions seamlessly, and the conversion rate improvements have significantly boosted our revenue.',
-      project: 'E-Commerce Platform Development',
-      results: [
-        '40% conversion increase',
-        '500K+ monthly users',
-        'Zero downtime',
-      ],
-      date: '2023',
-    },
-    {
-      id: 4,
-      name: 'David Kim',
-      role: 'VP of Technology',
-      company: 'FinanceCore Bank',
-      industry: 'Finance',
-      image:
-        'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face&auto=format',
-      rating: 5,
-      content:
-        'The real-time analytics dashboard BestITConsulting created has transformed how we make financial decisions. The insights we gain from their sophisticated data visualization platform have led to better investment strategies and risk management.',
-      project: 'Financial Analytics Dashboard',
-      results: [
-        '70% faster insights',
-        '90% report automation',
-        '$2M annual savings',
-      ],
-      date: '2023',
-    },
-    {
-      id: 5,
-      name: 'Lisa Thompson',
-      role: 'Fleet Manager',
-      company: 'LogiTrans Solutions',
-      industry: 'Transportation',
-      image:
-        'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop&crop=face&auto=format',
-      rating: 5,
-      content:
-        'The IoT fleet management system has revolutionized our operations. Real-time tracking, predictive maintenance, and route optimization have significantly reduced our operational costs while improving service quality.',
-      project: 'IoT Fleet Management System',
-      results: [
-        '35% fuel savings',
-        '50% maintenance reduction',
-        '25% faster deliveries',
-      ],
-      date: '2023',
-    },
-    {
-      id: 6,
-      name: 'Robert Wilson',
-      role: 'Manufacturing Director',
-      company: 'IndustryMax Corp',
-      industry: 'Manufacturing',
-      image:
-        'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face&auto=format',
-      rating: 5,
-      content:
-        "BestIT's cloud migration platform made our digital transformation seamless. The automated assessment and migration tools saved us months of work, and the cost optimization recommendations continue to provide value.",
-      project: 'Enterprise Cloud Migration',
-      results: [
-        '60% infrastructure savings',
-        '80% reliability improvement',
-        'Zero-downtime migration',
-      ],
-      date: '2022',
-    },
-    {
-      id: 7,
-      name: 'Jennifer Davis',
-      role: 'Customer Success Director',
-      company: 'TeleConnect Inc',
-      industry: 'Telecommunications',
-      image:
-        'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&h=150&fit=crop&crop=face&auto=format',
-      rating: 5,
-      content:
-        'The AI-powered customer service platform has transformed our support operations. The intelligent chatbot and sentiment analysis have dramatically improved response times and customer satisfaction rates.',
-      project: 'AI Customer Service Platform',
-      results: [
-        '75% faster responses',
-        '90% satisfaction rate',
-        '50% ticket reduction',
-      ],
-      date: '2022',
-    },
-    {
-      id: 8,
-      name: 'Mark Anderson',
-      role: 'Innovation Lead',
-      company: 'StartupLaunch',
-      industry: 'Technology',
-      image:
-        'https://images.unsplash.com/photo-1519345182560-3f2917c472ef?w=150&h=150&fit=crop&crop=face&auto=format',
-      rating: 5,
-      content:
-        'As a startup, we needed a reliable technology partner who could scale with us. BestIT not only delivered an amazing MVP but also provided ongoing support that helped us secure our Series A funding.',
-      project: 'MVP Development & Scaling',
-      results: ['Series A secured', '100K+ users acquired', '99.9% uptime'],
-      date: '2024',
-    },
-  ]
-
   const stats = [
     {
       icon: <Users className='h-8 w-8 text-blue-500' />,
-      number: '500+',
+      number: 500,
+      suffix: '+',
       label: 'Happy Clients',
       gradient: 'from-blue-400 to-cyan-500',
     },
     {
       icon: <Star className='h-8 w-8 text-yellow-500' />,
-      number: '4.9/5',
+      number: 4.9,
+      suffix: '/5',
+      decimals: 1,
       label: 'Average Rating',
       gradient: 'from-yellow-400 to-orange-500',
     },
     {
       icon: <CheckCircle className='h-8 w-8 text-green-500' />,
-      number: '98%',
+      number: 98,
+      suffix: '%',
       label: 'Satisfaction Rate',
       gradient: 'from-green-400 to-emerald-500',
     },
     {
       icon: <Globe className='h-8 w-8 text-purple-500' />,
-      number: '50+',
+      number: 50,
+      suffix: '+',
       label: 'Countries Served',
       gradient: 'from-purple-400 to-pink-500',
     },
@@ -309,36 +163,7 @@ export default function TestimonialsPage() {
           <section className='py-20 px-4 bg-white/50'>
             <div className='max-w-6xl mx-auto'>
               <div className='grid grid-cols-2 md:grid-cols-4 gap-8'>
-                {[
-                  {
-                    icon: <Users className='h-8 w-8 text-blue-500' />,
-                    number: 500,
-                    label: 'Happy Clients',
-                    gradient: 'from-blue-400 to-cyan-500',
-                    suffix: '+',
-                  },
-                  {
-                    icon: <Star className='h-8 w-8 text-yellow-500' />,
-                    number: 4.9,
-                    label: 'Average Rating',
-                    gradient: 'from-yellow-400 to-orange-500',
-                    suffix: '/5',
-                  },
-                  {
-                    icon: <CheckCircle className='h-8 w-8 text-green-500' />,
-                    number: 98,
-                    label: 'Satisfaction Rate',
-                    gradient: 'from-green-400 to-emerald-500',
-                    suffix: '%',
-                  },
-                  {
-                    icon: <Globe className='h-8 w-8 text-purple-500' />,
-                    number: 50,
-                    label: 'Countries Served',
-                    gradient: 'from-purple-400 to-pink-500',
-                    suffix: '+',
-                  },
-                ].map((stat, index) => (
+                {stats.map((stat, index) => (
                   <SlideIn
                     key={index}
                     direction='up'
@@ -359,9 +184,8 @@ export default function TestimonialsPage() {
                           duration={2}
                           delay={0.4 + index * 0.2}
                           suffix={stat.suffix}
-                        >
-                          {stat.number}
-                        </AnimatedCounter>
+                          decimals={stat.decimals}
+                        />
                       </div>
                       <div className='text-gray-600 font-medium'>
                         {stat.label}

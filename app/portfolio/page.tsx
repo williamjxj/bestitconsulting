@@ -134,7 +134,7 @@ export default function PortfolioPage() {
                 {[
                   {
                     icon: <CheckCircle className='h-8 w-8 text-green-500' />,
-                    number: 500,
+                    number: 50,
                     label: 'Projects Completed',
                     gradient: 'from-green-400 to-emerald-500',
                     suffix: '+',
@@ -176,10 +176,7 @@ export default function PortfolioPage() {
                           duration={2}
                           delay={0.4 + index * 0.2}
                           suffix={stat.suffix}
-                        >
-                          {stat.number}
-                          {stat.suffix}
-                        </AnimatedCounter>
+                        />
                       </div>
                       <div className='text-gray-600 font-medium'>
                         {stat.label}
