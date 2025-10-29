@@ -199,14 +199,7 @@ export const ES_TRANSLATIONS: Translations = {
         },
       },
     },
-    stats: {
-      title: 'Nuestro Impacto',
-      subtitle: 'Números que hablan por sí mismos',
-      clients: 'Clientes Satisfechos',
-      projects: 'Proyectos Completados',
-      years: 'Años de Experiencia',
-      team: 'Miembros del Equipo',
-    },
+    
     cta: {
       title: '¿Listo para Transformar su Negocio?',
       description:

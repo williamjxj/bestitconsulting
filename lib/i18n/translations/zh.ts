@@ -188,14 +188,7 @@ export const ZH_TRANSLATIONS: Translations = {
         },
       },
     },
-    stats: {
-      title: '我们的影响',
-      subtitle: '数字说明一切',
-      clients: '满意客户',
-      projects: '完成项目',
-      years: '年经验',
-      team: '团队成员',
-    },
+    
     cta: {
       title: '准备好转变您的业务了吗？',
       description: '立即联系我们，讨论如何帮助您实现技术目标。',
