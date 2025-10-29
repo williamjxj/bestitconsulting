@@ -402,7 +402,7 @@ const TechnologyShowcase = () => {
 
                 // Calculate 3D positioning
                 let transform = ''
-                let opacity = 0.3
+                let opacity = 0.4
                 let scale = 0.8
                 let zIndex = 1
 
@@ -414,18 +414,18 @@ const TechnologyShowcase = () => {
                 } else if (isPrev) {
                   transform =
                     'translateZ(-200px) translateX(-300px) rotateY(45deg)'
-                  opacity = 0.6
+                  opacity = 0.85
                   scale = 0.9
                   zIndex = 5
                 } else if (isNext) {
                   transform =
                     'translateZ(-200px) translateX(300px) rotateY(-45deg)'
-                  opacity = 0.6
+                  opacity = 0.85
                   scale = 0.9
                   zIndex = 5
                 } else {
                   transform = 'translateZ(-400px) translateX(0px) rotateY(0deg)'
-                  opacity = 0.2
+                  opacity = 0.4
                   scale = 0.7
                   zIndex = 1
                 }
@@ -446,10 +446,10 @@ const TechnologyShowcase = () => {
                     }}
                   >
                     <div
-                      className={`w-full h-full rounded-2xl shadow-2xl p-6 flex flex-col items-center justify-center border ${
+                      className={`relative w-full h-full rounded-2xl shadow-2xl p-6 flex flex-col items-center justify-center border outline outline-1 ${
                         isActive
-                          ? 'bg-white/20 border-white/30 backdrop-blur-md ring-1 ring-white/30'
-                          : 'bg-white/10 border-white/20 backdrop-blur-md'
+                          ? 'bg-gradient-to-br from-white/30 to-white/10 backdrop-blur-xl border-white/40 outline-white/40 ring-1 ring-white/50 shadow-[0_10px_30px_-10px_rgba(59,130,246,0.35)]'
+                          : 'bg-gradient-to-br from-white/15 to-white/5 backdrop-blur-md border-white/20 outline-white/20 hover:from-white/20 hover:to-white/10'
                       }`}
                       onMouseMove={isActive ? handleMouseMove : undefined}
                       onMouseLeave={isActive ? handleMouseOut : undefined}
@@ -462,6 +462,14 @@ const TechnologyShowcase = () => {
                           : undefined
                       }
                     >
+                      {/* overlay gradient for depth */}
+                      <div
+                        className={`pointer-events-none absolute inset-0 rounded-2xl ${
+                          isActive
+                            ? 'bg-[linear-gradient(to_bottom,rgba(255,255,255,0.35),transparent_35%,transparent_65%,rgba(0,0,0,0.05))]'
+                            : 'bg-[linear-gradient(to_bottom,rgba(255,255,255,0.2),transparent_35%,transparent_65%,rgba(0,0,0,0.06))]'
+                        }`}
+                      />
                       <div className='text-center mb-3'>
                         <h3 className='text-xl font-bold text-gray-900 mb-1'>
                           {category.title}
