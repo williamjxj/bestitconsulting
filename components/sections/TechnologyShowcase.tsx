@@ -388,19 +388,19 @@ const TechnologyShowcase = () => {
                     }}
                   >
                     <div
-                      className={`w-full h-full rounded-2xl shadow-2xl p-3 flex flex-col items-center justify-center ${
-                        index === 0
-                          ? 'bg-gradient-to-br from-blue-50 to-blue-100'
-                          : index === 1
-                            ? 'bg-gradient-to-br from-blue-50 to-blue-100'
-                            : 'bg-gradient-to-br from-blue-50 to-blue-100'
+                      className={`w-full h-full rounded-2xl shadow-2xl p-6 flex flex-col items-center justify-center border ${
+                        isActive
+                          ? 'bg-white/20 border-white/30 backdrop-blur-md ring-1 ring-white/30'
+                          : 'bg-white/10 border-white/20 backdrop-blur-md'
                       }`}
                     >
                       <div className='text-center mb-3'>
-                        <h3 className='text-xl font-bold text-gray-800 mb-1'>
+                        <h3 className='text-xl font-bold text-gray-900 mb-1'>
                           {category.title}
                         </h3>
-                        <div className='w-12 h-1 mx-auto rounded-full bg-gradient-to-r from-blue-500 to-blue-600'></div>
+                        <div className={`w-12 h-1 mx-auto rounded-full bg-gradient-to-r ${
+                          isActive ? 'from-blue-500 to-cyan-500' : 'from-gray-300 to-gray-200'
+                        }`}></div>
                       </div>
 
                       {/* Technology Grid */}
@@ -425,11 +425,11 @@ const TechnologyShowcase = () => {
           <div className='flex justify-center items-center mt-8 space-x-4'>
             <button
               onClick={prevSlide}
-              className='p-3 rounded-full bg-white shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 border border-gray-200 group'
+              className='p-3 rounded-full bg-white/80 backdrop-blur border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 group'
               aria-label='Previous slide'
             >
               <svg
-                className='w-6 h-6 text-gray-600 group-hover:text-blue-600 transition-colors'
+                className='w-6 h-6 text-gray-700 group-hover:text-blue-600 transition-colors'
                 fill='none'
                 stroke='currentColor'
                 viewBox='0 0 24 24'
@@ -449,10 +449,10 @@ const TechnologyShowcase = () => {
                 <button
                   key={index}
                   onClick={() => goToSlide(index)}
-                  className={`w-4 h-4 rounded-full transition-all duration-300 ${
+                  className={`h-2 rounded-full transition-all duration-300 ${
                     currentSlide === index
-                      ? 'bg-blue-500 scale-125 shadow-lg'
-                      : 'bg-gray-300 hover:bg-gray-400 hover:scale-110'
+                      ? 'w-8 bg-gradient-to-r from-blue-500 to-cyan-500 shadow-lg'
+                      : 'w-2 bg-gray-300 hover:bg-gray-400'
                   }`}
                   aria-label={`Go to slide ${index + 1}`}
                 />
@@ -461,11 +461,11 @@ const TechnologyShowcase = () => {
 
             <button
               onClick={nextSlide}
-              className='p-3 rounded-full bg-white shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 border border-gray-200 group'
+              className='p-3 rounded-full bg-white/80 backdrop-blur border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 group'
               aria-label='Next slide'
             >
               <svg
-                className='w-6 h-6 text-gray-600 group-hover:text-blue-600 transition-colors'
+                className='w-6 h-6 text-gray-700 group-hover:text-blue-600 transition-colors'
                 fill='none'
                 stroke='currentColor'
                 viewBox='0 0 24 24'
