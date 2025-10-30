@@ -67,6 +67,32 @@ export function TestimonialsSection({
       <div className='container mx-auto px-4'>
         <div className='text-center mb-16'>
           <h2 className='text-3xl md:text-4xl font-bold mb-4'>{title}</h2>
+          {/* Avatar line under the title (MagicUI-style) */}
+          <div className='flex items-center justify-center mb-6'>
+            <div className='flex -space-x-3'>
+              {[
+                'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=96&h=96&fit=crop&crop=faces&auto=format',
+                'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=96&h=96&fit=crop&crop=faces&auto=format',
+                'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=96&h=96&fit=crop&crop=faces&auto=format',
+                'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=96&h=96&fit=crop&crop=faces&auto=format',
+                'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=96&h=96&fit=crop&crop=faces&auto=format',
+                'https://images.unsplash.com/photo-1519345182560-3f2917c472ef?w=96&h=96&fit=crop&crop=faces&auto=format',
+              ].map((src, idx) => (
+                <img
+                  key={idx}
+                  src={src}
+                  alt=''
+                  width={44}
+                  height={44}
+                  className='h-11 w-11 rounded-full ring-2 ring-white shadow-md object-cover'
+                  aria-hidden
+                />
+              ))}
+            </div>
+            <span className='ml-4 text-sm font-medium text-muted-foreground whitespace-nowrap'>
+              + 120 happy clients
+            </span>
+          </div>
           <p className='text-lg text-muted-foreground max-w-2xl mx-auto'>
             {description}
           </p>
