@@ -454,9 +454,10 @@ export default function OurWorkPage() {
                     Our Live Projects
                   </h2>
                   <p className='text-xl text-gray-600 max-w-3xl mx-auto'>
-                    Explore our portfolio of live projects that showcase our
-                    expertise in modern web development, AI integration, and
-                    business solutions.
+                    We believe in transparency. Below are public-facing
+                    prototypes (MVPs and PoCs) built from our successful
+                    enterprise applications, demonstrating our capabilities and
+                    innovative approach.
                   </p>
                 </FadeIn>
               </div>

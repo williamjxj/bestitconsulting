@@ -157,7 +157,8 @@ export function IconCloud({
               if (!alreadyTried) {
                 try {
                   const url = new URL(img.src)
-                  const slug = url.pathname.split('/').filter(Boolean).pop() || ''
+                  const slug =
+                    url.pathname.split('/').filter(Boolean).pop() || ''
                   if (slug) {
                     img.dataset.fallbackTried = 'true'
                     img.src = `https://cdn.jsdelivr.net/npm/simple-icons/icons/${slug}.svg`

@@ -41,10 +41,16 @@ export interface IconCloudDemoProps {
   className?: string
 }
 
-export function IconCloudDemo({ size = 420, radius = 140, className }: IconCloudDemoProps) {
+export function IconCloudDemo({
+  size = 420,
+  radius = 140,
+  className,
+}: IconCloudDemoProps) {
   const images = slugs.map(slug => `https://cdn.simpleicons.org/${slug}`)
   return (
-    <div className={`relative flex items-center justify-center overflow-visible ${className ?? ''}`}>
+    <div
+      className={`relative flex items-center justify-center overflow-visible ${className ?? ''}`}
+    >
       <IconCloud images={images} size={size} radius={radius} />
     </div>
   )

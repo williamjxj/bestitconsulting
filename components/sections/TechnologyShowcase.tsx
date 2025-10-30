@@ -372,16 +372,16 @@ const TechnologyShowcase = () => {
     >
       <div className='container mx-auto px-4'>
         <div className='text-center mb-8'>
-            <span className='inline-block px-3 py-1 text-sm font-medium bg-gradient-to-r from-blue-100 to-cyan-100 text-blue-800 rounded-full mb-3 border border-blue-200/50'>
-              Technology Stack
-            </span>
-            <h2 className='text-2xl md:text-3xl font-bold mb-2 bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent'>
-              Built with Modern Technologies
-            </h2>
-            <p className='text-base text-muted-foreground max-w-xl mx-auto'>
-              We leverage cutting-edge tools and frameworks to deliver superior
-              results.
-            </p>
+          <span className='inline-block px-3 py-1 text-sm font-medium bg-gradient-to-r from-blue-100 to-cyan-100 text-blue-800 rounded-full mb-3 border border-blue-200/50'>
+            Technology Stack
+          </span>
+          <h2 className='text-2xl md:text-3xl font-bold mb-2 bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent'>
+            Built with Modern Technologies
+          </h2>
+          <p className='text-base text-muted-foreground max-w-xl mx-auto'>
+            We leverage cutting-edge tools and frameworks to deliver superior
+            results.
+          </p>
         </div>
 
         {/* Layout: carousel + icon cloud aside */}

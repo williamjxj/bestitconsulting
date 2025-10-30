@@ -133,10 +133,11 @@ export default function AboutPage() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.2 }}
               >
-                I'm a passionate full-stack developer dedicated to transforming
-                businesses through innovative digital solutions. With over a
-                decade of experience, I've helped numerous companies scale,
-                innovate, and succeed in the digital era.
+                Best IT Consulting is a solo software consultancy focused on
+                software outsourcing and AI technology consulting. We help
+                organizations ship faster with modern web platforms, streamline
+                operations through automation, and unlock value with practical
+                AI—on time and within budget.
               </motion.p>
               <motion.div
                 className='flex flex-col sm:flex-row gap-6 justify-center mb-12'
@@ -464,11 +465,11 @@ export default function AboutPage() {
             viewport={{ once: true }}
           >
             <h2 className='text-3xl lg:text-4xl font-bold text-gray-900 mb-6'>
-              My Work Philosophy & Approach
+              How We Work
             </h2>
             <p className='text-xl text-gray-600 max-w-3xl mx-auto'>
-              Discover what drives my commitment to delivering exceptional
-              technology solutions and building lasting client relationships.
+              Discover our delivery principles—focused on measurable outcomes,
+              reduced risk, and lasting impact for your business.
             </p>
           </motion.div>
 
@@ -480,13 +481,12 @@ export default function AboutPage() {
               viewport={{ once: true }}
             >
               <h3 className='text-2xl font-bold text-gray-900 mb-6'>
-                My Development Environment
+                Our Development Environment
               </h3>
               <p className='text-lg text-gray-600 leading-relaxed mb-6'>
-                I work from a modern, well-equipped home office that's designed
-                for maximum productivity and creativity. This setup allows me to
-                focus entirely on your project while maintaining the flexibility
-                to adapt to your schedule and needs.
+                A modern, well-equipped environment designed for productivity
+                and reliability. Our setup prioritizes security, performance,
+                and uninterrupted delivery so your project stays on track.
               </p>
               <div className='space-y-4'>
                 {[
@@ -530,7 +530,7 @@ export default function AboutPage() {
                       <div className='w-12 h-12 mx-auto mb-2 bg-white/20 rounded-full flex items-center justify-center'>
                         <Building className='w-6 h-6' />
                       </div>
-                      <p className='text-sm font-medium'>My Workspace</p>
+                      <p className='text-sm font-medium'>Our Workspace</p>
                     </div>
                   }
                 />
@@ -571,7 +571,7 @@ export default function AboutPage() {
                       <div className='w-12 h-12 mx-auto mb-2 bg-white/20 rounded-full flex items-center justify-center'>
                         <Users className='w-6 h-6' />
                       </div>
-                      <p className='text-sm font-medium'>My Values</p>
+                      <p className='text-sm font-medium'>Our Values</p>
                     </div>
                   }
                 />
@@ -592,13 +592,12 @@ export default function AboutPage() {
               viewport={{ once: true }}
             >
               <h3 className='text-2xl font-bold text-gray-900 mb-6'>
-                My Work Values & Commitment
+                Our Work Values & Commitment
               </h3>
               <p className='text-lg text-gray-600 leading-relaxed mb-6'>
-                I believe that exceptional technology solutions come from a deep
-                commitment to quality, continuous learning, and genuine
-                partnership with clients. Every project is an opportunity to
-                create something meaningful.
+                Exceptional outcomes come from discipline, quality, and true
+                partnership. We combine proven engineering practices with a
+                consultative approach to deliver solutions that matter.
               </p>
               <div className='space-y-4'>
                 {[
@@ -639,7 +638,7 @@ export default function AboutPage() {
               Ready to Work Together?
             </h2>
             <p className='text-xl text-blue-100 mb-8 max-w-2xl mx-auto'>
-              Let's discuss how I can help transform your business with
+              Let's discuss how we can help transform your business with
               innovative technology solutions tailored to your needs.
             </p>
             <div className='flex flex-col sm:flex-row gap-4 justify-center'>
