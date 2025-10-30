@@ -97,7 +97,10 @@ export function FadeIn({
       transition={{
         duration: optimizedConfig.duration / 1000,
         delay: (delay + stagger) / 1000,
-        ease: optimizedConfig.easing === 'ease-out' ? [0.25, 0.46, 0.45, 0.94] : optimizedConfig.easing,
+        ease:
+          optimizedConfig.easing === 'ease-out'
+            ? [0.25, 0.46, 0.45, 0.94]
+            : optimizedConfig.easing,
         onComplete: onComplete,
       }}
       onAnimationStart={onStart}

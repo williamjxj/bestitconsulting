@@ -188,7 +188,7 @@ export const ZH_TRANSLATIONS: Translations = {
         },
       },
     },
-    
+
     cta: {
       title: '准备好转变您的业务了吗？',
       description: '立即联系我们，讨论如何帮助您实现技术目标。',

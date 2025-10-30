@@ -44,7 +44,6 @@ export default function ServicesPage() {
   const node4Ref = useRef<HTMLDivElement>(null!)
   const centerNodeRef = useRef<HTMLDivElement>(null!)
 
-
   const processSteps = [
     {
       step: '01',

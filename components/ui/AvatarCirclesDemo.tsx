@@ -38,5 +38,3 @@ export function AvatarCirclesDemo() {
 }
 
 export default AvatarCirclesDemo
-
-

@@ -201,7 +201,7 @@ export const FR_TRANSLATIONS: Translations = {
         },
       },
     },
-    
+
     cta: {
       title: 'Prêt à Transformer Votre Entreprise?',
       description:

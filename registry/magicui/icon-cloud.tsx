@@ -7,7 +7,9 @@ interface IconCloudProps {
   radius?: number // sphere radius in px
 }
 
-function generateSpherePoints(count: number): Array<{ x: number; y: number; z: number }> {
+function generateSpherePoints(
+  count: number
+): Array<{ x: number; y: number; z: number }> {
   const points: Array<{ x: number; y: number; z: number }> = []
   const phi = Math.PI * (3 - Math.sqrt(5))
   for (let i = 0; i < count; i++) {
@@ -25,18 +27,26 @@ function generateSpherePoints(count: number): Array<{ x: number; y: number; z: n
  * Lightweight IconCloud compatible with MagicUI API surface.
  * Renders icons arranged on a circular ring that spins slowly.
  */
-export function IconCloud({ images, size = 420, radius = 140 }: IconCloudProps) {
+export function IconCloud({
+  images,
+  size = 420,
+  radius = 140,
+}: IconCloudProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const itemRefs = useRef<HTMLDivElement[]>([])
   const requestRef = useRef<number | null>(null)
 
-  const points = useMemo(() => generateSpherePoints(images.length), [images.length])
+  const points = useMemo(
+    () => generateSpherePoints(images.length),
+    [images.length]
+  )
 
   const yawRef = useRef(0)
   const pitchRef = useRef(0)
   const targetYawRef = useRef(0)
   const targetPitchRef = useRef(0)
-  const spinSpeedRef = useRef(0.02) // increase for a more noticeable auto-rotation
+  const spinSpeedRef = useRef(0.006) // slower, more subtle auto-rotation
+  const baseYawRef = useRef(0) // accumulates continuous spin
 
   useEffect(() => {
     const container = containerRef.current
@@ -45,13 +55,13 @@ export function IconCloud({ images, size = 420, radius = 140 }: IconCloudProps) 
     const lerp = (a: number, b: number, t: number) => a + (b - a) * t
 
     const animate = () => {
-      // gentle constant spin
-      yawRef.current += spinSpeedRef.current
-      // ease toward cursor target
-      yawRef.current = lerp(yawRef.current, targetYawRef.current, 0.06)
-      pitchRef.current = lerp(pitchRef.current, targetPitchRef.current, 0.06)
+      // continuous base spin
+      baseYawRef.current += spinSpeedRef.current
+      // ease interactive offsets toward targets
+      yawRef.current = lerp(yawRef.current, targetYawRef.current, 0.08)
+      pitchRef.current = lerp(pitchRef.current, targetPitchRef.current, 0.08)
 
-      const yaw = yawRef.current
+      const yaw = baseYawRef.current + yawRef.current
       const pitch = pitchRef.current
       const sinY = Math.sin(yaw)
       const cosY = Math.cos(yaw)
@@ -124,19 +134,40 @@ export function IconCloud({ images, size = 420, radius = 140 }: IconCloudProps) 
             if (el) itemRefs.current[index] = el
           }}
           className='absolute will-change-transform transition-transform duration-75 ease-out'
-          style={{ left: 0, top: 0, width: 32, height: 32, transform: 'translate3d(0,0,0)' }}
+          style={{
+            left: 0,
+            top: 0,
+            width: 32,
+            height: 32,
+            transform: 'translate3d(0,0,0)',
+          }}
         >
           <img
             src={src}
-            alt='tech icon'
+            alt='' // decorative; container has aria-label
             width={28}
             height={28}
             className='object-contain'
             loading='lazy'
             decoding='async'
             onError={e => {
-              const el = e.currentTarget as HTMLImageElement
-              el.style.display = 'none'
+              const img = e.currentTarget as HTMLImageElement
+              // Try fallback CDN once, then hide on second failure
+              const alreadyTried = img.dataset.fallbackTried === 'true'
+              if (!alreadyTried) {
+                try {
+                  const url = new URL(img.src)
+                  const slug = url.pathname.split('/').filter(Boolean).pop() || ''
+                  if (slug) {
+                    img.dataset.fallbackTried = 'true'
+                    img.src = `https://cdn.jsdelivr.net/npm/simple-icons/icons/${slug}.svg`
+                    return
+                  }
+                } catch (_) {
+                  // ignore URL parse errors and hide
+                }
+              }
+              img.style.display = 'none'
             }}
           />
         </div>
@@ -147,5 +178,3 @@ export function IconCloud({ images, size = 420, radius = 140 }: IconCloudProps) 
 }
 
 export default IconCloud
-
-

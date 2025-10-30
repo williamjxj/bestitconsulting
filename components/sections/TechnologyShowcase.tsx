@@ -371,14 +371,7 @@ const TechnologyShowcase = () => {
       className='py-12 bg-gradient-to-br from-slate-50 to-blue-50'
     >
       <div className='container mx-auto px-4'>
-        <div className='text-center mb-8 relative'>
-          {/* Icon Cloud background behind headline */}
-          <div className='pointer-events-none absolute inset-0 flex items-center justify-center'>
-            <div className='w-[420px] h-[420px] opacity-60'>
-              <IconCloudDemo />
-            </div>
-          </div>
-          <div className='relative z-10'>
+        <div className='text-center mb-8'>
             <span className='inline-block px-3 py-1 text-sm font-medium bg-gradient-to-r from-blue-100 to-cyan-100 text-blue-800 rounded-full mb-3 border border-blue-200/50'>
               Technology Stack
             </span>
@@ -389,107 +382,129 @@ const TechnologyShowcase = () => {
               We leverage cutting-edge tools and frameworks to deliver superior
               results.
             </p>
-          </div>
         </div>
 
         {/* Layout: carousel + icon cloud aside */}
         <div
-          className='relative mx-auto max-w-6xl grid lg:grid-cols-12 gap-8 items-center'
+          className='relative mx-auto max-w-6xl grid grid-cols-1 gap-8 items-center'
           aria-roledescription='carousel'
           aria-label='Technology categories carousel'
         >
           {/* 3D Carousel Container */}
           <div
-            className='relative lg:col-span-7 flex justify-center'
+            className='relative lg:col-span-12 flex justify-center'
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
           >
-          {/* 3D Carousel Track */}
-          <div
-            ref={carouselRef}
-            className='relative h-72 md:h-80 lg:h-96 xl:h-[28rem] w-full max-w-[760px]'
-            style={{ perspective: '1000px', overflow: 'visible' }}
-          >
-            <div className='relative w-full h-full will-change-transform'>
-              {categories.map((category, index) => {
-                const isActive = index === currentSlide
-                const isPrev =
-                  index ===
-                  (currentSlide - 1 + categories.length) % categories.length
-                const isNext = index === (currentSlide + 1) % categories.length
+            {/* 3D Carousel Track */}
+            <div
+              ref={carouselRef}
+              className='relative h-72 md:h-80 lg:h-96 xl:h-[28rem] w-full max-w-[760px]'
+              style={{ perspective: '1000px', overflow: 'visible' }}
+            >
+              <div className='relative w-full h-full will-change-transform'>
+                {categories.map((category, index) => {
+                  const isActive = index === currentSlide
+                  const isPrev =
+                    index ===
+                    (currentSlide - 1 + categories.length) % categories.length
+                  const isNext =
+                    index === (currentSlide + 1) % categories.length
 
-                // Calculate 3D positioning
-                let transform = ''
-                let opacity = 0.25
-                let scale = 0.8
-                let zIndex = 1
-                let blurClass = 'blur-[0.5px]'
+                  // Calculate 3D positioning
+                  let transform = ''
+                  let opacity = 0.25
+                  let scale = 0.8
+                  let zIndex = 1
+                  let blurClass = 'blur-[0.5px]'
 
-                if (isActive) {
-                  transform = 'translateZ(0px) rotateY(0deg)'
-                  opacity = 1
-                  scale = 1
-                  zIndex = 10
-                  blurClass = ''
-                } else if (isPrev) {
-                  transform =
-                    'translateZ(-200px) translateX(-300px) rotateY(45deg)'
-                  opacity = 0.25
-                  scale = 0.9
-                  zIndex = 5
-                } else if (isNext) {
-                  transform =
-                    'translateZ(-200px) translateX(300px) rotateY(-45deg)'
-                  opacity = 0.25
-                  scale = 0.9
-                  zIndex = 5
-                } else {
-                  transform = 'translateZ(-400px) translateX(0px) rotateY(0deg)'
-                  opacity = 0.2
-                  scale = 0.7
-                  zIndex = 1
-                }
+                  if (isActive) {
+                    transform = 'translateZ(0px) rotateY(0deg)'
+                    opacity = 1
+                    scale = 1
+                    zIndex = 10
+                    blurClass = ''
+                  } else if (isPrev) {
+                    transform =
+                      'translateZ(-200px) translateX(-300px) rotateY(45deg)'
+                    opacity = 0.25
+                    scale = 0.9
+                    zIndex = 5
+                  } else if (isNext) {
+                    transform =
+                      'translateZ(-200px) translateX(300px) rotateY(-45deg)'
+                    opacity = 0.25
+                    scale = 0.9
+                    zIndex = 5
+                  } else {
+                    transform =
+                      'translateZ(-400px) translateX(0px) rotateY(0deg)'
+                    opacity = 0.2
+                    scale = 0.7
+                    zIndex = 1
+                  }
 
-                const transformFull = `${transform} scale(${scale})`
-                return (
-                  <div
-                    key={index}
-                    className={`absolute inset-0 transition-all duration-700 ease-out will-change-transform ${
-                      isActive ? 'pointer-events-auto' : 'pointer-events-none'
-                    }`}
-                    style={{
-                      transform: transformFull,
-                      opacity,
-                      zIndex,
-                      transformStyle: 'preserve-3d',
-                    }}
-                    ref={el => {
-                      if (el) cardsRef.current[index] = el
-                    }}
-                  >
-                    {isActive ? (
-                      <BorderBeam>
-                        <div
-                          className={`relative z-0 w-full h-full rounded-2xl p-6 flex flex-col items-center justify-center overflow-hidden bg-white/10 backdrop-blur-sm shadow-lg`}
-                          onMouseMove={handleMouseMove}
-                          onMouseLeave={handleMouseOut}
-                          style={{
-                            transform: `rotateX(${tilt.rotateX}deg) rotateY(${tilt.rotateY}deg)`,
-                            transition: 'transform 120ms ease-out',
-                            backfaceVisibility: 'hidden',
-                          }}
-                        >
-                          {/* overlay gradient for depth (above content while animating) */}
+                  const transformFull = `${transform} scale(${scale})`
+                  return (
+                    <div
+                      key={index}
+                      className={`absolute inset-0 transition-all duration-700 ease-out will-change-transform ${
+                        isActive ? 'pointer-events-auto' : 'pointer-events-none'
+                      }`}
+                      style={{
+                        transform: transformFull,
+                        opacity,
+                        zIndex,
+                        transformStyle: 'preserve-3d',
+                      }}
+                      ref={el => {
+                        if (el) cardsRef.current[index] = el
+                      }}
+                    >
+                      {isActive ? (
+                        <BorderBeam>
                           <div
-                            className='pointer-events-none absolute inset-0 rounded-2xl z-10 bg-[linear-gradient(to_bottom,rgba(255,255,255,0.35),transparent_35%,transparent_65%,rgba(0,0,0,0.05))]'
-                          />
-                          <div className='text-center mb-3'>
-                            <h3 className='text-xl font-bold text-gray-900 mb-1'>
+                            className={`relative z-0 w-full h-full rounded-2xl p-6 flex flex-col items-center justify-center overflow-hidden bg-white/10 backdrop-blur-sm shadow-lg`}
+                            onMouseMove={handleMouseMove}
+                            onMouseLeave={handleMouseOut}
+                            style={{
+                              transform: `rotateX(${tilt.rotateX}deg) rotateY(${tilt.rotateY}deg)`,
+                              transition: 'transform 120ms ease-out',
+                              backfaceVisibility: 'hidden',
+                            }}
+                          >
+                            {/* overlay gradient for depth (above content while animating) */}
+                            <div className='pointer-events-none absolute inset-0 rounded-2xl z-10 bg-[linear-gradient(to_bottom,rgba(255,255,255,0.35),transparent_35%,transparent_65%,rgba(0,0,0,0.05))]' />
+                            <div className='text-center mb-3'>
+                              <h3 className='text-xl font-bold text-gray-900 mb-1'>
+                                {category.title}
+                              </h3>
+                              <div className='w-12 h-1 mx-auto rounded-full bg-gradient-to-r from-blue-500 to-cyan-500'></div>
+                            </div>
+                            <div className='flex flex-nowrap justify-center items-center gap-3 max-w-full overflow-hidden'>
+                              {category.technologies.map((tech, techIndex) => (
+                                <TechCard
+                                  key={techIndex}
+                                  name={tech.name}
+                                  icon={tech.icon}
+                                  color={tech.color}
+                                />
+                              ))}
+                            </div>
+                          </div>
+                        </BorderBeam>
+                      ) : (
+                        <div
+                          className={`relative z-0 w-full h-full rounded-2xl p-6 flex flex-col items-center justify-center overflow-hidden bg-white/5 ${blurClass}`}
+                          aria-hidden='true'
+                        >
+                          <div className='text-center mb-3 opacity-70'>
+                            <h3 className='text-xl font-bold text-gray-900/70 mb-1'>
                               {category.title}
                             </h3>
-                            <div className='w-12 h-1 mx-auto rounded-full bg-gradient-to-r from-blue-500 to-cyan-500'></div>
+                            <div className='w-12 h-1 mx-auto rounded-full bg-gradient-to-r from-gray-300 to-gray-200'></div>
                           </div>
-                          <div className='flex flex-nowrap justify-center items-center gap-3 max-w-full overflow-hidden'>
+                          <div className='flex flex-nowrap justify-center items-center gap-3 max-w-full overflow-hidden opacity-80'>
                             {category.technologies.map((tech, techIndex) => (
                               <TechCard
                                 key={techIndex}
@@ -500,37 +515,14 @@ const TechnologyShowcase = () => {
                             ))}
                           </div>
                         </div>
-                      </BorderBeam>
-                    ) : (
-                      <div
-                        className={`relative z-0 w-full h-full rounded-2xl p-6 flex flex-col items-center justify-center overflow-hidden bg-white/5 ${blurClass}`}
-                        aria-hidden='true'
-                      >
-                        <div className='text-center mb-3 opacity-70'>
-                          <h3 className='text-xl font-bold text-gray-900/70 mb-1'>
-                            {category.title}
-                          </h3>
-                          <div className='w-12 h-1 mx-auto rounded-full bg-gradient-to-r from-gray-300 to-gray-200'></div>
-                        </div>
-                        <div className='flex flex-nowrap justify-center items-center gap-3 max-w-full overflow-hidden opacity-80'>
-                          {category.technologies.map((tech, techIndex) => (
-                            <TechCard
-                              key={techIndex}
-                              name={tech.name}
-                              icon={tech.icon}
-                              color={tech.color}
-                            />
-                          ))}
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                )
-              })}
+                      )}
+                    </div>
+                  )
+                })}
+              </div>
+              {/* progress bar removed per request */}
             </div>
-            {/* progress bar removed per request */}
-          </div>
-          {/* close 3D Carousel Container */}
+            {/* close 3D Carousel Container */}
           </div>
           {/* Removed aside Icon Cloud to use as headline background */}
         </div>

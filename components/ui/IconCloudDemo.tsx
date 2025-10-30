@@ -35,13 +35,17 @@ const slugs = [
   'figma',
 ]
 
-export function IconCloudDemo() {
-  const images = slugs.map(
-    slug => `https://cdn.simpleicons.org/${slug}/${slug}`
-  )
+export interface IconCloudDemoProps {
+  size?: number
+  radius?: number
+  className?: string
+}
+
+export function IconCloudDemo({ size = 420, radius = 140, className }: IconCloudDemoProps) {
+  const images = slugs.map(slug => `https://cdn.simpleicons.org/${slug}`)
   return (
-    <div className='relative flex size-full items-center justify-center overflow-hidden mx-auto mr-[100px]'>
-      <IconCloud images={images} />
+    <div className={`relative flex items-center justify-center overflow-visible ${className ?? ''}`}>
+      <IconCloud images={images} size={size} radius={radius} />
     </div>
   )
 }

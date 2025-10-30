@@ -27,6 +27,7 @@ import {
 import Link from 'next/link'
 import Image from 'next/image'
 import { R2Image, R2CardImage, R2HeroImage } from '@/components/R2Image'
+import IconCloudDemo from '@/components/ui/IconCloudDemo'
 import { useR2Assets, R2_ASSET_MAPPINGS } from '@/hooks/useR2Assets'
 
 export default function TestimonialsPage() {
@@ -110,7 +111,12 @@ export default function TestimonialsPage() {
             <div className='absolute -bottom-1/2 -left-1/2 w-full h-full bg-gradient-radial from-cyan-400/15 to-transparent rounded-full animate-float'></div>
           </div>
 
-          <div className='container mx-auto px-4 relative z-10'>
+          <div className='container mx-auto px-4 relative'>
+            {/* Icon Cloud positioned inside container, to the left of heading */}
+            <div className='pointer-events-none absolute right-0 md:right-4 top-1/2 -translate-y-1/2 opacity-70'>
+              <IconCloudDemo size={360} radius={130} />
+            </div>
+
             <div className='max-w-4xl mx-auto text-center'>
               <div className='inline-flex items-center gap-2 px-4 py-2 text-sm font-medium bg-blue-600/20 rounded-full mb-8 border border-blue-500/30'>
                 <ThumbsUp className='h-4 w-4 text-cyan-300' />

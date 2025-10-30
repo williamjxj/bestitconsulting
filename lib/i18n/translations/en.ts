@@ -199,7 +199,7 @@ export const EN_TRANSLATIONS: Translations = {
         },
       },
     },
-    
+
     cta: {
       title: 'Ready to Transform Your Business?',
       description:
