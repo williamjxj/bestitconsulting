@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { IconCloudDemo } from '@/components/ui/IconCloudDemo'
+import BorderBeam from '@/components/ui/border-beam'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
@@ -392,20 +393,24 @@ const TechnologyShowcase = () => {
         </div>
 
         {/* Layout: carousel + icon cloud aside */}
-        <div className='relative mx-auto max-w-6xl grid lg:grid-cols-12 gap-8 items-center'>
+        <div
+          className='relative mx-auto max-w-6xl grid lg:grid-cols-12 gap-8 items-center'
+          aria-roledescription='carousel'
+          aria-label='Technology categories carousel'
+        >
           {/* 3D Carousel Container */}
           <div
-            className='relative lg:col-span-7'
+            className='relative lg:col-span-7 flex justify-center'
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
           >
           {/* 3D Carousel Track */}
           <div
             ref={carouselRef}
-            className='relative h-64 perspective-1000'
-            style={{ perspective: '1000px' }}
+            className='relative h-72 md:h-80 lg:h-96 xl:h-[28rem] w-full max-w-[760px]'
+            style={{ perspective: '1000px', overflow: 'visible' }}
           >
-            <div className='relative w-full h-full'>
+            <div className='relative w-full h-full will-change-transform'>
               {categories.map((category, index) => {
                 const isActive = index === currentSlide
                 const isPrev =
@@ -415,30 +420,32 @@ const TechnologyShowcase = () => {
 
                 // Calculate 3D positioning
                 let transform = ''
-                let opacity = 0.4
+                let opacity = 0.25
                 let scale = 0.8
                 let zIndex = 1
+                let blurClass = 'blur-[0.5px]'
 
                 if (isActive) {
                   transform = 'translateZ(0px) rotateY(0deg)'
                   opacity = 1
                   scale = 1
                   zIndex = 10
+                  blurClass = ''
                 } else if (isPrev) {
                   transform =
                     'translateZ(-200px) translateX(-300px) rotateY(45deg)'
-                  opacity = 0.85
+                  opacity = 0.25
                   scale = 0.9
                   zIndex = 5
                 } else if (isNext) {
                   transform =
                     'translateZ(-200px) translateX(300px) rotateY(-45deg)'
-                  opacity = 0.85
+                  opacity = 0.25
                   scale = 0.9
                   zIndex = 5
                 } else {
                   transform = 'translateZ(-400px) translateX(0px) rotateY(0deg)'
-                  opacity = 0.4
+                  opacity = 0.2
                   scale = 0.7
                   zIndex = 1
                 }
@@ -447,7 +454,9 @@ const TechnologyShowcase = () => {
                 return (
                   <div
                     key={index}
-                    className='absolute inset-0 transition-all duration-700 ease-out'
+                    className={`absolute inset-0 transition-all duration-700 ease-out will-change-transform ${
+                      isActive ? 'pointer-events-auto' : 'pointer-events-none'
+                    }`}
                     style={{
                       transform: transformFull,
                       opacity,
@@ -458,56 +467,68 @@ const TechnologyShowcase = () => {
                       if (el) cardsRef.current[index] = el
                     }}
                   >
-                    <div
-                      className={`relative w-full h-full rounded-2xl shadow-2xl p-6 flex flex-col items-center justify-center border outline outline-1 ${
-                        isActive
-                          ? 'bg-gradient-to-br from-white/30 to-white/10 backdrop-blur-xl border-white/40 outline-white/40 ring-1 ring-white/50 shadow-[0_10px_30px_-10px_rgba(59,130,246,0.35)]'
-                          : 'bg-gradient-to-br from-white/15 to-white/5 backdrop-blur-md border-white/20 outline-white/20 hover:from-white/20 hover:to-white/10'
-                      }`}
-                      onMouseMove={isActive ? handleMouseMove : undefined}
-                      onMouseLeave={isActive ? handleMouseOut : undefined}
-                      style={
-                        isActive
-                          ? {
-                              transform: `rotateX(${tilt.rotateX}deg) rotateY(${tilt.rotateY}deg)`,
-                              transition: 'transform 120ms ease-out',
-                            }
-                          : undefined
-                      }
-                    >
-                      {/* overlay gradient for depth */}
-                      <div
-                        className={`pointer-events-none absolute inset-0 rounded-2xl ${
-                          isActive
-                            ? 'bg-[linear-gradient(to_bottom,rgba(255,255,255,0.35),transparent_35%,transparent_65%,rgba(0,0,0,0.05))]'
-                            : 'bg-[linear-gradient(to_bottom,rgba(255,255,255,0.2),transparent_35%,transparent_65%,rgba(0,0,0,0.06))]'
-                        }`}
-                      />
-                      <div className='text-center mb-3'>
-                        <h3 className='text-xl font-bold text-gray-900 mb-1'>
-                          {category.title}
-                        </h3>
-                        <div className={`w-12 h-1 mx-auto rounded-full bg-gradient-to-r ${
-                          isActive ? 'from-blue-500 to-cyan-500' : 'from-gray-300 to-gray-200'
-                        }`}></div>
-                      </div>
-
-                      {/* Technology Grid */}
-                      <div className='flex flex-wrap justify-center gap-3 max-w-4xl'>
-                        {category.technologies.map((tech, techIndex) => (
-                          <TechCard
-                            key={techIndex}
-                            name={tech.name}
-                            icon={tech.icon}
-                            color={tech.color}
+                    {isActive ? (
+                      <BorderBeam>
+                        <div
+                          className={`relative z-0 w-full h-full rounded-2xl p-6 flex flex-col items-center justify-center overflow-hidden bg-white/10 backdrop-blur-sm shadow-lg`}
+                          onMouseMove={handleMouseMove}
+                          onMouseLeave={handleMouseOut}
+                          style={{
+                            transform: `rotateX(${tilt.rotateX}deg) rotateY(${tilt.rotateY}deg)`,
+                            transition: 'transform 120ms ease-out',
+                            backfaceVisibility: 'hidden',
+                          }}
+                        >
+                          {/* overlay gradient for depth (above content while animating) */}
+                          <div
+                            className='pointer-events-none absolute inset-0 rounded-2xl z-10 bg-[linear-gradient(to_bottom,rgba(255,255,255,0.35),transparent_35%,transparent_65%,rgba(0,0,0,0.05))]'
                           />
-                        ))}
+                          <div className='text-center mb-3'>
+                            <h3 className='text-xl font-bold text-gray-900 mb-1'>
+                              {category.title}
+                            </h3>
+                            <div className='w-12 h-1 mx-auto rounded-full bg-gradient-to-r from-blue-500 to-cyan-500'></div>
+                          </div>
+                          <div className='flex flex-nowrap justify-center items-center gap-3 max-w-full overflow-hidden'>
+                            {category.technologies.map((tech, techIndex) => (
+                              <TechCard
+                                key={techIndex}
+                                name={tech.name}
+                                icon={tech.icon}
+                                color={tech.color}
+                              />
+                            ))}
+                          </div>
+                        </div>
+                      </BorderBeam>
+                    ) : (
+                      <div
+                        className={`relative z-0 w-full h-full rounded-2xl p-6 flex flex-col items-center justify-center overflow-hidden bg-white/5 ${blurClass}`}
+                        aria-hidden='true'
+                      >
+                        <div className='text-center mb-3 opacity-70'>
+                          <h3 className='text-xl font-bold text-gray-900/70 mb-1'>
+                            {category.title}
+                          </h3>
+                          <div className='w-12 h-1 mx-auto rounded-full bg-gradient-to-r from-gray-300 to-gray-200'></div>
+                        </div>
+                        <div className='flex flex-nowrap justify-center items-center gap-3 max-w-full overflow-hidden opacity-80'>
+                          {category.technologies.map((tech, techIndex) => (
+                            <TechCard
+                              key={techIndex}
+                              name={tech.name}
+                              icon={tech.icon}
+                              color={tech.color}
+                            />
+                          ))}
+                        </div>
                       </div>
-                    </div>
+                    )}
                   </div>
                 )
               })}
             </div>
+            {/* progress bar removed per request */}
           </div>
           {/* close 3D Carousel Container */}
           </div>
