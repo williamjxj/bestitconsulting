@@ -28,6 +28,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { R2Image, R2CardImage, R2HeroImage } from '@/components/R2Image'
 import { useR2Assets, R2_ASSET_MAPPINGS } from '@/hooks/useR2Assets'
+import AvatarCircles from '@/components/ui/avatar-circles'
 
 export default function TestimonialsPage() {
   const { getImages, getAssetByFilename } = useR2Assets()
@@ -270,11 +271,29 @@ export default function TestimonialsPage() {
                 />
               </h1>
 
-              <p className='text-xl md:text-2xl text-blue-100/90 max-w-3xl mx-auto mb-12 leading-relaxed'>
+              <p className='text-xl md:text-2xl text-blue-100/90 max-w-3xl mx-auto mb-10 leading-relaxed'>
                 Discover why hundreds of businesses trust Best IT Consulting to
                 deliver exceptional technology solutions and drive their digital
                 transformation success.
               </p>
+
+              {/* Avatar Circles */}
+              <div className='flex justify-center mb-12'>
+                <AvatarCircles
+                  size={320}
+                  avatarSize={44}
+                  images={[
+                    'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=96&h=96&fit=crop&crop=faces&auto=format',
+                    'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=96&h=96&fit=crop&crop=faces&auto=format',
+                    'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=96&h=96&fit=crop&crop=faces&auto=format',
+                    'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=96&h=96&fit=crop&crop=faces&auto=format',
+                    'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=96&h=96&fit=crop&crop=faces&auto=format',
+                    'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=96&h=96&fit=crop&crop=faces&auto=format',
+                    'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=96&h=96&fit=crop&crop=faces&auto=format',
+                    'https://images.unsplash.com/photo-1519345182560-3f2917c472ef?w=96&h=96&fit=crop&crop=faces&auto=format',
+                  ]}
+                />
+              </div>
 
               <div className='flex flex-col sm:flex-row gap-6 justify-center items-center'>
                 <Button
