@@ -36,14 +36,14 @@ const slugs = [
 ]
 
 export function IconCloudDemo() {
-  const images = slugs.map(slug => `https://cdn.simpleicons.org/${slug}/${slug}`)
+  const images = slugs.map(
+    slug => `https://cdn.simpleicons.org/${slug}/${slug}`
+  )
   return (
-    <div className='relative flex w-full items-center justify-center overflow-hidden py-6'>
+    <div className='relative flex size-full items-center justify-center overflow-hidden mx-auto mr-[100px]'>
       <IconCloud images={images} />
     </div>
   )
 }
 
 export default IconCloudDemo
-
-

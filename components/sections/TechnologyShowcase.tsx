@@ -370,17 +370,25 @@ const TechnologyShowcase = () => {
       className='py-12 bg-gradient-to-br from-slate-50 to-blue-50'
     >
       <div className='container mx-auto px-4'>
-        <div className='text-center mb-8'>
-          <span className='inline-block px-3 py-1 text-sm font-medium bg-gradient-to-r from-blue-100 to-cyan-100 text-blue-800 rounded-full mb-3 border border-blue-200/50'>
-            Technology Stack
-          </span>
-          <h2 className='text-2xl md:text-3xl font-bold mb-2 bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent'>
-            Built with Modern Technologies
-          </h2>
-          <p className='text-base text-muted-foreground max-w-xl mx-auto'>
-            We leverage cutting-edge tools and frameworks to deliver superior
-            results.
-          </p>
+        <div className='text-center mb-8 relative'>
+          {/* Icon Cloud background behind headline */}
+          <div className='pointer-events-none absolute inset-0 flex items-center justify-center'>
+            <div className='w-[420px] h-[420px] opacity-60'>
+              <IconCloudDemo />
+            </div>
+          </div>
+          <div className='relative z-10'>
+            <span className='inline-block px-3 py-1 text-sm font-medium bg-gradient-to-r from-blue-100 to-cyan-100 text-blue-800 rounded-full mb-3 border border-blue-200/50'>
+              Technology Stack
+            </span>
+            <h2 className='text-2xl md:text-3xl font-bold mb-2 bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent'>
+              Built with Modern Technologies
+            </h2>
+            <p className='text-base text-muted-foreground max-w-xl mx-auto'>
+              We leverage cutting-edge tools and frameworks to deliver superior
+              results.
+            </p>
+          </div>
         </div>
 
         {/* Layout: carousel + icon cloud aside */}
@@ -501,12 +509,9 @@ const TechnologyShowcase = () => {
               })}
             </div>
           </div>
-          {/* Icon Cloud Aside */}
-          <div className='lg:col-span-5'>
-            <div className='rounded-2xl border border-white/30 bg-white/10 backdrop-blur-md p-4 shadow-xl'>
-              <IconCloudDemo />
-            </div>
+          {/* close 3D Carousel Container */}
           </div>
+          {/* Removed aside Icon Cloud to use as headline background */}
         </div>
       </div>
     </section>

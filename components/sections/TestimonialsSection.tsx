@@ -219,9 +219,7 @@ export function TestimonialsSection({
             </div>
             <div className='lg:col-span-5'>
               <div className='flex justify-center lg:justify-end'>
-                <div className='rounded-2xl border border-white/30 bg-white/40 backdrop-blur-md p-3 shadow-xl'>
-                  <AvatarCirclesDemo />
-                </div>
+                <AvatarCirclesDemo />
               </div>
             </div>
           </div>

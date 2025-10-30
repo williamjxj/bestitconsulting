@@ -1,6 +1,6 @@
 'use client'
 
-import { AvatarCircles } from '@/registry/magicui/avatar-circles'
+import { AvatarCircles } from '@/components/ui/avatar-circles'
 
 const avatars = [
   {
@@ -31,14 +31,8 @@ const avatars = [
 
 export function AvatarCirclesDemo() {
   return (
-    <div className='relative flex w-full items-center justify-center overflow-hidden'>
-      <AvatarCircles
-        numPeople={99}
-        avatarUrls={avatars}
-        size={320}
-        radius={120}
-        spinDurationMs={36000}
-      />
+    <div className='flex w-full items-center justify-center'>
+      <AvatarCircles numPeople={99} avatarUrls={avatars} />
     </div>
   )
 }
