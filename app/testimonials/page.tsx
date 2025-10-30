@@ -270,11 +270,12 @@ export default function TestimonialsPage() {
                 />
               </h1>
 
-              <p className='text-xl md:text-2xl text-blue-100/90 max-w-3xl mx-auto mb-12 leading-relaxed'>
+              <p className='text-xl md:text-2xl text-blue-100/90 max-w-3xl mx-auto mb-10 leading-relaxed'>
                 Discover why hundreds of businesses trust Best IT Consulting to
                 deliver exceptional technology solutions and drive their digital
                 transformation success.
               </p>
+
 
               <div className='flex flex-col sm:flex-row gap-6 justify-center items-center'>
                 <Button
