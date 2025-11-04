@@ -3,6 +3,12 @@ import { Resend } from 'resend'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
+// Configurable sender and business recipient. Use a verified domain (e.g. service@bestitconsulting.ca)
+// or Resend-managed address (bestitconsulting@resend.dev) until your domain is verified.
+const FROM_EMAIL =
+  process.env.FROM_EMAIL || 'Best IT Consulting <bestitconsulting@resend.dev>'
+const BUSINESS_EMAIL = process.env.BUSINESS_EMAIL || 'williamjxj@gmail.com'
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
@@ -37,8 +43,8 @@ export async function POST(request: NextRequest) {
 
     // Send email to your business email
     const businessEmailResult = await resend.emails.send({
-      from: 'Best IT Consulting <service@bestitconsulting.ca>',
-      to: [process.env.BUSINESS_EMAIL || 'service@bestitconsulting.ca'],
+      from: FROM_EMAIL,
+      to: [BUSINESS_EMAIL],
       subject: `New Contact Form Submission from ${name}`,
       html: `
         <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f8fafc;">
@@ -93,7 +99,7 @@ export async function POST(request: NextRequest) {
 
     // Send confirmation email to the customer
     const customerEmailResult = await resend.emails.send({
-      from: 'Best IT Consulting <service@bestitconsulting.ca>',
+      from: FROM_EMAIL,
       to: [email],
       subject: 'Thank you for contacting Best IT Consulting',
       html: `
