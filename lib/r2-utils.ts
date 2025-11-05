@@ -83,13 +83,13 @@ export function getDemoVideoUrl(): string {
 export async function listR2Assets(): Promise<string[]> {
   const config = getR2Config()
 
-  console.log('R2 Config:', {
-    accountId: config.accountId,
-    bucketName: config.bucketName,
-    hasAccessKey: !!config.accessKeyId,
-    hasSecretKey: !!config.secretAccessKey,
-    publicUrl: config.publicUrl,
-  })
+  // console.log('R2 Config:', {
+  //   accountId: config.accountId,
+  //   bucketName: config.bucketName,
+  //   hasAccessKey: !!config.accessKeyId,
+  //   hasSecretKey: !!config.secretAccessKey,
+  //   publicUrl: config.publicUrl,
+  // })
 
   try {
     // Create S3 client for R2

@@ -1,14 +1,13 @@
 /**
- * TestimonialsSection component with thumbnail cards grid layout
- * Displays client testimonials as individual cards in a responsive grid
+ * TestimonialsSection component with Magic UI marquee layout
+ * Displays client testimonials in an infinite scrolling marquee
  */
 
 'use client'
 
 import React from 'react'
-import { Card, CardContent } from '@/components/ui/card'
-import { Star, Quote, CheckCircle } from 'lucide-react'
-import { FadeIn } from '@/components/animations/FadeIn'
+import { cn } from '@/lib/utils'
+import { Marquee } from '@/components/ui/marquee'
 import { AvatarCirclesDemo } from '@/components/ui/AvatarCirclesDemo'
 
 interface Testimonial {
@@ -196,6 +195,68 @@ const defaultTestimonials: Testimonial[] = [
   },
 ]
 
+// Helper function to get initials from a name
+const getInitials = (name: string): string => {
+  const parts = name.trim().split(/\s+/)
+  if (parts.length >= 2) {
+    return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase()
+  }
+  return name.slice(0, 2).toUpperCase()
+}
+
+const ReviewCard = ({
+  img,
+  name,
+  username,
+  body,
+}: {
+  img: string
+  name: string
+  username: string
+  body: string
+}) => {
+  const [imageError, setImageError] = React.useState(false)
+  const initials = getInitials(name)
+  const showInitials = !img || imageError
+
+  return (
+    <figure
+      className={cn(
+        'relative h-full w-64 cursor-pointer overflow-hidden rounded-xl border-[1px] p-4',
+        // light styles - matching Magic UI demo (thin gray border)
+        'bg-gray-950/[.01] hover:bg-gray-950/[.05]',
+        // dark styles - matching Magic UI demo
+        'dark:bg-gray-50/[.10] dark:hover:bg-gray-50/[.15]'
+      )}
+      style={{ borderColor: 'rgba(0, 0, 0, 0.1)' }}
+    >
+      <div className='flex flex-row items-center gap-2'>
+        {showInitials ? (
+          <div className='flex h-8 w-8 items-center justify-center rounded-full bg-blue-600 text-xs font-semibold text-white dark:bg-blue-500'>
+            {initials}
+          </div>
+        ) : (
+          <img
+            className='rounded-full'
+            width='32'
+            height='32'
+            alt=''
+            src={img}
+            onError={() => setImageError(true)}
+          />
+        )}
+        <div className='flex flex-col'>
+          <figcaption className='text-sm font-medium dark:text-white'>
+            {name}
+          </figcaption>
+          <p className='text-xs font-medium dark:text-white/40'>{username}</p>
+        </div>
+      </div>
+      <blockquote className='mt-2 text-sm'>{body}</blockquote>
+    </figure>
+  )
+}
+
 export function TestimonialsSection({
   testimonials = defaultTestimonials,
   title = 'What Our Clients Say',
@@ -204,143 +265,52 @@ export function TestimonialsSection({
   autoPlayInterval,
   className = '',
 }: TestimonialsSectionProps) {
+  // Transform testimonials to marquee format
+  const reviews = testimonials.map(testimonial => ({
+    name: testimonial.name,
+    username: `@${testimonial.company.toLowerCase().replace(/\s+/g, '')}`,
+    body: testimonial.content,
+    img: testimonial.avatar || '', // Empty string will trigger initials display
+  }))
+
+  const firstRow = reviews.slice(0, Math.ceil(reviews.length / 2))
+  const secondRow = reviews.slice(Math.ceil(reviews.length / 2))
+
   return (
     <section
       className={`py-20 bg-gradient-to-br from-blue-50 to-cyan-50 ${className}`}
     >
       <div className='container mx-auto px-4'>
         <div className='mb-12'>
-          <div className='grid lg:grid-cols-12 gap-8 items-center'>
-            <div className='lg:col-span-7 text-center lg:text-left'>
-              <h2 className='text-4xl font-bold text-gray-900 mb-4'>{title}</h2>
-              <p className='text-xl text-gray-600 max-w-3xl mx-auto lg:mx-0'>
-                {description}
-              </p>
-            </div>
-            <div className='lg:col-span-5'>
-              <div className='flex justify-center lg:justify-end'>
+          <div className='flex flex-col items-center'>
+            <div className='flex flex-col lg:flex-row lg:items-center gap-4 mb-4 justify-center'>
+              <h2 className='text-4xl font-bold text-gray-900 text-center'>
+                {title}
+              </h2>
+              <div className='flex-shrink-0 lg:ml-4'>
                 <AvatarCirclesDemo />
               </div>
             </div>
+            <p className='text-xl text-gray-600 max-w-3xl mx-auto text-center'>
+              {description}
+            </p>
           </div>
         </div>
 
-        {/* Testimonials Grid */}
-        <div className='max-w-7xl mx-auto'>
-          <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
-            {testimonials.map((testimonial, index) => (
-              <FadeIn
-                key={testimonial.id}
-                direction='up'
-                delay={index * 0.1}
-                duration={0.6}
-              >
-                <Card className='h-full border-0 shadow-lg bg-white hover:shadow-xl transition-all duration-300 hover:-translate-y-2'>
-                  <CardContent className='p-6 h-full flex flex-col'>
-                    {/* Header with Rating and Quote Icon */}
-                    <div className='flex justify-between items-start mb-4'>
-                      {/* Rating */}
-                      <div className='flex gap-1'>
-                        {[...Array(testimonial.rating)].map((_, i) => (
-                          <Star
-                            key={i}
-                            className='h-4 w-4 text-yellow-400 fill-current'
-                          />
-                        ))}
-                      </div>
-
-                      {/* Large Quote Icon */}
-                      <div className='w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center'>
-                        <Quote className='h-8 w-8 text-gray-400' />
-                      </div>
-                    </div>
-
-                    {/* Testimonial Content */}
-                    <blockquote className='text-sm text-gray-700 mb-6 leading-relaxed flex-grow'>
-                      "{testimonial.content}"
-                    </blockquote>
-
-                    {/* Key Results Section */}
-                    <div className='mb-6'>
-                      <h4 className='font-semibold text-sm text-gray-900 mb-3'>
-                        Key Results:
-                      </h4>
-                      <ul className='space-y-2'>
-                        {testimonial.keyResults.map((result, i) => (
-                          <li
-                            key={i}
-                            className='flex items-center gap-2 text-xs text-gray-600'
-                          >
-                            <CheckCircle className='h-3 w-3 text-green-500 flex-shrink-0' />
-                            <span>{result}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-
-                    {/* Separator */}
-                    <div className='border-t border-gray-100 mb-4'></div>
-
-                    {/* Footer with Client Info and Tags */}
-                    <div className='flex items-center justify-between'>
-                      {/* Client Info */}
-                      <div className='flex items-center gap-3 flex-1 min-w-0'>
-                        <div className='relative flex-shrink-0'>
-                          <div className='w-10 h-10 rounded-full overflow-hidden bg-gray-200 flex items-center justify-center'>
-                            {testimonial.avatar ? (
-                              <img
-                                src={testimonial.avatar}
-                                alt={`${testimonial.name} avatar`}
-                                className='w-full h-full object-cover'
-                                onError={e => {
-                                  const target = e.target as HTMLImageElement
-                                  target.style.display = 'none'
-                                  const fallback =
-                                    target.nextElementSibling as HTMLElement
-                                  if (fallback) fallback.style.display = 'flex'
-                                }}
-                              />
-                            ) : null}
-                            <div
-                              className={`w-full h-full bg-gray-300 items-center justify-center text-gray-600 font-semibold text-xs ${
-                                testimonial.avatar ? 'hidden' : 'flex'
-                              }`}
-                            >
-                              {testimonial.name
-                                .split(' ')
-                                .map(n => n[0])
-                                .join('')}
-                            </div>
-                          </div>
-                        </div>
-                        <div className='flex-1 min-w-0'>
-                          <div className='font-semibold text-sm text-gray-900 truncate'>
-                            {testimonial.name}
-                          </div>
-                          <div className='text-xs text-gray-600 truncate'>
-                            {testimonial.role}
-                          </div>
-                          <div className='text-xs text-blue-600 truncate'>
-                            {testimonial.company}
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Industry Tag and Year */}
-                      <div className='flex flex-col items-end gap-2 flex-shrink-0'>
-                        <span className='px-2 py-1 text-xs font-medium bg-gray-100 text-gray-700 rounded-full border'>
-                          {testimonial.industry}
-                        </span>
-                        <span className='text-xs text-gray-500'>
-                          {testimonial.year}
-                        </span>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </FadeIn>
+        {/* Marquee Testimonials */}
+        <div className='relative flex w-full flex-col items-center justify-center overflow-hidden'>
+          <Marquee pauseOnHover className='[--duration:40s]'>
+            {firstRow.map(review => (
+              <ReviewCard key={review.username} {...review} />
             ))}
-          </div>
+          </Marquee>
+          <Marquee reverse pauseOnHover className='[--duration:40s]'>
+            {secondRow.map(review => (
+              <ReviewCard key={review.username} {...review} />
+            ))}
+          </Marquee>
+          <div className='pointer-events-none absolute inset-y-0 left-0 w-1/4 bg-gradient-to-r from-blue-50 to-transparent dark:from-blue-950 dark:to-transparent'></div>
+          <div className='pointer-events-none absolute inset-y-0 right-0 w-1/4 bg-gradient-to-l from-cyan-50 to-transparent dark:from-cyan-950 dark:to-transparent'></div>
         </div>
       </div>
     </section>

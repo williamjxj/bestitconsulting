@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 import './globals.css'
 import { I18nProvider } from '@/lib/i18n'
+import { MarqueeStyles } from '@/components/ui/MarqueeStyles'
 // import { AnimationPerformanceProvider } from '@/lib/animations/performance'
 // import { AnimationAccessibilityProvider } from '@/lib/animations/accessibility'
 
@@ -38,6 +39,7 @@ export default function RootLayout({
         suppressHydrationWarning={true}
       >
         <I18nProvider>
+          <MarqueeStyles />
           {/* <AnimationAccessibilityProvider>
             <AnimationPerformanceProvider> */}
           {children}

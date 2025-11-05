@@ -2,30 +2,31 @@
 
 import { AvatarCircles } from '@/components/ui/avatar-circles'
 
+// Professional avatars using UI Avatars service for business professionals
 const avatars = [
   {
-    imageUrl: 'https://avatars.githubusercontent.com/u/16860528',
-    profileUrl: 'https://github.com/dillionverma',
+    imageUrl:
+      'https://ui-avatars.com/api/?name=Sarah+Johnson&background=0056b3&color=fff&size=128&bold=true',
   },
   {
-    imageUrl: 'https://avatars.githubusercontent.com/u/20110627',
-    profileUrl: 'https://github.com/tomonarifeehan',
+    imageUrl:
+      'https://ui-avatars.com/api/?name=Michael+Chen&background=0d9488&color=fff&size=128&bold=true',
   },
   {
-    imageUrl: 'https://avatars.githubusercontent.com/u/106103625',
-    profileUrl: 'https://github.com/BankkRoll',
+    imageUrl:
+      'https://ui-avatars.com/api/?name=Emily+Rodriguez&background=7c3aed&color=fff&size=128&bold=true',
   },
   {
-    imageUrl: 'https://avatars.githubusercontent.com/u/59228569',
-    profileUrl: 'https://github.com/safethecode',
+    imageUrl:
+      'https://ui-avatars.com/api/?name=David+Kim&background=dc2626&color=fff&size=128&bold=true',
   },
   {
-    imageUrl: 'https://avatars.githubusercontent.com/u/59442788',
-    profileUrl: 'https://github.com/sanjay-mali',
+    imageUrl:
+      'https://ui-avatars.com/api/?name=Lisa+Wang&background=ea580c&color=fff&size=128&bold=true',
   },
   {
-    imageUrl: 'https://avatars.githubusercontent.com/u/89768406',
-    profileUrl: 'https://github.com/itsarghyadas',
+    imageUrl:
+      'https://ui-avatars.com/api/?name=James+Wilson&background=059669&color=fff&size=128&bold=true',
   },
 ]
 

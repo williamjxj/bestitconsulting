@@ -2,6 +2,27 @@
 @import 'tailwindcss';
 @import 'tw-animate-css';
 
+@custom-variant dark (&:is(.dark *));
+
+/* Marquee keyframes - defined after Tailwind imports */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(calc(-100% - var(--gap, 1rem)));
+  }
+}
+
+@keyframes marquee-vertical {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(calc(-100% - var(--gap, 1rem)));
+  }
+}
+
 /* Custom animations */
 @keyframes gradient {
   0% {
@@ -529,4 +550,42 @@ body {
 
 .bg-gradient-radial {
   background-image: radial-gradient(circle, var(--tw-gradient-stops));
+}
+
+/* Marquee animation utilities - using @theme for Tailwind v4 */
+@theme {
+  --animate-marquee: marquee var(--duration, 40s) infinite linear;
+  --animate-marquee-vertical: marquee-vertical var(--duration, 40s) linear
+    infinite;
+}
+
+@layer utilities {
+  .animate-marquee {
+    animation: var(--animate-marquee);
+  }
+
+  .animate-marquee-vertical {
+    animation: var(--animate-marquee-vertical);
+  }
+
+  .animate-marquee-reverse {
+    animation: var(--animate-marquee);
+    animation-direction: reverse;
+  }
+
+  .animate-marquee-vertical-reverse {
+    animation: var(--animate-marquee-vertical);
+    animation-direction: reverse;
+  }
+}
+
+@layer base {
+  * {
+    border-color: hsl(var(--border));
+    outline-color: hsl(var(--ring) / 0.5);
+  }
+  body {
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+  }
 }
