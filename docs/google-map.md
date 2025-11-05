@@ -11,6 +11,7 @@ This document describes how Google Maps is integrated into the contact page for 
 ### How Addresses and Locations Work
 
 - The contact page (`app/contact/page.tsx`) defines an `offices` array:
+
   - Each office has `city`, `country`, `address`, `postal`, `phone`, and `coordinates`.
   - Example:
     ```js
@@ -27,6 +28,7 @@ This document describes how Google Maps is integrated into the contact page for 
     ```
 
 - The map is rendered with:
+
   ```tsx
   <SmartGoogleMap addresses={offices} height='400px' className='w-full' />
   ```

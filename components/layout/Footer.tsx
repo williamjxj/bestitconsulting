@@ -52,11 +52,15 @@ const footerLinks = {
   ],
   services: [
     { name: 'Web Development', href: '/services#web-development' },
-    { name: 'Mobile Apps', href: '/services#mobile-apps' },
     { name: 'Cloud Solutions', href: '/services#cloud-solutions' },
-    { name: 'AI & ML', href: '/services#ai-ml' },
+    { name: 'AI Consulting', href: '/services#ai-consulting' },
+    { name: 'Mobile Apps', href: '/services#mobile-apps' },
+    {
+      name: 'Enterprise Software Upgrade',
+      href: '/services#enterprise-software-upgrade',
+    },
+    { name: 'Software Outsourcing', href: '/services#software-outsourcing' },
     { name: 'DevOps', href: '/services#devops' },
-    { name: 'Consulting', href: '/services#consulting' },
   ],
   resources: [
     { name: 'Portfolio', href: '/portfolio' },

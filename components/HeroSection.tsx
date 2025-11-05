@@ -1,6 +1,7 @@
 'use client'
 
-import React from 'react'
+import React, { useState, useEffect } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 import { Button } from '@/components/ui/button'
 import {
   ArrowRight,
@@ -14,28 +15,76 @@ import {
   CheckCircle,
   Cpu,
   Database,
+  ChevronLeft,
+  ChevronRight,
 } from 'lucide-react'
 import Link from 'next/link'
 import { FadeIn } from '@/components/animations/FadeIn'
 import { SlideIn } from '@/components/animations/SlideIn'
 import { ScaleIn } from '@/components/animations/ScaleIn'
-// import { HeroVisual } from '@/components/ui/hero-visual'
-// import { ProfessionalImage } from '@/components/ui/professional-image'
-// import { AnimatedText } from '@/components/hero/AnimatedText'
-// import { ParticleBackground } from '@/components/animations/ParticleBackground'
-// import { EnhancedParticleBackground } from '@/components/hero/EnhancedParticleBackground'
-// import { InteractiveParticles } from '@/components/hero/InteractiveParticles'
-// import { OptimizedParticles } from '@/components/hero/OptimizedParticles'
-// import { GradientBackground } from '@/components/hero/GradientBackground'
-// import { AnimatedGradientText } from '@/components/hero/AnimatedGradientText'
-// import { TypewriterHeadline } from '@/components/hero/TypewriterHeadline'
-// import { ScrollTextReveal } from '@/components/hero/ScrollTextReveal'
-// import { TextMorphing } from '@/components/hero/TextMorphing'
 import { AnimatedButton } from '@/components/ui/AnimatedButton'
 import { ButtonHoverEffects } from '@/components/ui/ButtonHoverEffects'
-// import LazyAnimation from '@/components/animations/LazyAnimation'
+
+const carouselSlides = [
+  {
+    headline: 'Transform Your Digital Future',
+    subheadline: 'with Expert IT Solutions',
+    description:
+      'We deliver cutting-edge software solutions that drive business growth and digital transformation for enterprises across Canada. From startup to scale.',
+    cta: 'Get Free Consultation',
+    ctaLink: '/contact?title=Get%20Free%20Consultation#contact-form',
+  },
+  {
+    headline: 'Modernize Legacy Systems with Intelligent Upgrades',
+    subheadline: '',
+    description:
+      'Transform outdated enterprise software into future-ready platforms — boosting performance, scalability, and efficiency.',
+    cta: 'Upgrade Now',
+    ctaLink: '/contact?title=Enterprise%20Software%20Upgrade#contact-form',
+  },
+  {
+    headline: 'Empower Your Business with Seamless AI Integration',
+    subheadline: '',
+    description:
+      'From automation to data-driven decision-making, we help businesses integrate AI to unlock new levels of productivity and innovation.',
+    cta: 'Integrate AI',
+    ctaLink: '/contact?title=AI%20Integration%20for%20Business#contact-form',
+  },
+  {
+    headline: 'Future-Proof Your Organization with Smart Transformation',
+    subheadline: '',
+    description:
+      'Rebuild your technology stack, connect systems, and embrace intelligent solutions that drive growth and resilience in the AI era.',
+    cta: 'Start Transformation',
+    ctaLink: '/contact?title=Digital%20Transformation#contact-form',
+  },
+]
 
 export function HeroSection() {
+  const [currentIndex, setCurrentIndex] = useState(0)
+
+  // Auto-rotate every 8 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % carouselSlides.length)
+    }, 8000)
+    return () => clearInterval(interval)
+  }, [])
+
+  const goToSlide = (index: number) => {
+    setCurrentIndex(index)
+  }
+
+  const goToPrevious = () => {
+    setCurrentIndex((prev) =>
+      prev === 0 ? carouselSlides.length - 1 : prev - 1
+    )
+  }
+
+  const goToNext = () => {
+    setCurrentIndex((prev) => (prev + 1) % carouselSlides.length)
+  }
+
   return (
     <section className='relative overflow-hidden bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 text-white h-screen flex items-center'>
       {/* Enhanced animated background with particle system */}
@@ -49,57 +98,57 @@ export function HeroSection() {
         rootMargin='100px'
       > */}
       <div className='absolute inset-0 overflow-hidden'>
-        {/* Primary gradient orbs */}
-        <div className='absolute -top-1/2 -right-1/2 w-full h-full bg-gradient-radial from-blue-500/20 to-transparent rounded-full animate-pulse-slow'></div>
-        <div className='absolute -bottom-1/2 -left-1/2 w-full h-full bg-gradient-radial from-cyan-400/15 to-transparent rounded-full animate-float'></div>
+        {/* Primary gradient orbs - centralized */}
+        <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-gradient-radial from-blue-500/20 to-transparent rounded-full animate-pulse-slow'></div>
+        <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-gradient-radial from-cyan-400/15 to-transparent rounded-full animate-float'></div>
 
-        {/* Secondary gradient layers */}
+        {/* Secondary gradient layers - centralized */}
         <div
-          className='absolute top-1/4 right-1/3 w-96 h-96 bg-gradient-radial from-purple-500/10 to-transparent rounded-full animate-pulse-slow'
+          className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-radial from-purple-500/10 to-transparent rounded-full animate-pulse-slow'
           style={{ animationDelay: '2s' }}
         ></div>
         <div
-          className='absolute bottom-1/4 left-1/3 w-80 h-80 bg-gradient-radial from-emerald-400/10 to-transparent rounded-full animate-float'
+          className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-gradient-radial from-emerald-400/10 to-transparent rounded-full animate-float'
           style={{ animationDelay: '4s' }}
         ></div>
 
-        {/* Enhanced floating geometric shapes */}
+        {/* Enhanced floating geometric shapes - centralized around center */}
         <div
-          className='absolute top-20 left-20 w-6 h-6 bg-cyan-300/40 rounded-full animate-float'
+          className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -ml-16 -mt-16 w-6 h-6 bg-cyan-300/40 rounded-full animate-float'
           style={{ animationDelay: '0s' }}
         ></div>
         <div
-          className='absolute top-40 right-32 w-4 h-4 bg-blue-300/30 rounded-full animate-float'
+          className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 ml-12 -mt-12 w-4 h-4 bg-blue-300/30 rounded-full animate-float'
           style={{ animationDelay: '1s' }}
         ></div>
         <div
-          className='absolute top-60 left-1/2 w-8 h-8 bg-purple-300/25 rounded-full animate-float'
+          className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-8 bg-purple-300/25 rounded-full animate-float'
           style={{ animationDelay: '2s' }}
         ></div>
         <div
-          className='absolute bottom-40 right-20 w-5 h-5 bg-emerald-300/35 rounded-full animate-float'
+          className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 ml-16 mt-12 w-5 h-5 bg-emerald-300/35 rounded-full animate-float'
           style={{ animationDelay: '3s' }}
         ></div>
         <div
-          className='absolute bottom-60 left-40 w-3 h-3 bg-pink-300/30 rounded-full animate-float'
+          className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -ml-12 mt-16 w-3 h-3 bg-pink-300/30 rounded-full animate-float'
           style={{ animationDelay: '4s' }}
         ></div>
 
-        {/* Tech-themed floating icons */}
+        {/* Tech-themed floating icons - centralized */}
         <div
-          className='absolute top-32 right-1/4 opacity-20 animate-float'
+          className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -ml-24 -mt-8 opacity-20 animate-float'
           style={{ animationDelay: '1s' }}
         >
           <Code2 className='h-8 w-8 text-cyan-300' />
         </div>
         <div
-          className='absolute bottom-32 left-1/4 opacity-20 animate-float'
+          className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 ml-24 mt-8 opacity-20 animate-float'
           style={{ animationDelay: '3s' }}
         >
           <Database className='h-6 w-6 text-blue-300' />
         </div>
         <div
-          className='absolute top-1/2 right-20 opacity-20 animate-float'
+          className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 mt-12 opacity-20 animate-float'
           style={{ animationDelay: '5s' }}
         >
           <Cpu className='h-7 w-7 text-purple-300' />
@@ -144,63 +193,107 @@ export function HeroSection() {
             </div>
           </FadeIn>
 
-          {/* Enhanced main headline with better typography */}
-          <SlideIn direction='up' delay={0.4} duration={1.0}>
-            <h1 className='text-5xl md:text-6xl lg:text-7xl font-bold leading-tight mb-8 tracking-tight'>
-              <span className='block mb-2'>Transform Your</span>
-              <span className='block mb-2 bg-gradient-to-r from-blue-400 via-cyan-400 to-blue-500 bg-clip-text text-transparent'>
-                Digital Future
-              </span>
-              <span className='block text-4xl md:text-5xl lg:text-6xl mt-4 text-blue-100'>
-                with Expert IT Solutions
-              </span>
-            </h1>
-          </SlideIn>
-
-          {/* Enhanced subtitle with better spacing */}
-          {/* <ScrollTextReveal
-            text="We deliver cutting-edge software solutions that drive business growth and digital transformation for enterprises across Canada. From startup to scale."
-            className="text-xl md:text-2xl text-blue-100/90 max-w-4xl mx-auto mb-12 leading-relaxed"
-            delay={1.2}
-            staggerChildren={0.02}
-          /> */}
-          <p className='text-xl md:text-2xl text-blue-100/90 max-w-4xl mx-auto mb-12 leading-relaxed'>
-            We deliver cutting-edge software solutions that drive business
-            growth and digital transformation for enterprises across Canada.
-            From startup to scale.
-          </p>
-
-          {/* Enhanced CTA buttons */}
-          <SlideIn direction='up' delay={1.4} duration={0.8}>
-            <div className='flex flex-col sm:flex-row gap-6 justify-center items-center mb-16'>
-              <AnimatedButton
-                size='lg'
-                className='group text-lg px-8 py-4 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 shadow-lg hover:shadow-xl transition-all duration-300'
-                rippleColor='rgba(255, 255, 255, 0.3)'
-                duration={0.6}
-                asChild
+          {/* Carousel Content */}
+          <div className='relative w-full'>
+            <AnimatePresence mode='wait'>
+              <motion.div
+                key={currentIndex}
+                initial={{ opacity: 0, y: 40 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -40 }}
+                transition={{ duration: 0.8, ease: 'easeOut' }}
+                className='hero-text'
               >
-                <Link href='/contact?title=Get%20Free%20Consultation#contact-form'>
-                  <Rocket className='mr-2 h-5 w-5' />
-                  Get Free Consultation
-                  <ArrowRight className='ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform' />
-                </Link>
-              </AnimatedButton>
-              <ButtonHoverEffects
-                size='lg'
-                variant='outline'
-                className='text-lg px-8 py-4 bg-white/10 border-white/20 hover:bg-white/20 backdrop-blur-sm transition-all duration-300'
-                hoverScale={1.05}
-                hoverBgColor='rgba(255, 255, 255, 0.2)'
-                asChild
-              >
-                <Link href='/portfolio'>
-                  <Zap className='mr-2 h-5 w-5' />
-                  View Our Work
-                </Link>
-              </ButtonHoverEffects>
+                {/* Enhanced main headline with better typography */}
+                <h1 className='text-5xl md:text-6xl lg:text-7xl font-bold leading-tight mb-8 tracking-tight'>
+                  {carouselSlides[currentIndex].subheadline ? (
+                    <>
+                      <span className='block mb-2'>
+                        {carouselSlides[currentIndex].headline}
+                      </span>
+                      {carouselSlides[currentIndex].subheadline && (
+                        <span className='block mb-2 bg-gradient-to-r from-blue-400 via-cyan-400 to-blue-500 bg-clip-text text-transparent'>
+                          {carouselSlides[currentIndex].subheadline}
+                        </span>
+                      )}
+                    </>
+                  ) : (
+                    <span className='block mb-2 bg-gradient-to-r from-blue-400 via-cyan-400 to-blue-500 bg-clip-text text-transparent'>
+                      {carouselSlides[currentIndex].headline}
+                    </span>
+                  )}
+                </h1>
+
+                {/* Enhanced subtitle with better spacing */}
+                <p className='text-xl md:text-2xl text-blue-100/90 max-w-4xl mx-auto mb-12 leading-relaxed'>
+                  {carouselSlides[currentIndex].description}
+                </p>
+
+                {/* Enhanced CTA buttons */}
+                <div className='flex flex-col sm:flex-row gap-6 justify-center items-center mb-16'>
+                  <AnimatedButton
+                    size='lg'
+                    className='group text-lg px-8 py-4 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 shadow-lg hover:shadow-xl transition-all duration-300'
+                    rippleColor='rgba(255, 255, 255, 0.3)'
+                    duration={0.6}
+                    asChild
+                  >
+                    <Link href={carouselSlides[currentIndex].ctaLink}>
+                      <Rocket className='mr-2 h-5 w-5' />
+                      {carouselSlides[currentIndex].cta}
+                      <ArrowRight className='ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform' />
+                    </Link>
+                  </AnimatedButton>
+                  <ButtonHoverEffects
+                    size='lg'
+                    variant='outline'
+                    className='text-lg px-8 py-4 bg-white/10 border-white/20 hover:bg-white/20 backdrop-blur-sm transition-all duration-300'
+                    hoverScale={1.05}
+                    hoverBgColor='rgba(255, 255, 255, 0.2)'
+                    asChild
+                  >
+                    <Link href='/portfolio'>
+                      <Zap className='mr-2 h-5 w-5' />
+                      View Our Work
+                    </Link>
+                  </ButtonHoverEffects>
+                </div>
+              </motion.div>
+            </AnimatePresence>
+
+            {/* Carousel Navigation Dots */}
+            <div className='flex justify-center items-center gap-2 mb-8'>
+              {carouselSlides.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => goToSlide(index)}
+                  className={`transition-all duration-300 rounded-full ${
+                    index === currentIndex
+                      ? 'w-10 h-2 bg-white'
+                      : 'w-2 h-2 bg-white/40 hover:bg-white/60'
+                  }`}
+                  aria-label={`Go to slide ${index + 1}`}
+                />
+              ))}
             </div>
-          </SlideIn>
+
+          </div>
+
+          {/* Carousel Navigation Arrows - positioned relative to section */}
+          <button
+            onClick={goToPrevious}
+            className='hidden md:flex absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-sm items-center justify-center transition-all duration-300 group z-20'
+            aria-label='Previous slide'
+          >
+            <ChevronLeft className='h-6 w-6 text-white group-hover:scale-110 transition-transform' />
+          </button>
+          <button
+            onClick={goToNext}
+            className='hidden md:flex absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-sm items-center justify-center transition-all duration-300 group z-20'
+            aria-label='Next slide'
+          >
+            <ChevronRight className='h-6 w-6 text-white group-hover:scale-110 transition-transform' />
+          </button>
 
           {/* Enhanced stats with modern cards */}
           <FadeIn delay={1.6} duration={1.0}>
