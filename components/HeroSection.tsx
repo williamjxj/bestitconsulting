@@ -180,7 +180,7 @@ export function HeroSection() {
                 duration={0.6}
                 asChild
               >
-                <Link href='/contact'>
+                <Link href='/contact?title=Get%20Free%20Consultation#contact-form'>
                   <Rocket className='mr-2 h-5 w-5' />
                   Get Free Consultation
                   <ArrowRight className='ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform' />

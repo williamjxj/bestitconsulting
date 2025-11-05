@@ -271,7 +271,7 @@ export default function HomePage() {
                 className='bg-white text-blue-700 hover:bg-blue-50'
                 asChild
               >
-                <Link href='/contact'>Get a Free Consultation</Link>
+                <Link href='/contact?title=Get%20a%20Free%20Consultation#contact-form'>Get a Free Consultation</Link>
               </Button>
               <Button
                 size='lg'
