@@ -66,7 +66,7 @@ export function HeroSection() {
   // Auto-rotate every 8 seconds
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % carouselSlides.length)
+      setCurrentIndex(prev => (prev + 1) % carouselSlides.length)
     }, 8000)
     return () => clearInterval(interval)
   }, [])
@@ -76,13 +76,11 @@ export function HeroSection() {
   }
 
   const goToPrevious = () => {
-    setCurrentIndex((prev) =>
-      prev === 0 ? carouselSlides.length - 1 : prev - 1
-    )
+    setCurrentIndex(prev => (prev === 0 ? carouselSlides.length - 1 : prev - 1))
   }
 
   const goToNext = () => {
-    setCurrentIndex((prev) => (prev + 1) % carouselSlides.length)
+    setCurrentIndex(prev => (prev + 1) % carouselSlides.length)
   }
 
   return (
@@ -276,7 +274,6 @@ export function HeroSection() {
                 />
               ))}
             </div>
-
           </div>
 
           {/* Carousel Navigation Arrows - positioned relative to section */}
