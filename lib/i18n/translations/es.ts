@@ -6,7 +6,7 @@ export const ES_TRANSLATIONS: Translations = {
     home: 'Inicio',
     services: 'Servicios',
     about: 'Acerca de',
-    'our-work': 'Nuestro Trabajo',
+    'case-studies': 'Casos de Estudio',
     portfolio: 'Portafolio',
     testimonials: 'Testimonios',
     contact: 'Contacto',

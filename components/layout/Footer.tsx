@@ -1,6 +1,8 @@
 'use client'
 
+import { useState } from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { motion } from 'framer-motion'
 import { brandClasses } from '@/lib/branding'
 import { useReducedMotion } from '@/lib/accessibility'
@@ -20,15 +22,32 @@ import {
   Award,
   Users,
   Smartphone,
+  Presentation,
 } from 'lucide-react'
 import { QRCodeCompact } from '@/components/ui/qr-code'
 import { FAQDialogCompact } from '@/components/ui/faq-dialog'
+
+// Pages that exist and should navigate normally
+const existingPages = [
+  '/about',
+  '/about#team',
+  '/services',
+  '/portfolio',
+  '/case-studies',
+  '/faq',
+]
+
+// Pages that should redirect to contact form with CTA title
+const redirectToContactPages = ['/careers', '/blog', '/docs', '/support']
+
+// Legal pages that should show tooltip (don't exist)
+const legalPages = ['/privacy', '/terms', '/cookies', '/gdpr']
 
 const footerLinks = {
   company: [
     { name: 'About Us', href: '/about' },
     { name: 'Our Team', href: '/about#team' },
-    { name: 'Careers', href: '/careers' },
+    { name: 'Careers', href: '/careers', redirectToContact: true },
     { name: 'FAQ', href: '/faq' },
   ],
   services: [
@@ -42,16 +61,21 @@ const footerLinks = {
   resources: [
     { name: 'Portfolio', href: '/portfolio' },
     { name: 'Case Studies', href: '/case-studies' },
-    { name: 'Blog', href: '/blog' },
-    { name: 'Documentation', href: '/docs' },
-    { name: 'Support', href: '/support' },
-    { name: 'FAQ', href: '/faq' },
+    { name: 'Blog', href: '/blog', redirectToContact: true },
+    { name: 'Documentation', href: '/docs', redirectToContact: true },
+    { name: 'Support', href: '/support', redirectToContact: true },
+    {
+      name: 'Presentation',
+      href: 'https://gamma.app/docs/Best-IT-Consulting-gwcl04w56hlfimh',
+      icon: Presentation,
+      isExternal: true,
+    },
   ],
   legal: [
-    { name: 'Privacy Policy', href: '/privacy' },
-    { name: 'Terms of Service', href: '/terms' },
-    { name: 'Cookie Policy', href: '/cookies' },
-    { name: 'GDPR', href: '/gdpr' },
+    { name: 'Privacy Policy', href: '/privacy', showTooltip: true },
+    { name: 'Terms of Service', href: '/terms', showTooltip: true },
+    { name: 'Cookie Policy', href: '/cookies', showTooltip: true },
+    { name: 'GDPR', href: '/gdpr', showTooltip: true },
   ],
 }
 
@@ -103,6 +127,45 @@ export function Footer() {
   const reducedMotion = useReducedMotion()
   const deviceType = getDeviceType()
   const shouldAnimate = !reducedMotion && deviceType !== 'mobile'
+  const router = useRouter()
+  const [tooltip, setTooltip] = useState<{
+    text: string
+    x: number
+    y: number
+  } | null>(null)
+
+  const handleLinkClick = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    link: any
+  ) => {
+    // External links (like Presentation) should open in new tab - don't prevent default
+    if (link.isExternal) {
+      return
+    }
+
+    // Links that should redirect to contact form
+    if (link.redirectToContact) {
+      e.preventDefault()
+      const title = encodeURIComponent(link.name)
+      router.push(`/contact?title=${title}#contact-form`)
+      return
+    }
+
+    // Legal links that should show tooltip
+    if (link.showTooltip) {
+      e.preventDefault()
+      const rect = (e.currentTarget as HTMLElement).getBoundingClientRect()
+      setTooltip({
+        text: 'Coming soon',
+        x: rect.left + rect.width / 2,
+        y: rect.top - 10,
+      })
+      setTimeout(() => setTooltip(null), 2000)
+      return
+    }
+
+    // Normal navigation for existing pages (no prevent default)
+  }
 
   return (
     <footer className='bg-gray-900 text-white'>
@@ -199,14 +262,32 @@ export function Footer() {
                             triggerText={link.name}
                             className='text-gray-300 hover:text-white transition-colors duration-200 p-0 h-auto font-normal justify-start'
                           />
+                        ) : (link as any).isExternal ? (
+                          <a
+                            href={(link as any).href}
+                            target='_blank'
+                            rel='noopener noreferrer'
+                            className='text-gray-300 hover:text-white transition-colors duration-200 flex items-center group cursor-pointer'
+                          >
+                            {(link as any).icon &&
+                              (() => {
+                                const IconComponent = (link as any).icon
+                                return (
+                                  <IconComponent className='mr-2 h-4 w-4' />
+                                )
+                              })()}
+                            <span>{link.name}</span>
+                            <ArrowRight className='ml-2 h-3 w-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200' />
+                          </a>
                         ) : (
-                          <Link
+                          <a
                             href={link.href}
-                            className='text-gray-300 hover:text-white transition-colors duration-200 flex items-center group'
+                            onClick={e => handleLinkClick(e, link)}
+                            className='text-gray-300 hover:text-white transition-colors duration-200 flex items-center group cursor-pointer'
                           >
                             <span>{link.name}</span>
                             <ArrowRight className='ml-2 h-3 w-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200' />
-                          </Link>
+                          </a>
                         )}
                       </motion.li>
                     ))}
@@ -252,24 +333,85 @@ export function Footer() {
             © 2025 Best IT Consulting. All rights reserved.
           </div>
           <div className='flex items-center space-x-6 text-sm text-gray-400'>
-            <Link
+            <a
               href='/privacy'
-              className='hover:text-white transition-colors'
+              onClick={e => {
+                e.preventDefault()
+                const rect = (
+                  e.currentTarget as HTMLElement
+                ).getBoundingClientRect()
+                setTooltip({
+                  text: 'Coming soon',
+                  x: rect.left + rect.width / 2,
+                  y: rect.top - 10,
+                })
+                setTimeout(() => setTooltip(null), 2000)
+              }}
+              className='hover:text-white transition-colors cursor-pointer'
             >
               Privacy Policy
-            </Link>
-            <Link href='/terms' className='hover:text-white transition-colors'>
+            </a>
+            <a
+              href='/terms'
+              onClick={e => {
+                e.preventDefault()
+                const rect = (
+                  e.currentTarget as HTMLElement
+                ).getBoundingClientRect()
+                setTooltip({
+                  text: 'Coming soon',
+                  x: rect.left + rect.width / 2,
+                  y: rect.top - 10,
+                })
+                setTimeout(() => setTooltip(null), 2000)
+              }}
+              className='hover:text-white transition-colors cursor-pointer'
+            >
               Terms of Service
-            </Link>
-            <Link
+            </a>
+            <a
               href='/cookies'
-              className='hover:text-white transition-colors'
+              onClick={e => {
+                e.preventDefault()
+                const rect = (
+                  e.currentTarget as HTMLElement
+                ).getBoundingClientRect()
+                setTooltip({
+                  text: 'Coming soon',
+                  x: rect.left + rect.width / 2,
+                  y: rect.top - 10,
+                })
+                setTimeout(() => setTooltip(null), 2000)
+              }}
+              className='hover:text-white transition-colors cursor-pointer'
             >
               Cookie Policy
-            </Link>
+            </a>
           </div>
         </motion.div>
       </div>
+
+      {/* Tooltip */}
+      {tooltip && (
+        <motion.div
+          className='fixed z-50 px-3 py-2 bg-gray-800 text-white text-xs rounded-lg shadow-lg pointer-events-none'
+          style={{
+            left: `${tooltip.x}px`,
+            top: `${tooltip.y}px`,
+            transform: 'translateX(-50%) translateY(-100%)',
+          }}
+          initial={{ opacity: 0, y: tooltip.y + 5 }}
+          animate={{ opacity: 1, y: tooltip.y }}
+          exit={{ opacity: 0, y: tooltip.y + 5 }}
+          transition={{ duration: 0.2 }}
+        >
+          {tooltip.text}
+          <div
+            className='absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-800'
+            style={{ marginTop: '-1px' }}
+          />
+        </motion.div>
+      )}
     </footer>
   )
 }
