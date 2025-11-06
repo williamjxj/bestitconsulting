@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState } from 'react'
-import { ChevronDown, Globe, Check } from 'lucide-react'
+import { ChevronDown, Check } from 'lucide-react'
 import { useLanguageManager } from '@/lib/i18n/hooks'
 
 interface LanguageSelectorProps {
@@ -9,6 +9,7 @@ interface LanguageSelectorProps {
   showNativeName?: boolean
   variant?: 'dropdown' | 'buttons' | 'minimal'
   className?: string
+  iconOnly?: boolean
 }
 
 export function LanguageSelector({
@@ -16,6 +17,7 @@ export function LanguageSelector({
   showNativeName = false,
   variant = 'dropdown',
   className = '',
+  iconOnly = false,
 }: LanguageSelectorProps) {
   const { availableLanguages, currentLanguage, setLanguage, isLoading } =
     useLanguageManager()
@@ -61,7 +63,6 @@ export function LanguageSelector({
           className='flex items-center gap-2 text-gray-600 hover:text-blue-600 transition-colors'
           title='Switch Language'
         >
-          <Globe className='w-4 h-4' />
           {currentLang && (
             <span className='flex items-center gap-2'>
               {showFlag && currentLang.flag}
@@ -112,19 +113,33 @@ export function LanguageSelector({
       <button
         onClick={() => setIsOpen(!isOpen)}
         disabled={isLoading}
-        className='flex items-center gap-3 px-3 py-2 text-sm border border-gray-300 rounded-md bg-white hover:bg-gray-50 transition-colors'
+        className={`flex items-center ${
+          iconOnly
+            ? 'p-2 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500'
+            : 'gap-3 px-3 py-2 text-sm border border-gray-300 rounded-md bg-white hover:bg-gray-50 transition-colors'
+        }`}
+        title={
+          iconOnly && currentLang
+            ? showNativeName
+              ? currentLang.nativeName
+              : currentLang.name
+            : undefined
+        }
       >
-        <Globe className='w-4 h-4 text-gray-500' />
         {currentLang && (
-          <span className='flex items-center gap-3'>
-            {showFlag && <span className='mr-1'>{currentLang.flag}</span>}
-            <span>
-              {showNativeName ? currentLang.nativeName : currentLang.name}
-            </span>
-          </span>
+          <>
+            {showFlag && (
+              <span className={iconOnly ? '' : 'mr-1'}>{currentLang.flag}</span>
+            )}
+            {!iconOnly && (
+              <span>
+                {showNativeName ? currentLang.nativeName : currentLang.name}
+              </span>
+            )}
+          </>
         )}
         <ChevronDown
-          className={`w-4 h-4 text-gray-500 transition-transform ${isOpen ? 'rotate-180' : ''}`}
+          className={`w-4 h-4 text-gray-500 transition-transform ${isOpen ? 'rotate-180' : ''} ${iconOnly ? 'ml-1' : ''}`}
         />
       </button>
 

@@ -222,6 +222,7 @@ export function Footer() {
                   <motion.a
                     key={social.name}
                     href={social.href}
+                    tabIndex={0}
                     className='w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center text-gray-400 hover:text-white hover:bg-blue-600 transition-colors duration-200'
                     whileHover={
                       shouldAnimate ? { scale: 1.1, y: -2 } : undefined

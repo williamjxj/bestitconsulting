@@ -17,6 +17,7 @@ import {
 } from 'lucide-react'
 import { useNavTranslation } from '@/lib/i18n/hooks'
 import { LanguageSelector } from './LanguageSelector'
+import { brandClasses } from '@/lib/branding'
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -69,10 +70,92 @@ export default function Header() {
           : 'bg-white/90 backdrop-blur-sm'
       }`}
     >
-      <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
-        <div className='flex justify-between items-center h-14 sm:h-16'>
+      <div className={brandClasses.container}>
+        <div className='flex items-center justify-between h-14 sm:h-16 gap-2'>
+          {/* Logo - Left Side */}
+          <div className='flex items-center flex-shrink-0 min-w-0'>
+            <Link
+              href='/'
+              className='group flex items-center'
+              title='BestIT Consulting - Technology Solutions'
+            >
+              <Image
+                src='/logo.png'
+                alt='BestIT Consulting Logo'
+                width={160}
+                height={40}
+                className='h-8 w-auto max-w-[120px] transition-opacity duration-300 group-hover:opacity-90 lg:h-10 lg:max-w-none sm:h-12'
+                priority
+              />
+            </Link>
+          </div>
 
-          {/* Desktop Navigation - Center - Hidden on mobile */}
+          {/* Mobile: Hamburger Menu and Language Selector - Right side */}
+          <div className='lg:hidden flex items-center space-x-1.5 flex-shrink-0 z-50'>
+            <div className='relative flex-shrink-0'>
+              <button
+                type='button'
+                onClick={() => {
+                  setMobileMenuOpen(!mobileMenuOpen)
+                }}
+                className='p-2 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500'
+                aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
+                aria-expanded={mobileMenuOpen}
+              >
+                {mobileMenuOpen ? (
+                  <X className='h-6 w-6' strokeWidth={2} />
+                ) : (
+                  <Menu className='h-6 w-6' strokeWidth={2} />
+                )}
+              </button>
+
+              {/* Mobile Menu Dropdown */}
+              {mobileMenuOpen && (
+                <>
+                  <div
+                    className='fixed inset-0 z-40 lg:hidden'
+                    onClick={() => setMobileMenuOpen(false)}
+                  />
+                  <div className='absolute right-0 top-full mt-1 bg-white border border-gray-200 rounded-md shadow-lg z-50 min-w-[200px] lg:hidden'>
+                    <div className='py-2'>
+                      {navItems.map((item, index) => {
+                        const Icon = item.icon
+                        return (
+                          <Link
+                            key={item.href}
+                            href={item.href}
+                            className={`relative py-2.5 px-4 rounded-lg font-semibold text-sm transition-all duration-300 flex items-center gap-3 ${
+                              isActive(item.href)
+                                ? 'text-white bg-gradient-to-r from-blue-600 to-indigo-600 shadow-lg shadow-blue-500/25'
+                                : 'text-gray-700 hover:text-blue-600 hover:bg-blue-50 hover:shadow-md'
+                            }`}
+                            onClick={() => setMobileMenuOpen(false)}
+                            style={{ animationDelay: `${index * 50}ms` }}
+                          >
+                            <Icon
+                              className={`h-5 w-5 flex-shrink-0 ${
+                                isActive(item.href)
+                                  ? 'text-white'
+                                  : 'text-gray-500'
+                              }`}
+                              strokeWidth={2}
+                            />
+                            {t(item.key)}
+                            {!isActive(item.href) && (
+                              <span className='absolute inset-0 rounded-lg bg-gradient-to-r from-blue-600/10 to-indigo-600/10 opacity-0 hover:opacity-100 transition-opacity duration-300'></span>
+                            )}
+                          </Link>
+                        )
+                      })}
+                    </div>
+                  </div>
+                </>
+              )}
+            </div>
+            <LanguageSelector showNativeName={false} iconOnly={true} />
+          </div>
+
+          {/* Desktop Navigation - Center */}
           <div className='hidden lg:flex flex-1 justify-center'>
             <div className='flex items-center space-x-0.5'>
               {navItems.map(({ key, href }) => (
@@ -94,98 +177,9 @@ export default function Header() {
             </div>
           </div>
 
-          {/* Desktop Right Side - Language Selector and Logo */}
+          {/* Desktop Language Selector - Right Side */}
           <div className='hidden lg:flex items-center space-x-3 flex-shrink-0'>
             <LanguageSelector showNativeName={true} />
-            <Link
-              href='/'
-              className='group flex items-center'
-              title='BestIT Consulting - Technology Solutions'
-            >
-              <Image
-                src='/logo.png'
-                alt='BestIT Consulting Logo'
-                width={160}
-                height={40}
-                className='h-10 sm:h-12 w-auto transition-opacity duration-300 group-hover:opacity-90'
-                priority
-              />
-            </Link>
-          </div>
-
-          {/* Mobile Right Side - Logo, Language Selector, and Menu Button */}
-          <div className='lg:hidden flex items-center space-x-2 flex-shrink-0 z-50'>
-            <Link
-              href='/'
-              className='group flex items-center'
-              title='BestIT Consulting - Technology Solutions'
-            >
-              <Image
-                src='/logo.png'
-                alt='BestIT Consulting Logo'
-                width={120}
-                height={30}
-                className='h-8 w-auto transition-opacity duration-300 group-hover:opacity-90'
-                priority
-              />
-            </Link>
-            <LanguageSelector showNativeName={false} />
-            <button
-              type='button'
-              onClick={() => {
-                setMobileMenuOpen(!mobileMenuOpen)
-              }}
-              className='p-2 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500'
-              aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
-              aria-expanded={mobileMenuOpen}
-            >
-              {mobileMenuOpen ? (
-                <X className='h-6 w-6' strokeWidth={2} />
-              ) : (
-                <Menu className='h-6 w-6' strokeWidth={2} />
-              )}
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* Mobile Menu with smooth animation */}
-      <div
-        className={`lg:hidden transition-all duration-300 ease-in-out overflow-hidden ${
-          mobileMenuOpen
-            ? 'max-h-[800px] opacity-100 visible'
-            : 'max-h-0 opacity-0 invisible'
-        }`}
-      >
-        <div className='py-4 border-t border-gray-200 bg-white'>
-          <div className='flex flex-col space-y-3'>
-            {navItems.map((item, index) => {
-              const Icon = item.icon
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className={`relative py-3 px-4 rounded-lg font-semibold text-sm transition-all duration-300 transform hover:translate-x-2 flex items-center gap-3 ${
-                    isActive(item.href)
-                      ? 'text-white bg-gradient-to-r from-blue-600 to-indigo-600 shadow-lg shadow-blue-500/25'
-                      : 'text-gray-700 hover:text-blue-600 hover:bg-blue-50 hover:shadow-md'
-                  }`}
-                  onClick={() => setMobileMenuOpen(false)}
-                  style={{ animationDelay: `${index * 50}ms` }}
-                >
-                  <Icon
-                    className={`h-5 w-5 flex-shrink-0 ${
-                      isActive(item.href) ? 'text-white' : 'text-gray-500'
-                    }`}
-                    strokeWidth={2}
-                  />
-                  {t(item.key)}
-                  {!isActive(item.href) && (
-                    <span className='absolute inset-0 rounded-lg bg-gradient-to-r from-blue-600/10 to-indigo-600/10 opacity-0 hover:opacity-100 transition-opacity duration-300'></span>
-                  )}
-                </Link>
-              )
-            })}
           </div>
         </div>
       </div>
