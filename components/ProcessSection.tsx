@@ -110,7 +110,7 @@ export function ProcessSection({ className = '' }: ProcessSectionProps) {
         {/* Process Steps */}
         <div className='relative'>
           {/* Connection Line */}
-          <div className='hidden lg:block absolute top-1/2 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-200 via-yellow-200 via-green-200 to-purple-200 transform -translate-y-1/2 z-0'></div>
+          <div className='hidden lg:block absolute top-1/2 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-200 via-yellow-200 to-purple-200 transform -translate-y-1/2 z-0'></div>
 
           <div className='grid grid-cols-1 lg:grid-cols-4 gap-8 lg:gap-4'>
             {processSteps.map((step, index) => (

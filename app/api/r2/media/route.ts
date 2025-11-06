@@ -4,8 +4,16 @@ import { getMediaAssets, validateR2Config } from '@/lib/r2-media'
 export async function GET(request: NextRequest) {
   try {
     // Validate R2 configuration
-    const config = validateR2Config()
-    if (!config.isConfigured) {
+    const configData = {
+      baseUrl: process.env.R2_BASE_URL || '',
+      moreUrl: process.env.R2_MORE_URL || '',
+      accessKeyId: process.env.R2_ACCESS_KEY_ID || '',
+      secretAccessKey: process.env.R2_SECRET_ACCESS_KEY || '',
+      bucketName: process.env.R2_BUCKET_NAME || '',
+    }
+
+    const isConfigured = validateR2Config(configData)
+    if (!isConfigured) {
       return NextResponse.json(
         {
           error: 'R2_MEDIA_CONFIG_MISSING',
@@ -74,7 +82,10 @@ export async function GET(request: NextRequest) {
     }
 
     // Get media assets
-    let assets = getMediaAssets(category)
+    let assets = await getMediaAssets()
+
+    // Filter by category
+    assets = assets.filter(asset => asset.category === category)
 
     // Filter by type if specified
     if (type) {

@@ -22,7 +22,13 @@ import {
   Star,
 } from 'lucide-react'
 
-const ScrollReveal = ({ children, delay = 0 }) => {
+const ScrollReveal = ({
+  children,
+  delay = 0,
+}: {
+  children: React.ReactNode
+  delay?: number
+}) => {
   const ref = React.useRef(null)
   const inView = useInView(ref, { once: true, margin: '-100px' })
 
@@ -38,7 +44,13 @@ const ScrollReveal = ({ children, delay = 0 }) => {
   )
 }
 
-const StaggerChildren = ({ children, staggerDelay = 0.1 }) => {
+const StaggerChildren = ({
+  children,
+  staggerDelay = 0.1,
+}: {
+  children: React.ReactNode
+  staggerDelay?: number
+}) => {
   const ref = React.useRef(null)
   const inView = useInView(ref, { once: true, margin: '-50px' })
 
@@ -479,7 +491,7 @@ export default function PortfolioPage() {
                     Results
                   </h3>
                   <div className='grid grid-cols-3 gap-6'>
-                    {selectedProject.results.map((result, idx) => (
+                    {selectedProject.results.map((result: any, idx: number) => (
                       <div key={idx} className='text-center'>
                         <div className='text-4xl font-bold text-blue-600 mb-2'>
                           {result.metric}
@@ -495,12 +507,14 @@ export default function PortfolioPage() {
                     Key Features
                   </h3>
                   <div className='grid md:grid-cols-2 gap-3'>
-                    {selectedProject.features.map((feature, idx) => (
-                      <div key={idx} className='flex items-start gap-2'>
-                        <CheckCircle2 className='w-5 h-5 text-green-500 flex-shrink-0 mt-0.5' />
-                        <span className='text-slate-700'>{feature}</span>
-                      </div>
-                    ))}
+                    {selectedProject.features.map(
+                      (feature: any, idx: number) => (
+                        <div key={idx} className='flex items-start gap-2'>
+                          <CheckCircle2 className='w-5 h-5 text-green-500 flex-shrink-0 mt-0.5' />
+                          <span className='text-slate-700'>{feature}</span>
+                        </div>
+                      )
+                    )}
                   </div>
                 </div>
 
@@ -509,7 +523,7 @@ export default function PortfolioPage() {
                     Technologies Used
                   </h3>
                   <div className='flex flex-wrap gap-2'>
-                    {selectedProject.tech.map((tech, idx) => (
+                    {selectedProject.tech.map((tech: any, idx: number) => (
                       <span
                         key={idx}
                         className='px-4 py-2 bg-slate-100 text-slate-700 rounded-lg font-medium'

@@ -1,83 +1,90 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import {
-  scaleIn,
-  hoverScale,
-  getAnimationVariants,
-} from '@/lib/framer-animations'
-import { scrollTriggerConfig } from '@/lib/framer-animations'
 import { ReactNode } from 'react'
+import { Card } from '@/components/ui/card'
+import { shouldReduceMotion } from '@/lib/accessibility'
 
 interface AnimatedCardProps {
   children: ReactNode
-  hover?: {
-    scale?: number
-    rotate?: number
-    translateY?: number
-    opacity?: number
-  }
-  delay?: number
-  stagger?: number
+  variant?: 'default' | 'elevated' | 'outlined' | 'glass'
+  size?: 'sm' | 'md' | 'lg'
+  hover?: boolean
+  disabled?: boolean
+  onClick?: () => void
   className?: string
-  once?: boolean
+  hoverConfig?: {
+    scale?: number
+    y?: number
+    shadow?: string
+  }
 }
 
-/**
- * AnimatedCard Component
- *
- * A card component with scroll-triggered animations and hover effects
- * Implements accessibility-aware animations with reduced motion support
- */
-export function AnimatedCard({
+function AnimatedCard({
   children,
-  hover = { scale: 1.05 },
-  delay = 0,
-  stagger = 0,
-  className = '',
-  once = scrollTriggerConfig.once,
+  variant = 'default',
+  size = 'md',
+  hover = true,
+  disabled = false,
+  onClick,
+  className,
+  hoverConfig = { scale: 1.02, y: -5 },
 }: AnimatedCardProps) {
-  const hoverVariants = {
-    rest: {
-      scale: 1,
-      rotate: 0,
-      y: 0,
-      opacity: 1,
-    },
-    hover: {
-      scale: hover.scale || 1.05,
-      rotate: hover.rotate || 0,
-      y: hover.translateY || 0,
-      opacity: hover.opacity || 1,
-    },
+  // Get animation variants based on motion preference
+  const getAnimationVariants = () => {
+    if (shouldReduceMotion() || !hover || disabled) {
+      return {
+        whileHover: undefined,
+        whileTap: undefined,
+        transition: undefined,
+      }
+    }
+
+    return {
+      whileHover: {
+        scale: hoverConfig.scale || 1.02,
+        y: hoverConfig.y || -5,
+        boxShadow:
+          hoverConfig.shadow ||
+          '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+      },
+      whileTap: { scale: 0.98 },
+      transition: { type: 'spring' as const, stiffness: 400, damping: 17 },
+    }
+  }
+
+  const animationProps = getAnimationVariants()
+
+  const cardClasses = {
+    sm: 'p-4',
+    md: 'p-6',
+    lg: 'p-8',
+  }
+
+  const variantClasses = {
+    default: 'bg-white border border-gray-200',
+    elevated: 'bg-white shadow-lg border-0',
+    outlined: 'bg-transparent border-2 border-gray-300',
+    glass: 'bg-white/10 backdrop-blur-sm border border-white/20',
   }
 
   return (
-    <motion.div
-      initial='hidden'
-      whileInView='visible'
-      whileHover='hover'
-      viewport={{
-        once,
-        amount: scrollTriggerConfig.threshold,
-        margin: '0px 0px -50px 0px',
-      }}
-      variants={getAnimationVariants(scaleIn)}
-      transition={{
-        delay: delay + stagger,
-        duration: 0.6,
-        ease: 'easeOut',
-      }}
-      className={`group cursor-pointer ${className}`}
-    >
-      <motion.div
-        variants={hoverVariants}
-        initial='rest'
-        whileHover='hover'
-        className='h-full'
+    <motion.div {...animationProps} className={className}>
+      <Card
+        className={`
+          ${cardClasses[size]}
+          ${variantClasses[variant]}
+          ${onClick ? 'cursor-pointer' : ''}
+          ${disabled ? 'opacity-50 cursor-not-allowed' : ''}
+          transition-all duration-300
+        `}
+        onClick={disabled ? undefined : onClick}
       >
         {children}
-      </motion.div>
+      </Card>
     </motion.div>
   )
 }
+
+export default AnimatedCard
+export { AnimatedCard }

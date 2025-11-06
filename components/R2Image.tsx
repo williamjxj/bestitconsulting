@@ -1,204 +1,145 @@
 'use client'
 
 import Image from 'next/image'
-import { useState, useEffect, useCallback } from 'react'
-import { buildR2Url, getFallbackUrl } from '@/lib/r2-media'
-import { getLoadingTimeout } from '@/lib/media-config'
-import { Skeleton } from '@/components/ui/skeleton'
-import { useResponsive } from '@/lib/breakpoints'
+import { useState, useEffect } from 'react'
+import {
+  getOptimizedImageUrl,
+  getBestSupportedFormat,
+  generatePlaceholder,
+} from '@/lib/r2-media'
 
 interface R2ImageProps {
-  src: string
+  assetId?: string
+  src?: string
   alt: string
   width?: number
   height?: number
-  fill?: boolean
-  priority?: boolean
-  fallback?: string
-  className?: string
-  category?: 'team' | 'company' | 'general'
-  onLoad?: () => void
-  onError?: () => void
+  format?: 'webp' | 'avif' | 'jpg' | 'png'
   quality?: number
   sizes?: string
+  priority?: boolean
+  loading?: 'lazy' | 'eager'
   placeholder?: 'blur' | 'empty'
   blurDataURL?: string
+  className?: string
+  style?: React.CSSProperties
+  onLoad?: () => void
+  onError?: () => void
+  fill?: boolean
+  category?: string
 }
 
 export default function R2Image({
+  assetId,
   src,
   alt,
-  width = 300,
-  height = 200,
-  fill = false,
-  priority = false,
-  fallback,
-  className = '',
-  category = 'general',
-  onLoad,
-  onError,
-  quality,
+  width,
+  height,
+  format,
+  quality = 80,
   sizes,
+  priority = false,
+  loading = 'lazy',
   placeholder = 'blur',
   blurDataURL,
+  className,
+  style,
+  onLoad,
+  onError,
+  fill,
+  category,
 }: R2ImageProps) {
-  const [imgSrc, setImgSrc] = useState(buildR2Url(src))
+  const [imageError, setImageError] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
-  const [hasError, setHasError] = useState(false)
-  const [retryCount, setRetryCount] = useState(0)
-  const [webpSupported, setWebpSupported] = useState(false)
-  const { isMobile } = useResponsive()
+  const [isClient, setIsClient] = useState(false)
 
-  const fallbackUrl = fallback || getFallbackUrl(category)
-  const loadingTimeout = getLoadingTimeout('image')
+  // Get the best supported format if not specified
+  const imageFormat = format || getBestSupportedFormat()
 
-  // Detect WebP support
+  // Generate optimized image URL
+  const imageUrl =
+    src ||
+    (assetId
+      ? getOptimizedImageUrl(assetId, {
+          width,
+          height,
+          format: imageFormat as any,
+          quality,
+        })
+      : null)
+
+  // Set client flag after hydration
   useEffect(() => {
-    const checkWebPSupport = () => {
-      const canvas = document.createElement('canvas')
-      canvas.width = 1
-      canvas.height = 1
-      return canvas.toDataURL('image/webp').indexOf('data:image/webp') === 0
-    }
-    setWebpSupported(checkWebPSupport())
+    setIsClient(true)
   }, [])
 
-  // Generate optimized image URL with WebP support
-  const getOptimizedUrl = useCallback(
-    (originalSrc: string) => {
-      const baseUrl = buildR2Url(originalSrc)
-      if (webpSupported && !baseUrl.includes('.webp')) {
-        // Add WebP format parameter if supported
-        return `${baseUrl}?format=webp&quality=${quality || (isMobile ? 75 : 90)}`
-      }
-      return baseUrl
-    },
-    [webpSupported, quality, isMobile]
-  )
+  // If no valid URL, return placeholder
+  if (!imageUrl) {
+    return (
+      <div
+        className={`bg-gray-200 flex items-center justify-center ${className}`}
+        style={{ width, height, ...style }}
+      >
+        <span className='text-gray-500 text-sm'>Image unavailable</span>
+      </div>
+    )
+  }
 
-  // Generate responsive sizes
-  const getResponsiveSizes = useCallback(() => {
-    if (sizes) return sizes
+  // Generate placeholder if not provided (only on client side after hydration)
+  const placeholderUrl =
+    blurDataURL ||
+    (placeholder === 'blur' && width && height && isClient
+      ? generatePlaceholder(width, height)
+      : undefined)
 
-    if (isMobile) {
-      return '(max-width: 768px) 100vw, 50vw'
-    }
-    return '(max-width: 1200px) 50vw, 33vw'
-  }, [sizes, isMobile])
-
-  // Generate blur data URL if not provided
-  const getBlurDataURL = useCallback(() => {
-    if (blurDataURL) return blurDataURL
-
-    // Generate a simple blur placeholder
-    const canvas = document.createElement('canvas')
-    canvas.width = 8
-    canvas.height = 6
-    const ctx = canvas.getContext('2d')
-    if (ctx) {
-      ctx.fillStyle = '#f3f4f6'
-      ctx.fillRect(0, 0, 8, 6)
-    }
-    return canvas.toDataURL('image/jpeg', 0.1)
-  }, [blurDataURL])
-
-  // Reset state when src changes
-  useEffect(() => {
-    setImgSrc(getOptimizedUrl(src))
-    setIsLoading(true)
-    setHasError(false)
-    setRetryCount(0)
-  }, [src, getOptimizedUrl])
-
-  const handleError = useCallback(() => {
-    if (retryCount < 3) {
-      // Retry with exponential backoff
-      const delay = Math.pow(2, retryCount) * 1000
-      setTimeout(() => {
-        setRetryCount(prev => prev + 1)
-        setImgSrc(getOptimizedUrl(src))
-      }, delay)
-    } else {
-      // Use fallback after max retries
-      setHasError(true)
-      setImgSrc(fallbackUrl)
-      setIsLoading(false)
-      onError?.()
-    }
-  }, [retryCount, getOptimizedUrl, src, fallbackUrl, onError])
-
-  const handleLoad = useCallback(() => {
-    setIsLoading(false)
-    setHasError(false)
-    onLoad?.()
-  }, [onLoad])
-
-  // Set loading timeout
-  useEffect(() => {
-    if (isLoading) {
-      const timeout = setTimeout(() => {
-        if (isLoading) {
-          handleError()
-        }
-      }, loadingTimeout)
-
-      return () => clearTimeout(timeout)
-    }
-  }, [isLoading, loadingTimeout])
+  if (imageError) {
+    return (
+      <div
+        className={`bg-gray-200 flex items-center justify-center ${className}`}
+        style={{ width, height, ...style }}
+      >
+        <span className='text-gray-500 text-sm'>Image unavailable</span>
+      </div>
+    )
+  }
 
   return (
-    <div className={`relative ${className}`}>
-      {isLoading && (
-        <Skeleton className='absolute inset-0' style={{ width, height }} />
+    <div className={`relative ${className}`} style={style}>
+      {isLoading && isClient && placeholderUrl && (
+        <Image
+          src={placeholderUrl}
+          alt=''
+          width={width}
+          height={height}
+          className='absolute inset-0 object-cover blur-sm'
+          priority={priority}
+        />
       )}
-
       <Image
-        src={imgSrc}
+        src={imageUrl}
         alt={alt}
         width={fill ? undefined : width}
         height={fill ? undefined : height}
         fill={fill}
+        sizes={sizes}
         priority={priority}
-        quality={quality || (isMobile ? 75 : 90)}
-        sizes={getResponsiveSizes()}
-        placeholder={placeholder}
-        blurDataURL={placeholder === 'blur' ? getBlurDataURL() : undefined}
-        onError={handleError}
-        onLoad={handleLoad}
-        className={`transition-opacity duration-300 ${
-          isLoading ? 'opacity-0' : 'opacity-100'
-        } ${hasError ? 'grayscale' : ''} ${className}`}
-        style={
-          fill
-            ? undefined
-            : {
-                width: '100%',
-                height: 'auto',
-                objectFit: 'cover',
-              }
+        loading={loading}
+        placeholder={
+          isClient && placeholder === 'blur' && placeholderUrl
+            ? 'blur'
+            : 'empty'
         }
+        blurDataURL={isClient ? placeholderUrl : undefined}
+        className={`transition-opacity duration-300 ${isLoading ? 'opacity-0' : 'opacity-100'}`}
+        onLoad={() => {
+          setIsLoading(false)
+          onLoad?.()
+        }}
+        onError={() => {
+          setImageError(true)
+          onError?.()
+        }}
       />
-
-      {hasError && (
-        <div className='absolute inset-0 flex items-center justify-center bg-gray-100 dark:bg-gray-800'>
-          <div className='text-center text-gray-500 dark:text-gray-400'>
-            <svg
-              className='w-8 h-8 mx-auto mb-2'
-              fill='none'
-              stroke='currentColor'
-              viewBox='0 0 24 24'
-            >
-              <path
-                strokeLinecap='round'
-                strokeLinejoin='round'
-                strokeWidth={2}
-                d='M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z'
-              />
-            </svg>
-            <p className='text-sm'>Image unavailable</p>
-          </div>
-        </div>
-      )}
     </div>
   )
 }

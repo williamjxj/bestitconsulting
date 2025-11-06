@@ -181,6 +181,9 @@ export interface AnimationPerformanceMetrics {
   renderTime: number
 }
 
+// Performance Metrics type alias
+export type PerformanceMetrics = AnimationPerformanceMetrics
+
 // Responsive Design Interfaces
 export interface BreakpointConfig {
   mobile: number

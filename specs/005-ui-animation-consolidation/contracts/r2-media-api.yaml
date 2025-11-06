@@ -1,0 +1,396 @@
+openapi: 3.0.3
+info:
+  title: R2 Media API
+  description: API for managing and serving media assets from Cloudflare R2
+  version: 1.0.0
+  contact:
+    name: BestIT Consulting
+    email: support@bestitconsulting.com
+
+servers:
+  - url: https://bestitconsulting.com/api/r2
+    description: Production server
+  - url: http://localhost:3000/api/r2
+    description: Development server
+
+paths:
+  /media:
+    get:
+      summary: Get media assets
+      description: Retrieve paginated list of media assets with filtering options
+      operationId: getMediaAssets
+      parameters:
+        - name: category
+          in: query
+          required: true
+          schema:
+            type: string
+            enum: [team, company, general]
+          description: Asset category filter
+        - name: type
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: [image, video]
+          description: Media type filter
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 20
+          description: Number of assets to return
+        - name: offset
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 0
+            default: 0
+          description: Number of assets to skip
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  assets:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/MediaAsset'
+                  total:
+                    type: integer
+                    description: Total number of assets
+                  hasMore:
+                    type: boolean
+                    description: Whether more assets are available
+                  pagination:
+                    $ref: '#/components/schemas/PaginationInfo'
+        '400':
+          description: Bad request - invalid parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '503':
+          description: Service unavailable - R2 configuration missing
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /media/{assetId}:
+    get:
+      summary: Get specific media asset
+      description: Retrieve a specific media asset by ID
+      operationId: getMediaAsset
+      parameters:
+        - name: assetId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Unique identifier for the media asset
+        - name: format
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: [webp, avif, jpg, png]
+          description: Preferred image format
+        - name: width
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 4096
+          description: Preferred image width
+        - name: height
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 4096
+          description: Preferred image height
+        - name: quality
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 80
+          description: Image quality (1-100)
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MediaAsset'
+        '404':
+          description: Asset not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '400':
+          description: Bad request - invalid parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /health:
+    get:
+      summary: Health check
+      description: Check R2 bucket connectivity and configuration
+      operationId: healthCheck
+      responses:
+        '200':
+          description: Healthy
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [healthy]
+                  bucketUrl:
+                    type: string
+                    description: R2 bucket URL
+                  lastChecked:
+                    type: string
+                    format: date-time
+                  responseTime:
+                    type: integer
+                    description: Response time in milliseconds
+        '503':
+          description: Unhealthy
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [unhealthy]
+                  error:
+                    type: string
+                    description: Error message
+                  lastChecked:
+                    type: string
+                    format: date-time
+        '500':
+          description: Health check failed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [error]
+                  error:
+                    type: string
+                    description: Error message
+                  lastChecked:
+                    type: string
+                    format: date-time
+
+components:
+  schemas:
+    MediaAsset:
+      type: object
+      required:
+        - id
+        - filename
+        - url
+        - type
+        - category
+        - format
+        - size
+        - dimensions
+        - createdAt
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the media asset
+        filename:
+          type: string
+          description: Original filename
+        url:
+          type: string
+          format: uri
+          description: R2 CDN URL
+        type:
+          type: string
+          enum: [image, video]
+          description: Media type
+        category:
+          type: string
+          enum: [team, company, general]
+          description: Asset category
+        format:
+          type: string
+          description: File format (jpg, png, webp, mp4, etc.)
+        size:
+          type: integer
+          description: File size in bytes
+        dimensions:
+          $ref: '#/components/schemas/MediaDimensions'
+        optimization:
+          $ref: '#/components/schemas/OptimizationSettings'
+        fallback:
+          $ref: '#/components/schemas/FallbackConfig'
+        metadata:
+          $ref: '#/components/schemas/AssetMetadata'
+        createdAt:
+          type: string
+          format: date-time
+          description: Creation timestamp
+        updatedAt:
+          type: string
+          format: date-time
+          description: Last update timestamp
+
+    MediaDimensions:
+      type: object
+      required:
+        - width
+        - height
+      properties:
+        width:
+          type: integer
+          description: Asset width in pixels
+        height:
+          type: integer
+          description: Asset height in pixels
+        aspectRatio:
+          type: number
+          description: Calculated aspect ratio
+
+    OptimizationSettings:
+      type: object
+      properties:
+        quality:
+          type: integer
+          minimum: 1
+          maximum: 100
+          description: Image quality (1-100)
+        formats:
+          type: array
+          items:
+            type: string
+          description: Supported formats (webp, avif, jpg)
+        sizes:
+          type: array
+          items:
+            type: integer
+          description: Responsive image sizes
+        lazy:
+          type: boolean
+          description: Lazy loading enabled
+        placeholder:
+          type: string
+          description: Blur placeholder data URL
+
+    FallbackConfig:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+          description: Whether fallback is enabled
+        type:
+          type: string
+          enum: [placeholder, error, retry]
+          description: Fallback type
+        placeholderUrl:
+          type: string
+          description: Placeholder image URL
+        errorMessage:
+          type: string
+          description: Error message for failed loads
+        retryAttempts:
+          type: integer
+          description: Number of retry attempts
+        retryDelay:
+          type: integer
+          description: Delay between retries (ms)
+
+    AssetMetadata:
+      type: object
+      properties:
+        alt:
+          type: string
+          description: Alt text for accessibility
+        title:
+          type: string
+          description: Asset title
+        description:
+          type: string
+          description: Asset description
+        tags:
+          type: array
+          items:
+            type: string
+          description: Asset tags for categorization
+        author:
+          type: string
+          description: Asset author/creator
+        license:
+          type: string
+          description: Usage license
+
+    PaginationInfo:
+      type: object
+      required:
+        - limit
+        - offset
+        - total
+      properties:
+        limit:
+          type: integer
+          description: Number of items per page
+        offset:
+          type: integer
+          description: Number of items skipped
+        total:
+          type: integer
+          description: Total number of items
+
+    ErrorResponse:
+      type: object
+      required:
+        - error
+        - message
+      properties:
+        error:
+          type: string
+          description: Error code
+        message:
+          type: string
+          description: Human-readable error message
+        details:
+          type: object
+          description: Additional error details

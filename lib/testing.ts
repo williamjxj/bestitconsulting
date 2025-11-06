@@ -45,7 +45,7 @@ export function testMobilePerformance(): Promise<{
   return new Promise(resolve => {
     const startTime = performance.now()
     let frameCount = 0
-    let lastTime = startTime
+    const lastTime = startTime
     let touchLatency = 0
 
     // Test touch latency
@@ -140,7 +140,12 @@ export function testMobileResponsive(): {
   viewport: { width: number; height: number }
   deviceType: string
 } {
-  const { isMobile, isTablet, isDesktop, isWide, width } = useResponsive()
+  // Get responsive values without using hooks
+  const width = window.innerWidth
+  const isMobile = width < 768
+  const isTablet = width >= 768 && width < 1024
+  const isDesktop = width >= 1024 && width < 1920
+  const isWide = width >= 1920
 
   return {
     breakpoints: {
@@ -173,7 +178,7 @@ export function testMobileAnimations(): Promise<{
     const startTime = performance.now()
     let animationCount = 0
     let frameCount = 0
-    let lastTime = startTime
+    const lastTime = startTime
 
     // Count animations
     const animatedElements = document.querySelectorAll(

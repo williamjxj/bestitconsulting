@@ -12,7 +12,15 @@ import {
 } from 'lucide-react'
 
 // Animated Counter Component
-const AnimatedCounter = ({ end, duration = 2, suffix = '' }) => {
+const AnimatedCounter = ({
+  end,
+  duration = 2,
+  suffix = '',
+}: {
+  end: number
+  duration?: number
+  suffix?: string
+}) => {
   const [count, setCount] = useState(0)
   const [hasAnimated, setHasAnimated] = useState(false)
   const ref = React.useRef(null)
@@ -21,8 +29,8 @@ const AnimatedCounter = ({ end, duration = 2, suffix = '' }) => {
   useEffect(() => {
     if (inView && !hasAnimated) {
       setHasAnimated(true)
-      let startTime
-      const animate = currentTime => {
+      let startTime: number
+      const animate = (currentTime: number) => {
         if (!startTime) startTime = currentTime
         const progress = Math.min(
           (currentTime - startTime) / (duration * 1000),
@@ -46,7 +54,13 @@ const AnimatedCounter = ({ end, duration = 2, suffix = '' }) => {
 }
 
 // Scroll Reveal Component
-const ScrollReveal = ({ children, delay = 0 }) => {
+const ScrollReveal = ({
+  children,
+  delay = 0,
+}: {
+  children: React.ReactNode
+  delay?: number
+}) => {
   const ref = React.useRef(null)
   const inView = useInView(ref, { once: true, margin: '-100px' })
 
@@ -63,7 +77,13 @@ const ScrollReveal = ({ children, delay = 0 }) => {
 }
 
 // Stagger Children Component
-const StaggerChildren = ({ children, staggerDelay = 0.1 }) => {
+const StaggerChildren = ({
+  children,
+  staggerDelay = 0.1,
+}: {
+  children: React.ReactNode
+  staggerDelay?: number
+}) => {
   const ref = React.useRef(null)
   const inView = useInView(ref, { once: true, margin: '-50px' })
 

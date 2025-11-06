@@ -17,7 +17,13 @@ import {
   X,
 } from 'lucide-react'
 
-const ScrollReveal = ({ children, delay = 0 }) => {
+const ScrollReveal = ({
+  children,
+  delay = 0,
+}: {
+  children: React.ReactNode
+  delay?: number
+}) => {
   const ref = React.useRef(null)
   const inView = useInView(ref, { once: true, margin: '-100px' })
 
@@ -33,7 +39,13 @@ const ScrollReveal = ({ children, delay = 0 }) => {
   )
 }
 
-const StaggerChildren = ({ children, staggerDelay = 0.1 }) => {
+const StaggerChildren = ({
+  children,
+  staggerDelay = 0.1,
+}: {
+  children: React.ReactNode
+  staggerDelay?: number
+}) => {
   const ref = React.useRef(null)
   const inView = useInView(ref, { once: true, margin: '-50px' })
 
@@ -456,14 +468,16 @@ export default function TestimonialsPage() {
                   Results
                 </h3>
                 <div className='grid grid-cols-3 gap-6'>
-                  {selectedTestimonial.results.map((result, idx) => (
-                    <div key={idx} className='text-center'>
-                      <div className='text-4xl font-bold text-blue-600 mb-2'>
-                        {result.metric}
+                  {selectedTestimonial.results.map(
+                    (result: any, idx: number) => (
+                      <div key={idx} className='text-center'>
+                        <div className='text-4xl font-bold text-blue-600 mb-2'>
+                          {result.metric}
+                        </div>
+                        <div className='text-slate-600'>{result.label}</div>
                       </div>
-                      <div className='text-slate-600'>{result.label}</div>
-                    </div>
-                  ))}
+                    )
+                  )}
                 </div>
               </div>
 

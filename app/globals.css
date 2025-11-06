@@ -1,6 +1,7 @@
-/* Tailwind CSS v4 with custom theme variables */
-@import 'tailwindcss';
-@import 'tw-animate-css';
+/* Tailwind CSS v3 with custom theme variables */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 /* Mobile menu visibility fix */
 @media (max-width: 767px) {
@@ -374,13 +375,18 @@ body {
 
 /* Subtle background patterns and textures */
 .bg-pattern-dots {
-  background-image: radial-gradient(circle, rgba(59, 130, 246, 0.1) 1px, transparent 1px);
+  background-image: radial-gradient(
+    circle,
+    rgba(59, 130, 246, 0.1) 1px,
+    transparent 1px
+  );
   background-size: 20px 20px;
 }
 
 .bg-pattern-grid {
-  background-image: linear-gradient(rgba(59, 130, 246, 0.1) 1px, transparent 1px),
-                    linear-gradient(90deg, rgba(59, 130, 246, 0.1) 1px, transparent 1px);
+  background-image:
+    linear-gradient(rgba(59, 130, 246, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(59, 130, 246, 0.1) 1px, transparent 1px);
   background-size: 20px 20px;
 }
 
@@ -446,31 +452,51 @@ body {
 
 /* Visual depth with shadows and gradients */
 .shadow-soft {
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  box-shadow:
+    0 1px 3px 0 rgba(0, 0, 0, 0.1),
+    0 1px 2px 0 rgba(0, 0, 0, 0.06);
 }
 
 .shadow-medium {
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
 .shadow-large {
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  box-shadow:
+    0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }
 
 .shadow-xl {
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  box-shadow:
+    0 20px 25px -5px rgba(0, 0, 0, 0.1),
+    0 10px 10px -5px rgba(0, 0, 0, 0.04);
 }
 
 .gradient-primary {
-  background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--primary) / 0.8) 100%);
+  background: linear-gradient(
+    135deg,
+    hsl(var(--primary)) 0%,
+    hsl(var(--primary) / 0.8) 100%
+  );
 }
 
 .gradient-secondary {
-  background: linear-gradient(135deg, hsl(var(--secondary)) 0%, hsl(var(--secondary) / 0.8) 100%);
+  background: linear-gradient(
+    135deg,
+    hsl(var(--secondary)) 0%,
+    hsl(var(--secondary) / 0.8) 100%
+  );
 }
 
 .gradient-accent {
-  background: linear-gradient(135deg, hsl(var(--accent)) 0%, hsl(var(--accent) / 0.8) 100%);
+  background: linear-gradient(
+    135deg,
+    hsl(var(--accent)) 0%,
+    hsl(var(--accent) / 0.8) 100%
+  );
 }
 
 /* Enhanced focus states for accessibility */
@@ -482,7 +508,11 @@ body {
 
 /* Improved button and interactive element styling */
 .btn-primary {
-  background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--primary) / 0.9) 100%);
+  background: linear-gradient(
+    135deg,
+    hsl(var(--primary)) 0%,
+    hsl(var(--primary) / 0.9) 100%
+  );
   color: hsl(var(--primary-foreground));
   border: none;
   border-radius: calc(var(--radius) - 2px);
@@ -492,7 +522,11 @@ body {
 }
 
 .btn-primary:hover {
-  background: linear-gradient(135deg, hsl(var(--primary) / 0.9) 0%, hsl(var(--primary) / 0.8) 100%);
+  background: linear-gradient(
+    135deg,
+    hsl(var(--primary) / 0.9) 0%,
+    hsl(var(--primary) / 0.8) 100%
+  );
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }

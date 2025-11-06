@@ -1,370 +1,422 @@
 /**
  * R2 Media Utilities
  *
- * Provides utilities for working with Cloudflare R2 media bucket
- * including URL construction, validation, and media asset management.
+ * Utilities for working with Cloudflare R2 media assets,
+ * including optimization, error handling, and fallback mechanisms.
  */
 
+// R2 Media Configuration
+export interface R2MediaConfig {
+  baseUrl: string
+  moreUrl: string
+  accessKeyId: string
+  secretAccessKey: string
+  bucketName: string
+}
+
+// Media Asset Interface
 export interface MediaAsset {
   id: string
   filename: string
   url: string
   type: 'image' | 'video'
+  category: 'team' | 'company' | 'general'
   format: string
   size: number
-  width?: number
-  height?: number
-  alt: string
-  category: 'team' | 'company' | 'general'
-  uploadedAt: Date
-  isActive: boolean
-}
-
-export interface R2BucketConfig {
-  baseUrl: string
-  bucketName: string
-  region: string
-  isConfigured: boolean
-  lastChecked: Date
-  isHealthy: boolean
-}
-
-export interface MediaGallery {
-  id: string
-  title: string
-  description?: string
-  category: 'team' | 'company'
-  assets: MediaAsset[]
-  layout: 'grid' | 'carousel' | 'masonry'
-  maxItems?: number
-  isVisible: boolean
-}
-
-/**
- * Get the base URL for R2 media bucket from environment variables
- * @returns The base URL for R2 media bucket
- * @throws Error if NEXT_PUBLIC_R2_MORE_URL is not configured
- */
-export function getR2BaseUrl(): string {
-  const baseUrl = process.env.NEXT_PUBLIC_R2_MORE_URL
-  if (!baseUrl) {
-    throw new Error('NEXT_PUBLIC_R2_MORE_URL is not configured')
+  dimensions: {
+    width: number
+    height: number
+    aspectRatio: number
   }
-  return baseUrl
-}
-
-/**
- * Build a complete R2 URL from a path
- * @param path - The path to append to the base URL
- * @returns Complete R2 URL
- */
-export function buildR2Url(path: string): string {
-  const baseUrl = getR2BaseUrl()
-  // Ensure path doesn't start with slash to avoid double slashes
-  const cleanPath = path.startsWith('/') ? path.slice(1) : path
-  return `${baseUrl}/${cleanPath}`
-}
-
-/**
- * Validate R2 bucket configuration
- * @returns R2BucketConfig object with validation status
- */
-export function validateR2Config(): R2BucketConfig {
-  const baseUrl = process.env.NEXT_PUBLIC_R2_MORE_URL
-  const isConfigured = !!baseUrl && baseUrl.startsWith('https://')
-
-  return {
-    baseUrl: baseUrl || '',
-    bucketName: extractBucketName(baseUrl || ''),
-    region: 'auto', // R2 uses auto region
-    isConfigured,
-    lastChecked: new Date(),
-    isHealthy: isConfigured,
+  optimization: {
+    quality: number
+    formats: string[]
+    sizes: number[]
+    lazy: boolean
+    placeholder?: string
   }
+  fallback: {
+    enabled: boolean
+    type: 'placeholder' | 'error' | 'retry'
+    placeholderUrl?: string
+    errorMessage?: string
+    retryAttempts?: number
+    retryDelay?: number
+  }
+  metadata: {
+    alt?: string
+    title?: string
+    description?: string
+    tags?: string[]
+    author?: string
+    license?: string
+  }
+  createdAt: Date
+  updatedAt: Date
 }
 
-/**
- * Extract bucket name from R2 URL
- * @param url - R2 URL
- * @returns Bucket name
- */
-function extractBucketName(url: string): string {
+// Get R2 configuration from environment
+export const getR2Config = (): R2MediaConfig | null => {
+  const config = {
+    baseUrl: process.env.NEXT_PUBLIC_R2_BASE_URL || '',
+    moreUrl: process.env.NEXT_PUBLIC_R2_MORE_URL || '',
+    accessKeyId: process.env.R2_ACCESS_KEY_ID || '',
+    secretAccessKey: process.env.R2_SECRET_ACCESS_KEY || '',
+    bucketName: process.env.R2_BUCKET_NAME || '',
+  }
+
+  // Return null if configuration is incomplete
+  if (
+    !config.baseUrl ||
+    !config.accessKeyId ||
+    !config.secretAccessKey ||
+    !config.bucketName
+  ) {
+    return null
+  }
+
+  return config
+}
+
+// Generate optimized image URL
+export const getOptimizedImageUrl = (
+  assetId: string,
+  options: {
+    width?: number
+    height?: number
+    format?: 'webp' | 'avif' | 'jpg' | 'png'
+    quality?: number
+    fit?: 'cover' | 'contain' | 'fill' | 'inside' | 'outside'
+  } = {}
+): string => {
+  const config = getR2Config()
+  if (!config) return ''
+
+  const {
+    width,
+    height,
+    format = 'webp',
+    quality = 80,
+    fit = 'cover',
+  } = options
+
+  const params = new URLSearchParams()
+
+  if (width) params.append('w', width.toString())
+  if (height) params.append('h', height.toString())
+  params.append('f', format)
+  params.append('q', quality.toString())
+  params.append('fit', fit)
+
+  return `${config.baseUrl}/media/${assetId}?${params.toString()}`
+}
+
+// Generate responsive image URLs
+export const getResponsiveImageUrls = (
+  assetId: string,
+  sizes: number[] = [320, 640, 768, 1024, 1280, 1920]
+): { src: string; width: number; format: string }[] => {
+  return sizes.map(size => ({
+    src: getOptimizedImageUrl(assetId, { width: size, format: 'webp' }),
+    width: size,
+    format: 'webp',
+  }))
+}
+
+// Generate srcset string for responsive images
+export const getSrcSet = (
+  assetId: string,
+  sizes: number[] = [320, 640, 768, 1024, 1280, 1920]
+): string => {
+  const urls = getResponsiveImageUrls(assetId, sizes)
+  return urls.map(({ src, width }) => `${src} ${width}w`).join(', ')
+}
+
+// Check if image format is supported
+export const isFormatSupported = (format: string): boolean => {
+  if (typeof window === 'undefined') return true
+
+  const canvas = document.createElement('canvas')
+  const ctx = canvas.getContext('2d')
+
+  if (!ctx) return false
+
   try {
-    const urlObj = new URL(url)
-    return urlObj.hostname.split('.')[0]
-  } catch {
-    return ''
-  }
-}
-
-/**
- * Get media assets by category
- * @param category - Media category filter
- * @returns Array of media assets
- */
-export function getMediaAssets(category: string): MediaAsset[] {
-  // Mock data for development - in production this would fetch from R2 bucket
-  const mockAssets: MediaAsset[] = [
-    {
-      id: 'team-1',
-      filename: 'team-member-1.jpg',
-      url: buildR2Url('team/team-member-1.jpg'),
-      type: 'image',
-      format: 'jpg',
-      size: 245760,
-      width: 400,
-      height: 400,
-      alt: 'Team member 1',
-      category: 'team',
-      uploadedAt: new Date(),
-      isActive: true,
-    },
-    {
-      id: 'team-2',
-      filename: 'team-member-2.jpg',
-      url: buildR2Url('team/team-member-2.jpg'),
-      type: 'image',
-      format: 'jpg',
-      size: 198432,
-      width: 400,
-      height: 400,
-      alt: 'Team member 2',
-      category: 'team',
-      uploadedAt: new Date(),
-      isActive: true,
-    },
-    {
-      id: 'company-1',
-      filename: 'office-space.jpg',
-      url: buildR2Url('company/office-space.jpg'),
-      type: 'image',
-      format: 'jpg',
-      size: 512000,
-      width: 800,
-      height: 600,
-      alt: 'Our office space',
-      category: 'company',
-      uploadedAt: new Date(),
-      isActive: true,
-    },
-  ]
-
-  return mockAssets.filter(asset => asset.category === category)
-}
-
-/**
- * Create a media asset object
- * @param filename - Original filename
- * @param category - Media category
- * @param alt - Alternative text
- * @param type - Media type
- * @returns MediaAsset object
- */
-export function createMediaAsset(
-  filename: string,
-  category: 'team' | 'company' | 'general',
-  alt: string,
-  type: 'image' | 'video' = 'image'
-): MediaAsset {
-  const id = `${category}-${filename.replace(/\.[^/.]+$/, '')}-${Date.now()}`
-
-  return {
-    id,
-    filename,
-    url: buildR2Url(`${category}/${filename}`),
-    type,
-    format: filename.split('.').pop() || '',
-    size: 0, // Will be set when file is uploaded
-    alt,
-    category,
-    uploadedAt: new Date(),
-    isActive: true,
-  }
-}
-
-/**
- * Check if a media asset is accessible
- * @param asset - Media asset to check
- * @returns Promise<boolean> - Whether asset is accessible
- */
-export async function checkMediaAssetAccess(
-  asset: MediaAsset
-): Promise<boolean> {
-  try {
-    const response = await fetch(asset.url, { method: 'HEAD' })
-    return response.ok
+    canvas.toDataURL(`image/${format}`)
+    return true
   } catch {
     return false
   }
 }
 
-/**
- * Get fallback URL for media assets
- * @param category - Media category
- * @returns Fallback image URL
- */
-export function getFallbackUrl(
-  category: 'team' | 'company' | 'general'
-): string {
-  const fallbackMap = {
-    team: '/placeholders/team-placeholder.jpg',
-    company: '/placeholders/company-placeholder.jpg',
-    general: '/placeholders/image-placeholder.jpg',
+// Get best supported format
+export const getBestSupportedFormat = (): string => {
+  if (isFormatSupported('avif')) return 'avif'
+  if (isFormatSupported('webp')) return 'webp'
+  return 'jpg'
+}
+
+// Generate placeholder image
+export const generatePlaceholder = (
+  width: number,
+  height: number,
+  color: string = '#f3f4f6'
+): string => {
+  // Only generate placeholder on client side
+  if (typeof window === 'undefined') {
+    return ''
   }
 
-  return fallbackMap[category] || '/placeholders/image-placeholder.jpg'
+  const canvas = document.createElement('canvas')
+  canvas.width = width
+  canvas.height = height
+
+  const ctx = canvas.getContext('2d')
+  if (!ctx) return ''
+
+  ctx.fillStyle = color
+  ctx.fillRect(0, 0, width, height)
+
+  return canvas.toDataURL('image/jpeg', 0.1)
 }
 
-/**
- * Filter media assets by category and type
- * @param assets - Array of media assets
- * @param category - Category filter
- * @param type - Type filter (optional)
- * @returns Filtered assets
- */
-export function filterMediaAssets(
-  assets: MediaAsset[],
-  category: string,
-  type?: 'image' | 'video'
-): MediaAsset[] {
-  let filtered = assets.filter(asset => asset.category === category)
-
-  if (type) {
-    filtered = filtered.filter(asset => asset.type === type)
+// Lazy load image with intersection observer
+export const lazyLoadImage = (
+  img: HTMLImageElement,
+  src: string,
+  placeholder?: string
+): (() => void) => {
+  if (placeholder) {
+    img.src = placeholder
   }
 
-  return filtered
-}
-
-/**
- * Search media assets by text
- * @param assets - Array of media assets
- * @param query - Search query
- * @returns Matching assets
- */
-export function searchMediaAssets(
-  assets: MediaAsset[],
-  query: string
-): MediaAsset[] {
-  const searchTerm = query.toLowerCase()
-
-  return assets.filter(
-    asset =>
-      asset.alt.toLowerCase().includes(searchTerm) ||
-      asset.filename.toLowerCase().includes(searchTerm) ||
-      asset.category.toLowerCase().includes(searchTerm)
-  )
-}
-
-/**
- * Sort media assets by various criteria
- * @param assets - Array of media assets
- * @param sortBy - Sort criteria
- * @param order - Sort order
- * @returns Sorted assets
- */
-export function sortMediaAssets(
-  assets: MediaAsset[],
-  sortBy: 'uploadedAt' | 'filename' | 'size' | 'category',
-  order: 'asc' | 'desc' = 'desc'
-): MediaAsset[] {
-  return [...assets].sort((a, b) => {
-    let comparison = 0
-
-    switch (sortBy) {
-      case 'uploadedAt':
-        comparison = a.uploadedAt.getTime() - b.uploadedAt.getTime()
-        break
-      case 'filename':
-        comparison = a.filename.localeCompare(b.filename)
-        break
-      case 'size':
-        comparison = a.size - b.size
-        break
-      case 'category':
-        comparison = a.category.localeCompare(b.category)
-        break
-    }
-
-    return order === 'desc' ? -comparison : comparison
-  })
-}
-
-/**
- * Get media asset statistics
- * @param assets - Array of media assets
- * @returns Statistics object
- */
-export function getMediaAssetStats(assets: MediaAsset[]) {
-  const total = assets.length
-  const byType = assets.reduce(
-    (acc, asset) => {
-      acc[asset.type] = (acc[asset.type] || 0) + 1
-      return acc
+  const observer = new IntersectionObserver(
+    entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          img.src = src
+          observer.unobserve(img)
+        }
+      })
     },
-    {} as Record<string, number>
+    { rootMargin: '50px' }
   )
 
-  const byCategory = assets.reduce(
-    (acc, asset) => {
-      acc[asset.category] = (acc[asset.category] || 0) + 1
-      return acc
-    },
-    {} as Record<string, number>
-  )
+  observer.observe(img)
 
-  const totalSize = assets.reduce((sum, asset) => sum + asset.size, 0)
-  const activeCount = assets.filter(asset => asset.isActive).length
+  return () => observer.disconnect()
+}
 
-  return {
-    total,
-    active: activeCount,
-    inactive: total - activeCount,
-    byType,
-    byCategory,
-    totalSize,
-    averageSize: total > 0 ? Math.round(totalSize / total) : 0,
+// Error handling for media loading
+export const handleMediaError = (
+  error: Error,
+  fallback: {
+    type: 'placeholder' | 'error' | 'retry'
+    placeholderUrl?: string
+    errorMessage?: string
+    retryAttempts?: number
+    retryDelay?: number
+  }
+): Promise<string> => {
+  console.error('Media loading error:', error)
+
+  switch (fallback.type) {
+    case 'placeholder':
+      return Promise.resolve(
+        fallback.placeholderUrl || generatePlaceholder(300, 200)
+      )
+
+    case 'error':
+      return Promise.reject(
+        new Error(fallback.errorMessage || 'Failed to load media')
+      )
+
+    case 'retry':
+      const attempts = fallback.retryAttempts || 3
+      const delay = fallback.retryDelay || 1000
+
+      return new Promise((resolve, reject) => {
+        let attempt = 0
+
+        const retry = () => {
+          attempt++
+          if (attempt > attempts) {
+            reject(new Error(`Failed to load media after ${attempts} attempts`))
+            return
+          }
+
+          setTimeout(() => {
+            resolve('retry')
+          }, delay)
+        }
+
+        retry()
+      })
+
+    default:
+      return Promise.reject(error)
   }
 }
 
-/**
- * Preload media assets for better performance
- * @param assets - Array of media assets to preload
- * @returns Promise that resolves when all assets are preloaded
- */
-export async function preloadMediaAssets(assets: MediaAsset[]): Promise<void> {
-  const preloadPromises = assets.map(asset => {
-    return new Promise<void>(resolve => {
+// Preload critical images
+export const preloadCriticalImages = (urls: string[]): Promise<void[]> => {
+  const promises = urls.map(url => {
+    return new Promise<void>((resolve, reject) => {
       const img = new Image()
       img.onload = () => resolve()
-      img.onerror = () => resolve() // Continue even if one fails
-      img.src = asset.url
+      img.onerror = () => reject(new Error(`Failed to preload image: ${url}`))
+      img.src = url
     })
   })
 
-  await Promise.all(preloadPromises)
+  return Promise.all(promises)
 }
 
-/**
- * Get optimized image URL with query parameters
- * @param url - Base image URL
- * @param width - Desired width
- * @param height - Desired height
- * @param quality - Image quality (1-100)
- * @returns Optimized URL
- */
-export function getOptimizedImageUrl(
-  url: string,
-  width?: number,
-  height?: number,
-  quality: number = 80
-): string {
-  const params = new URLSearchParams()
+// Check if image is cached
+export const isImageCached = (url: string): boolean => {
+  const img = new Image()
+  img.src = url
+  return img.complete
+}
 
-  if (width) params.set('w', width.toString())
-  if (height) params.set('h', height.toString())
-  params.set('q', quality.toString())
-  params.set('f', 'auto') // Auto format selection
+// Get image dimensions
+export const getImageDimensions = (
+  url: string
+): Promise<{ width: number; height: number }> => {
+  return new Promise((resolve, reject) => {
+    const img = new Image()
+    img.onload = () => {
+      resolve({
+        width: img.naturalWidth,
+        height: img.naturalHeight,
+      })
+    }
+    img.onerror = () => reject(new Error(`Failed to load image: ${url}`))
+    img.src = url
+  })
+}
 
-  return `${url}?${params.toString()}`
+// Calculate aspect ratio
+export const calculateAspectRatio = (width: number, height: number): number => {
+  return width / height
+}
+
+// Get responsive image sizes
+export const getResponsiveSizes = (maxWidth: number): number[] => {
+  const sizes = [320, 640, 768, 1024, 1280, 1920]
+  return sizes.filter(size => size <= maxWidth)
+}
+
+// Generate blur placeholder
+export const generateBlurPlaceholder = (
+  width: number,
+  height: number
+): string => {
+  const canvas = document.createElement('canvas')
+  canvas.width = width
+  canvas.height = height
+
+  const ctx = canvas.getContext('2d')
+  if (!ctx) return ''
+
+  // Create a simple gradient for blur effect
+  const gradient = ctx.createLinearGradient(0, 0, width, height)
+  gradient.addColorStop(0, '#f3f4f6')
+  gradient.addColorStop(1, '#e5e7eb')
+
+  ctx.fillStyle = gradient
+  ctx.fillRect(0, 0, width, height)
+
+  return canvas.toDataURL('image/jpeg', 0.1)
+}
+
+// Media optimization utilities
+export const optimizeMediaForDevice = (asset: MediaAsset): MediaAsset => {
+  const optimized = { ...asset }
+
+  // Adjust quality based on device capabilities
+  if (typeof window !== 'undefined') {
+    const connection = (navigator as any).connection
+    if (connection && connection.effectiveType === 'slow-2g') {
+      optimized.optimization.quality = Math.min(
+        optimized.optimization.quality,
+        60
+      )
+    }
+
+    // Adjust format based on support
+    const bestFormat = getBestSupportedFormat()
+    if (!optimized.optimization.formats.includes(bestFormat)) {
+      optimized.optimization.formats.unshift(bestFormat)
+    }
+  }
+
+  return optimized
+}
+
+// Cache management
+export const clearMediaCache = (): void => {
+  if (typeof window !== 'undefined' && 'caches' in window) {
+    caches.keys().then(cacheNames => {
+      cacheNames.forEach(cacheName => {
+        if (cacheName.includes('r2-media')) {
+          caches.delete(cacheName)
+        }
+      })
+    })
+  }
+}
+
+// Performance monitoring for media loading
+export const monitorMediaPerformance = (url: string): Promise<number> => {
+  const startTime = performance.now()
+
+  return new Promise((resolve, reject) => {
+    const img = new Image()
+    img.onload = () => {
+      const endTime = performance.now()
+      resolve(endTime - startTime)
+    }
+    img.onerror = () => reject(new Error(`Failed to load media: ${url}`))
+    img.src = url
+  })
+}
+
+// Media loading statistics
+export const getMediaLoadingStats = () => {
+  const stats = {
+    totalRequests: 0,
+    successfulRequests: 0,
+    failedRequests: 0,
+    averageLoadTime: 0,
+    cacheHitRate: 0,
+  }
+
+  // This would be implemented with actual tracking
+  return stats
+}
+
+// Additional utility functions for R2 media
+export const buildR2Url = (assetId: string, options?: any): string => {
+  const config = getR2Config()
+  if (!config || !assetId) return ''
+  return `${config.baseUrl.replace(/\/$/, '')}/media/${assetId}`
+}
+
+export const getFallbackUrl = (category?: string): string => {
+  return '/api/placeholder/300/200'
+}
+
+export const validateR2Config = (config: R2MediaConfig): boolean => {
+  return !!(
+    config.baseUrl &&
+    config.accessKeyId &&
+    config.secretAccessKey &&
+    config.bucketName
+  )
+}
+
+export const getMediaAssets = async (): Promise<MediaAsset[]> => {
+  // This would fetch from R2 API
+  return []
 }

@@ -38,25 +38,36 @@ export default function R2Video({
   onLoad,
   onError,
 }: R2VideoProps) {
-  const [videoSrc, setVideoSrc] = useState(buildR2Url(src))
+  const [videoSrc, setVideoSrc] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [hasError, setHasError] = useState(false)
   const [retryCount, setRetryCount] = useState(0)
+  const [isClient, setIsClient] = useState(false)
   const videoRef = useRef<HTMLVideoElement>(null)
 
   const fallbackUrl = fallback || getFallbackUrl(category)
   const loadingTimeout = getLoadingTimeout('video')
 
-  // Reset state when src changes
+  // Set client flag after hydration
   useEffect(() => {
-    setVideoSrc(buildR2Url(src))
-    setIsLoading(true)
-    setHasError(false)
-    setRetryCount(0)
-  }, [src])
+    setIsClient(true)
+  }, [])
+
+  // Initialize video source after client hydration
+  useEffect(() => {
+    if (isClient && src && src.trim()) {
+      setVideoSrc(buildR2Url(src))
+      setIsLoading(true)
+      setHasError(false)
+      setRetryCount(0)
+    } else if (isClient && (!src || !src.trim())) {
+      setHasError(true)
+      setIsLoading(false)
+    }
+  }, [src, isClient])
 
   const handleError = () => {
-    if (retryCount < 3) {
+    if (retryCount < 3 && src && src.trim()) {
       // Retry with exponential backoff
       const delay = Math.pow(2, retryCount) * 1000
       setTimeout(() => {
@@ -141,7 +152,7 @@ export default function R2Video({
 
       <video
         ref={videoRef}
-        src={videoSrc}
+        src={isClient ? videoSrc || undefined : undefined}
         poster={poster}
         width={width}
         height={height}

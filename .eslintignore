@@ -10,6 +10,9 @@ build/
 # Cache directories
 .cache/
 
+# Coverage reports
+coverage/
+
 # Environment files
 .env*
 
@@ -29,12 +32,13 @@ Thumbs.db
 .vscode/
 .idea/
 
-# Coverage reports
-coverage/
-
 # Temporary files
 *.tmp
 *.temp
+
+# Minified files
+*.min.js
+*.min.css
 
 # TypeScript build info
 *.tsbuildinfo
@@ -44,7 +48,3 @@ next-env.d.ts
 .cursor/
 .specify/
 .github/
-
-# Minified files
-*.min.js
-*.min.css

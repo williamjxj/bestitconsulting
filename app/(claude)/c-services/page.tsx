@@ -23,7 +23,13 @@ import {
 } from 'lucide-react'
 
 // Scroll Reveal Component
-const ScrollReveal = ({ children, delay = 0 }) => {
+const ScrollReveal = ({
+  children,
+  delay = 0,
+}: {
+  children: React.ReactNode
+  delay?: number
+}) => {
   const ref = React.useRef(null)
   const inView = useInView(ref, { once: true, margin: '-100px' })
 
@@ -40,7 +46,13 @@ const ScrollReveal = ({ children, delay = 0 }) => {
 }
 
 // Stagger Children Component
-const StaggerChildren = ({ children, staggerDelay = 0.1 }) => {
+const StaggerChildren = ({
+  children,
+  staggerDelay = 0.1,
+}: {
+  children: React.ReactNode
+  staggerDelay?: number
+}) => {
   const ref = React.useRef(null)
   const inView = useInView(ref, { once: true, margin: '-50px' })
 
@@ -65,7 +77,15 @@ const StaggerChildren = ({ children, staggerDelay = 0.1 }) => {
 }
 
 // Service Card Component
-const ServiceCard = ({ service, index, onSelect }) => {
+const ServiceCard = ({
+  service,
+  index,
+  onSelect,
+}: {
+  service: any
+  index: number
+  onSelect: (service: any) => void
+}) => {
   const [isHovered, setIsHovered] = useState(false)
 
   return (
@@ -94,7 +114,7 @@ const ServiceCard = ({ service, index, onSelect }) => {
       <p className='text-slate-600 mb-6 flex-1'>{service.description}</p>
 
       <div className='space-y-3 mb-6'>
-        {service.highlights.map((highlight, idx) => (
+        {service.highlights.map((highlight: any, idx: number) => (
           <div key={idx} className='flex items-center gap-2'>
             <CheckCircle2 className='w-5 h-5 text-green-500 flex-shrink-0' />
             <span className='text-sm text-slate-700'>{highlight}</span>
@@ -113,7 +133,13 @@ const ServiceCard = ({ service, index, onSelect }) => {
 }
 
 // Service Detail Modal
-const ServiceDetail = ({ service, onClose }) => {
+const ServiceDetail = ({
+  service,
+  onClose,
+}: {
+  service: any
+  onClose: () => void
+}) => {
   if (!service) return null
 
   return (
@@ -159,7 +185,7 @@ const ServiceDetail = ({ service, onClose }) => {
                 Key Features
               </h3>
               <div className='space-y-3'>
-                {service.features.map((feature, idx) => (
+                {service.features.map((feature: any, idx: number) => (
                   <div key={idx} className='flex items-start gap-3'>
                     <CheckCircle2 className='w-6 h-6 text-green-500 flex-shrink-0 mt-0.5' />
                     <span className='text-slate-700'>{feature}</span>
@@ -173,7 +199,7 @@ const ServiceDetail = ({ service, onClose }) => {
                 Technologies
               </h3>
               <div className='flex flex-wrap gap-2'>
-                {service.technologies.map((tech, idx) => (
+                {service.technologies.map((tech: any, idx: number) => (
                   <span
                     key={idx}
                     className='px-3 py-1.5 bg-slate-100 text-slate-700 rounded-lg text-sm font-medium'
@@ -190,7 +216,7 @@ const ServiceDetail = ({ service, onClose }) => {
               Why Choose Us?
             </h3>
             <div className='grid md:grid-cols-3 gap-6'>
-              {service.benefits.map((benefit, idx) => (
+              {service.benefits.map((benefit: any, idx: number) => (
                 <div key={idx} className='text-center'>
                   <div className='text-3xl font-bold text-blue-600 mb-2'>
                     {benefit.stat}

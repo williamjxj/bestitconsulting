@@ -1,102 +1,116 @@
 'use client'
 
-import { motion } from 'framer-motion'
-import { fadeInUp, getAnimationVariants } from '@/lib/framer-animations'
-import { scrollTriggerConfig } from '@/lib/framer-animations'
-import { ReactNode } from 'react'
+import { motion, useInView } from 'framer-motion'
+import { useRef, ReactNode } from 'react'
+import React from 'react'
+import {
+  shouldReduceMotion,
+  getReducedMotionVariants,
+} from '@/lib/accessibility'
 
 interface AnimatedTextProps {
   children: ReactNode
-  animation?: 'fadeIn' | 'slideUp' | 'slideInLeft' | 'slideInRight' | 'fadeInUp'
+  variant?: 'fade' | 'slide' | 'typewriter' | 'split'
   delay?: number
   duration?: number
-  stagger?: number
   className?: string
-  once?: boolean
-  as?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p' | 'span' | 'div'
+  as?: keyof JSX.IntrinsicElements
+  split?: boolean
+  stagger?: number
+  animation?: string
 }
 
-/**
- * AnimatedText Component
- *
- * A text component with scroll-triggered animations
- * Supports staggered animations for multiple text elements
- * Implements accessibility-aware animations with reduced motion support
- */
-export function AnimatedText({
+function AnimatedText({
   children,
-  animation = 'fadeInUp',
+  variant = 'fade',
   delay = 0,
   duration = 0.8,
-  stagger = 0,
-  className = '',
-  once = scrollTriggerConfig.once,
+  className,
   as: Component = 'div',
+  split = false,
+  stagger = 0.1,
+  animation,
 }: AnimatedTextProps) {
-  // Get the appropriate animation variant
-  const getAnimationVariant = () => {
-    switch (animation) {
-      case 'fadeIn':
-        return getAnimationVariants({
-          hidden: { opacity: 0 },
-          visible: {
-            opacity: 1,
-            transition: { duration, delay, ease: 'easeOut' },
-          },
-        })
-      case 'slideUp':
-        return getAnimationVariants({
-          hidden: { opacity: 0, y: 20 },
-          visible: {
-            opacity: 1,
-            y: 0,
-            transition: { duration, delay, ease: 'easeOut' },
-          },
-        })
-      case 'slideInLeft':
-        return getAnimationVariants({
-          hidden: { opacity: 0, x: -30 },
-          visible: {
-            opacity: 1,
-            x: 0,
-            transition: { duration, delay, ease: 'easeOut' },
-          },
-        })
-      case 'slideInRight':
-        return getAnimationVariants({
-          hidden: { opacity: 0, x: 30 },
-          visible: {
-            opacity: 1,
-            x: 0,
-            transition: { duration, delay, ease: 'easeOut' },
-          },
-        })
-      case 'fadeInUp':
-      default:
-        return getAnimationVariants(fadeInUp)
+  const ref = useRef(null)
+  const inView = useInView(ref, { once: true, margin: '-100px' })
+
+  // Get animation variants based on motion preference
+  const getAnimationVariants = () => {
+    if (shouldReduceMotion()) {
+      const reducedVariants = getReducedMotionVariants()
+      return {
+        initial: { opacity: 0 },
+        animate: { opacity: 1 },
+        transition: { duration: 0.2 },
+      }
     }
+
+    const variants = {
+      fade: {
+        initial: { opacity: 0 },
+        animate: { opacity: 1 },
+        transition: { duration, delay, ease: [0.4, 0, 0.2, 1] as const },
+      },
+      slide: {
+        initial: { y: 20, opacity: 0 },
+        animate: { y: 0, opacity: 1 },
+        transition: { duration, delay, ease: [0.4, 0, 0.2, 1] as const },
+      },
+      typewriter: {
+        initial: { width: 0 },
+        animate: { width: '100%' },
+        transition: { duration, delay, ease: [0.4, 0, 0.2, 1] as const },
+      },
+      split: {
+        initial: { y: 20, opacity: 0 },
+        animate: { y: 0, opacity: 1 },
+        transition: {
+          duration,
+          delay,
+          ease: [0.4, 0, 0.2, 1] as const,
+          staggerChildren: stagger,
+          delayChildren: 0.1,
+        },
+      },
+    }
+
+    return variants[variant]
   }
 
-  const MotionComponent = motion[Component] as any
+  const animationVariants = getAnimationVariants()
+
+  // Split text into words for stagger animation
+  const splitText = (text: string) => {
+    return text.split(' ').map((word, index) => (
+      <motion.span
+        key={index}
+        initial={{ y: 20, opacity: 0 }}
+        animate={inView ? { y: 0, opacity: 1 } : { y: 20, opacity: 0 }}
+        transition={{
+          duration,
+          delay: delay + index * stagger,
+          ease: [0.4, 0, 0.2, 1] as const,
+        }}
+        className='inline-block mr-2'
+      >
+        {word}
+      </motion.span>
+    ))
+  }
 
   return (
-    <MotionComponent
-      initial='hidden'
-      whileInView='visible'
-      viewport={{
-        once,
-        amount: scrollTriggerConfig.threshold,
-        margin: '0px 0px -50px 0px',
-      }}
-      variants={getAnimationVariant()}
-      transition={{
-        delay: delay + stagger,
-        duration,
-        ease: 'easeOut',
-      }}
+    <motion.div
+      ref={ref}
+      initial={animationVariants.initial}
+      animate={inView ? animationVariants.animate : animationVariants.initial}
+      transition={animationVariants.transition}
       className={className}
+      as={Component}
     >
-      {children}
-    </MotionComponent>
+      {split && typeof children === 'string' ? splitText(children) : children}
+    </motion.div>
   )
 }
+
+export default AnimatedText
+export { AnimatedText }

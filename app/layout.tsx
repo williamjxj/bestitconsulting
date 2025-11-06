@@ -13,20 +13,22 @@ export const metadata: Metadata = {
   title: 'BestIT Consulting - Modern IT Solutions & Digital Transformation',
   description:
     'Transform your business with our expert IT consulting services. We deliver modern, scalable solutions that drive growth and innovation.',
-  keywords: 'IT consulting, digital transformation, cloud solutions, software development, cybersecurity',
+  keywords:
+    'IT consulting, digital transformation, cloud solutions, software development, cybersecurity',
   authors: [{ name: 'BestIT Consulting' }],
   openGraph: {
     title: 'BestIT Consulting - Modern IT Solutions',
-    description: 'Transform your business with our expert IT consulting services.',
+    description:
+      'Transform your business with our expert IT consulting services.',
     type: 'website',
     locale: 'en_US',
   },
   twitter: {
     card: 'summary_large_image',
     title: 'BestIT Consulting - Modern IT Solutions',
-    description: 'Transform your business with our expert IT consulting services.',
+    description:
+      'Transform your business with our expert IT consulting services.',
   },
-  viewport: 'width=device-width, initial-scale=1',
   robots: 'index, follow',
 }
 

@@ -382,8 +382,8 @@ export class AnalyticsTracker {
 
     // Initialize gtag
     ;(window as any).dataLayer = (window as any).dataLayer || []
-    ;(window as any).gtag = function () {
-      ;(window as any).dataLayer.push(arguments)
+    ;(window as any).gtag = function (...args: any[]) {
+      ;(window as any).dataLayer.push(args)
     }
     ;(window as any).gtag('js', new Date())
     ;(window as any).gtag('config', measurementId, {
