@@ -64,16 +64,16 @@ export default function Header() {
 
   return (
     <nav
-      className={`fixed top-0 w-full z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 w-full z-50 transition-all duration-300 ${
         scrolled
           ? 'bg-white/95 backdrop-blur-md border-b border-gray-200/50 shadow-lg'
           : 'bg-white/90 backdrop-blur-sm'
       }`}
     >
-      <div className={brandClasses.container}>
-        <div className='flex items-center justify-between h-14 sm:h-16 gap-2'>
+      <div className='w-full max-w-full lg:max-w-7xl lg:mx-auto px-3 sm:px-4 lg:px-8 box-border'>
+        <div className='flex items-center justify-between h-14 sm:h-16 gap-2 min-w-0 w-full'>
           {/* Logo - Left Side */}
-          <div className='flex items-center flex-shrink-0 min-w-0'>
+          <div className='flex items-center flex-shrink-0'>
             <Link
               href='/'
               className='group flex items-center'
@@ -84,7 +84,7 @@ export default function Header() {
                 alt='BestIT Consulting Logo'
                 width={160}
                 height={40}
-                className='h-8 w-auto max-w-[120px] transition-opacity duration-300 group-hover:opacity-90 lg:h-10 lg:max-w-none sm:h-12'
+                className='h-8 w-auto max-w-[75px] sm:max-w-[100px] transition-opacity duration-300 group-hover:opacity-90 lg:h-10 lg:max-w-none'
                 priority
               />
             </Link>
