@@ -4,7 +4,17 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
-import { Menu, X } from 'lucide-react'
+import {
+  Menu,
+  X,
+  Home,
+  Briefcase,
+  Info,
+  FileText,
+  Image as ImageIcon,
+  MessageSquare,
+  Mail,
+} from 'lucide-react'
 import { useNavTranslation } from '@/lib/i18n/hooks'
 import { LanguageSelector } from './LanguageSelector'
 
@@ -15,13 +25,13 @@ export default function Header() {
   const pathname = usePathname()
 
   const navItems = [
-    { key: 'home', href: '/' },
-    { key: 'services', href: '/services' },
-    { key: 'about', href: '/about' },
-    { key: 'case-studies', href: '/case-studies' },
-    { key: 'portfolio', href: '/portfolio' },
-    { key: 'testimonials', href: '/testimonials' },
-    { key: 'contact', href: '/contact' },
+    { key: 'home', href: '/', icon: Home },
+    { key: 'services', href: '/services', icon: Briefcase },
+    { key: 'about', href: '/about', icon: Info },
+    { key: 'case-studies', href: '/case-studies', icon: FileText },
+    { key: 'portfolio', href: '/portfolio', icon: ImageIcon },
+    { key: 'testimonials', href: '/testimonials', icon: MessageSquare },
+    { key: 'contact', href: '/contact', icon: Mail },
   ]
 
   useEffect(() => {
@@ -61,23 +71,6 @@ export default function Header() {
     >
       <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
         <div className='flex justify-between items-center h-14 sm:h-16'>
-          {/* Logo - Left Side */}
-          <div className='flex items-center flex-shrink-0'>
-            <Link
-              href='/'
-              className='group flex items-center'
-              title='BestIT Consulting - Technology Solutions'
-            >
-              <Image
-                src='/logo.png'
-                alt='BestIT Consulting Logo'
-                width={160}
-                height={40}
-                className='h-10 sm:h-12 w-auto transition-opacity duration-300 group-hover:opacity-90'
-                priority
-              />
-            </Link>
-          </div>
 
           {/* Desktop Navigation - Center - Hidden on mobile */}
           <div className='hidden lg:flex flex-1 justify-center'>
@@ -101,13 +94,41 @@ export default function Header() {
             </div>
           </div>
 
-          {/* Desktop Right Side - Language Selector */}
+          {/* Desktop Right Side - Language Selector and Logo */}
           <div className='hidden lg:flex items-center space-x-3 flex-shrink-0'>
             <LanguageSelector showNativeName={true} />
+            <Link
+              href='/'
+              className='group flex items-center'
+              title='BestIT Consulting - Technology Solutions'
+            >
+              <Image
+                src='/logo.png'
+                alt='BestIT Consulting Logo'
+                width={160}
+                height={40}
+                className='h-10 sm:h-12 w-auto transition-opacity duration-300 group-hover:opacity-90'
+                priority
+              />
+            </Link>
           </div>
 
-          {/* Mobile Right Side - Menu Button */}
+          {/* Mobile Right Side - Logo, Language Selector, and Menu Button */}
           <div className='lg:hidden flex items-center space-x-2 flex-shrink-0 z-50'>
+            <Link
+              href='/'
+              className='group flex items-center'
+              title='BestIT Consulting - Technology Solutions'
+            >
+              <Image
+                src='/logo.png'
+                alt='BestIT Consulting Logo'
+                width={120}
+                height={30}
+                className='h-8 w-auto transition-opacity duration-300 group-hover:opacity-90'
+                priority
+              />
+            </Link>
             <LanguageSelector showNativeName={false} />
             <button
               type='button'
@@ -138,24 +159,33 @@ export default function Header() {
       >
         <div className='py-4 border-t border-gray-200 bg-white'>
           <div className='flex flex-col space-y-3'>
-            {navItems.map((item, index) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={`relative py-3 px-4 rounded-lg font-semibold text-sm transition-all duration-300 transform hover:translate-x-2 ${
-                  isActive(item.href)
-                    ? 'text-white bg-gradient-to-r from-blue-600 to-indigo-600 shadow-lg shadow-blue-500/25'
-                    : 'text-gray-700 hover:text-blue-600 hover:bg-blue-50 hover:shadow-md'
-                }`}
-                onClick={() => setMobileMenuOpen(false)}
-                style={{ animationDelay: `${index * 50}ms` }}
-              >
-                {t(item.key)}
-                {!isActive(item.href) && (
-                  <span className='absolute inset-0 rounded-lg bg-gradient-to-r from-blue-600/10 to-indigo-600/10 opacity-0 hover:opacity-100 transition-opacity duration-300'></span>
-                )}
-              </Link>
-            ))}
+            {navItems.map((item, index) => {
+              const Icon = item.icon
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={`relative py-3 px-4 rounded-lg font-semibold text-sm transition-all duration-300 transform hover:translate-x-2 flex items-center gap-3 ${
+                    isActive(item.href)
+                      ? 'text-white bg-gradient-to-r from-blue-600 to-indigo-600 shadow-lg shadow-blue-500/25'
+                      : 'text-gray-700 hover:text-blue-600 hover:bg-blue-50 hover:shadow-md'
+                  }`}
+                  onClick={() => setMobileMenuOpen(false)}
+                  style={{ animationDelay: `${index * 50}ms` }}
+                >
+                  <Icon
+                    className={`h-5 w-5 flex-shrink-0 ${
+                      isActive(item.href) ? 'text-white' : 'text-gray-500'
+                    }`}
+                    strokeWidth={2}
+                  />
+                  {t(item.key)}
+                  {!isActive(item.href) && (
+                    <span className='absolute inset-0 rounded-lg bg-gradient-to-r from-blue-600/10 to-indigo-600/10 opacity-0 hover:opacity-100 transition-opacity duration-300'></span>
+                  )}
+                </Link>
+              )
+            })}
           </div>
         </div>
       </div>
