@@ -42,4 +42,5 @@ next-env.d.ts
 # customize
 /.cursor
 .obsidian
+.vscode
 

@@ -2,13 +2,13 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { motion } from 'framer-motion'
 import { brandClasses } from '@/lib/branding'
 import { useReducedMotion } from '@/lib/accessibility'
 import { getDeviceType } from '@/lib/mobile-optimization'
 import {
-  Code2,
   Mail,
   Phone,
   MapPin,
@@ -185,18 +185,19 @@ export function Footer() {
               transition={{ duration: 0.6 }}
               viewport={{ once: true }}
             >
-              <Link href='/' className='flex items-center space-x-2 mb-6 group'>
+              <Link href='/' className='flex items-center mb-6 group'>
                 <motion.div
-                  className='w-10 h-10 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-lg flex items-center justify-center'
                   whileHover={shouldAnimate ? { scale: 1.05 } : undefined}
                   transition={{ duration: 0.2 }}
                 >
-                  <Code2 className='h-6 w-6 text-white' />
+                  <Image
+                    src='/bitc-logo-horizontal.svg'
+                    alt='BestIT Consulting Logo'
+                    width={160}
+                    height={40}
+                    className='h-10 w-auto transition-opacity duration-300 group-hover:opacity-90'
+                  />
                 </motion.div>
-                <div className='flex flex-col'>
-                  <span className='font-bold text-xl'>BestIT</span>
-                  <span className='text-sm text-gray-400'>Consulting</span>
-                </div>
               </Link>
 
               {/* Contact Info */}

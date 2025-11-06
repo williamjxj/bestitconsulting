@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import {
   Menu,
@@ -13,7 +14,6 @@ import {
   FlaskConical,
   Settings,
   HelpCircle,
-  Zap,
 } from 'lucide-react'
 import { useNavTranslation } from '@/lib/i18n/hooks'
 import { LanguageSelector } from './LanguageSelector'
@@ -111,15 +111,17 @@ export default function Header() {
             <div className='flex-shrink-0'>
               <Link
                 href='/'
-                className='group flex items-center space-x-2'
+                className='group flex items-center'
                 title='BestIT Consulting - Technology Solutions'
               >
-                <div className='w-8 h-8 bg-gradient-to-br from-blue-600 to-cyan-600 rounded-lg flex items-center justify-center group-hover:shadow-lg transition-all duration-300'>
-                  <Zap className='h-5 w-5 text-white' aria-hidden='true' />
-                </div>
-                <h1 className='text-2xl font-bold bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent'>
-                  BestIT
-                </h1>
+                <Image
+                  src='/bitc-logo-horizontal.svg'
+                  alt='BestIT Consulting Logo'
+                  width={160}
+                  height={40}
+                  className='h-8 w-auto transition-opacity duration-300 group-hover:opacity-90'
+                  priority
+                />
               </Link>
             </div>
           </div>
@@ -195,9 +197,8 @@ export default function Header() {
             <LanguageSelector showNativeName={true} />
             <Link
               href='/contact'
-              className='group relative bg-gradient-to-r from-blue-600 to-cyan-600 text-white px-4 py-2 rounded-lg font-medium hover:shadow-xl transition-all duration-300 hover:scale-105 overflow-hidden whitespace-nowrap'
+              className='group relative bg-transparent border-2 border-blue-600/30 hover:border-blue-600/50 text-blue-600 hover:bg-blue-50/50 backdrop-blur-sm px-4 py-2 rounded-lg font-medium transition-all duration-300 whitespace-nowrap'
             >
-              <div className='absolute inset-0 bg-gradient-to-r from-blue-700 to-cyan-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300'></div>
               <div className='relative flex items-center gap-1.5'>
                 <Sparkles className='w-4 h-4 group-hover:rotate-12 transition-transform duration-300' />
                 <span>Get Started</span>
@@ -275,10 +276,9 @@ export default function Header() {
 
             <Link
               href='/contact'
-              className='group relative block w-full text-center bg-gradient-to-r from-blue-600 to-cyan-600 text-white px-3 py-2 rounded-md font-medium mt-4 overflow-hidden whitespace-nowrap'
+              className='group relative block w-full text-center bg-transparent border-2 border-blue-600/30 hover:border-blue-600/50 text-blue-600 hover:bg-blue-50/50 backdrop-blur-sm px-3 py-2 rounded-md font-medium mt-4 whitespace-nowrap transition-all duration-300'
               onClick={() => setMobileMenuOpen(false)}
             >
-              <div className='absolute inset-0 bg-gradient-to-r from-blue-700 to-cyan-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300'></div>
               <div className='relative flex items-center justify-center gap-1.5'>
                 <Sparkles className='w-4 h-4 group-hover:rotate-12 transition-transform duration-300' />
                 <span>Get Started</span>

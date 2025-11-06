@@ -231,8 +231,8 @@ export function HeroSection() {
                 <div className='flex flex-col sm:flex-row gap-6 justify-center items-center mb-16'>
                   <AnimatedButton
                     size='lg'
-                    className='group text-lg px-8 py-4 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 shadow-lg hover:shadow-xl transition-all duration-300'
-                    rippleColor='rgba(255, 255, 255, 0.3)'
+                    className='group text-lg px-8 py-4 bg-transparent border-2 border-white/30 hover:border-white/50 text-white hover:bg-white/10 backdrop-blur-sm transition-all duration-300'
+                    rippleColor='rgba(255, 255, 255, 0.2)'
                     duration={0.6}
                     asChild
                   >
@@ -245,9 +245,9 @@ export function HeroSection() {
                   <ButtonHoverEffects
                     size='lg'
                     variant='outline'
-                    className='text-lg px-8 py-4 bg-white/10 border-white/20 hover:bg-white/20 backdrop-blur-sm transition-all duration-300'
+                    className='text-lg px-8 py-4 bg-transparent border-2 border-white/20 hover:border-white/40 hover:bg-white/10 backdrop-blur-sm transition-all duration-300'
                     hoverScale={1.05}
-                    hoverBgColor='rgba(255, 255, 255, 0.2)'
+                    hoverBgColor='rgba(255, 255, 255, 0.1)'
                     asChild
                   >
                     <Link href='/portfolio'>
