@@ -85,7 +85,7 @@ export async function POST(request: NextRequest) {
 
             <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #e2e8f0; text-align: center;">
               <p style="color: #64748b; font-size: 14px; margin: 0;">
-                This email was sent from the contact form on <strong>bestitconsulting.vercel.app</strong>
+                This email was sent from the contact form on <strong>bestitconsulting.ca</strong>
               </p>
               <p style="color: #64748b; font-size: 14px; margin: 5px 0 0 0;">
                 Reply directly to this email to respond to ${name}
@@ -140,7 +140,7 @@ export async function POST(request: NextRequest) {
             </p>
 
             <div style="text-align: center; margin: 30px 0;">
-              <a href="https://bestitconsulting.vercel.app/portfolio" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 12px 24px; text-decoration: none; border-radius: 8px; font-weight: bold; display: inline-block;">
+              <a href="https://bestitconsulting.ca/portfolio" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 12px 24px; text-decoration: none; border-radius: 8px; font-weight: bold; display: inline-block;">
                 View Our Portfolio
               </a>
             </div>
@@ -152,7 +152,7 @@ export async function POST(request: NextRequest) {
               <p style="color: #64748b; font-size: 14px; margin: 0;">
                 📞 Call us: +1 (236) 992-3846<br>
                 📧 Email: service@bestitconsulting.ca<br>
-                🌐 Website: bestitconsulting.vercel.app
+                🌐 Website: bestitconsulting.ca
               </p>
             </div>
 

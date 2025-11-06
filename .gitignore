@@ -23,6 +23,19 @@
 .DS_Store
 *.pem
 
+# python
+*.py
+*.pyc
+__pycache__/
+*.pyo
+*.pyd
+.Python
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+
 # debug
 npm-debug.log*
 yarn-debug.log*

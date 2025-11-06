@@ -172,228 +172,163 @@ export function Footer() {
   }
 
   return (
-    <footer className='bg-gray-900 text-white'>
+    <footer className='bg-gray-900 text-white py-12'>
       {/* Main Footer Content */}
       <div className={brandClasses.container}>
-        <div className='py-16 lg:py-20'>
-          <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 lg:gap-6'>
-            {/* Company Info */}
-            <motion.div
-              className='sm:col-span-2 md:col-span-1'
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              viewport={{ once: true }}
-            >
-              <Link href='/' className='flex items-center mb-6 group'>
-                <motion.div
+        <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8'>
+          {/* Company Info */}
+          <motion.div
+            className='sm:col-span-2 md:col-span-1'
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+          >
+            <Link href='/' className='flex items-center mb-6 group'>
+              <motion.div
+                whileHover={shouldAnimate ? { scale: 1.05 } : undefined}
+                transition={{ scale: { duration: 0.2 } }}
+                className='bg-white rounded-lg p-2 border border-blue-400/30 shadow-lg'
+              >
+                <Image
+                  src='/logo.png'
+                  alt='BestIT Consulting Logo'
+                  width={160}
+                  height={40}
+                  className='h-10 w-auto transition-opacity duration-300 group-hover:opacity-90'
+                />
+              </motion.div>
+            </Link>
+
+            {/* Contact Info */}
+            <div className='space-y-2 mb-6'>
+              <div className='flex items-center space-x-3 text-gray-400'>
+                <Mail className='h-4 w-4 text-blue-400' />
+                <span className='text-sm'>service@bestitconsulting.ca</span>
+              </div>
+              <div className='flex items-center space-x-3 text-gray-400'>
+                <Phone className='h-4 w-4 text-blue-400' />
+                <span className='text-sm'>+1 (236) 992-3846</span>
+              </div>
+              <div className='flex items-center space-x-3 text-gray-400'>
+                <MapPin className='h-4 w-4 text-blue-400' />
+                <span className='text-sm'>Great Vancouver, Canada 🇨🇦</span>
+              </div>
+            </div>
+
+            {/* Social Links */}
+            <div className='flex space-x-4'>
+              {socialLinks.map((social, index) => (
+                <motion.a
+                  key={social.name}
+                  href={social.href}
+                  tabIndex={0}
+                  className='text-gray-400 hover:text-white transition-colors'
                   whileHover={shouldAnimate ? { scale: 1.05 } : undefined}
-                  transition={{ duration: 0.2 }}
-                >
-                  <Image
-                    src='/logo.png'
-                    alt='BestIT Consulting Logo'
-                    width={160}
-                    height={40}
-                    className='h-10 w-auto transition-opacity duration-300 group-hover:opacity-90'
-                  />
-                </motion.div>
-              </Link>
-
-              {/* Contact Info */}
-              <div className='space-y-3 mb-6'>
-                <div className='flex items-center space-x-3 text-gray-300'>
-                  <Mail className='h-4 w-4 text-blue-400' />
-                  <span className='text-sm'>service@bestitconsulting.ca</span>
-                </div>
-                <div className='flex items-center space-x-3 text-gray-300'>
-                  <Phone className='h-4 w-4 text-blue-400' />
-                  <span className='text-sm'>+1 (236) 992-3846</span>
-                </div>
-                <div className='flex items-center space-x-3 text-gray-300'>
-                  <MapPin className='h-4 w-4 text-blue-400' />
-                  <span className='text-sm'>Great Vancouver, Canada 🇨🇦</span>
-                </div>
-              </div>
-
-              {/* Social Links */}
-              <div className='flex space-x-4'>
-                {socialLinks.map((social, index) => (
-                  <motion.a
-                    key={social.name}
-                    href={social.href}
-                    tabIndex={0}
-                    className='w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center text-gray-400 hover:text-white hover:bg-blue-600 transition-colors duration-200'
-                    whileHover={
-                      shouldAnimate ? { scale: 1.1, y: -2 } : undefined
-                    }
-                    whileTap={shouldAnimate ? { scale: 0.95 } : undefined}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.3, delay: index * 0.1 }}
-                    viewport={{ once: true }}
-                  >
-                    <social.icon className='h-5 w-5' />
-                  </motion.a>
-                ))}
-              </div>
-            </motion.div>
-
-            {/* Links Sections */}
-            {Object.entries(footerLinks).map(
-              ([category, links], categoryIndex) => (
-                <motion.div
-                  key={category}
-                  className='lg:col-span-1'
+                  whileTap={shouldAnimate ? { scale: 0.95 } : undefined}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: categoryIndex * 0.1 }}
+                  transition={{ duration: 0.3, delay: index * 0.1 }}
                   viewport={{ once: true }}
                 >
-                  <h3 className='font-semibold text-white mb-4 capitalize'>
-                    {category}
-                  </h3>
-                  <ul className='space-y-3'>
-                    {links.map((link, index) => (
-                      <motion.li
-                        key={link.name}
-                        initial={{ opacity: 0, x: -10 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.3, delay: index * 0.05 }}
-                        viewport={{ once: true }}
-                      >
-                        {link.name === 'FAQ' ? (
-                          <FAQDialogCompact
-                            faqs={faqs}
-                            triggerText={link.name}
-                            className='text-gray-300 hover:text-white transition-colors duration-200 p-0 h-auto font-normal justify-start'
-                          />
-                        ) : (link as any).isExternal ? (
-                          <a
-                            href={(link as any).href}
-                            target='_blank'
-                            rel='noopener noreferrer'
-                            className='text-gray-300 hover:text-white transition-colors duration-200 flex items-center group cursor-pointer'
-                          >
-                            {(link as any).icon &&
-                              (() => {
-                                const IconComponent = (link as any).icon
-                                return (
-                                  <IconComponent className='mr-2 h-4 w-4' />
-                                )
-                              })()}
-                            <span>{link.name}</span>
-                            <ArrowRight className='ml-2 h-3 w-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200' />
-                          </a>
-                        ) : (
-                          <a
-                            href={link.href}
-                            onClick={e => handleLinkClick(e, link)}
-                            className='text-gray-300 hover:text-white transition-colors duration-200 flex items-center group cursor-pointer'
-                          >
-                            <span>{link.name}</span>
-                            <ArrowRight className='ml-2 h-3 w-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200' />
-                          </a>
-                        )}
-                      </motion.li>
-                    ))}
-                  </ul>
-                </motion.div>
-              )
-            )}
+                  <social.icon className='h-6 w-6' />
+                </motion.a>
+              ))}
+            </div>
+          </motion.div>
 
-            {/* Mobile Access Section */}
-            <motion.div
-              className='lg:col-span-1'
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.5 }}
-              viewport={{ once: true }}
-            >
-              <h3 className='font-semibold text-white mb-4 flex items-center gap-2'>
-                <Smartphone className='h-4 w-4 text-blue-400' />
-                Mobile Access
-              </h3>
-              <div className='flex flex-col items-center space-y-3'>
-                <QRCodeCompact
-                  url='https://bestitconsulting.vercel.app'
-                  size={80}
-                />
-                <p className='text-gray-300 text-xs text-center'>
-                  Scan to visit our website
-                </p>
-              </div>
-            </motion.div>
-          </div>
+          {/* Links Sections */}
+          {Object.entries(footerLinks).map(
+            ([category, links], categoryIndex) => (
+              <motion.div
+                key={category}
+                className='lg:col-span-1'
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: categoryIndex * 0.1 }}
+                viewport={{ once: true }}
+              >
+                <h3 className='font-semibold text-white mb-4 capitalize'>
+                  {category}
+                </h3>
+                <ul className='space-y-2 text-gray-400'>
+                  {links.map((link, index) => (
+                    <motion.li
+                      key={link.name}
+                      initial={{ opacity: 0, x: -10 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      transition={{ duration: 0.3, delay: index * 0.05 }}
+                      viewport={{ once: true }}
+                    >
+                      {link.name === 'FAQ' ? (
+                        <FAQDialogCompact
+                          faqs={faqs}
+                          triggerText={link.name}
+                          className='text-gray-400 hover:text-white transition-colors p-0 h-auto font-normal justify-start'
+                        />
+                      ) : (link as any).isExternal ? (
+                        <a
+                          href={(link as any).href}
+                          target='_blank'
+                          rel='noopener noreferrer'
+                          className='text-gray-400 hover:text-white transition-colors flex items-center group cursor-pointer'
+                        >
+                          {(link as any).icon &&
+                            (() => {
+                              const IconComponent = (link as any).icon
+                              return <IconComponent className='mr-2 h-4 w-4' />
+                            })()}
+                          <span>{link.name}</span>
+                          <ArrowRight className='ml-2 h-3 w-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200' />
+                        </a>
+                      ) : (
+                        <a
+                          href={link.href}
+                          onClick={e => handleLinkClick(e, link)}
+                          className='text-gray-400 hover:text-white transition-colors flex items-center group cursor-pointer'
+                        >
+                          <span>{link.name}</span>
+                          <ArrowRight className='ml-2 h-3 w-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200' />
+                        </a>
+                      )}
+                    </motion.li>
+                  ))}
+                </ul>
+              </motion.div>
+            )
+          )}
+
+          {/* Mobile Access Section */}
+          <motion.div
+            className='lg:col-span-1'
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.5 }}
+            viewport={{ once: true }}
+          >
+            <h3 className='font-semibold text-white mb-4 flex items-center gap-2'>
+              <Smartphone className='h-4 w-4 text-blue-400' />
+              Mobile Access
+            </h3>
+            <div className='flex flex-col items-center space-y-3'>
+              <QRCodeCompact url='https://bestitconsulting.ca' size={80} />
+              <p className='text-gray-400 text-xs text-center'>
+                Scan to visit our website
+              </p>
+            </div>
+          </motion.div>
         </div>
 
         {/* Bottom Bar */}
         <motion.div
-          className='pt-4 pb-6 border-t border-gray-800 flex flex-col lg:flex-row items-center justify-between'
+          className='border-t border-gray-100 mt-8 pt-8 text-center text-gray-400'
+          style={{ borderColor: '#334155' }}
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
         >
-          <div className='text-gray-400 text-sm mb-4 lg:mb-0'>
-            © 2025 Best IT Consulting. All rights reserved.
-          </div>
-          <div className='flex items-center space-x-6 text-sm text-gray-400'>
-            <a
-              href='/privacy'
-              onClick={e => {
-                e.preventDefault()
-                const rect = (
-                  e.currentTarget as HTMLElement
-                ).getBoundingClientRect()
-                setTooltip({
-                  text: 'Coming soon',
-                  x: rect.left + rect.width / 2,
-                  y: rect.top - 10,
-                })
-                setTimeout(() => setTooltip(null), 2000)
-              }}
-              className='hover:text-white transition-colors cursor-pointer'
-            >
-              Privacy Policy
-            </a>
-            <a
-              href='/terms'
-              onClick={e => {
-                e.preventDefault()
-                const rect = (
-                  e.currentTarget as HTMLElement
-                ).getBoundingClientRect()
-                setTooltip({
-                  text: 'Coming soon',
-                  x: rect.left + rect.width / 2,
-                  y: rect.top - 10,
-                })
-                setTimeout(() => setTooltip(null), 2000)
-              }}
-              className='hover:text-white transition-colors cursor-pointer'
-            >
-              Terms of Service
-            </a>
-            <a
-              href='/cookies'
-              onClick={e => {
-                e.preventDefault()
-                const rect = (
-                  e.currentTarget as HTMLElement
-                ).getBoundingClientRect()
-                setTooltip({
-                  text: 'Coming soon',
-                  x: rect.left + rect.width / 2,
-                  y: rect.top - 10,
-                })
-                setTimeout(() => setTooltip(null), 2000)
-              }}
-              className='hover:text-white transition-colors cursor-pointer'
-            >
-              Cookie Policy
-            </a>
-          </div>
+          <p>© 2025 BestIT Consulting Ltd. All rights reserved.</p>
         </motion.div>
       </div>
 
