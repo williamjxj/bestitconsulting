@@ -1,30 +1,18 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
-import {
-  Menu,
-  X,
-  ArrowRight,
-  Sparkles,
-  ChevronDown,
-  Box,
-  FlaskConical,
-  Settings,
-  HelpCircle,
-} from 'lucide-react'
+import { Menu, X } from 'lucide-react'
 import { useNavTranslation } from '@/lib/i18n/hooks'
 import { LanguageSelector } from './LanguageSelector'
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const [dropdownOpen, setDropdownOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const { t } = useNavTranslation()
   const pathname = usePathname()
-  const dropdownRef = useRef<HTMLDivElement>(null)
 
   const navItems = [
     { key: 'home', href: '/' },
@@ -36,37 +24,6 @@ export default function Header() {
     { key: 'contact', href: '/contact' },
   ]
 
-  const dropdownItems = [
-    {
-      key: '3d-effects',
-      href: '/3d-effects',
-      label: '3D Effects',
-      icon: Box,
-      description: 'WebGL & Three.js demos',
-    },
-    {
-      key: 'r2-test',
-      href: '/r2-test',
-      label: 'R2 Test',
-      icon: FlaskConical,
-      description: 'Asset management testing',
-    },
-    {
-      key: 'admin',
-      href: '/admin',
-      label: 'Admin',
-      icon: Settings,
-      description: 'Language management',
-    },
-    {
-      key: 'faq',
-      href: '/faq',
-      label: 'FAQ',
-      icon: HelpCircle,
-      description: 'Frequently asked questions',
-    },
-  ]
-
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20)
@@ -75,25 +32,22 @@ export default function Header() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  // Close dropdown when clicking outside
+  // Close mobile menu on Escape key
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target as Node)
-      ) {
-        setDropdownOpen(false)
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape' && mobileMenuOpen) {
+        setMobileMenuOpen(false)
       }
     }
 
-    if (dropdownOpen) {
-      document.addEventListener('mousedown', handleClickOutside)
+    if (mobileMenuOpen) {
+      document.addEventListener('keydown', handleEscape)
     }
 
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside)
+      document.removeEventListener('keydown', handleEscape)
     }
-  }, [dropdownOpen])
+  }, [mobileMenuOpen])
 
   const isActive = (href: string) => pathname === href
 
@@ -107,28 +61,27 @@ export default function Header() {
     >
       <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
         <div className='flex justify-between items-center h-14 sm:h-16'>
-          <div className='flex items-center'>
-            <div className='flex-shrink-0'>
-              <Link
-                href='/'
-                className='group flex items-center'
-                title='BestIT Consulting - Technology Solutions'
-              >
-                <Image
-                  src='/bitc-logo-horizontal.svg'
-                  alt='BestIT Consulting Logo'
-                  width={160}
-                  height={40}
-                  className='h-8 w-auto transition-opacity duration-300 group-hover:opacity-90'
-                  priority
-                />
-              </Link>
-            </div>
+          {/* Logo - Left Side */}
+          <div className='flex items-center flex-shrink-0'>
+            <Link
+              href='/'
+              className='group flex items-center'
+              title='BestIT Consulting - Technology Solutions'
+            >
+              <Image
+                src='/logo.png'
+                alt='BestIT Consulting Logo'
+                width={160}
+                height={40}
+                className='h-10 sm:h-12 w-auto transition-opacity duration-300 group-hover:opacity-90'
+                priority
+              />
+            </Link>
           </div>
 
-          {/* Desktop Navigation */}
-          <div className='hidden lg:flex'>
-            <div className='ml-10 flex items-center space-x-0.5'>
+          {/* Desktop Navigation - Center - Hidden on mobile */}
+          <div className='hidden lg:flex flex-1 justify-center'>
+            <div className='flex items-center space-x-0.5'>
               {navItems.map(({ key, href }) => (
                 <Link
                   key={key}
@@ -148,146 +101,64 @@ export default function Header() {
             </div>
           </div>
 
-          {/* Language Selector & CTA */}
-          <div className='hidden lg:flex items-center space-x-3'>
-            {/* Dropdown Menu - Only in Development */}
-            {process.env.NODE_ENV === 'development' && (
-              <div className='relative' ref={dropdownRef}>
-                <button
-                  onClick={() => setDropdownOpen(!dropdownOpen)}
-                  className='flex items-center gap-1 px-3 py-2 rounded-lg text-sm font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50 transition-all duration-300'
-                >
-                  <span>Tools</span>
-                  <ChevronDown
-                    className={`w-4 h-4 transition-transform duration-200 ${dropdownOpen ? 'rotate-180' : ''}`}
-                  />
-                </button>
-
-                {/* Dropdown Content */}
-                {dropdownOpen && (
-                  <div className='absolute right-0 mt-2 w-64 bg-white rounded-lg shadow-xl border border-gray-200 py-2 z-50'>
-                    {dropdownItems.map(item => {
-                      const IconComponent = item.icon
-                      return (
-                        <Link
-                          key={item.key}
-                          href={item.href}
-                          className='flex items-center gap-3 px-4 py-3 hover:bg-gray-50 transition-colors duration-200 group'
-                          onClick={() => setDropdownOpen(false)}
-                        >
-                          <div className='flex-shrink-0 w-8 h-8 bg-blue-50 rounded-lg flex items-center justify-center group-hover:bg-blue-100 transition-colors duration-200'>
-                            <IconComponent className='w-4 h-4 text-blue-600' />
-                          </div>
-                          <div className='flex-1 min-w-0'>
-                            <div className='text-sm font-medium text-gray-900 group-hover:text-blue-600 transition-colors duration-200'>
-                              {item.label}
-                            </div>
-                            <div className='text-xs text-gray-500 group-hover:text-blue-500 transition-colors duration-200'>
-                              {item.description}
-                            </div>
-                          </div>
-                        </Link>
-                      )
-                    })}
-                  </div>
-                )}
-              </div>
-            )}
-
+          {/* Desktop Right Side - Language Selector */}
+          <div className='hidden lg:flex items-center space-x-3 flex-shrink-0'>
             <LanguageSelector showNativeName={true} />
-            <Link
-              href='/contact'
-              className='group relative bg-transparent border-2 border-blue-600/30 hover:border-blue-600/50 text-blue-600 hover:bg-blue-50/50 backdrop-blur-sm px-4 py-2 rounded-lg font-medium transition-all duration-300 whitespace-nowrap'
-            >
-              <div className='relative flex items-center gap-1.5'>
-                <Sparkles className='w-4 h-4 group-hover:rotate-12 transition-transform duration-300' />
-                <span>Get Started</span>
-                <ArrowRight className='w-4 h-4 group-hover:translate-x-1 transition-transform duration-300' />
-              </div>
-            </Link>
           </div>
 
-          {/* Mobile menu button */}
-          <div className='lg:hidden flex items-center space-x-1 sm:space-x-2'>
-            <LanguageSelector showNativeName={true} />
+          {/* Mobile Right Side - Menu Button */}
+          <div className='lg:hidden flex items-center space-x-2 flex-shrink-0 z-50'>
+            <LanguageSelector showNativeName={false} />
             <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className='text-gray-700 hover:text-blue-600 p-1 sm:p-2 rounded-md hover:bg-gray-100 transition-colors'
+              type='button'
+              onClick={() => {
+                setMobileMenuOpen(!mobileMenuOpen)
+              }}
+              className='p-2 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500'
               aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
+              aria-expanded={mobileMenuOpen}
             >
               {mobileMenuOpen ? (
-                <X className='h-5 w-5 sm:h-6 sm:w-6' />
+                <X className='h-6 w-6' strokeWidth={2} />
               ) : (
-                <Menu className='h-5 w-5 sm:h-6 sm:w-6' />
+                <Menu className='h-6 w-6' strokeWidth={2} />
               )}
             </button>
           </div>
         </div>
       </div>
 
-      {/* Mobile Navigation */}
-      {mobileMenuOpen && (
-        <div className='lg:hidden absolute top-full left-0 right-0 z-50 bg-white shadow-lg border-t border-gray-200'>
-          <div className='px-2 pt-2 pb-3 space-y-1 sm:px-3'>
-            {navItems.map(({ key, href }) => (
+      {/* Mobile Menu with smooth animation */}
+      <div
+        className={`lg:hidden transition-all duration-300 ease-in-out overflow-hidden ${
+          mobileMenuOpen
+            ? 'max-h-[800px] opacity-100 visible'
+            : 'max-h-0 opacity-0 invisible'
+        }`}
+      >
+        <div className='py-4 border-t border-gray-200 bg-white'>
+          <div className='flex flex-col space-y-3'>
+            {navItems.map((item, index) => (
               <Link
-                key={key}
-                href={href}
-                className={`block px-3 py-2 rounded-md text-base font-medium transition-colors ${
-                  isActive(href)
-                    ? 'text-blue-600 bg-blue-50'
-                    : 'text-gray-700 hover:text-blue-600 hover:bg-gray-50'
+                key={item.href}
+                href={item.href}
+                className={`relative py-3 px-4 rounded-lg font-semibold text-sm transition-all duration-300 transform hover:translate-x-2 ${
+                  isActive(item.href)
+                    ? 'text-white bg-gradient-to-r from-blue-600 to-indigo-600 shadow-lg shadow-blue-500/25'
+                    : 'text-gray-700 hover:text-blue-600 hover:bg-blue-50 hover:shadow-md'
                 }`}
                 onClick={() => setMobileMenuOpen(false)}
+                style={{ animationDelay: `${index * 50}ms` }}
               >
-                {t(key)}
+                {t(item.key)}
+                {!isActive(item.href) && (
+                  <span className='absolute inset-0 rounded-lg bg-gradient-to-r from-blue-600/10 to-indigo-600/10 opacity-0 hover:opacity-100 transition-opacity duration-300'></span>
+                )}
               </Link>
             ))}
-
-            {/* Mobile Dropdown Items - Only in Development */}
-            {process.env.NODE_ENV === 'development' && (
-              <div className='border-t border-gray-200 pt-2 mt-2'>
-                <div className='px-3 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wider'>
-                  Tools
-                </div>
-                {dropdownItems.map(item => {
-                  const IconComponent = item.icon
-                  return (
-                    <Link
-                      key={item.key}
-                      href={item.href}
-                      className='flex items-center gap-3 px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50 transition-colors'
-                      onClick={() => setMobileMenuOpen(false)}
-                    >
-                      <div className='flex-shrink-0 w-6 h-6 bg-blue-50 rounded-md flex items-center justify-center'>
-                        <IconComponent className='w-4 h-4 text-blue-600' />
-                      </div>
-                      <div>
-                        <div className='font-medium'>{item.label}</div>
-                        <div className='text-xs text-gray-500'>
-                          {item.description}
-                        </div>
-                      </div>
-                    </Link>
-                  )
-                })}
-              </div>
-            )}
-
-            <Link
-              href='/contact'
-              className='group relative block w-full text-center bg-transparent border-2 border-blue-600/30 hover:border-blue-600/50 text-blue-600 hover:bg-blue-50/50 backdrop-blur-sm px-3 py-2 rounded-md font-medium mt-4 whitespace-nowrap transition-all duration-300'
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              <div className='relative flex items-center justify-center gap-1.5'>
-                <Sparkles className='w-4 h-4 group-hover:rotate-12 transition-transform duration-300' />
-                <span>Get Started</span>
-                <ArrowRight className='w-4 h-4 group-hover:translate-x-1 transition-transform duration-300' />
-              </div>
-            </Link>
           </div>
         </div>
-      )}
+      </div>
     </nav>
   )
 }

@@ -191,7 +191,7 @@ export function Footer() {
                   transition={{ duration: 0.2 }}
                 >
                   <Image
-                    src='/bitc-logo-horizontal.svg'
+                    src='/logo.png'
                     alt='BestIT Consulting Logo'
                     width={160}
                     height={40}

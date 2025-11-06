@@ -42,9 +42,6 @@ supabase/migrations/
 .DS_Store
 *.log
 
-# Optional docs and test outputs
-# docs/*.md
-
 # Shadcn generated component cache (update paths as needed)
 components.json
 components_backup/
