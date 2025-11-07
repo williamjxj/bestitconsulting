@@ -7,16 +7,7 @@
 
 import { motion, AnimatePresence } from 'framer-motion'
 import { useState, useEffect } from 'react'
-import {
-  CheckCircle,
-  ArrowRight,
-  Monitor,
-  Shield,
-  TrendingUp,
-  Smartphone,
-  Cloud,
-  Zap,
-} from 'lucide-react'
+import { CheckCircle, ArrowRight } from 'lucide-react'
 import {
   Card,
   CardContent,
@@ -124,7 +115,6 @@ const defaultProjects: Project[] = [
       'Advanced security protocols',
       'Scalable microservices design',
     ],
-    icon: <Zap className='h-6 w-6' />,
     gradient: 'from-purple-500 to-indigo-500',
     link: '#',
     featured: true,
@@ -156,7 +146,7 @@ const defaultProjects: Project[] = [
   },
   {
     id: 'dashboard',
-    title: 'Analytics Dashboard',
+    title: 'Financial Analytics Dashboard',
     description:
       'Real-time analytics dashboard with interactive data visualization.',
     image: getR2ImageUrl('portfolio/g-31.jpg'),
@@ -188,50 +178,13 @@ const defaultProjects: Project[] = [
     link: '#',
   },
   {
-    id: 'ecommerce-platform',
-    title: 'E-Commerce Platform',
-    client: 'Online Retail Chain',
-    description:
-      'A comprehensive e-commerce solution with advanced inventory management, payment processing, and real-time analytics. Built for scalability to handle millions of transactions.',
-    image: getR2ImageUrl('portfolio/g-61.jpg'),
-    image2: getR2ImageUrl('portfolio/g-62.jpg'),
-    technologies: [
-      'Next.js',
-      'TypeScript',
-      'Node.js',
-      'PostgreSQL',
-      'Stripe',
-      'Redis',
-      'AWS',
-    ],
-    category: 'Web Application',
-    industry: 'Retail',
-    results: [
-      '40% increase in conversion rates',
-      '60% improvement in page load speed',
-      '500K+ users served monthly',
-      '99.9% uptime achieved',
-    ],
-    features: [
-      'Multi-vendor marketplace',
-      'Real-time inventory tracking',
-      'Advanced search & filtering',
-      'Mobile-responsive design',
-      'Integrated payment gateway',
-      'Admin dashboard with analytics',
-    ],
-    icon: <Monitor className='h-6 w-6' />,
-    gradient: 'from-blue-500 to-cyan-500',
-    link: '#',
-  },
-  {
     id: 'healthcare-management',
     title: 'Healthcare Management System',
     client: 'Regional Healthcare Provider',
     description:
       'HIPAA-compliant patient management system with appointment scheduling, electronic health records, and telemedicine capabilities.',
-    image: getR2ImageUrl('portfolio/g-71.jpg'),
-    image2: getR2ImageUrl('portfolio/g-72.jpg'),
+    image: getR2ImageUrl('portfolio/g-61.jpg'),
+    image2: getR2ImageUrl('portfolio/g-62.jpg'),
     technologies: [
       'React',
       'Node.js',
@@ -257,45 +210,7 @@ const defaultProjects: Project[] = [
       'Prescription management',
       'Insurance claim processing',
     ],
-    icon: <Shield className='h-6 w-6' />,
     gradient: 'from-green-500 to-emerald-500',
-    link: '#',
-  },
-  {
-    id: 'financial-analytics',
-    title: 'Financial Analytics Dashboard',
-    client: 'Investment Firm',
-    description:
-      'Real-time financial data visualization platform with advanced analytics, portfolio tracking, and automated reporting capabilities.',
-    image: getR2ImageUrl('portfolio/g-81.jpg'),
-    image2: getR2ImageUrl('portfolio/g-82.jpg'),
-    technologies: [
-      'Vue.js',
-      'Python',
-      'Django',
-      'PostgreSQL',
-      'Redis',
-      'D3.js',
-      'AWS',
-    ],
-    category: 'Data Visualization',
-    industry: 'Finance',
-    results: [
-      '70% faster data processing',
-      '90% reduction in report generation time',
-      '45% improvement in decision-making speed',
-      '$2M+ in cost savings annually',
-    ],
-    features: [
-      'Real-time market data integration',
-      'Interactive charts and graphs',
-      'Portfolio performance tracking',
-      'Risk assessment algorithms',
-      'Automated compliance reporting',
-      'Multi-currency support',
-    ],
-    icon: <TrendingUp className='h-6 w-6' />,
-    gradient: 'from-purple-500 to-pink-500',
     link: '#',
   },
   {
@@ -304,8 +219,8 @@ const defaultProjects: Project[] = [
     client: 'Logistics Company',
     description:
       'IoT-powered fleet management system with real-time vehicle tracking, predictive maintenance, and route optimization.',
-    image: getR2ImageUrl('portfolio/g-91.jpg'),
-    image2: getR2ImageUrl('portfolio/g-92.jpg'),
+    image: getR2ImageUrl('portfolio/g-71.jpg'),
+    image2: getR2ImageUrl('portfolio/g-72.jpg'),
     technologies: [
       'React Native',
       'Node.js',
@@ -331,7 +246,6 @@ const defaultProjects: Project[] = [
       'Fuel consumption analytics',
       'Mobile driver app',
     ],
-    icon: <Smartphone className='h-6 w-6' />,
     gradient: 'from-orange-500 to-red-500',
     link: '#',
   },
@@ -341,8 +255,8 @@ const defaultProjects: Project[] = [
     client: 'Manufacturing Enterprise',
     description:
       'Enterprise-grade cloud migration platform with automated workload assessment, migration planning, and monitoring.',
-    image: getR2ImageUrl('portfolio/g-101.jpg'),
-    image2: getR2ImageUrl('portfolio/g-102.jpg'),
+    image: getR2ImageUrl('portfolio/g-81.jpg'),
+    image2: getR2ImageUrl('portfolio/g-82.jpg'),
     technologies: [
       'Angular',
       'Spring Boot',
@@ -368,45 +282,7 @@ const defaultProjects: Project[] = [
       'Performance analytics',
       'Multi-cloud support',
     ],
-    icon: <Cloud className='h-6 w-6' />,
     gradient: 'from-indigo-500 to-blue-500',
-    link: '#',
-  },
-  {
-    id: 'ai-customer-service',
-    title: 'AI-Powered Customer Service',
-    client: 'Telecommunications Company',
-    description:
-      'Intelligent customer service platform with AI chatbots, sentiment analysis, and automated ticket routing.',
-    image: getR2ImageUrl('portfolio/g-111.jpg'),
-    image2: getR2ImageUrl('portfolio/g-112.jpg'),
-    technologies: [
-      'Next.js',
-      'Python',
-      'TensorFlow',
-      'Natural Language Processing',
-      'Redis',
-      'PostgreSQL',
-      'AWS',
-    ],
-    category: 'AI Application',
-    industry: 'Telecommunications',
-    results: [
-      '75% reduction in response time',
-      '50% decrease in support tickets',
-      '90% customer satisfaction rate',
-      '24/7 automated support coverage',
-    ],
-    features: [
-      'AI-powered chatbot',
-      'Sentiment analysis',
-      'Automated ticket routing',
-      'Knowledge base integration',
-      'Multi-language support',
-      'Performance analytics dashboard',
-    ],
-    icon: <Zap className='h-6 w-6' />,
-    gradient: 'from-yellow-500 to-orange-500',
     link: '#',
   },
   {
@@ -415,8 +291,8 @@ const defaultProjects: Project[] = [
     client: 'Global Enterprise Suite',
     description:
       'Comprehensive modernization and ongoing maintenance of mission-critical legacy systems with minimal disruption and measurable ROI.',
-    image: getR2ImageUrl('portfolio/g-121.jpg'),
-    image2: getR2ImageUrl('portfolio/g-122.jpg'),
+    image: getR2ImageUrl('portfolio/g-91.jpg'),
+    image2: getR2ImageUrl('portfolio/g-92.jpg'),
     technologies: ['Java', '.NET', 'PostgreSQL', 'Kubernetes', 'AWS', 'CI/CD'],
     category: 'Modernization',
     industry: 'Enterprise',
@@ -436,21 +312,10 @@ const defaultProjects: Project[] = [
       'Rapid risk mitigation with progressive rollouts',
       'Future-ready architecture without full rewrites',
     ],
-    icon: <Zap className='h-6 w-6' />,
     gradient: 'from-slate-700 to-indigo-600',
     link: '#',
   },
 ]
-
-// Remove newer duplicates and prefer original items
-const dedupedProjects: Project[] = defaultProjects.filter(
-  p =>
-    ![
-      'ecommerce-platform',
-      'financial-analytics',
-      'ai-customer-service',
-    ].includes(p.id)
-)
 
 // Carousel component for project images
 function ProjectImageCarousel({ project }: { project: Project }) {
@@ -529,7 +394,7 @@ function ProjectImageCarousel({ project }: { project: Project }) {
 }
 
 export function PortfolioSection({
-  projects = dedupedProjects,
+  projects = defaultProjects,
   title = 'Our Portfolio',
   description = 'Showcasing our latest projects and technical expertise',
   className = '',
@@ -552,29 +417,28 @@ export function PortfolioSection({
     <section className={`py-20 bg-muted/30 ${className}`}>
       <div className='container mx-auto px-4'>
         <FadeIn delay={0.2} duration={0.8}>
-          <div className='text-center mb-16'>
-            <h2 className='text-3xl md:text-4xl font-bold mb-4'>{title}</h2>
-            <p className='text-lg text-muted-foreground max-w-2xl mx-auto'>
-              {description}
-            </p>
+          <div className='flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-12'>
+            <div className='text-center md:text-center flex-1'>
+              <h2 className='text-3xl md:text-4xl font-bold mb-4'>{title}</h2>
+              <p className='text-lg text-muted-foreground max-w-2xl mx-auto'>
+                {description}
+              </p>
+            </div>
+            <div className='flex justify-center md:justify-end'>
+              <select
+                value={selectedCategory}
+                onChange={e => setSelectedCategory(e.target.value)}
+                className='px-4 py-2 rounded-lg border border-border bg-background text-foreground text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 min-w-[200px] cursor-pointer'
+              >
+                {categories.map(category => (
+                  <option key={category} value={category}>
+                    {category}
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
         </FadeIn>
-
-        <div className='flex flex-wrap justify-center gap-2 mb-12'>
-          {categories.map(category => (
-            <button
-              key={category}
-              onClick={() => setSelectedCategory(category)}
-              className={`px-6 py-3 rounded-full font-medium transition-all duration-300 ${
-                selectedCategory === category
-                  ? 'bg-primary text-primary-foreground shadow-lg transform scale-105'
-                  : 'bg-muted text-muted-foreground hover:bg-muted/80 hover:text-foreground'
-              }`}
-            >
-              {category}
-            </button>
-          ))}
-        </div>
 
         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
           {filteredProjects.map((project, index) => {
@@ -590,20 +454,10 @@ export function PortfolioSection({
                 duration={0.6}
               >
                 <Card className='group h-full overflow-hidden rounded-xl bg-white border-0 shadow-lg hover:shadow-xl transition-all duration-300'>
-                  {/* Header with Icon and Category Tag */}
-                  <div className='relative p-4 flex items-start justify-between'>
-                    {/* Icon */}
-                    {project.icon && (
-                      <div
-                        className={`w-12 h-12 rounded-lg bg-gradient-to-br ${
-                          project.gradient || 'from-blue-500 to-cyan-500'
-                        } flex items-center justify-center text-white shadow-md`}
-                      >
-                        {project.icon}
-                      </div>
-                    )}
+                  {/* Header with Category Tag */}
+                  <div className='relative p-4 flex items-start justify-end'>
                     {/* Category Tag */}
-                    <span className='px-3 py-1 bg-black text-white text-xs font-medium rounded-full'>
+                    <span className='px-3 py-1 bg-blue-900 text-white text-xs font-medium rounded-full'>
                       {project.category}
                     </span>
                   </div>
@@ -614,13 +468,17 @@ export function PortfolioSection({
                   </div>
 
                   {/* Industry Tag */}
-                  {project.industry && (
-                    <div className='px-4 mt-4'>
-                      <span className='px-3 py-1 bg-blue-600 text-white text-xs font-medium rounded-full'>
-                        {project.industry}
-                      </span>
-                    </div>
-                  )}
+                  {project.industry &&
+                    ![
+                      'legacy-modernization',
+                      'legacy-upgrade-maintenance',
+                    ].includes(project.id) && (
+                      <div className='px-4 mt-4'>
+                        <span className='px-3 py-1 bg-blue-600 text-white text-xs font-medium rounded-full'>
+                          {project.industry}
+                        </span>
+                      </div>
+                    )}
 
                   {/* Content */}
                   <CardContent className='p-6 pt-4'>
@@ -757,29 +615,6 @@ export function PortfolioSection({
             })()}
           </DialogContent>
         </Dialog>
-
-        <FadeIn delay={1.2} duration={0.8}>
-          <div className='text-center mt-12'>
-            <Button size='lg' asChild>
-              <a href='/portfolio'>
-                View All Projects
-                <svg
-                  className='w-4 h-4 ml-2'
-                  fill='none'
-                  stroke='currentColor'
-                  viewBox='0 0 24 24'
-                >
-                  <path
-                    strokeLinecap='round'
-                    strokeLinejoin='round'
-                    strokeWidth={2}
-                    d='M9 5l7 7-7 7'
-                  />
-                </svg>
-              </a>
-            </Button>
-          </div>
-        </FadeIn>
       </div>
     </section>
   )

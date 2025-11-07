@@ -6,6 +6,7 @@
 'use client'
 
 import React from 'react'
+import Image from 'next/image'
 import { cn } from '@/lib/utils'
 import { Marquee } from '@/components/ui/marquee'
 import { AvatarCirclesDemo } from '@/components/ui/AvatarCirclesDemo'
@@ -282,18 +283,30 @@ export function TestimonialsSection({
     >
       <div className='container mx-auto px-4'>
         <div className='mb-12'>
-          <div className='flex flex-col items-center'>
-            <div className='flex flex-col lg:flex-row lg:items-center gap-4 mb-4 justify-center'>
-              <h2 className='text-4xl font-bold text-gray-900 text-center'>
-                {title}
-              </h2>
-              <div className='flex-shrink-0 lg:ml-4'>
-                <AvatarCirclesDemo />
-              </div>
+          <div className='relative max-w-4xl mx-auto lg:pr-64'>
+            <div className='pointer-events-none absolute inset-y-0 right-0 hidden lg:flex items-center justify-center overflow-visible'>
+              <Image
+                src='/gemini-thanks.png'
+                alt='Thank you note'
+                width={400}
+                height={300}
+                className='h-[140%] w-auto object-contain opacity-90 drop-shadow-lg rotate-[30deg]'
+                priority
+              />
             </div>
-            <p className='text-xl text-gray-600 max-w-3xl mx-auto text-center'>
-              {description}
-            </p>
+            <div className='flex flex-col items-center gap-4 text-center lg:items-start lg:text-left'>
+              <div className='flex flex-col lg:flex-row lg:items-center gap-4 justify-center lg:justify-start'>
+                <h2 className='text-4xl font-bold text-gray-900 text-center lg:text-left'>
+                  {title}
+                </h2>
+                <div className='flex-shrink-0 lg:ml-4'>
+                  <AvatarCirclesDemo />
+                </div>
+              </div>
+              <p className='text-xl text-gray-600 max-w-3xl mx-auto lg:mx-0'>
+                {description}
+              </p>
+            </div>
           </div>
         </div>
 

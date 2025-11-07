@@ -2,7 +2,6 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { motion } from 'framer-motion'
 import { brandClasses } from '@/lib/branding'
@@ -188,15 +187,9 @@ export function Footer() {
               <motion.div
                 whileHover={shouldAnimate ? { scale: 1.05 } : undefined}
                 transition={{ scale: { duration: 0.2 } }}
-                className='bg-white rounded-lg p-2 border border-blue-400/30 shadow-lg'
+                className='text-2xl font-bold text-white transition-opacity duration-300 group-hover:opacity-90'
               >
-                <Image
-                  src='/logo.png'
-                  alt='BestIT Consulting Logo'
-                  width={160}
-                  height={40}
-                  className='h-10 w-auto transition-opacity duration-300 group-hover:opacity-90'
-                />
+                Best IT Consulting
               </motion.div>
             </Link>
 

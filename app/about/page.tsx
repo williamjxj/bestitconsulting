@@ -37,19 +37,20 @@ const founderInfo = {
   bio: 'Full-stack developer with 10+ years of experience building scalable web applications and digital solutions.',
   expertise: [
     'Full-Stack Development',
+    'AI/ML',
     'Cloud Architecture',
     'DevOps',
     'UI/UX Design',
   ],
-  experience: '10+ years',
+  experience: '20+ years',
   education: 'Computer Science & Software Engineering',
   specialties: [
     'React/Next.js',
     'Node.js',
+    'AI/ML',
     'Python',
-    'AWS',
-    'Docker',
-    'TypeScript',
+    'AWS/GCP/Azure',
+    'PostgreSQL/MongoDB',
   ],
 }
 
