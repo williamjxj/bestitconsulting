@@ -56,4 +56,5 @@ next-env.d.ts
 /.cursor
 .obsidian
 .vscode
-
+# Documentation build
+docs/build/

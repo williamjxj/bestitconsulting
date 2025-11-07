@@ -29,15 +29,19 @@ async function main() {
   } else {
     console.error('❌', result.message)
     if (result.details) {
-      console.error('\n🔍 Error Details:', JSON.stringify(result.details, null, 2))
+      console.error(
+        '\n🔍 Error Details:',
+        JSON.stringify(result.details, null, 2)
+      )
     }
-    console.error('\n⚠️  Please check your Supabase configuration in .env.local')
+    console.error(
+      '\n⚠️  Please check your Supabase configuration in .env.local'
+    )
     process.exit(1)
   }
 }
 
-main().catch((error) => {
+main().catch(error => {
   console.error('❌ Unexpected error:', error)
   process.exit(1)
 })
-

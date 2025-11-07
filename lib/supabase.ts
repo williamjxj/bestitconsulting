@@ -17,7 +17,9 @@ function getSupabaseUrl(): string {
 function getSupabaseAnonKey(): string {
   const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
   if (!key) {
-    throw new Error('Missing NEXT_PUBLIC_SUPABASE_ANON_KEY environment variable')
+    throw new Error(
+      'Missing NEXT_PUBLIC_SUPABASE_ANON_KEY environment variable'
+    )
   }
   return key
 }
@@ -86,7 +88,11 @@ export async function testSupabaseConnection(): Promise<{
         },
       })
 
-      if (!healthCheck.ok && healthCheck.status !== 401 && healthCheck.status !== 404) {
+      if (
+        !healthCheck.ok &&
+        healthCheck.status !== 401 &&
+        healthCheck.status !== 404
+      ) {
         return {
           success: false,
           message: `Cannot reach Supabase API: HTTP ${healthCheck.status}`,
@@ -106,15 +112,20 @@ export async function testSupabaseConnection(): Promise<{
 
     // Try a simple query to verify authentication
     // Using a non-existent table is fine - we just want to verify auth works
-    const { error } = await client.from('_connection_test_').select('*').limit(1)
+    const { error } = await client
+      .from('_connection_test_')
+      .select('*')
+      .limit(1)
 
     // If we get a "table not found" or "schema cache" error, connection is working
     // These errors mean we successfully authenticated but the table doesn't exist
     if (error) {
       const connectionErrorCodes = ['PGRST116', 'PGRST205', '42P01']
-      if (connectionErrorCodes.includes(error.code) ||
-          error.message.includes('does not exist') ||
-          error.message.includes('schema cache')) {
+      if (
+        connectionErrorCodes.includes(error.code) ||
+        error.message.includes('does not exist') ||
+        error.message.includes('schema cache')
+      ) {
         return {
           success: true,
           message: 'Supabase connection successful - configuration is correct',
@@ -164,4 +175,3 @@ export async function testSupabaseConnection(): Promise<{
     }
   }
 }
-

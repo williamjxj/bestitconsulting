@@ -256,7 +256,9 @@ export default function ServicesPage() {
                 className='bg-white text-blue-700 hover:bg-blue-50'
                 asChild
               >
-                <Link href='/contact?title=Schedule%20Consultation#contact-form'>Schedule Consultation</Link>
+                <Link href='/contact?title=Schedule%20Consultation#contact-form'>
+                  Schedule Consultation
+                </Link>
               </Button>
               <Button
                 size='lg'

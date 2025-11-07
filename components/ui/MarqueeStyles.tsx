@@ -57,4 +57,3 @@ export function MarqueeStyles() {
 
   return null
 }
-
