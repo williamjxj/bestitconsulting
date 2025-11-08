@@ -60,7 +60,9 @@ const carouselSlides = [
   },
 ]
 
-const R2_BASE_URL = process.env.NEXT_PUBLIC_R2_BASE_URL || 'https://pub-3b3f23afc5404f20b2081d34fa4c87b8.r2.dev'
+const R2_BASE_URL =
+  process.env.NEXT_PUBLIC_R2_BASE_URL ||
+  'https://pub-3b3f23afc5404f20b2081d34fa4c87b8.r2.dev'
 
 export function HeroSection() {
   const [currentIndex, setCurrentIndex] = useState(0)
@@ -311,19 +313,19 @@ export function HeroSection() {
               {[
                 {
                   icon: <Award className='h-8 w-8 text-yellow-400' />,
-                  number: '10+',
+                  number: '20+',
                   label: 'Years Experience',
                   accent: 'from-yellow-400 to-orange-500',
                 },
                 {
                   icon: <Globe className='h-8 w-8 text-green-400' />,
-                  number: '500+',
+                  number: '50+',
                   label: 'Projects Delivered',
                   accent: 'from-green-400 to-emerald-500',
                 },
                 {
                   icon: <Users className='h-8 w-8 text-blue-400' />,
-                  number: '50+',
+                  number: '20+',
                   label: 'Expert Team',
                   accent: 'from-blue-400 to-cyan-500',
                 },

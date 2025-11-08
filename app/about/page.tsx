@@ -82,9 +82,9 @@ const values = [
 ]
 
 const stats = [
-  { number: '500+', label: 'Projects Completed', icon: Briefcase },
+  { number: '50+', label: 'Projects Completed', icon: Briefcase },
   { number: '98%', label: 'Client Satisfaction', icon: Star },
-  { number: '10+', label: 'Years Experience', icon: Award },
+  { number: '20+', label: 'Years Experience', icon: Award },
   { number: '24/7', label: 'Support Available', icon: Zap },
 ]
 
@@ -175,7 +175,7 @@ export default function AboutPage() {
                   cards={[
                     {
                       icon: <Briefcase className='size-4 text-blue-300' />,
-                      title: '500+ Projects',
+                      title: '50+ Projects',
                       description: 'Successfully delivered',
                       date: '2024',
                       iconClassName: 'text-blue-400',

@@ -79,7 +79,7 @@ export default function PortfolioPage() {
             <div className='max-w-4xl mx-auto text-center'>
               <div className='inline-flex items-center gap-2 px-4 py-2 text-sm font-medium bg-blue-600/20 rounded-full mb-8 border border-blue-500/30 animate-fade-in backdrop-blur-sm'>
                 <Rocket className='h-4 w-4 text-cyan-300 animate-float' />
-                <span>500+ Successful Projects • Award-Winning Solutions</span>
+                <span>50+ Successful Projects • Award-Winning Solutions</span>
               </div>
 
               <h1 className='text-5xl md:text-6xl lg:text-7xl font-bold leading-tight mb-8'>

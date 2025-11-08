@@ -62,7 +62,7 @@ export default function HomePage() {
 
   const stats = [
     {
-      number: '500+',
+      number: '50+',
       label: 'Projects Delivered',
       icon: <Trophy className='h-6 w-6' />,
     },

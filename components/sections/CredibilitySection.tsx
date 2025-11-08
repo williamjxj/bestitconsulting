@@ -38,7 +38,7 @@ export function CredibilitySection({
   const achievements = [
     {
       icon: Users,
-      number: '500+',
+      number: '50+',
       label: 'Happy Clients',
       gradient: 'from-blue-500 to-cyan-500',
       description: 'Satisfied customers worldwide',
