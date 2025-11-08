@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
 import { useReducedMotion } from '@/lib/accessibility'
 import { getDeviceType } from '@/lib/mobile-optimization'
@@ -19,9 +19,17 @@ export const AnimatedHeadline = ({
   className,
 }: AnimatedHeadlineProps) => {
   const containerRef = useRef<HTMLDivElement>(null)
+  const [mounted, setMounted] = useState(false)
   const reducedMotion = useReducedMotion()
-  const deviceType = getDeviceType()
-  const shouldAnimate = !reducedMotion && deviceType !== 'mobile'
+  const [deviceType, setDeviceType] = useState<'mobile' | 'tablet' | 'desktop'>('desktop')
+
+  // Only check device type after mount to avoid hydration mismatch
+  useEffect(() => {
+    setMounted(true)
+    setDeviceType(getDeviceType())
+  }, [])
+
+  const shouldAnimate = mounted && !reducedMotion && deviceType !== 'mobile'
 
   useEffect(() => {
     if (!shouldAnimate || !containerRef.current) return
@@ -50,10 +58,8 @@ export const AnimatedHeadline = ({
     })
   }, [shouldAnimate, text])
 
-  if (!shouldAnimate) {
-    return <div className={className}>{text}</div>
-  }
-
+  // Always render the same structure to avoid hydration mismatch
+  // The animation will be applied after mount if conditions are met
   return (
     <div className={className} ref={containerRef}>
       {text.split(' ').map((word, wordIndex) => (
@@ -67,6 +73,7 @@ export const AnimatedHeadline = ({
                   ? 'text-white'
                   : 'bg-clip-text text-transparent bg-gradient-to-r from-blue-300 via-cyan-300 to-purple-400 bg-[length:200%_100%] animate-text-shimmer'
               }`}
+              style={!shouldAnimate ? { opacity: 1, transform: 'translateY(0)' } : undefined}
             >
               {char === ' ' ? '\u00A0' : char}
             </span>

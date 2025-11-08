@@ -88,6 +88,11 @@ export const R2_ASSET_MAPPINGS = {
     demoPoster: 'jimeng-5-poster.jpg',
     technology: 'jimeng-2.png',
     team: 'jimeng-3.png',
+    gammaC1: 'home-page/gamma-c1.png',
+    gammaC2: 'home-page/gamma-c2.png',
+    gammaC3: 'home-page/gamma-c3.png',
+    gammaC4: 'home-page/gamma-c4.png',
+    unsplash: 'home-page/unsplash.avif',
   },
   services: {
     hero: 'jimeng-4.png',

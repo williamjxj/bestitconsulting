@@ -1,16 +1,22 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { Button } from '@/components/ui/button'
-import { IconCloudDemo } from '@/components/ui/IconCloudDemo'
-import BorderBeam from '@/components/ui/border-beam'
-import { gsap } from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { motion } from 'framer-motion'
+import Autoplay from 'embla-carousel-autoplay'
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+  type CarouselApi,
+} from '@/components/ui/carousel'
+import { AuroraText } from '@/components/ui/aurora-text'
+import { Marquee } from '@/components/ui/marquee'
 
-// Register GSAP plugins
-if (typeof window !== 'undefined') {
-  gsap.registerPlugin(ScrollTrigger)
-}
+const R2_BASE_URL =
+  process.env.NEXT_PUBLIC_R2_BASE_URL ||
+  'https://pub-3b3f23afc5404f20b2081d34fa4c87b8.r2.dev'
 
 interface Technology {
   name: string
@@ -25,34 +31,49 @@ interface TechCardProps {
 }
 
 const TechCard = ({ name, icon, color }: TechCardProps) => (
-  <div className='flex-shrink-0 mx-2'>
-    <div className='relative w-20 h-20 rounded-xl p-[1px] bg-gradient-to-br from-gray-200 to-gray-100 shadow-sm hover:shadow-md transition-shadow duration-300'>
-      <div className='w-full h-full bg-white rounded-[10px] border border-gray-200/70 flex flex-col items-center justify-center hover:border-blue-300/60 transition-all duration-300 group'>
-        <div
-          className={`text-white bg-gradient-to-br ${color} p-2 rounded-lg mb-1 group-hover:scale-110 transition-transform duration-300`}
-        >
-          {icon}
+  <motion.div
+    className='flex-shrink-0 mx-2'
+    initial={{ opacity: 0, y: 20 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true }}
+    transition={{ duration: 0.4, ease: 'easeOut' }}
+  >
+    <motion.div
+      className='relative w-28 h-28 md:w-32 md:h-32 rounded-xl group'
+      whileHover={{ scale: 1.1, y: -4 }}
+      transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+    >
+      <div className='relative w-full h-full rounded-xl p-[2px] bg-gradient-to-br from-blue-400/20 via-cyan-400/20 to-purple-400/20 shadow-lg hover:shadow-xl transition-all duration-300'>
+        <div className='w-full h-full bg-white/95 backdrop-blur-sm rounded-[10px] flex flex-col items-center justify-center transition-all duration-300 group-hover:bg-white'>
+          <motion.div
+            className={`text-white bg-gradient-to-br ${color} p-3 rounded-lg mb-2 shadow-md flex items-center justify-center`}
+            whileHover={{ scale: 1.15, rotate: 5 }}
+            transition={{ type: 'spring', stiffness: 400 }}
+          >
+            <div className='w-8 h-8 md:w-10 md:h-10 flex items-center justify-center [&>svg]:w-full [&>svg]:h-full'>
+              {icon}
+            </div>
+          </motion.div>
+          <motion.span
+            className='text-sm md:text-base font-bold text-center leading-tight tracking-tight'
+            whileHover={{ scale: 1.1 }}
+          >
+            <AuroraText className='text-sm md:text-base'>{name}</AuroraText>
+          </motion.span>
         </div>
-        <span className='text-xs font-medium text-gray-700 group-hover:text-blue-600 transition-colors text-center leading-tight'>
-          {name}
-        </span>
       </div>
-    </div>
-  </div>
+    </motion.div>
+  </motion.div>
 )
 
 const TechnologyShowcase = () => {
   const sectionRef = useRef<HTMLElement>(null)
-  const carouselRef = useRef<HTMLDivElement>(null)
   const cardsRef = useRef<HTMLDivElement[]>([])
-  const [currentSlide, setCurrentSlide] = useState(0)
-  const autoPlayRef = useRef<NodeJS.Timeout | null>(null)
-  const [progress, setProgress] = useState(0) // 0..1 autoplay progress
-  const rafRef = useRef<number | null>(null)
-  const autoplayDurationMs = 4000
-
-  // Parallax tilt state for active slide
-  const [tilt, setTilt] = useState({ rotateX: 0, rotateY: 0 })
+  const [api, setApi] = useState<CarouselApi>()
+  const [current, setCurrent] = useState(0)
+  const autoplayPlugin = useRef(
+    Autoplay({ delay: 6000, stopOnInteraction: false, stopOnMouseEnter: true })
+  )
 
   // Technology data
   const frontendTechs: Technology[] = [
@@ -217,6 +238,118 @@ const TechnologyShowcase = () => {
     },
   ]
 
+  const aiMlTechs: Technology[] = [
+    {
+      name: 'TensorFlow',
+      color: 'from-orange-500 to-orange-700',
+      icon: (
+        <svg className='w-6 h-6' viewBox='0 0 24 24' fill='currentColor'>
+          <path d='M1.292 5.856L11.54 0v24l-4.095-2.378V7.603l-6.168 3.59.015-5.337zm21.43 5.336l-.014-5.337L12.46 0v24l4.095-2.378V7.603l6.168 3.59z' />
+        </svg>
+      ),
+    },
+    {
+      name: 'PyTorch',
+      color: 'from-red-500 to-red-700',
+      icon: (
+        <svg className='w-6 h-6' viewBox='0 0 24 24' fill='currentColor'>
+          <path d='M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 16.894a.9.9 0 01-.636.266H6.742a.9.9 0 01-.636-.266.9.9 0 01-.266-.636V7.742c0-.239.095-.468.266-.636a.9.9 0 01.636-.266h10.516c.239 0 .468.095.636.266a.9.9 0 01.266.636v8.516a.9.9 0 01-.266.636z' />
+        </svg>
+      ),
+    },
+    {
+      name: 'OpenAI',
+      color: 'from-green-500 to-green-700',
+      icon: (
+        <svg className='w-6 h-6' viewBox='0 0 24 24' fill='currentColor'>
+          <path d='M22.282 9.821a5.985 5.985 0 00-4.076-4.076 5.864 5.864 0 00-5.263 0 5.985 5.985 0 00-4.076 4.076 5.864 5.864 0 000 5.263 5.985 5.985 0 004.076 4.076 5.864 5.864 0 005.263 0 5.985 5.985 0 004.076-4.076 5.864 5.864 0 000-5.263zm-1.768 3.821a4.464 4.464 0 01-2.253 2.253 4.324 4.324 0 01-3.263 0 4.464 4.464 0 01-2.253-2.253 4.324 4.324 0 010-3.263 4.464 4.464 0 012.253-2.253 4.324 4.324 0 013.263 0 4.464 4.464 0 012.253 2.253 4.324 4.324 0 010 3.263z' />
+          <circle cx='12' cy='12' r='2' />
+        </svg>
+      ),
+    },
+    {
+      name: 'Hugging Face',
+      color: 'from-yellow-500 to-yellow-700',
+      icon: (
+        <svg className='w-6 h-6' viewBox='0 0 24 24' fill='currentColor'>
+          <path d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z' />
+        </svg>
+      ),
+    },
+    {
+      name: 'Scikit-learn',
+      color: 'from-blue-500 to-blue-700',
+      icon: (
+        <svg className='w-6 h-6' viewBox='0 0 24 24' fill='currentColor'>
+          <path d='M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5' />
+        </svg>
+      ),
+    },
+    {
+      name: 'Jupyter',
+      color: 'from-purple-500 to-purple-700',
+      icon: (
+        <svg className='w-6 h-6' viewBox='0 0 24 24' fill='currentColor'>
+          <path d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z' />
+        </svg>
+      ),
+    },
+    {
+      name: 'Agentic AI',
+      color: 'from-indigo-500 to-indigo-700',
+      icon: (
+        <svg className='w-6 h-6' viewBox='0 0 24 24' fill='currentColor'>
+          <path d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z' />
+        </svg>
+      ),
+    },
+    {
+      name: 'Vibe Coding',
+      color: 'from-pink-500 to-pink-700',
+      icon: (
+        <svg className='w-6 h-6' viewBox='0 0 24 24' fill='currentColor'>
+          <path d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15l-5-5 1.41-1.41L11 14.17l7.59-7.59L20 8l-9 9z' />
+        </svg>
+      ),
+    },
+    {
+      name: 'Spec-Driven Development',
+      color: 'from-teal-500 to-teal-700',
+      icon: (
+        <svg className='w-6 h-6' viewBox='0 0 24 24' fill='currentColor'>
+          <path d='M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z' />
+        </svg>
+      ),
+    },
+    {
+      name: 'Supabase',
+      color: 'from-emerald-500 to-emerald-700',
+      icon: (
+        <svg className='w-6 h-6' viewBox='0 0 24 24' fill='currentColor'>
+          <path d='M21.362 9.354H12V.396a.396.396 0 0 0-.716-.233L2.203 12.424l-.401.562a1.04 1.04 0 0 0 .836 1.659H12v8.959a.396.396 0 0 0 .716.233l9.081-12.261.401-.562a1.04 1.04 0 0 0-.836-1.66z' />
+        </svg>
+      ),
+    },
+    {
+      name: 'Vercel',
+      color: 'from-gray-600 to-gray-800',
+      icon: (
+        <svg className='w-6 h-6' viewBox='0 0 24 24' fill='currentColor'>
+          <path d='M24 22.525H0l12-21.05 12 21.05z' />
+        </svg>
+      ),
+    },
+    {
+      name: 'Context Engineering',
+      color: 'from-violet-500 to-violet-700',
+      icon: (
+        <svg className='w-6 h-6' viewBox='0 0 24 24' fill='currentColor'>
+          <path d='M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5' />
+        </svg>
+      ),
+    },
+  ]
+
   const categories = [
     {
       title: 'Frontend Development',
@@ -230,301 +363,176 @@ const TechnologyShowcase = () => {
       title: 'Cloud & DevOps',
       technologies: cloudTechs,
     },
+    {
+      title: 'AI & ML',
+      technologies: aiMlTechs,
+    },
   ]
 
+  // Track current slide
   useEffect(() => {
-    if (typeof window === 'undefined') return
+    if (!api) return
 
-    const cards = cardsRef.current.filter(Boolean)
+    setCurrent(api.selectedScrollSnap())
 
-    // Set initial state
-    gsap.set(cards, {
-      y: 100,
-      opacity: 0,
-    })
+    const updateCurrent = () => {
+      setCurrent(api.selectedScrollSnap())
+    }
 
-    // Create scroll trigger animation
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: sectionRef.current,
-        start: 'top 80%',
-        end: 'bottom 20%',
-        toggleActions: 'play none none reverse',
-      },
-    })
-
-    tl.to(cards, {
-      y: 0,
-      opacity: 1,
-      duration: 0.8,
-      ease: 'power2.out',
-      stagger: 0.1,
-    })
+    api.on('select', updateCurrent)
 
     return () => {
-      tl.kill()
+      api.off('select', updateCurrent)
     }
-  }, [])
-
-  // Auto-play functionality
-  useEffect(() => {
-    const startAutoPlay = () => {
-      const start = performance.now()
-      const tick = (now: number) => {
-        const elapsed = now - start
-        const p = Math.min(1, elapsed / autoplayDurationMs)
-        setProgress(p)
-        if (p >= 1) {
-          setCurrentSlide(prev => (prev + 1) % categories.length)
-        } else {
-          rafRef.current = requestAnimationFrame(tick)
-        }
-      }
-      rafRef.current = requestAnimationFrame(tick)
-    }
-
-    const stopAutoPlay = () => {
-      if (rafRef.current) cancelAnimationFrame(rafRef.current)
-      rafRef.current = null
-      setProgress(0)
-    }
-
-    startAutoPlay()
-
-    return () => {
-      stopAutoPlay()
-    }
-  }, [categories.length])
-
-  // Restart progress when slide changes (if autoplay running)
-  useEffect(() => {
-    if (rafRef.current) {
-      // already running; stop and start to reset progress
-      cancelAnimationFrame(rafRef.current)
-      rafRef.current = null
-      setProgress(0)
-      const start = performance.now()
-      const tick = (now: number) => {
-        const elapsed = now - start
-        const p = Math.min(1, elapsed / autoplayDurationMs)
-        setProgress(p)
-        if (p >= 1) {
-          setCurrentSlide(prev => (prev + 1) % categories.length)
-        } else {
-          rafRef.current = requestAnimationFrame(tick)
-        }
-      }
-      rafRef.current = requestAnimationFrame(tick)
-    }
-  }, [currentSlide, categories.length])
-
-  const nextSlide = () => {
-    setCurrentSlide(prev => (prev + 1) % categories.length)
-  }
-
-  const prevSlide = () => {
-    setCurrentSlide(prev => (prev - 1 + categories.length) % categories.length)
-  }
+  }, [api])
 
   const goToSlide = (index: number) => {
-    setCurrentSlide(index)
+    api?.scrollTo(index)
   }
-
-  // Pause auto-play on hover
-  const handleMouseEnter = () => {
-    if (rafRef.current) cancelAnimationFrame(rafRef.current)
-    rafRef.current = null
-  }
-
-  const handleMouseLeave = () => {
-    if (!rafRef.current) {
-      const start = performance.now()
-      const tick = (now: number) => {
-        const elapsed = now - start
-        const p = Math.min(1, elapsed / autoplayDurationMs)
-        setProgress(p)
-        if (p >= 1) {
-          setCurrentSlide(prev => (prev + 1) % categories.length)
-        } else {
-          rafRef.current = requestAnimationFrame(tick)
-        }
-      }
-      rafRef.current = requestAnimationFrame(tick)
-    }
-  }
-
-  // Mouse move parallax for active slide
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const rect = (e.currentTarget as HTMLDivElement).getBoundingClientRect()
-    const x = e.clientX - rect.left
-    const y = e.clientY - rect.top
-    const pctX = (x / rect.width) * 2 - 1 // -1..1
-    const pctY = (y / rect.height) * 2 - 1 // -1..1
-    const maxTilt = 6 // degrees
-    setTilt({ rotateX: -pctY * maxTilt, rotateY: pctX * maxTilt })
-  }
-  const handleMouseOut = () => setTilt({ rotateX: 0, rotateY: 0 })
 
   return (
-    <section
-      ref={sectionRef}
-      className='py-12 bg-gradient-to-br from-slate-50 to-blue-50'
-    >
+    <section ref={sectionRef} className='relative py-16 md:py-20'>
       <div className='container mx-auto px-4'>
-        <div className='text-center mb-8'>
-          <span className='inline-block px-3 py-1 text-sm font-medium bg-gradient-to-r from-blue-100 to-cyan-100 text-blue-800 rounded-full mb-3 border border-blue-200/50'>
+        <div className='text-center mb-12'>
+          <span className='inline-block px-4 py-1.5 text-sm font-semibold bg-blue-50 text-blue-700 rounded-full mb-4 border border-blue-200'>
             Technology Stack
           </span>
-          <h2 className='text-2xl md:text-3xl font-bold mb-2 bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent'>
+          <h2 className='text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-gray-900'>
             Built with Modern Technologies
           </h2>
-          <p className='text-base text-muted-foreground max-w-xl mx-auto'>
+          <p className='text-base md:text-lg text-gray-600 max-w-2xl mx-auto'>
             We leverage cutting-edge tools and frameworks to deliver superior
             results.
           </p>
         </div>
 
-        {/* Layout: carousel + icon cloud aside */}
-        <div
-          className='relative mx-auto max-w-6xl grid grid-cols-1 gap-8 items-center'
-          aria-roledescription='carousel'
-          aria-label='Technology categories carousel'
-        >
-          {/* 3D Carousel Container */}
-          <div
-            className='relative lg:col-span-12 flex justify-center'
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
+        {/* Carousel Container */}
+        <div className='relative mx-auto max-w-6xl'>
+          <Carousel
+            setApi={setApi}
+            opts={{
+              loop: true,
+              align: 'start',
+            }}
+            plugins={[autoplayPlugin.current]}
+            className='w-full'
           >
-            {/* 3D Carousel Track */}
-            <div
-              ref={carouselRef}
-              className='relative h-72 md:h-80 lg:h-96 xl:h-[28rem] w-full max-w-[760px]'
-              style={{ perspective: '1000px', overflow: 'visible' }}
-            >
-              <div className='relative w-full h-full will-change-transform'>
-                {categories.map((category, index) => {
-                  const isActive = index === currentSlide
-                  const isPrev =
-                    index ===
-                    (currentSlide - 1 + categories.length) % categories.length
-                  const isNext =
-                    index === (currentSlide + 1) % categories.length
-
-                  // Calculate 3D positioning
-                  let transform = ''
-                  let opacity = 0.25
-                  let scale = 0.8
-                  let zIndex = 1
-                  let blurClass = 'blur-[0.5px]'
-
-                  if (isActive) {
-                    transform = 'translateZ(0px) rotateY(0deg)'
-                    opacity = 1
-                    scale = 1
-                    zIndex = 10
-                    blurClass = ''
-                  } else if (isPrev) {
-                    transform =
-                      'translateZ(-200px) translateX(-300px) rotateY(45deg)'
-                    opacity = 0.25
-                    scale = 0.9
-                    zIndex = 5
-                  } else if (isNext) {
-                    transform =
-                      'translateZ(-200px) translateX(300px) rotateY(-45deg)'
-                    opacity = 0.25
-                    scale = 0.9
-                    zIndex = 5
-                  } else {
-                    transform =
-                      'translateZ(-400px) translateX(0px) rotateY(0deg)'
-                    opacity = 0.2
-                    scale = 0.7
-                    zIndex = 1
-                  }
-
-                  const transformFull = `${transform} scale(${scale})`
-                  return (
+            <CarouselContent className='-ml-2 md:-ml-4'>
+              {categories.map((category, index) => (
+                <CarouselItem key={index} className='pl-2 md:pl-4'>
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{
+                      opacity: index === current ? 1 : 0.4,
+                      scale: index === current ? 1 : 0.95,
+                    }}
+                    transition={{ duration: 0.5, ease: 'easeInOut' }}
+                    className='relative w-full h-72 md:h-80 lg:h-96 xl:h-[28rem] rounded-3xl p-8 flex flex-col items-center justify-center overflow-hidden border-2 border-gray-200/50 shadow-lg'
+                    ref={el => {
+                      if (el) cardsRef.current[index] = el
+                    }}
+                  >
+                    {/* Background image with opacity - unique for each category */}
                     <div
-                      key={index}
-                      className={`absolute inset-0 transition-all duration-700 ease-out will-change-transform ${
-                        isActive ? 'pointer-events-auto' : 'pointer-events-none'
-                      }`}
+                      key={`bg-img-${index}`}
+                      className='absolute inset-0 animate-carousel-bg'
                       style={{
-                        transform: transformFull,
-                        opacity,
-                        zIndex,
-                        transformStyle: 'preserve-3d',
+                        backgroundImage: `url(${R2_BASE_URL}/home-page/gamma-c${index + 1}.png)`,
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center',
+                        backgroundRepeat: 'no-repeat',
+                        opacity: 0.2,
                       }}
-                      ref={el => {
-                        if (el) cardsRef.current[index] = el
-                      }}
-                    >
-                      {isActive ? (
-                        <BorderBeam>
-                          <div
-                            className={`relative z-0 w-full h-full rounded-2xl p-6 flex flex-col items-center justify-center overflow-hidden bg-white/10 backdrop-blur-sm shadow-lg`}
-                            onMouseMove={handleMouseMove}
-                            onMouseLeave={handleMouseOut}
-                            style={{
-                              transform: `rotateX(${tilt.rotateX}deg) rotateY(${tilt.rotateY}deg)`,
-                              transition: 'transform 120ms ease-out',
-                              backfaceVisibility: 'hidden',
-                            }}
-                          >
-                            {/* overlay gradient for depth (above content while animating) */}
-                            <div className='pointer-events-none absolute inset-0 rounded-2xl z-10 bg-[linear-gradient(to_bottom,rgba(255,255,255,0.35),transparent_35%,transparent_65%,rgba(0,0,0,0.05))]' />
-                            <div className='text-center mb-3'>
-                              <h3 className='text-xl font-bold text-gray-900 mb-1'>
-                                {category.title}
-                              </h3>
-                              <div className='w-12 h-1 mx-auto rounded-full bg-gradient-to-r from-blue-500 to-cyan-500'></div>
-                            </div>
-                            <div className='flex flex-nowrap justify-center items-center gap-3 max-w-full overflow-hidden'>
-                              {category.technologies.map((tech, techIndex) => (
-                                <TechCard
-                                  key={techIndex}
-                                  name={tech.name}
-                                  icon={tech.icon}
-                                  color={tech.color}
-                                />
-                              ))}
-                            </div>
-                          </div>
-                        </BorderBeam>
-                      ) : (
-                        <div
-                          className={`relative z-0 w-full h-full rounded-2xl p-6 flex flex-col items-center justify-center overflow-hidden bg-white/5 ${blurClass}`}
-                          aria-hidden='true'
-                        >
-                          <div className='text-center mb-3 opacity-70'>
-                            <h3 className='text-xl font-bold text-gray-900/70 mb-1'>
-                              {category.title}
-                            </h3>
-                            <div className='w-12 h-1 mx-auto rounded-full bg-gradient-to-r from-gray-300 to-gray-200'></div>
-                          </div>
-                          <div className='flex flex-nowrap justify-center items-center gap-3 max-w-full overflow-hidden opacity-80'>
-                            {category.technologies.map((tech, techIndex) => (
-                              <TechCard
-                                key={techIndex}
-                                name={tech.name}
-                                icon={tech.icon}
-                                color={tech.color}
-                              />
-                            ))}
-                          </div>
-                        </div>
-                      )}
+                      data-category-index={index}
+                      data-image-name={`gamma-c${index + 1}.png`}
+                    />
+                    {/* Overlay for better text readability */}
+                    <div className='absolute inset-0 bg-white/30 z-[1]' />
+
+                    {/* Content */}
+                    <div className='relative z-[10] text-center mb-6'>
+                      <div className='mb-3'>
+                        <h3 className='text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-extrabold leading-tight mb-4 tracking-tight bg-gradient-to-r from-blue-900 via-blue-700 to-indigo-900 bg-clip-text text-transparent drop-shadow-lg'>
+                          {category.title}
+                        </h3>
+                      </div>
+                      <motion.div
+                        className='w-16 h-2 mx-auto rounded-full bg-gradient-to-r from-blue-500 via-cyan-500 to-purple-500'
+                        initial={{ width: 0 }}
+                        animate={{ width: index === current ? 80 : 0 }}
+                        transition={{ duration: 0.5, delay: 0.2 }}
+                      />
                     </div>
-                  )
-                })}
-              </div>
-              {/* progress bar removed per request */}
-            </div>
-            {/* close 3D Carousel Container */}
+                    {index === 3 ? (
+                      // AI & ML section uses Marquee for scrolling
+                      <motion.div
+                        className='relative z-[10] w-full'
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: index === current ? 1 : 0.5, y: 0 }}
+                        transition={{ duration: 0.5, delay: 0.3 }}
+                      >
+                        <Marquee
+                          className='[--gap:1rem]'
+                          style={
+                            {
+                              '--duration': '20s',
+                              '--gap': '1rem',
+                            } as React.CSSProperties & { '--duration': string }
+                          }
+                          pauseOnHover={true}
+                          repeat={2}
+                        >
+                          {category.technologies.map((tech, techIndex) => (
+                            <TechCard
+                              key={techIndex}
+                              name={tech.name}
+                              icon={tech.icon}
+                              color={tech.color}
+                            />
+                          ))}
+                        </Marquee>
+                      </motion.div>
+                    ) : (
+                      // Other sections use regular flex layout
+                      <motion.div
+                        className='relative z-[10] flex flex-nowrap justify-center items-center gap-4 max-w-full overflow-x-auto px-4'
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: index === current ? 1 : 0.5, y: 0 }}
+                        transition={{ duration: 0.5, delay: 0.3 }}
+                      >
+                        {category.technologies.map((tech, techIndex) => (
+                          <TechCard
+                            key={techIndex}
+                            name={tech.name}
+                            icon={tech.icon}
+                            color={tech.color}
+                          />
+                        ))}
+                      </motion.div>
+                    )}
+                  </motion.div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious className='left-2 md:left-4 bg-white border border-gray-300 shadow-sm hover:shadow-md' />
+            <CarouselNext className='right-2 md:right-4 bg-white border border-gray-300 shadow-sm hover:shadow-md' />
+          </Carousel>
+
+          {/* Dots indicator */}
+          <div className='flex justify-center gap-3 mt-8'>
+            {categories.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => goToSlide(index)}
+                className={`rounded-full transition-all duration-300 ${
+                  index === current
+                    ? 'h-3 w-12 bg-blue-500'
+                    : 'h-3 w-3 bg-gray-300 hover:bg-gray-400'
+                }`}
+                aria-label={`Go to slide ${index + 1}`}
+              />
+            ))}
           </div>
-          {/* Removed aside Icon Cloud to use as headline background */}
         </div>
       </div>
     </section>

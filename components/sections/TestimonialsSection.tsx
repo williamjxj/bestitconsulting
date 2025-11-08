@@ -283,18 +283,19 @@ export function TestimonialsSection({
     >
       <div className='container mx-auto px-4'>
         <div className='mb-12'>
-          <div className='relative max-w-4xl mx-auto lg:pr-64'>
-            <div className='pointer-events-none absolute inset-y-0 right-0 hidden lg:flex items-center justify-center overflow-visible'>
+          <div className='relative max-w-4xl mx-auto lg:pr-72'>
+            <div className='pointer-events-none absolute inset-y-0 right-0 hidden lg:flex items-center justify-center overflow-visible z-0'>
               <Image
                 src='/gemini-thanks.png'
                 alt='Thank you note'
-                width={400}
-                height={300}
-                className='h-[140%] w-auto object-contain opacity-90 drop-shadow-lg rotate-[30deg]'
+                width={500}
+                height={360}
+                className='h-[216%] w-auto object-contain opacity-90 drop-shadow-lg rotate-[30deg] -translate-y-[10px]'
+                style={{ filter: 'brightness(1.2)' }}
                 priority
               />
             </div>
-            <div className='flex flex-col items-center gap-4 text-center lg:items-start lg:text-left'>
+            <div className='relative z-10 flex flex-col items-center gap-4 text-center lg:items-start lg:text-left'>
               <div className='flex flex-col lg:flex-row lg:items-center gap-4 justify-center lg:justify-start'>
                 <h2 className='text-4xl font-bold text-gray-900 text-center lg:text-left'>
                   {title}
@@ -311,7 +312,7 @@ export function TestimonialsSection({
         </div>
 
         {/* Marquee Testimonials */}
-        <div className='relative flex w-full flex-col items-center justify-center overflow-hidden'>
+        <div className='relative z-10 flex w-full flex-col items-center justify-center overflow-hidden'>
           <Marquee pauseOnHover className='[--duration:40s]'>
             {firstRow.map(review => (
               <ReviewCard key={review.username} {...review} />

@@ -60,6 +60,8 @@ const carouselSlides = [
   },
 ]
 
+const R2_BASE_URL = process.env.NEXT_PUBLIC_R2_BASE_URL || 'https://pub-3b3f23afc5404f20b2081d34fa4c87b8.r2.dev'
+
 export function HeroSection() {
   const [currentIndex, setCurrentIndex] = useState(0)
 
@@ -95,6 +97,17 @@ export function HeroSection() {
         threshold={0.1}
         rootMargin='100px'
       > */}
+      {/* Background image with opacity */}
+      <div
+        className='absolute inset-0 overflow-hidden'
+        style={{
+          backgroundImage: `url(${R2_BASE_URL}/home-page/unsplash.avif)`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          opacity: 0.4,
+        }}
+      />
       <div className='absolute inset-0 overflow-hidden'>
         {/* Primary gradient orbs - centralized */}
         <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-gradient-radial from-blue-500/20 to-transparent rounded-full animate-pulse-slow'></div>
