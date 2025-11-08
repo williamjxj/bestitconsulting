@@ -29,8 +29,10 @@ import Image from 'next/image'
 import { R2Image, R2CardImage, R2HeroImage } from '@/components/R2Image'
 import IconCloudDemo from '@/components/ui/IconCloudDemo'
 import { useR2Assets, R2_ASSET_MAPPINGS } from '@/hooks/useR2Assets'
+import { useI18n } from '@/lib/i18n'
 
 export default function TestimonialsPage() {
+  const { t } = useI18n()
   const { getImages, getAssetByFilename } = useR2Assets()
 
   // Get R2 assets for testimonials page
@@ -50,7 +52,7 @@ export default function TestimonialsPage() {
       icon: <Users className='h-8 w-8 text-blue-500' />,
       number: 500,
       suffix: '+',
-      label: 'Happy Clients',
+      label: t('stats.happyClients', 'testimonials'),
       gradient: 'from-blue-400 to-cyan-500',
     },
     {
@@ -58,21 +60,21 @@ export default function TestimonialsPage() {
       number: 4.9,
       suffix: '/5',
       decimals: 1,
-      label: 'Average Rating',
+      label: t('stats.averageRating', 'testimonials'),
       gradient: 'from-yellow-400 to-orange-500',
     },
     {
       icon: <CheckCircle className='h-8 w-8 text-green-500' />,
       number: 98,
       suffix: '%',
-      label: 'Satisfaction Rate',
+      label: t('stats.satisfactionRate', 'testimonials'),
       gradient: 'from-green-400 to-emerald-500',
     },
     {
       icon: <Globe className='h-8 w-8 text-purple-500' />,
       number: 50,
       suffix: '+',
-      label: 'Countries Served',
+      label: t('stats.countriesServed', 'testimonials'),
       gradient: 'from-purple-400 to-pink-500',
     },
   ]
@@ -120,20 +122,18 @@ export default function TestimonialsPage() {
             <div className='max-w-4xl mx-auto text-center'>
               <div className='inline-flex items-center gap-2 px-4 py-2 text-sm font-medium bg-blue-600/20 rounded-full mb-8 border border-blue-500/30'>
                 <ThumbsUp className='h-4 w-4 text-cyan-300' />
-                <span>4.9/5 Rating • 98% Client Satisfaction</span>
+                <span>{t('hero.badge', 'testimonials')}</span>
               </div>
 
               <h1 className='text-5xl md:text-6xl lg:text-7xl font-bold leading-tight mb-8'>
                 <AnimatedHeadline
-                  text='Client Testimonials'
+                  text={t('hero.title', 'testimonials')}
                   className='text-5xl md:text-6xl lg:text-7xl font-bold leading-tight'
                 />
               </h1>
 
               <p className='text-xl md:text-2xl text-blue-100/90 max-w-3xl mx-auto mb-12 leading-relaxed'>
-                Discover why hundreds of businesses trust Best IT Consulting to
-                deliver exceptional technology solutions and drive their digital
-                transformation success.
+                {t('subtitle', 'testimonials')}
               </p>
 
               <div className='flex flex-col sm:flex-row gap-6 justify-center items-center'>
@@ -144,7 +144,7 @@ export default function TestimonialsPage() {
                 >
                   <Link href='/contact'>
                     <MessageSquare className='mr-2 h-5 w-5' />
-                    Share Your Story
+                    {t('hero.shareStory', 'testimonials')}
                     <ArrowRight className='ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform' />
                   </Link>
                 </Button>
@@ -156,7 +156,7 @@ export default function TestimonialsPage() {
                 >
                   <Link href='/portfolio'>
                     <Rocket className='mr-2 h-5 w-5' />
-                    View Our Work
+                    {t('hero.viewWork', 'testimonials')}
                   </Link>
                 </Button>
               </div>

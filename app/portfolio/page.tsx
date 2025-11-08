@@ -25,8 +25,10 @@ import {
   R2HeroImage,
 } from '@/components/R2Image'
 import { useR2Assets, R2_ASSET_MAPPINGS } from '@/hooks/useR2Assets'
+import { useI18n } from '@/lib/i18n'
 
 export default function PortfolioPage() {
+  const { t } = useI18n()
   const { getImages, getAssetByFilename } = useR2Assets()
 
   // Get R2 assets for portfolio page
@@ -79,20 +81,18 @@ export default function PortfolioPage() {
             <div className='max-w-4xl mx-auto text-center'>
               <div className='inline-flex items-center gap-2 px-4 py-2 text-sm font-medium bg-blue-600/20 rounded-full mb-8 border border-blue-500/30 animate-fade-in backdrop-blur-sm'>
                 <Rocket className='h-4 w-4 text-cyan-300 animate-float' />
-                <span>50+ Successful Projects • Award-Winning Solutions</span>
+                <span>{t('badge', 'portfolio')}</span>
               </div>
 
               <h1 className='text-5xl md:text-6xl lg:text-7xl font-bold leading-tight mb-8'>
                 <AnimatedHeadline
-                  text='Our Portfolio'
+                  text={t('title', 'portfolio')}
                   className='text-5xl md:text-6xl lg:text-7xl font-bold leading-tight'
                 />
               </h1>
 
               <p className='text-xl md:text-2xl text-blue-100/90 max-w-3xl mx-auto mb-12 leading-relaxed animate-slide-up'>
-                Explore our collection of successful projects that have
-                transformed businesses and delivered measurable results across
-                various industries.
+                {t('subtitle', 'portfolio')}
               </p>
 
               <div
@@ -106,7 +106,7 @@ export default function PortfolioPage() {
                 >
                   <Link href='/contact'>
                     <Rocket className='mr-2 h-5 w-5' />
-                    Start Your Project
+                    {t('startProject', 'portfolio')}
                     <ArrowRight className='ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform' />
                   </Link>
                 </Button>
@@ -118,7 +118,7 @@ export default function PortfolioPage() {
                 >
                   <Link href='/services'>
                     <Globe className='mr-2 h-5 w-5' />
-                    Our Services
+                    {t('ourServices', 'portfolio')}
                   </Link>
                 </Button>
               </div>
@@ -282,7 +282,7 @@ export default function PortfolioPage() {
               >
                 <Link href='/contact'>
                   <Rocket className='mr-2 h-5 w-5' />
-                  Start Your Project
+                  {t('startProject', 'portfolio')}
                   <ArrowRight className='ml-2 h-5 w-5' />
                 </Link>
               </Button>

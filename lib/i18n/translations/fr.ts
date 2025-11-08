@@ -36,6 +36,42 @@ export const FR_TRANSLATIONS: Translations = {
     title: 'Nos Services',
     subtitle:
       'Services de conseil IT professionnels adaptés aux besoins de votre entreprise',
+    hero: {
+      badge: 'Nos Services',
+      title: 'Solutions IT Complètes pour Votre Entreprise',
+      description:
+        'Du développement full-stack aux solutions cloud et à la cybersécurité, nous fournissons des services technologiques de bout en bout qui stimulent la transformation numérique et la croissance des entreprises.',
+      getStarted: "Commencer Aujourd'hui",
+    },
+    section: {
+      title: 'Ce Que Nous Offrons',
+      description:
+        "Nous fournissons des services technologiques de pointe qui aident les entreprises à évoluer, innover et réussir à l'ère numérique.",
+    },
+    process: {
+      title: 'Notre Processus',
+      subtitle: 'Comment Nous Travaillons Avec Vous',
+      step1: {
+        title: 'Découverte & Analyse',
+        description:
+          'Nous analysons vos besoins commerciaux, exigences techniques et infrastructure actuelle pour créer une feuille de route de projet complète.',
+      },
+      step2: {
+        title: 'Stratégie & Planification',
+        description:
+          'Nos experts développent une stratégie technique détaillée et un plan de projet avec des jalons et livrables clairs.',
+      },
+      step3: {
+        title: 'Implémentation',
+        description:
+          'Nous exécutons le projet en utilisant des méthodologies agiles, assurant une communication et des retours réguliers tout au long du processus.',
+      },
+      step4: {
+        title: 'Support & Optimisation',
+        description:
+          'Support continu, surveillance et optimisation pour garantir que votre solution continue à fournir une valeur maximale.',
+      },
+    },
     fullStackDev: 'Développement Full-Stack',
     fullStackDevDesc:
       "Développement d'applications web et mobile de bout en bout utilisant des technologies modernes et les meilleures pratiques.",
@@ -107,28 +143,115 @@ export const FR_TRANSLATIONS: Translations = {
     title: 'À propos de Best IT Consulting',
     subtitle: 'Votre partenaire de confiance en transformation numérique',
     description:
-      'Nous sommes une équipe de développeurs et consultants expérimentés dédiés à aider les entreprises à exploiter la technologie pour la croissance et le succès.',
+      "Best IT Consulting est un cabinet de conseil logiciel solo axé sur l'externalisation logicielle et le conseil en technologie IA. Nous aidons les organisations à livrer plus rapidement avec des plateformes web modernes, rationaliser les opérations grâce à l'automatisation et libérer de la valeur avec l'IA pratique — à temps et dans le budget.",
+    hero: {
+      badge: 'À Propos de Nous',
+      title: 'À propos de Best IT Consulting',
+      ourServices: 'Nos Services',
+      viewPortfolio: 'Voir le Portfolio',
+    },
+    founder: {
+      name: 'William Jiang',
+      role: 'Fondateur & Développeur Principal',
+      bio: "Développeur full-stack avec plus de 10 ans d'expérience dans la construction d'applications web et de solutions numériques évolutives.",
+      experience: '20+ ans',
+      education: 'Informatique & Génie Logiciel',
+    },
+    values: {
+      clientFirst: {
+        title: 'Approche Client-First',
+        description:
+          'Nous priorisons vos objectifs commerciaux et livrons des solutions qui génèrent de vrais résultats.',
+      },
+      quality: {
+        title: 'Qualité & Sécurité',
+        description:
+          'Sécurité et normes de qualité de niveau entreprise dans chaque projet que nous livrons.',
+      },
+      innovation: {
+        title: 'Innovation',
+        description:
+          'Technologies de pointe et solutions créatives pour les défis modernes.',
+      },
+      collaboration: {
+        title: 'Collaboration',
+        description:
+          'Communication transparente et partenariat tout au long du processus.',
+      },
+    },
+    stats: {
+      projectsCompleted: 'Projets Terminés',
+      clientSatisfaction: 'Satisfaction Client',
+      yearsExperience: "Années d'Expérience",
+      supportAvailable: 'Support Disponible',
+    },
     mission: 'Notre Mission',
     missionDesc:
       'Fournir des solutions IT innovantes, fiables et rentables qui favorisent le succès des entreprises.',
     vision: 'Notre Vision',
     visionDesc:
       'Être la principale société de conseil IT qui transforme les entreprises grâce à la technologie.',
-    values: 'Nos Valeurs',
+    valuesTitle: 'Nos Valeurs',
     valuesDesc: 'Innovation, fiabilité, transparence et succès client.',
   },
   portfolio: {
     title: 'Notre Portfolio',
     subtitle:
-      'Présentation de nos projets réussis et des réalisations de nos clients',
+      'Explorez notre collection de projets réussis qui ont transformé les entreprises et livré des résultats mesurables dans diverses industries.',
+    badge: '50+ Projets Réussis • Solutions Primées',
+    startProject: 'Démarrer Votre Projet',
+    ourServices: 'Nos Services',
     viewProject: 'Voir le projet',
     projectDetails: 'Détails du projet',
     technologies: 'Technologies utilisées',
     category: 'Catégorie',
+    stats: {
+      projectsCompleted: 'Projets Terminés',
+      happyClients: 'Clients Heureux',
+      yearsExperience: "Années d'Expérience",
+    },
+  },
+  'case-studies': {
+    title: 'Notre Travail',
+    subtitle:
+      "Explorez notre portfolio de projets innovants et d'études de cas réussies",
   },
   testimonials: {
     title: 'Témoignages clients',
-    subtitle: 'Ce que nos clients disent de travailler avec nous',
+    subtitle:
+      "Découvrez pourquoi des centaines d'entreprises font confiance à Best IT Consulting pour fournir des solutions technologiques exceptionnelles et stimuler leur succès en transformation numérique.",
+    hero: {
+      badge: 'Note 4,9/5 • 98% de Satisfaction Client',
+      title: 'Témoignages Clients',
+      shareStory: 'Partagez Votre Histoire',
+      viewWork: 'Voir Notre Travail',
+    },
+    stats: {
+      happyClients: 'Clients Heureux',
+      averageRating: 'Note Moyenne',
+      satisfactionRate: 'Taux de Satisfaction',
+      countriesServed: 'Pays Desservis',
+    },
+    achievements: {
+      bestPartner: {
+        title: 'Meilleur Partenaire Technologique 2024',
+        organization: 'Prix des Entreprises Canadiennes',
+        description:
+          "Reconnu pour l'innovation exceptionnelle et la satisfaction client",
+      },
+      top10: {
+        title: 'Top 10 des Firmes de Conseil IT',
+        organization: 'Tech Review Magazine',
+        description:
+          'Classé parmi les principales entreprises de conseil technologique au Canada',
+      },
+      clientChoice: {
+        title: 'Prix Choix Client',
+        organization: "Prix d'Excellence de l'Industrie",
+        description:
+          'Élu par les clients comme le partenaire technologique le plus fiable',
+      },
+    },
     clientReview: 'Avis client',
   },
   contact: {
@@ -141,6 +264,53 @@ export const FR_TRANSLATIONS: Translations = {
     phone: 'Téléphone',
     address: 'Adresse',
     office: 'Bureau',
+    hero: {
+      badge: 'Consultation Gratuite • Réponse sous 24 heures',
+      title: 'Commençons Votre Voyage Numérique',
+      description:
+        "Prêt à transformer votre entreprise avec une technologie de pointe? Notre équipe d'experts est là pour transformer votre vision en réalité.",
+      getConsultation: 'Obtenir une Consultation Gratuite',
+      callNow: 'Appeler Maintenant',
+    },
+    carousel: {
+      slide1:
+        'Nous offrons des sessions de conseil technique gratuites pour aider les entreprises à explorer des solutions logicielles et IA innovantes. Des études de cas ou des détails de solutions personnalisées peuvent être fournis sur demande.',
+      slide2:
+        "Conseil Technique Gratuit: Obtenez des conseils d'experts de nos ingénieurs seniors — sans frais. Nous aidons les startups et les entreprises à résoudre des défis du monde réel grâce à l'architecture logicielle moderne, l'intégration IA et l'optimisation des systèmes.",
+      slide3:
+        'Dites-nous vos objectifs, et nous fournirons des informations personnalisées ou une étude de cas pertinente pour votre projet. Explorons comment la bonne technologie peut faire avancer votre entreprise.',
+    },
+    form: {
+      title: 'Démarrer Votre Projet',
+      description:
+        'Parlez-nous de vos exigences de projet et nous vous répondrons dans les 24 heures avec une proposition détaillée.',
+      success: {
+        title: 'Message envoyé avec succès!',
+        description: 'Nous vous répondrons dans les 24 heures.',
+      },
+      error: {
+        title: "Erreur lors de l'envoi du message",
+        description: 'Veuillez réessayer ou nous contacter directement.',
+      },
+    },
+    info: {
+      getInTouch: 'Nous Contacter',
+      ourOffice: 'Notre Bureau',
+      businessHours: "Heures d'Ouverture",
+      followUs: 'Suivez-nous',
+      mondayFriday: 'Lundi - Vendredi',
+      saturday: 'Samedi',
+      sunday: 'Dimanche',
+      closed: 'Fermé',
+      getDirections: "Obtenir l'Itinéraire",
+    },
+    cta: {
+      title: 'Prêt à Commencer?',
+      description:
+        "Ne laissez pas les défis technologiques freiner votre entreprise. Contactez-nous dès aujourd'hui et construisons quelque chose d'extraordinaire ensemble.",
+      startProject: 'Démarrer Votre Projet',
+      viewWork: 'Voir Notre Travail',
+    },
   },
   errors: {
     notFound: 'Page non trouvée',
@@ -169,6 +339,51 @@ export const FR_TRANSLATIONS: Translations = {
         'Nous aidons les entreprises à se transformer grâce à la technologie avec nos services experts en développement logiciel et conseil IT.',
       cta: 'Commencer',
       learnMore: 'En savoir plus',
+    },
+    video: {
+      badge: 'Voyez-nous en Action',
+      title: 'Regardez Comment Nous Transformons',
+      titleHighlight: ' les Entreprises',
+      description:
+        'Découvrez comment nos solutions innovantes ont aidé les entreprises à rationaliser leurs opérations, réduire les coûts et accélérer la croissance grâce à la transformation numérique.',
+      startJourney: 'Commencez Votre Voyage',
+      viewCaseStudies: 'Voir les Études de Cas',
+    },
+    features: {
+      badge: 'Notre Expertise',
+      title: 'Solutions IT Complètes',
+      subtitle:
+        "Du concept au déploiement, nous fournissons des services technologiques de bout en bout qui stimulent l'innovation.",
+      fullStack: {
+        title: 'Développement Full-Stack',
+        description:
+          'Applications web et mobiles modernes construites avec des technologies de pointe.',
+      },
+      cloud: {
+        title: 'Solutions Cloud',
+        description:
+          'Architecture cloud évolutive et déploiement pour des performances maximales.',
+      },
+      cybersecurity: {
+        title: 'Cybersécurité',
+        description:
+          'Solutions de sécurité complètes pour protéger vos actifs numériques.',
+      },
+      teamAugmentation: {
+        title: "Augmentation d'Équipe",
+        description:
+          'Développeurs experts pour accélérer la livraison de votre projet.',
+      },
+      exploreAll: 'Explorer Tous les Services',
+    },
+    stats: {
+      title: 'Bilan Prouvé',
+      subtitle:
+        "Des chiffres qui démontrent notre engagement envers l'excellence et le succès client.",
+      projectsDelivered: 'Projets Livrés',
+      enterpriseClients: 'Clients Entreprise',
+      clientSatisfaction: 'Satisfaction Client',
+      supportAvailable: 'Support Disponible',
     },
     services: {
       title: 'Nos Services',
@@ -201,12 +416,12 @@ export const FR_TRANSLATIONS: Translations = {
         },
       },
     },
-
     cta: {
-      title: 'Prêt à Transformer Votre Entreprise?',
+      title: 'Prêt à Démarrer Votre Projet?',
       description:
-        "Contactez-nous dès aujourd'hui pour discuter de la façon dont nous pouvons vous aider à atteindre vos objectifs technologiques.",
-      button: 'Nous Contacter',
+        'Discutons de la façon dont nous pouvons vous aider à atteindre vos objectifs commerciaux avec nos solutions logicielles expertes.',
+      getConsultation: 'Obtenir une Consultation Gratuite',
+      viewWork: 'Voir Notre Travail',
     },
   },
   footer: {

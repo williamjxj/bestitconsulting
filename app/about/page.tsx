@@ -29,6 +29,7 @@ import {
   R2HeroImage,
 } from '@/components/R2Image'
 import { useR2Assets, R2_ASSET_MAPPINGS } from '@/hooks/useR2Assets'
+import { useI18n } from '@/lib/i18n'
 
 const founderInfo = {
   name: 'William Jiang',
@@ -54,46 +55,59 @@ const founderInfo = {
   ],
 }
 
-const values = [
-  {
-    icon: Target,
-    title: 'Client-First Approach',
-    description:
-      'We prioritize your business goals and deliver solutions that drive real results.',
-  },
-  {
-    icon: Shield,
-    title: 'Quality & Security',
-    description:
-      'Enterprise-grade security and quality standards in every project we deliver.',
-  },
-  {
-    icon: Lightbulb,
-    title: 'Innovation',
-    description:
-      'Cutting-edge technologies and creative solutions for modern challenges.',
-  },
-  {
-    icon: Users,
-    title: 'Collaboration',
-    description:
-      'Transparent communication and partnership throughout the entire process.',
-  },
-]
-
-const stats = [
-  { number: '50+', label: 'Projects Completed', icon: Briefcase },
-  { number: '98%', label: 'Client Satisfaction', icon: Star },
-  { number: '20+', label: 'Years Experience', icon: Award },
-  { number: '24/7', label: 'Support Available', icon: Zap },
-]
-
 export default function AboutPage() {
+  const { t } = useI18n()
   const reducedMotion = useReducedMotion()
   const deviceType = getDeviceType()
   const shouldAnimate = !reducedMotion && deviceType !== 'mobile'
 
   const { getImages, getAssetByFilename } = useR2Assets()
+
+  const values = [
+    {
+      icon: Target,
+      title: t('values.clientFirst.title', 'about'),
+      description: t('values.clientFirst.description', 'about'),
+    },
+    {
+      icon: Shield,
+      title: t('values.quality.title', 'about'),
+      description: t('values.quality.description', 'about'),
+    },
+    {
+      icon: Lightbulb,
+      title: t('values.innovation.title', 'about'),
+      description: t('values.innovation.description', 'about'),
+    },
+    {
+      icon: Users,
+      title: t('values.collaboration.title', 'about'),
+      description: t('values.collaboration.description', 'about'),
+    },
+  ]
+
+  const stats = [
+    {
+      number: '50+',
+      label: t('stats.projectsCompleted', 'about'),
+      icon: Briefcase,
+    },
+    {
+      number: '98%',
+      label: t('stats.clientSatisfaction', 'about'),
+      icon: Star,
+    },
+    {
+      number: '20+',
+      label: t('stats.yearsExperience', 'about'),
+      icon: Award,
+    },
+    {
+      number: '24/7',
+      label: t('stats.supportAvailable', 'about'),
+      icon: Zap,
+    },
+  ]
 
   // Get R2 assets for about page
   const heroImage = getAssetByFilename(R2_ASSET_MAPPINGS.about.hero)
@@ -120,11 +134,11 @@ export default function AboutPage() {
               transition={{ duration: 0.6 }}
             >
               <div className='inline-flex items-center gap-2 px-4 py-2 text-sm font-medium bg-blue-600/20 rounded-full mb-8 border border-blue-500/30'>
-                <span>About Us</span>
+                <span>{t('hero.badge', 'about')}</span>
               </div>
               <h1 className='text-4xl lg:text-6xl font-bold mb-6'>
                 <AnimatedHeadline
-                  text='About Best IT Consulting'
+                  text={t('hero.title', 'about')}
                   className='text-4xl lg:text-6xl font-bold leading-tight'
                 />
               </h1>
@@ -134,11 +148,7 @@ export default function AboutPage() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.2 }}
               >
-                Best IT Consulting is a solo software consultancy focused on
-                software outsourcing and AI technology consulting. We help
-                organizations ship faster with modern web platforms, streamline
-                operations through automation, and unlock value with practical
-                AI—on time and within budget.
+                {t('description', 'about')}
               </motion.p>
               <motion.div
                 className='flex flex-col sm:flex-row gap-6 justify-center mb-12'
@@ -150,7 +160,7 @@ export default function AboutPage() {
                   size='lg'
                   className='group text-lg px-8 py-4 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700'
                 >
-                  Our Services
+                  {t('hero.ourServices', 'about')}
                   <ArrowRight className='ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform' />
                 </Button>
                 <Button
@@ -158,7 +168,7 @@ export default function AboutPage() {
                   size='lg'
                   className='text-lg px-8 py-4 bg-white/10 border-white/20 hover:bg-white/20'
                 >
-                  View Portfolio
+                  {t('hero.viewPortfolio', 'about')}
                 </Button>
               </motion.div>
             </motion.div>

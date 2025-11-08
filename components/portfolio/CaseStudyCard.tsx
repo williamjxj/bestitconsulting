@@ -1,6 +1,40 @@
 /**
- * Case study card component
- * Enhanced case study card with hover reveal animations
+ * Case study card component with image-first layout
+ * Enhanced case study card with hover reveal animations and accessibility support.
+ *
+ * Features:
+ * - Image-first layout (image → category → title → description)
+ * - Hover animations with reduced motion support
+ * - Category and featured badges overlaid on image
+ * - Technology tags display
+ * - Project links (view project, GitHub)
+ *
+ * @param {CaseStudyCardProps} props - Component props
+ * @param {string} props.title - Project title
+ * @param {string} props.description - Project description
+ * @param {string} props.image - Project image URL
+ * @param {string[]} props.technologies - Array of technology names
+ * @param {string} props.category - Project category
+ * @param {string} [props.link] - Optional project link URL
+ * @param {string} [props.github] - Optional GitHub repository URL
+ * @param {boolean} [props.featured] - Whether project is featured
+ * @param {string} [props.className] - Additional CSS classes
+ * @param {boolean} [props.respectReducedMotion] - Whether to respect reduced motion preference
+ * @param {() => void} [props.onHover] - Callback on hover
+ * @param {() => void} [props.onLeave] - Callback on mouse leave
+ *
+ * @example
+ * ```tsx
+ * <CaseStudyCard
+ *   title="E-Commerce Platform"
+ *   description="Full-stack e-commerce solution"
+ *   image="/project.jpg"
+ *   technologies={["React", "Node.js"]}
+ *   category="Web Development"
+ *   link="https://example.com"
+ *   featured
+ * />
+ * ```
  */
 
 'use client'
@@ -111,34 +145,10 @@ export const CaseStudyCard: React.FC<CaseStudyCardProps> = ({
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      <Card className='relative overflow-hidden h-full'>
-        {/* Featured badge */}
-        {featured && (
-          <motion.div
-            className='absolute top-4 right-4 z-10'
-            variants={badgeVariants}
-            initial='initial'
-            whileHover='hover'
-          >
-            <Badge variant='default' className='bg-blue-500'>
-              Featured
-            </Badge>
-          </motion.div>
-        )}
-
-        {/* Category badge */}
+      <Card className='relative overflow-hidden h-full flex flex-col'>
+        {/* Image First - Larger and More Prominent */}
         <motion.div
-          className='absolute top-4 left-4 z-10'
-          variants={badgeVariants}
-          initial='initial'
-          whileHover='hover'
-        >
-          <Badge variant='outline'>{category}</Badge>
-        </motion.div>
-
-        {/* Image */}
-        <motion.div
-          className='relative h-48 overflow-hidden'
+          className='relative w-full aspect-video overflow-hidden'
           variants={imageVariants}
           initial='initial'
           whileHover='hover'
@@ -153,17 +163,46 @@ export const CaseStudyCard: React.FC<CaseStudyCardProps> = ({
             }}
             transition={{ duration: 0.3 }}
           />
+
+          {/* Featured badge overlay on image */}
+          {featured && (
+            <motion.div
+              className='absolute top-4 right-4 z-10'
+              variants={badgeVariants}
+              initial='initial'
+              whileHover='hover'
+            >
+              <Badge
+                variant='default'
+                className='bg-blue-500/90 backdrop-blur-sm'
+              >
+                Featured
+              </Badge>
+            </motion.div>
+          )}
+
+          {/* Category badge overlay on image */}
+          <motion.div
+            className='absolute top-4 left-4 z-10'
+            variants={badgeVariants}
+            initial='initial'
+            whileHover='hover'
+          >
+            <Badge variant='outline' className='bg-white/90 backdrop-blur-sm'>
+              {category}
+            </Badge>
+          </motion.div>
         </motion.div>
 
         {/* Content */}
         <motion.div
-          className='p-6'
+          className='p-6 flex-1 flex flex-col'
           variants={contentVariants}
           initial='initial'
           whileHover='hover'
         >
           <CardTitle className='mb-2'>{title}</CardTitle>
-          <p className='text-muted-foreground mb-4 line-clamp-3'>
+          <p className='text-muted-foreground mb-4 line-clamp-3 flex-1'>
             {description}
           </p>
 

@@ -22,8 +22,10 @@ import { DemoVideo } from '@/components/DemoVideo'
 import { TestimonialsSection } from '@/components/sections/TestimonialsSection'
 import { R2Image, R2Video, R2HeroImage } from '@/components/R2Image'
 import { useR2Assets, R2_ASSET_MAPPINGS } from '@/hooks/useR2Assets'
+import { useI18n } from '@/lib/i18n'
 
 export default function HomePage() {
+  const { t } = useI18n()
   const { getImages, getVideos, getAssetByFilename } = useR2Assets()
 
   // Get R2 assets for home page
@@ -37,48 +39,45 @@ export default function HomePage() {
   const features = [
     {
       icon: <Code2 className='h-8 w-8' />,
-      title: 'Full-Stack Development',
-      description:
-        'Modern web and mobile applications built with cutting-edge technologies.',
+      title: t('features.fullStack.title', 'home'),
+      description: t('features.fullStack.description', 'home'),
     },
     {
       icon: <Cloud className='h-8 w-8' />,
-      title: 'Cloud Solutions',
-      description:
-        'Scalable cloud architecture and deployment for maximum performance.',
+      title: t('features.cloud.title', 'home'),
+      description: t('features.cloud.description', 'home'),
     },
     {
       icon: <Shield className='h-8 w-8' />,
-      title: 'Cybersecurity',
-      description:
-        'Comprehensive security solutions to protect your digital assets.',
+      title: t('features.cybersecurity.title', 'home'),
+      description: t('features.cybersecurity.description', 'home'),
     },
     {
       icon: <Users className='h-8 w-8' />,
-      title: 'Team Augmentation',
-      description: 'Expert developers to accelerate your project delivery.',
+      title: t('features.teamAugmentation.title', 'home'),
+      description: t('features.teamAugmentation.description', 'home'),
     },
   ]
 
   const stats = [
     {
       number: '50+',
-      label: 'Projects Delivered',
+      label: t('stats.projectsDelivered', 'home'),
       icon: <Trophy className='h-6 w-6' />,
     },
     {
       number: '50+',
-      label: 'Enterprise Clients',
+      label: t('stats.enterpriseClients', 'home'),
       icon: <Building className='h-6 w-6' />,
     },
     {
       number: '98%',
-      label: 'Client Satisfaction',
+      label: t('stats.clientSatisfaction', 'home'),
       icon: <Star className='h-6 w-6' />,
     },
     {
       number: '247',
-      label: 'Support Available',
+      label: t('stats.supportAvailable', 'home'),
       icon: <Shield className='h-6 w-6' />,
     },
   ]
@@ -101,26 +100,28 @@ export default function HomePage() {
                   >
                     <div>
                       <span className='inline-block px-4 py-1.5 text-sm font-medium bg-blue-100 text-blue-800 rounded-full mb-4'>
-                        See Us In Action
+                        {t('video.badge', 'home')}
                       </span>
                       <h2 className='text-3xl md:text-4xl font-bold mb-6'>
-                        Watch How We Transform
-                        <span className='text-blue-600'> Businesses</span>
+                        {t('video.title', 'home')}
+                        <span className='text-blue-600'>
+                          {t('video.titleHighlight', 'home')}
+                        </span>
                       </h2>
                       <p className='text-lg text-muted-foreground mb-8'>
-                        Discover how our innovative solutions have helped
-                        companies streamline operations, reduce costs, and
-                        accelerate growth through digital transformation.
+                        {t('video.description', 'home')}
                       </p>
                       <div className='flex gap-4'>
                         <Button size='lg' asChild>
                           <Link href='/contact'>
-                            Start Your Journey
+                            {t('video.startJourney', 'home')}
                             <ArrowRight className='ml-2 h-4 w-4' />
                           </Link>
                         </Button>
                         <Button size='lg' variant='outline' asChild>
-                          <Link href='/portfolio'>View Case Studies</Link>
+                          <Link href='/portfolio'>
+                            {t('video.viewCaseStudies', 'home')}
+                          </Link>
                         </Button>
                       </div>
                     </div>
@@ -162,14 +163,13 @@ export default function HomePage() {
             <div className='w-full lg:max-w-7xl lg:mx-auto'>
               <div className='text-center mb-16'>
                 <span className='inline-block px-4 py-1.5 text-sm font-medium bg-blue-100 text-blue-800 rounded-full mb-4'>
-                  Our Expertise
+                  {t('features.badge', 'home')}
                 </span>
                 <h2 className='text-3xl md:text-4xl font-bold mb-4'>
-                  Comprehensive IT Solutions
+                  {t('features.title', 'home')}
                 </h2>
                 <p className='text-lg text-muted-foreground max-w-2xl mx-auto'>
-                  From concept to deployment, we provide end-to-end technology
-                  services that drive innovation.
+                  {t('features.subtitle', 'home')}
                 </p>
               </div>
 
@@ -197,7 +197,7 @@ export default function HomePage() {
               <div className='text-center mt-12'>
                 <Button size='lg' asChild>
                   <Link href='/services' className='group'>
-                    Explore All Services
+                    {t('features.exploreAll', 'home')}
                     <ArrowRight className='ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform' />
                   </Link>
                 </Button>
@@ -215,11 +215,10 @@ export default function HomePage() {
             <div className='w-full lg:max-w-7xl lg:mx-auto'>
               <div className='text-center mb-16'>
                 <h2 className='text-3xl md:text-4xl font-bold mb-4'>
-                  Proven Track Record
+                  {t('stats.title', 'home')}
                 </h2>
                 <p className='text-xl text-blue-100 max-w-2xl mx-auto'>
-                  Numbers that showcase our commitment to excellence and client
-                  success.
+                  {t('stats.subtitle', 'home')}
                 </p>
               </div>
 
@@ -259,11 +258,10 @@ export default function HomePage() {
         <section className='py-12 bg-gradient-to-r from-blue-600 to-indigo-700 text-white'>
           <div className='w-full px-4 sm:px-6 lg:px-8 text-center'>
             <h2 className='text-3xl md:text-4xl font-bold mb-6'>
-              Ready to Start Your Project?
+              {t('cta.title', 'home')}
             </h2>
             <p className='text-xl text-blue-100 max-w-2xl mx-auto mb-8'>
-              Let's discuss how we can help you achieve your business goals with
-              our expert software solutions.
+              {t('cta.description', 'home')}
             </p>
             <div className='flex flex-col sm:flex-row gap-4 justify-center'>
               <Button
@@ -272,7 +270,7 @@ export default function HomePage() {
                 asChild
               >
                 <Link href='/contact?title=Get%20a%20Free%20Consultation#contact-form'>
-                  Get a Free Consultation
+                  {t('cta.getConsultation', 'home')}
                 </Link>
               </Button>
               <Button
@@ -281,7 +279,7 @@ export default function HomePage() {
                 className='border-white/30 hover:bg-white/10'
                 asChild
               >
-                <Link href='/portfolio'>View Our Work</Link>
+                <Link href='/portfolio'>{t('cta.viewWork', 'home')}</Link>
               </Button>
             </div>
           </div>

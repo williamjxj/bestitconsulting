@@ -21,7 +21,9 @@ export const AnimatedHeadline = ({
   const containerRef = useRef<HTMLDivElement>(null)
   const [mounted, setMounted] = useState(false)
   const reducedMotion = useReducedMotion()
-  const [deviceType, setDeviceType] = useState<'mobile' | 'tablet' | 'desktop'>('desktop')
+  const [deviceType, setDeviceType] = useState<'mobile' | 'tablet' | 'desktop'>(
+    'desktop'
+  )
 
   // Only check device type after mount to avoid hydration mismatch
   useEffect(() => {
@@ -73,7 +75,11 @@ export const AnimatedHeadline = ({
                   ? 'text-white'
                   : 'bg-clip-text text-transparent bg-gradient-to-r from-blue-300 via-cyan-300 to-purple-400 bg-[length:200%_100%] animate-text-shimmer'
               }`}
-              style={!shouldAnimate ? { opacity: 1, transform: 'translateY(0)' } : undefined}
+              style={
+                !shouldAnimate
+                  ? { opacity: 1, transform: 'translateY(0)' }
+                  : undefined
+              }
             >
               {char === ' ' ? '\u00A0' : char}
             </span>

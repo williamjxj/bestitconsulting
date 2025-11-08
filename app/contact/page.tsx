@@ -31,8 +31,36 @@ import {
   Users,
 } from 'lucide-react'
 import Link from 'next/link'
+import { useI18n } from '@/lib/i18n'
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from '@/components/ui/carousel'
+import Autoplay from 'embla-carousel-autoplay'
 
+/**
+ * Contact page component with hero carousel
+ *
+ * Features:
+ * - Hero section with animated text carousel (3 slides)
+ * - Contact form with validation
+ * - Office information and map
+ * - Benefits banner
+ * - Full internationalization support
+ *
+ * Carousel Implementation:
+ * - Uses shadcn/ui Carousel component with embla-carousel-autoplay
+ * - Autoplay: 4-second intervals, stops on interaction
+ * - Three slides with translated content from i18n
+ * - Full accessibility support (ARIA labels, keyboard navigation)
+ * - Responsive navigation buttons
+ */
 export default function ContactPage() {
+  const { t } = useI18n()
+  const [emblaApi, setEmblaApi] = useState<any>(null)
   const formFields = [
     {
       name: 'name',
@@ -164,20 +192,74 @@ export default function ContactPage() {
             <div className='text-center max-w-4xl mx-auto'>
               <div className='inline-flex items-center gap-2 px-4 py-2 text-sm font-medium bg-blue-600/20 rounded-full mb-6 border border-blue-500/30'>
                 <MessageSquare className='h-4 w-4 text-cyan-300' />
-                <span>Free Consultation • Response within 24 hours</span>
+                <span>{t('hero.badge', 'contact')}</span>
               </div>
 
               <h1 className='text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6'>
                 <AnimatedHeadline
-                  text="Let's Start Your Digital Journey"
+                  text={t('hero.title', 'contact')}
                   className='text-4xl md:text-5xl lg:text-6xl font-bold leading-tight'
                 />
               </h1>
 
-              <p className='text-lg md:text-xl text-blue-100/90 mb-8 max-w-2xl mx-auto'>
-                Ready to transform your business with cutting-edge technology?
-                Our expert team is here to turn your vision into reality.
-              </p>
+              {/* Carousel for Hero Text */}
+              <div className='mb-8 max-w-2xl mx-auto relative'>
+                <Carousel
+                  setApi={setEmblaApi}
+                  plugins={[
+                    Autoplay({
+                      delay: 4000,
+                      stopOnInteraction: true,
+                      stopOnMouseEnter: true,
+                    }),
+                  ]}
+                  opts={{
+                    align: 'start',
+                    loop: true,
+                  }}
+                  className='w-full'
+                  role='region'
+                  aria-roledescription='carousel'
+                >
+                  <CarouselContent>
+                    <CarouselItem
+                      role='group'
+                      aria-roledescription='slide'
+                      aria-label='Slide 1 of 3'
+                    >
+                      <p className='text-lg md:text-xl text-blue-100/90 text-center px-4'>
+                        {t('carousel.slide1', 'contact')}
+                      </p>
+                    </CarouselItem>
+                    <CarouselItem
+                      role='group'
+                      aria-roledescription='slide'
+                      aria-label='Slide 2 of 3'
+                    >
+                      <p className='text-lg md:text-xl text-blue-100/90 text-center px-4'>
+                        {t('carousel.slide2', 'contact')}
+                      </p>
+                    </CarouselItem>
+                    <CarouselItem
+                      role='group'
+                      aria-roledescription='slide'
+                      aria-label='Slide 3 of 3'
+                    >
+                      <p className='text-lg md:text-xl text-blue-100/90 text-center px-4'>
+                        {t('carousel.slide3', 'contact')}
+                      </p>
+                    </CarouselItem>
+                  </CarouselContent>
+                  <CarouselPrevious
+                    className='left-0 md:-left-12 text-white border-white/30 hover:bg-white/10 hover:border-white/50 bg-white/5 backdrop-blur-sm'
+                    aria-label='Previous slide'
+                  />
+                  <CarouselNext
+                    className='right-0 md:-right-12 text-white border-white/30 hover:bg-white/10 hover:border-white/50 bg-white/5 backdrop-blur-sm'
+                    aria-label='Next slide'
+                  />
+                </Carousel>
+              </div>
 
               <div className='flex flex-col sm:flex-row gap-4 justify-center items-center'>
                 <Button
@@ -187,7 +269,7 @@ export default function ContactPage() {
                 >
                   <Link href='#contact-form'>
                     <Send className='mr-2 h-5 w-5' />
-                    Get Free Consultation
+                    {t('hero.getConsultation', 'contact')}
                     <ArrowRight className='ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform' />
                   </Link>
                 </Button>
@@ -199,7 +281,7 @@ export default function ContactPage() {
                 >
                   <Link href='#contact-methods'>
                     <Phone className='mr-2 h-5 w-5' />
-                    Call Now
+                    {t('hero.callNow', 'contact')}
                   </Link>
                 </Button>
               </div>
@@ -242,11 +324,10 @@ export default function ContactPage() {
                 <Card className='border-0 shadow-xl bg-white'>
                   <CardHeader className='pb-4'>
                     <CardTitle className='text-2xl font-bold text-gray-900 mb-2'>
-                      Start Your Project
+                      {t('form.title', 'contact')}
                     </CardTitle>
                     <p className='text-gray-600'>
-                      Tell us about your project requirements and we'll get back
-                      to you within 24 hours with a detailed proposal.
+                      {t('form.description', 'contact')}
                     </p>
                   </CardHeader>
                   <CardContent className='p-6 pt-0'>
@@ -256,10 +337,10 @@ export default function ContactPage() {
                           <CheckCircle className='h-5 w-5 text-green-600' />
                           <div>
                             <h4 className='font-semibold text-green-800'>
-                              Message sent successfully!
+                              {t('form.success.title', 'contact')}
                             </h4>
                             <p className='text-green-700 text-sm'>
-                              We'll get back to you within 24 hours.
+                              {t('form.success.description', 'contact')}
                             </p>
                           </div>
                         </div>
@@ -272,10 +353,10 @@ export default function ContactPage() {
                           <AlertCircle className='h-5 w-5 text-red-600' />
                           <div>
                             <h4 className='font-semibold text-red-800'>
-                              Error sending message
+                              {t('form.error.title', 'contact')}
                             </h4>
                             <p className='text-red-700 text-sm'>
-                              Please try again or contact us directly.
+                              {t('form.error.description', 'contact')}
                             </p>
                           </div>
                         </div>
@@ -533,10 +614,11 @@ export default function ContactPage() {
         {/* Compact CTA Section */}
         <section className='py-12 px-4 bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 text-white'>
           <div className='max-w-4xl mx-auto text-center'>
-            <h2 className='text-3xl font-bold mb-4'>Ready to Get Started?</h2>
+            <h2 className='text-3xl font-bold mb-4'>
+              {t('cta.title', 'contact')}
+            </h2>
             <p className='text-lg text-blue-100/90 mb-6 max-w-2xl mx-auto'>
-              Don't let technology challenges hold your business back. Contact
-              us today and let's build something amazing together.
+              {t('cta.description', 'contact')}
             </p>
 
             <div className='flex flex-col sm:flex-row gap-4 justify-center items-center'>
@@ -547,7 +629,7 @@ export default function ContactPage() {
               >
                 <Link href='#contact-form'>
                   <Send className='mr-2 h-5 w-5' />
-                  Start Your Project
+                  {t('cta.startProject', 'contact')}
                   <ArrowRight className='ml-2 h-5 w-5' />
                 </Link>
               </Button>

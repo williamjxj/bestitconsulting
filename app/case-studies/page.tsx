@@ -47,8 +47,10 @@ import {
   R2HeroImage,
 } from '@/components/R2Image'
 import { useR2Assets, R2_ASSET_MAPPINGS } from '@/hooks/useR2Assets'
+import { useI18n } from '@/lib/i18n'
 
 export default function OurWorkPage() {
+  const { t } = useI18n()
   const { getImages, getAssetByFilename } = useR2Assets()
   const BASE_URL = process.env.NEXT_PUBLIC_R2_BASE_URL || ''
 
@@ -159,16 +161,16 @@ export default function OurWorkPage() {
 
     if (validImages.length === 0) {
       return (
-        <div className='w-full h-64 bg-gradient-to-br from-blue-100 to-cyan-100 rounded-lg' />
+        <div className='w-full h-full bg-gradient-to-br from-blue-100 to-cyan-100' />
       )
     }
 
     return (
-      <div className='relative w-full h-64 overflow-hidden rounded-lg'>
+      <div className='relative w-full h-full overflow-hidden'>
         <img
           src={validImages[index]}
           alt={alt}
-          className='w-full h-64 object-cover transition-opacity duration-700'
+          className='w-full h-full object-cover transition-opacity duration-700'
         />
       </div>
     )
@@ -178,13 +180,13 @@ export default function OurWorkPage() {
     {
       icon: <Rocket className='h-8 w-8 text-blue-500' />,
       label: 'Live Projects',
-      value: 9,
+      value: 19,
       suffix: '+',
     },
     {
       icon: <Users className='h-8 w-8 text-green-500' />,
       label: 'Happy Clients',
-      value: 25,
+      value: 50,
       suffix: '+',
     },
     {
@@ -196,7 +198,7 @@ export default function OurWorkPage() {
     {
       icon: <Clock className='h-8 w-8 text-orange-500' />,
       label: 'Years Experience',
-      value: 5,
+      value: 20,
       suffix: '+',
     },
   ]
@@ -392,14 +394,12 @@ export default function OurWorkPage() {
               </div>
               <h1 className='text-5xl md:text-6xl lg:text-7xl font-bold mb-8'>
                 <AnimatedHeadline
-                  text='Our Work'
+                  text={t('title', 'case-studies')}
                   className='text-5xl md:text-6xl lg:text-7xl font-bold'
                 />
               </h1>
               <p className='text-xl md:text-2xl text-blue-100/90 max-w-2xl leading-relaxed mb-8'>
-                Discover our portfolio of cutting-edge digital solutions, from
-                AI-powered applications to enterprise-grade platforms that drive
-                business transformation.
+                {t('subtitle', 'case-studies')}
               </p>
               <div className='flex flex-wrap gap-6 text-sm text-blue-200/80'>
                 <div className='flex items-center gap-2'>
@@ -446,8 +446,8 @@ export default function OurWorkPage() {
 
         {/* Projects Section */}
         <ScrollTrigger animation='fade' direction='up' duration={0.8}>
-          <section className='py-20 px-4 bg-gradient-to-br from-blue-50 to-cyan-50'>
-            <div className='max-w-7xl mx-auto'>
+          <section className='py-20 bg-gradient-to-br from-blue-50 to-cyan-50'>
+            <div className='container mx-auto px-4'>
               <div className='text-center mb-16'>
                 <FadeIn delay={0.2} duration={0.8}>
                   <h2 className='text-4xl font-bold text-gray-900 mb-6'>
@@ -470,47 +470,11 @@ export default function OurWorkPage() {
                     delay={index * 0.1}
                     duration={0.6}
                   >
-                    <Card className='group hover:shadow-xl transition-all duration-300 hover:-translate-y-2 border-0 bg-white/80 backdrop-blur-sm h-full w-full'>
-                      <CardHeader className='pb-2'>
-                        <div className='flex items-center justify-between gap-2'>
-                          <div className='flex items-center gap-3 min-w-0'>
-                            <CardTitle className='text-base md:text-lg font-bold text-gray-900 group-hover:text-blue-600 transition-colors leading-snug line-clamp-2 break-words'>
-                              <Link
-                                href={project.url}
-                                target='_blank'
-                                rel='noopener noreferrer'
-                                className='hover:underline'
-                                title={project.url}
-                                onClick={e => {
-                                  e.preventDefault()
-                                }}
-                                onKeyDown={e => {
-                                  if (e.key === 'Enter' || e.key === ' ') {
-                                    e.preventDefault()
-                                  }
-                                }}
-                              >
-                                {project.title}
-                              </Link>
-                            </CardTitle>
-                            <Badge
-                              variant='secondary'
-                              className='bg-blue-100 text-blue-800 border-blue-200 whitespace-nowrap'
-                            >
-                              {project.category}
-                            </Badge>
-                          </div>
-                          <div className='flex items-center gap-2 text-green-600 shrink-0'>
-                            <div className='w-2 h-2 bg-green-500 rounded-full animate-pulse'></div>
-                            <span className='text-sm font-medium'>
-                              {project.status}
-                            </span>
-                          </div>
-                        </div>
-                      </CardHeader>
-                      <CardContent className='flex flex-col h-full'>
+                    <Card className='group h-full overflow-hidden rounded-xl bg-white border-0 shadow-lg hover:shadow-[0_8px_30px_rgb(0,0,0,0.12)] transition-shadow duration-300 flex flex-col !gap-0 !py-0'>
+                      {/* Image First - No margin, extends to card edges */}
+                      <div className='relative w-full aspect-video overflow-hidden'>
                         {/* Project Image */}
-                        <div className='mb-4'>
+                        <div className='w-full h-full transition-transform duration-300 group-hover:scale-[1.2]'>
                           {(() => {
                             // Local folder carousels by project id
                             const idToLocalImages: Record<number, string[]> = {
@@ -610,7 +574,7 @@ export default function OurWorkPage() {
                               <R2CardImage
                                 src={randomJimeng}
                                 alt={project.title}
-                                className='w-full h-64 rounded-lg object-cover'
+                                className='w-full h-full object-cover !rounded-none'
                                 animation='fade'
                                 delay={0.2}
                                 hover={true}
@@ -627,7 +591,7 @@ export default function OurWorkPage() {
                                 }
                               />
                             ) : (
-                              <div className='w-full h-64 bg-gradient-to-br from-blue-100 to-cyan-100 rounded-lg flex items-center justify-center'>
+                              <div className='w-full h-full bg-gradient-to-br from-blue-100 to-cyan-100 flex items-center justify-center'>
                                 <div className='text-center'>
                                   <Code2 className='w-8 h-8 text-blue-400 mx-auto mb-2' />
                                   <p className='text-gray-600 text-sm'>
@@ -638,6 +602,50 @@ export default function OurWorkPage() {
                             )
                           })()}
                         </div>
+                        {/* Category Badge Overlay on Image */}
+                        <div className='absolute top-4 right-4 z-10'>
+                          <Badge
+                            variant='secondary'
+                            className='bg-blue-100/90 backdrop-blur-sm text-blue-800 border-blue-200 whitespace-nowrap'
+                          >
+                            {project.category}
+                          </Badge>
+                        </div>
+                        {/* Status Badge Overlay on Image */}
+                        <div className='absolute top-4 left-4 z-10'>
+                          <div className='flex items-center gap-2 px-3 py-1 bg-white/90 backdrop-blur-sm rounded-full'>
+                            <div className='w-2 h-2 bg-green-500 rounded-full animate-pulse'></div>
+                            <span className='text-sm font-medium text-green-700'>
+                              {project.status}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Content */}
+                      <CardContent className='flex flex-col h-full p-6'>
+                        {/* Title */}
+                        <CardHeader className='p-0 pb-3'>
+                          <CardTitle className='text-base md:text-lg font-bold text-gray-900 group-hover:text-blue-600 transition-colors leading-snug line-clamp-2 break-words'>
+                            <Link
+                              href={project.url}
+                              target='_blank'
+                              rel='noopener noreferrer'
+                              className='hover:underline'
+                              title={project.url}
+                              onClick={e => {
+                                e.preventDefault()
+                              }}
+                              onKeyDown={e => {
+                                if (e.key === 'Enter' || e.key === ' ') {
+                                  e.preventDefault()
+                                }
+                              }}
+                            >
+                              {project.title}
+                            </Link>
+                          </CardTitle>
+                        </CardHeader>
 
                         <p className='text-gray-600 mb-4 leading-relaxed flex-grow'>
                           {project.description}
@@ -660,7 +668,7 @@ export default function OurWorkPage() {
                         </div>
                         <Button
                           asChild
-                          className='w-full group-hover:bg-blue-600 transition-colors'
+                          className='w-full bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white'
                         >
                           <Link
                             href={project.url}

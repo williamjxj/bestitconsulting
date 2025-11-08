@@ -36,6 +36,42 @@ export const EN_TRANSLATIONS: Translations = {
     title: 'Our Services',
     subtitle:
       'Professional IT consulting services tailored to your business needs',
+    hero: {
+      badge: 'Our Services',
+      title: 'Comprehensive IT Solutions for Your Business',
+      description:
+        'From full-stack development to cloud solutions and cybersecurity, we provide end-to-end technology services that drive digital transformation and business growth.',
+      getStarted: 'Get Started Today',
+    },
+    section: {
+      title: 'What We Offer',
+      description:
+        'We deliver cutting-edge technology services that help businesses scale, innovate, and succeed in the digital era.',
+    },
+    process: {
+      title: 'Our Process',
+      subtitle: 'How We Work With You',
+      step1: {
+        title: 'Discovery & Analysis',
+        description:
+          'We analyze your business needs, technical requirements, and current infrastructure to create a comprehensive project roadmap.',
+      },
+      step2: {
+        title: 'Strategy & Planning',
+        description:
+          'Our experts develop a detailed technical strategy and project plan with clear milestones and deliverables.',
+      },
+      step3: {
+        title: 'Implementation',
+        description:
+          'We execute the project using agile methodologies, ensuring regular communication and feedback throughout the process.',
+      },
+      step4: {
+        title: 'Support & Optimization',
+        description:
+          'Ongoing support, monitoring, and optimization to ensure your solution continues to deliver maximum value.',
+      },
+    },
     fullStackDev: 'Full-Stack Development',
     fullStackDevDesc:
       'End-to-end web and mobile application development using modern technologies and best practices.',
@@ -106,27 +142,114 @@ export const EN_TRANSLATIONS: Translations = {
     title: 'About Best IT Consulting',
     subtitle: 'Your trusted partner in digital transformation',
     description:
-      'We are a team of experienced developers and consultants dedicated to helping businesses leverage technology for growth and success.',
+      'Best IT Consulting is a solo software consultancy focused on software outsourcing and AI technology consulting. We help organizations ship faster with modern web platforms, streamline operations through automation, and unlock value with practical AI—on time and within budget.',
+    hero: {
+      badge: 'About Us',
+      title: 'About Best IT Consulting',
+      ourServices: 'Our Services',
+      viewPortfolio: 'View Portfolio',
+    },
+    founder: {
+      name: 'William Jiang',
+      role: 'Founder & Lead Developer',
+      bio: 'Full-stack developer with 10+ years of experience building scalable web applications and digital solutions.',
+      experience: '20+ years',
+      education: 'Computer Science & Software Engineering',
+    },
+    values: {
+      clientFirst: {
+        title: 'Client-First Approach',
+        description:
+          'We prioritize your business goals and deliver solutions that drive real results.',
+      },
+      quality: {
+        title: 'Quality & Security',
+        description:
+          'Enterprise-grade security and quality standards in every project we deliver.',
+      },
+      innovation: {
+        title: 'Innovation',
+        description:
+          'Cutting-edge technologies and creative solutions for modern challenges.',
+      },
+      collaboration: {
+        title: 'Collaboration',
+        description:
+          'Transparent communication and partnership throughout the entire process.',
+      },
+    },
+    stats: {
+      projectsCompleted: 'Projects Completed',
+      clientSatisfaction: 'Client Satisfaction',
+      yearsExperience: 'Years Experience',
+      supportAvailable: 'Support Available',
+    },
     mission: 'Our Mission',
     missionDesc:
       'To provide innovative, reliable, and cost-effective IT solutions that drive business success.',
     vision: 'Our Vision',
     visionDesc:
       'To be the leading IT consulting firm that transforms businesses through technology.',
-    values: 'Our Values',
+    valuesTitle: 'Our Values',
     valuesDesc: 'Innovation, reliability, transparency, and customer success.',
   },
   portfolio: {
     title: 'Our Portfolio',
-    subtitle: 'Showcasing our successful projects and client achievements',
+    subtitle:
+      'Explore our collection of successful projects that have transformed businesses and delivered measurable results across various industries.',
+    badge: '50+ Successful Projects • Award-Winning Solutions',
+    startProject: 'Start Your Project',
+    ourServices: 'Our Services',
     viewProject: 'View Project',
     projectDetails: 'Project Details',
     technologies: 'Technologies Used',
     category: 'Category',
+    stats: {
+      projectsCompleted: 'Projects Completed',
+      happyClients: 'Happy Clients',
+      yearsExperience: 'Years Experience',
+    },
+  },
+  'case-studies': {
+    title: 'Our Work',
+    subtitle:
+      'Explore our portfolio of innovative projects and successful case studies',
   },
   testimonials: {
     title: 'Client Testimonials',
-    subtitle: 'What our clients say about working with us',
+    subtitle:
+      'Discover why hundreds of businesses trust Best IT Consulting to deliver exceptional technology solutions and drive their digital transformation success.',
+    hero: {
+      badge: '4.9/5 Rating • 98% Client Satisfaction',
+      title: 'Client Testimonials',
+      shareStory: 'Share Your Story',
+      viewWork: 'View Our Work',
+    },
+    stats: {
+      happyClients: 'Happy Clients',
+      averageRating: 'Average Rating',
+      satisfactionRate: 'Satisfaction Rate',
+      countriesServed: 'Countries Served',
+    },
+    achievements: {
+      bestPartner: {
+        title: 'Best Technology Partner 2024',
+        organization: 'Canadian Business Awards',
+        description:
+          'Recognized for outstanding innovation and client satisfaction',
+      },
+      top10: {
+        title: 'Top 10 IT Consulting Firms',
+        organization: 'Tech Review Magazine',
+        description:
+          'Ranked among the leading technology consulting companies in Canada',
+      },
+      clientChoice: {
+        title: 'Client Choice Award',
+        organization: 'Industry Excellence Awards',
+        description: 'Voted by clients as the most trusted technology partner',
+      },
+    },
     clientReview: 'Client Review',
   },
   contact: {
@@ -139,6 +262,53 @@ export const EN_TRANSLATIONS: Translations = {
     phone: 'Phone',
     address: 'Address',
     office: 'Office',
+    hero: {
+      badge: 'Free Consultation • Response within 24 hours',
+      title: "Let's Start Your Digital Journey",
+      description:
+        'Ready to transform your business with cutting-edge technology? Our expert team is here to turn your vision into reality.',
+      getConsultation: 'Get Free Consultation',
+      callNow: 'Call Now',
+    },
+    carousel: {
+      slide1:
+        'We offer complimentary technical consulting sessions to help businesses explore innovative software and AI solutions. Case studies or tailored solution details can be provided upon request.',
+      slide2:
+        'Free Technical Consulting: Get expert guidance from our senior engineers — at no cost. We help startups and enterprises solve real-world challenges through modern software architecture, AI integration, and system optimization.',
+      slide3:
+        "Tell us your goals, and we'll provide tailored insights or a case study relevant to your project. Let's explore how the right technology can move your business forward.",
+    },
+    form: {
+      title: 'Start Your Project',
+      description:
+        "Tell us about your project requirements and we'll get back to you within 24 hours with a detailed proposal.",
+      success: {
+        title: 'Message sent successfully!',
+        description: "We'll get back to you within 24 hours.",
+      },
+      error: {
+        title: 'Error sending message',
+        description: 'Please try again or contact us directly.',
+      },
+    },
+    info: {
+      getInTouch: 'Get In Touch',
+      ourOffice: 'Our Office',
+      businessHours: 'Business Hours',
+      followUs: 'Follow Us',
+      mondayFriday: 'Monday - Friday',
+      saturday: 'Saturday',
+      sunday: 'Sunday',
+      closed: 'Closed',
+      getDirections: 'Get Directions',
+    },
+    cta: {
+      title: 'Ready to Get Started?',
+      description:
+        "Don't let technology challenges hold your business back. Contact us today and let's build something amazing together.",
+      startProject: 'Start Your Project',
+      viewWork: 'View Our Work',
+    },
   },
   errors: {
     notFound: 'Page not found',
@@ -167,6 +337,50 @@ export const EN_TRANSLATIONS: Translations = {
         'We help businesses transform through technology with our expert software development and IT consulting services.',
       cta: 'Get Started',
       learnMore: 'Learn More',
+    },
+    video: {
+      badge: 'See Us In Action',
+      title: 'Watch How We Transform',
+      titleHighlight: ' Businesses',
+      description:
+        'Discover how our innovative solutions have helped companies streamline operations, reduce costs, and accelerate growth through digital transformation.',
+      startJourney: 'Start Your Journey',
+      viewCaseStudies: 'View Case Studies',
+    },
+    features: {
+      badge: 'Our Expertise',
+      title: 'Comprehensive IT Solutions',
+      subtitle:
+        'From concept to deployment, we provide end-to-end technology services that drive innovation.',
+      fullStack: {
+        title: 'Full-Stack Development',
+        description:
+          'Modern web and mobile applications built with cutting-edge technologies.',
+      },
+      cloud: {
+        title: 'Cloud Solutions',
+        description:
+          'Scalable cloud architecture and deployment for maximum performance.',
+      },
+      cybersecurity: {
+        title: 'Cybersecurity',
+        description:
+          'Comprehensive security solutions to protect your digital assets.',
+      },
+      teamAugmentation: {
+        title: 'Team Augmentation',
+        description: 'Expert developers to accelerate your project delivery.',
+      },
+      exploreAll: 'Explore All Services',
+    },
+    stats: {
+      title: 'Proven Track Record',
+      subtitle:
+        'Numbers that showcase our commitment to excellence and client success.',
+      projectsDelivered: 'Projects Delivered',
+      enterpriseClients: 'Enterprise Clients',
+      clientSatisfaction: 'Client Satisfaction',
+      supportAvailable: 'Support Available',
     },
     services: {
       title: 'Our Services',
@@ -199,12 +413,12 @@ export const EN_TRANSLATIONS: Translations = {
         },
       },
     },
-
     cta: {
-      title: 'Ready to Transform Your Business?',
+      title: 'Ready to Start Your Project?',
       description:
-        'Contact us today to discuss how we can help you achieve your technology goals.',
-      button: 'Get in Touch',
+        "Let's discuss how we can help you achieve your business goals with our expert software solutions.",
+      getConsultation: 'Get a Free Consultation',
+      viewWork: 'View Our Work',
     },
   },
   footer: {

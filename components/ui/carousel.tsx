@@ -132,10 +132,7 @@ function Carousel({
   )
 }
 
-function CarouselContent({
-  className,
-  ...props
-}: React.ComponentProps<'div'>) {
+function CarouselContent({ className, ...props }: React.ComponentProps<'div'>) {
   const { carouselRef, orientation } = useCarousel()
 
   return (
@@ -156,10 +153,7 @@ function CarouselContent({
   )
 }
 
-function CarouselItem({
-  className,
-  ...props
-}: React.ComponentProps<'div'>) {
+function CarouselItem({ className, ...props }: React.ComponentProps<'div'>) {
   const { orientation } = useCarousel()
 
   return (
@@ -245,4 +239,3 @@ export {
   CarouselPrevious,
   CarouselNext,
 }
-

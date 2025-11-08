@@ -27,8 +27,10 @@ import { Section } from '@/components/ui/section'
 import { AnimatedBeam } from '@/components/ui/animated-beam'
 import { R2Image, R2HeroImage } from '@/components/R2Image'
 import { useR2Assets, R2_ASSET_MAPPINGS } from '@/hooks/useR2Assets'
+import { useI18n } from '@/lib/i18n'
 
 export default function ServicesPage() {
+  const { t } = useI18n()
   const breadcrumbs = [{ name: 'Home', href: '/' }, { name: 'Services' }]
   const { getImages, getAssetByFilename } = useR2Assets()
 
@@ -47,30 +49,26 @@ export default function ServicesPage() {
   const processSteps = [
     {
       step: '01',
-      title: 'Discovery & Analysis',
-      description:
-        'We analyze your business needs, technical requirements, and current infrastructure to create a comprehensive project roadmap.',
+      title: t('process.step1.title', 'services'),
+      description: t('process.step1.description', 'services'),
       icon: <Target className='h-8 w-8' />,
     },
     {
       step: '02',
-      title: 'Strategy & Planning',
-      description:
-        'Our experts develop a detailed technical strategy and project plan with clear milestones and deliverables.',
+      title: t('process.step2.title', 'services'),
+      description: t('process.step2.description', 'services'),
       icon: <CheckCircle className='h-8 w-8' />,
     },
     {
       step: '03',
-      title: 'Implementation',
-      description:
-        'We execute the project using agile methodologies, ensuring regular communication and feedback throughout the process.',
+      title: t('process.step3.title', 'services'),
+      description: t('process.step3.description', 'services'),
       icon: <Zap className='h-8 w-8' />,
     },
     {
       step: '04',
-      title: 'Support & Optimization',
-      description:
-        'Ongoing support, monitoring, and optimization to ensure your solution continues to deliver maximum value.',
+      title: t('process.step4.title', 'services'),
+      description: t('process.step4.description', 'services'),
       icon: <Shield className='h-8 w-8' />,
     },
   ]
@@ -164,22 +162,20 @@ export default function ServicesPage() {
           <div className='container mx-auto px-4 relative z-10'>
             <div className='max-w-4xl mx-auto text-center'>
               <span className='inline-block px-4 py-2 text-sm font-medium bg-blue-600/20 rounded-full mb-6 border border-blue-500/30'>
-                Our Services
+                {t('hero.badge', 'services')}
               </span>
               <h1 className='text-4xl md:text-6xl font-bold leading-tight mb-6'>
                 <AnimatedHeadline
-                  text='Comprehensive IT Solutions for Your Business'
+                  text={t('hero.title', 'services')}
                   className='text-4xl md:text-6xl font-bold leading-tight'
                 />
               </h1>
               <p className='text-xl text-blue-100 max-w-3xl mx-auto mb-10'>
-                From full-stack development to cloud solutions and
-                cybersecurity, we provide end-to-end technology services that
-                drive digital transformation and business growth.
+                {t('hero.description', 'services')}
               </p>
               <Button size='lg' className='group' asChild>
                 <Link href='/contact'>
-                  Get Started Today
+                  {t('hero.getStarted', 'services')}
                   <ArrowRight className='ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform' />
                 </Link>
               </Button>
@@ -189,8 +185,8 @@ export default function ServicesPage() {
 
         {/* Services Grid */}
         <ServicesSection
-          title='What We Offer'
-          description='We deliver cutting-edge technology services that help businesses scale, innovate, and succeed in the digital era.'
+          title={t('section.title', 'services')}
+          description={t('section.description', 'services')}
         />
 
         {/* Process Section */}
@@ -200,11 +196,10 @@ export default function ServicesPage() {
               <FadeIn delay={0.2} duration={0.8}>
                 <div className='text-center mb-16'>
                   <h2 className='text-3xl md:text-4xl font-bold mb-4'>
-                    Our Process
+                    {t('process.title', 'services')}
                   </h2>
                   <p className='text-lg text-muted-foreground max-w-2xl mx-auto'>
-                    We follow a proven methodology to ensure successful project
-                    delivery and client satisfaction.
+                    {t('process.subtitle', 'services')}
                   </p>
                 </div>
               </FadeIn>

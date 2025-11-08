@@ -347,7 +347,7 @@ function ProjectImageCarousel({ project }: { project: Project }) {
   // If there's an error or no images, show placeholder
   if (imageError || images.length === 0) {
     return (
-      <div className='w-full h-64 rounded-lg overflow-hidden bg-gray-200'>
+      <div className='w-full h-full overflow-hidden bg-gray-200'>
         <img
           src={placeholderUrl}
           alt={project.title}
@@ -359,7 +359,7 @@ function ProjectImageCarousel({ project }: { project: Project }) {
 
   if (images.length <= 1) {
     return (
-      <div className='w-full h-64 rounded-lg overflow-hidden bg-gray-200'>
+      <div className='w-full h-full overflow-hidden bg-gray-200'>
         <img
           src={project.image}
           alt={project.title}
@@ -372,7 +372,7 @@ function ProjectImageCarousel({ project }: { project: Project }) {
 
   return (
     <div
-      className='relative w-full h-64 rounded-lg overflow-hidden bg-gray-200'
+      className='relative w-full h-full overflow-hidden bg-gray-200'
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -393,6 +393,32 @@ function ProjectImageCarousel({ project }: { project: Project }) {
   )
 }
 
+/**
+ * PortfolioSection component with interactive project showcase
+ * Displays portfolio projects with image-first card layout, engaging animations, and interactions.
+ *
+ * Features:
+ * - Image-first card layout (image → category → title → description)
+ * - Category filtering
+ * - Project image carousel
+ * - Responsive grid layout (1 col mobile, 2 col tablet, 3 col desktop)
+ * - Modal dialog for detailed project information
+ *
+ * @param {PortfolioSectionProps} props - Component props
+ * @param {Project[]} props.projects - Array of project objects to display
+ * @param {string} props.title - Section title
+ * @param {string} props.description - Section description
+ * @param {string} props.className - Additional CSS classes
+ *
+ * @example
+ * ```tsx
+ * <PortfolioSection
+ *   projects={myProjects}
+ *   title="Our Work"
+ *   description="Check out our latest projects"
+ * />
+ * ```
+ */
 export function PortfolioSection({
   projects = defaultProjects,
   title = 'Our Portfolio',
@@ -453,35 +479,34 @@ export function PortfolioSection({
                 delay={index * 0.1}
                 duration={0.6}
               >
-                <Card className='group h-full overflow-hidden rounded-xl bg-white border-0 shadow-lg hover:shadow-xl transition-all duration-300'>
-                  {/* Header with Category Tag */}
-                  <div className='relative p-4 flex items-start justify-end'>
-                    {/* Category Tag */}
-                    <span className='px-3 py-1 bg-blue-900 text-white text-xs font-medium rounded-full'>
-                      {project.category}
-                    </span>
+                <Card className='group h-full overflow-hidden rounded-xl bg-white border-0 shadow-lg hover:shadow-[0_8px_30px_rgb(0,0,0,0.12)] transition-shadow duration-300 flex flex-col !gap-0 !py-0'>
+                  {/* Image First - Larger and More Prominent - No margin, extends to card edges */}
+                  <div className='relative w-full aspect-video overflow-hidden rounded-t-xl'>
+                    <div className='w-full h-full transition-transform duration-300 group-hover:scale-[1.2]'>
+                      <ProjectImageCarousel project={project} />
+                    </div>
+                    {/* Category Tag Overlay on Image */}
+                    <div className='absolute top-4 right-4 z-10'>
+                      <span className='px-3 py-1 bg-blue-900/90 backdrop-blur-sm text-white text-xs font-medium rounded-full'>
+                        {project.category}
+                      </span>
+                    </div>
+                    {/* Industry Tag Overlay on Image (if exists) */}
+                    {project.industry &&
+                      ![
+                        'legacy-modernization',
+                        'legacy-upgrade-maintenance',
+                      ].includes(project.id) && (
+                        <div className='absolute top-4 left-4 z-10'>
+                          <span className='px-3 py-1 bg-blue-600/90 backdrop-blur-sm text-white text-xs font-medium rounded-full'>
+                            {project.industry}
+                          </span>
+                        </div>
+                      )}
                   </div>
-
-                  {/* Image */}
-                  <div className='relative px-4'>
-                    <ProjectImageCarousel project={project} />
-                  </div>
-
-                  {/* Industry Tag */}
-                  {project.industry &&
-                    ![
-                      'legacy-modernization',
-                      'legacy-upgrade-maintenance',
-                    ].includes(project.id) && (
-                      <div className='px-4 mt-4'>
-                        <span className='px-3 py-1 bg-blue-600 text-white text-xs font-medium rounded-full'>
-                          {project.industry}
-                        </span>
-                      </div>
-                    )}
 
                   {/* Content */}
-                  <CardContent className='p-6 pt-4'>
+                  <CardContent className='p-6 flex-1 flex flex-col'>
                     {/* Title and Client */}
                     <div className='mb-3'>
                       <CardTitle className='text-xl font-bold mb-1'>
@@ -495,7 +520,7 @@ export function PortfolioSection({
                     </div>
 
                     {/* Description */}
-                    <CardDescription className='text-sm text-gray-700 mb-4 leading-relaxed line-clamp-3'>
+                    <CardDescription className='text-sm text-gray-700 mb-4 leading-relaxed line-clamp-3 flex-1'>
                       {project.description}
                     </CardDescription>
 
