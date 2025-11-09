@@ -149,6 +149,7 @@ export default function OurWorkPage() {
     alt: string
   }) {
     const [index, setIndex] = useState(0)
+    const [isHovered, setIsHovered] = useState(false)
     const validImages = images.filter(Boolean)
 
     useEffect(() => {
@@ -165,13 +166,92 @@ export default function OurWorkPage() {
       )
     }
 
+    const goToPrevious = (e: React.MouseEvent) => {
+      e.stopPropagation()
+      setIndex(prev => (prev - 1 + validImages.length) % validImages.length)
+    }
+
+    const goToNext = (e: React.MouseEvent) => {
+      e.stopPropagation()
+      setIndex(prev => (prev + 1) % validImages.length)
+    }
+
+    const goToSlide = (e: React.MouseEvent, slideIndex: number) => {
+      e.stopPropagation()
+      setIndex(slideIndex)
+    }
+
     return (
-      <div className='relative w-full h-full overflow-hidden'>
-        <img
-          src={validImages[index]}
-          alt={alt}
-          className='w-full h-full object-cover transition-opacity duration-700'
-        />
+      <div
+        className='relative w-full h-full overflow-hidden'
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+      >
+        {/* Image with scale transform - separate from indicators */}
+        <div className='absolute inset-0 w-full h-full z-0'>
+          <img
+            src={validImages[index]}
+            alt={alt}
+            className='w-full h-full object-cover transition-transform duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]'
+            style={{
+              height: '100%',
+              objectFit: 'cover',
+              transform: isHovered ? 'scale(1.1)' : 'scale(1)'
+            }}
+          />
+        </div>
+
+        {/* Navigation Arrows - Fixed position, only visible when hovering carousel */}
+        {validImages.length > 1 && (
+          <>
+            {/* Left Arrow - Light gray, semi-transparent, rounded square, only visible on carousel hover */}
+            <button
+              onClick={goToPrevious}
+              className='absolute left-2 top-1/2 z-30 bg-gray-200/80 hover:bg-gray-300/90 text-gray-700 rounded-md p-1.5 transition-opacity duration-200 pointer-events-auto'
+              aria-label='Previous image'
+              style={{
+                transform: 'translateY(-50%)',
+                willChange: 'opacity',
+                opacity: isHovered ? 1 : 0
+              }}
+            >
+              <ArrowRight className='h-4 w-4 rotate-180' />
+            </button>
+
+            {/* Right Arrow - Light gray, semi-transparent, rounded square, only visible on carousel hover */}
+            <button
+              onClick={goToNext}
+              className='absolute right-2 top-1/2 z-30 bg-gray-200/80 hover:bg-gray-300/90 text-gray-700 rounded-md p-1.5 transition-opacity duration-200 pointer-events-auto'
+              aria-label='Next image'
+              style={{
+                transform: 'translateY(-50%)',
+                willChange: 'opacity',
+                opacity: isHovered ? 1 : 0
+              }}
+            >
+              <ArrowRight className='h-4 w-4' />
+            </button>
+
+            {/* Pagination Dots - Always visible, fixed position at bottom */}
+            <div
+              className='absolute bottom-2 left-1/2 z-30 flex gap-1.5 pointer-events-auto'
+              style={{ transform: 'translateX(-50%)', willChange: 'auto' }}
+            >
+              {validImages.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={e => goToSlide(e, i)}
+                  className={`h-1.5 rounded-full transition-all duration-200 ${
+                    i === index
+                      ? 'w-6 bg-white'
+                      : 'w-1.5 bg-white/50 hover:bg-white/75'
+                  }`}
+                  aria-label={`Go to slide ${i + 1}`}
+                />
+              ))}
+            </div>
+          </>
+        )}
       </div>
     )
   }
@@ -470,11 +550,15 @@ export default function OurWorkPage() {
                     delay={index * 0.1}
                     duration={0.6}
                   >
-                    <Card className='group h-full overflow-hidden rounded-xl bg-white border-0 shadow-lg hover:shadow-[0_8px_30px_rgb(0,0,0,0.12)] transition-shadow duration-300 flex flex-col !gap-0 !py-0'>
-                      {/* Image First - No margin, extends to card edges */}
-                      <div className='relative w-full aspect-video overflow-hidden'>
+                    <Card
+                      hover={false}
+                      animated={false}
+                      className='group h-[500px] overflow-hidden rounded-xl bg-white border-0 shadow-lg hover:shadow-xl hover:shadow-gray-900/20 transition-[shadow] duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] flex flex-col !gap-0 !py-0'
+                    >
+                      {/* Image First - 60% of card height (300px), extends to card edges */}
+                      <div className='relative w-full h-[300px] overflow-hidden flex-shrink-0'>
                         {/* Project Image */}
-                        <div className='w-full h-full transition-transform duration-300 group-hover:scale-[1.2]'>
+                        <div className='w-full h-full'>
                           {(() => {
                             // Local folder carousels by project id
                             const idToLocalImages: Record<number, string[]> = {
@@ -571,27 +655,30 @@ export default function OurWorkPage() {
                                 : null
 
                             return randomJimeng ? (
-                              <R2CardImage
-                                src={randomJimeng}
-                                alt={project.title}
-                                className='w-full h-full object-cover !rounded-none'
-                                animation='fade'
-                                delay={0.2}
-                                hover={true}
-                                overlay={true}
-                                overlayContent={
-                                  <div className='text-white text-center'>
-                                    <div className='w-8 h-8 mx-auto mb-2 bg-white/20 rounded-full flex items-center justify-center'>
-                                      <ArrowRight className='w-4 h-4' />
+                              <div className='w-full h-full'>
+                                <R2CardImage
+                                  src={randomJimeng}
+                                  alt={project.title}
+                                  className='w-full h-full object-cover !rounded-none group-hover:scale-110 transition-transform duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]'
+                                  animation='fade'
+                                  delay={0.2}
+                                  hover={false}
+                                  overlay={true}
+                                  fill={true}
+                                  overlayContent={
+                                    <div className='text-white text-center'>
+                                      <div className='w-8 h-8 mx-auto mb-2 bg-white/20 rounded-full flex items-center justify-center'>
+                                        <ArrowRight className='w-4 h-4' />
+                                      </div>
+                                      <p className='text-xs font-medium'>
+                                        View Project
+                                      </p>
                                     </div>
-                                    <p className='text-xs font-medium'>
-                                      View Project
-                                    </p>
-                                  </div>
-                                }
-                              />
+                                  }
+                                />
+                              </div>
                             ) : (
-                              <div className='w-full h-full bg-gradient-to-br from-blue-100 to-cyan-100 flex items-center justify-center'>
+                              <div className='w-full h-full bg-gradient-to-br from-blue-100 to-cyan-100 flex items-center justify-center' style={{ height: '100%' }}>
                                 <div className='text-center'>
                                   <Code2 className='w-8 h-8 text-blue-400 mx-auto mb-2' />
                                   <p className='text-gray-600 text-sm'>
@@ -601,15 +688,6 @@ export default function OurWorkPage() {
                               </div>
                             )
                           })()}
-                        </div>
-                        {/* Category Badge Overlay on Image */}
-                        <div className='absolute top-4 right-4 z-10'>
-                          <Badge
-                            variant='secondary'
-                            className='bg-blue-100/90 backdrop-blur-sm text-blue-800 border-blue-200 whitespace-nowrap'
-                          >
-                            {project.category}
-                          </Badge>
                         </div>
                         {/* Status Badge Overlay on Image */}
                         <div className='absolute top-4 left-4 z-10'>
@@ -622,10 +700,10 @@ export default function OurWorkPage() {
                         </div>
                       </div>
 
-                      {/* Content */}
-                      <CardContent className='flex flex-col h-full p-6'>
+                      {/* Content - Compressed to fit in remaining 40% (200px) */}
+                      <CardContent className='flex flex-col flex-1 p-4 min-h-0 overflow-hidden'>
                         {/* Title */}
-                        <CardHeader className='p-0 pb-3'>
+                        <CardHeader className='p-0 pb-2'>
                           <CardTitle className='text-base md:text-lg font-bold text-gray-900 group-hover:text-blue-600 transition-colors leading-snug line-clamp-2 break-words'>
                             <Link
                               href={project.url}
@@ -647,11 +725,11 @@ export default function OurWorkPage() {
                           </CardTitle>
                         </CardHeader>
 
-                        <p className='text-gray-600 mb-4 leading-relaxed flex-grow'>
+                        <p className='text-gray-600 mb-3 leading-tight text-sm flex-grow line-clamp-2'>
                           {project.description}
                         </p>
-                        <div className='flex items-center justify-between mb-4'>
-                          <div className='flex flex-wrap gap-2'>
+                        <div className='flex items-center justify-between mb-3'>
+                          <div className='flex flex-wrap gap-1.5'>
                             {project.technologies
                               .slice(0, 3)
                               .map((tech, techIndex) => (
@@ -664,11 +742,11 @@ export default function OurWorkPage() {
                                 </Badge>
                               ))}
                           </div>
-                          <MoreHorizontal className='w-5 h-5 text-gray-400' />
+                          <MoreHorizontal className='w-4 h-4 text-gray-400' />
                         </div>
                         <Button
                           asChild
-                          className='w-full bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white'
+                          className='w-full bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white text-sm py-2'
                         >
                           <Link
                             href={project.url}

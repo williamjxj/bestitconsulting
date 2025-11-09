@@ -344,14 +344,38 @@ function ProjectImageCarousel({ project }: { project: Project }) {
     setImageError(true)
   }
 
+  const goToPrevious = (e: React.MouseEvent) => {
+    e.stopPropagation()
+    setCurrentImageIndex(prev => (prev - 1 + images.length) % images.length)
+  }
+
+  const goToNext = (e: React.MouseEvent) => {
+    e.stopPropagation()
+    setCurrentImageIndex(prev => (prev + 1) % images.length)
+  }
+
+  const goToSlide = (e: React.MouseEvent, slideIndex: number) => {
+    e.stopPropagation()
+    setCurrentImageIndex(slideIndex)
+  }
+
   // If there's an error or no images, show placeholder
   if (imageError || images.length === 0) {
     return (
-      <div className='w-full h-full overflow-hidden bg-gray-200'>
+      <div
+        className='w-full h-full overflow-hidden bg-gray-200'
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+      >
         <img
           src={placeholderUrl}
           alt={project.title}
-          className='w-full h-full object-cover'
+          className='w-full h-full object-cover transition-transform duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]'
+          style={{
+            height: '100%',
+            objectFit: 'cover',
+            transform: isHovered ? 'scale(1.1)' : 'scale(1)'
+          }}
         />
       </div>
     )
@@ -359,11 +383,20 @@ function ProjectImageCarousel({ project }: { project: Project }) {
 
   if (images.length <= 1) {
     return (
-      <div className='w-full h-full overflow-hidden bg-gray-200'>
+      <div
+        className='w-full h-full overflow-hidden bg-gray-200'
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+      >
         <img
           src={project.image}
           alt={project.title}
-          className='w-full h-full object-cover'
+          className='w-full h-full object-cover transition-transform duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]'
+          style={{
+            height: '100%',
+            objectFit: 'cover',
+            transform: isHovered ? 'scale(1.1)' : 'scale(1)'
+          }}
           onError={handleImageError}
         />
       </div>
@@ -372,23 +405,83 @@ function ProjectImageCarousel({ project }: { project: Project }) {
 
   return (
     <div
-      className='relative w-full h-full overflow-hidden bg-gray-200'
+      className='relative w-full h-full overflow-hidden'
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <AnimatePresence mode='wait'>
-        <motion.img
-          key={currentImageIndex}
-          src={images[currentImageIndex]}
-          alt={project.title}
-          className='w-full h-full object-cover'
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 1.2 }}
-          onError={handleImageError}
-        />
-      </AnimatePresence>
+      {/* Image with scale transform - separate from indicators */}
+      <div className='absolute inset-0 w-full h-full z-0'>
+        <AnimatePresence mode='wait'>
+          <motion.img
+            key={currentImageIndex}
+            src={images[currentImageIndex]}
+            alt={project.title}
+            className='w-full h-full object-cover transition-transform duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]'
+            style={{
+              height: '100%',
+              objectFit: 'cover',
+              transform: isHovered ? 'scale(1.1)' : 'scale(1)'
+            }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 1.2 }}
+            onError={handleImageError}
+          />
+        </AnimatePresence>
+      </div>
+
+      {/* Navigation Arrows - Fixed position, only visible when hovering carousel */}
+      {images.length > 1 && (
+        <>
+          {/* Left Arrow - Light gray, semi-transparent, rounded square, only visible on carousel hover */}
+          <button
+            onClick={goToPrevious}
+            className='absolute left-2 top-1/2 z-30 bg-gray-200/80 hover:bg-gray-300/90 text-gray-700 rounded-md p-1.5 transition-opacity duration-200 pointer-events-auto'
+            aria-label='Previous image'
+            style={{
+              transform: 'translateY(-50%)',
+              willChange: 'opacity',
+              opacity: isHovered ? 1 : 0
+            }}
+          >
+            <ArrowRight className='h-4 w-4 rotate-180' />
+          </button>
+
+          {/* Right Arrow - Light gray, semi-transparent, rounded square, only visible on carousel hover */}
+          <button
+            onClick={goToNext}
+            className='absolute right-2 top-1/2 z-30 bg-gray-200/80 hover:bg-gray-300/90 text-gray-700 rounded-md p-1.5 transition-opacity duration-200 pointer-events-auto'
+            aria-label='Next image'
+            style={{
+              transform: 'translateY(-50%)',
+              willChange: 'opacity',
+              opacity: isHovered ? 1 : 0
+            }}
+          >
+            <ArrowRight className='h-4 w-4' />
+          </button>
+
+          {/* Pagination Dots - Always visible, fixed position at bottom */}
+          <div
+            className='absolute bottom-2 left-1/2 z-30 flex gap-1.5 pointer-events-auto'
+            style={{ transform: 'translateX(-50%)', willChange: 'auto' }}
+          >
+            {images.map((_, i) => (
+              <button
+                key={i}
+                onClick={e => goToSlide(e, i)}
+                className={`h-1.5 rounded-full transition-all duration-200 ${
+                  i === currentImageIndex
+                    ? 'w-6 bg-white'
+                    : 'w-1.5 bg-white/50 hover:bg-white/75'
+                }`}
+                aria-label={`Go to slide ${i + 1}`}
+              />
+            ))}
+          </div>
+        </>
+      )}
     </div>
   )
 }
@@ -479,10 +572,14 @@ export function PortfolioSection({
                 delay={index * 0.1}
                 duration={0.6}
               >
-                <Card className='group h-full overflow-hidden rounded-xl bg-white border-0 shadow-lg hover:shadow-[0_8px_30px_rgb(0,0,0,0.12)] transition-shadow duration-300 flex flex-col !gap-0 !py-0'>
-                  {/* Image First - Larger and More Prominent - No margin, extends to card edges */}
-                  <div className='relative w-full aspect-video overflow-hidden rounded-t-xl'>
-                    <div className='w-full h-full transition-transform duration-300 group-hover:scale-[1.2]'>
+                <Card
+                  hover={false}
+                  animated={false}
+                  className='group h-[500px] overflow-hidden rounded-xl bg-white border-0 shadow-lg hover:shadow-xl hover:shadow-gray-900/20 transition-[shadow] duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] flex flex-col !gap-0 !py-0'
+                >
+                  {/* Image First - 60% of card height (300px), extends to card edges */}
+                  <div className='relative w-full h-[300px] overflow-hidden flex-shrink-0'>
+                    <div className='w-full h-full'>
                       <ProjectImageCarousel project={project} />
                     </div>
                     {/* Category Tag Overlay on Image */}
@@ -505,37 +602,37 @@ export function PortfolioSection({
                       )}
                   </div>
 
-                  {/* Content */}
-                  <CardContent className='p-6 flex-1 flex flex-col'>
+                  {/* Content - Compressed to fit in remaining 40% (200px) */}
+                  <CardContent className='p-4 flex-1 flex flex-col min-h-0 overflow-hidden'>
                     {/* Title and Client */}
-                    <div className='mb-3'>
-                      <CardTitle className='text-xl font-bold mb-1'>
+                    <div className='mb-2'>
+                      <CardTitle className='text-base md:text-lg font-bold mb-1 group-hover:text-blue-600 transition-colors leading-snug line-clamp-2'>
                         {project.title}
                       </CardTitle>
                       {project.client && (
-                        <p className='text-sm text-gray-600'>
+                        <p className='text-xs text-gray-600'>
                           {project.client}
                         </p>
                       )}
                     </div>
 
                     {/* Description */}
-                    <CardDescription className='text-sm text-gray-700 mb-4 leading-relaxed line-clamp-3 flex-1'>
+                    <CardDescription className='text-sm text-gray-600 mb-3 leading-tight line-clamp-2 flex-grow'>
                       {project.description}
                     </CardDescription>
 
                     {/* Technologies */}
-                    <div className='flex flex-wrap items-center gap-2 mb-6'>
+                    <div className='flex flex-wrap items-center gap-1.5 mb-3'>
                       {displayTechs.map((tech, techIndex) => (
                         <span
                           key={techIndex}
-                          className='px-3 py-1 bg-black text-white text-xs font-medium rounded-full'
+                          className='px-2 py-0.5 bg-black text-white text-xs font-medium rounded-full'
                         >
                           {tech}
                         </span>
                       ))}
                       {remainingTechs > 0 && (
-                        <span className='px-3 py-1 bg-black text-white text-xs font-medium rounded-full'>
+                        <span className='px-2 py-0.5 bg-black text-white text-xs font-medium rounded-full'>
                           +{remainingTechs}
                         </span>
                       )}
@@ -543,11 +640,11 @@ export function PortfolioSection({
 
                     {/* View Case Study Button opens modal */}
                     <Button
-                      className='w-full bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white'
+                      className='w-full bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white text-sm py-2'
                       onClick={() => setOpenProjectId(project.id)}
                     >
                       View Case Study
-                      <ArrowRight className='ml-2 h-4 w-4' />
+                      <ArrowRight className='ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform' />
                     </Button>
                   </CardContent>
                 </Card>
