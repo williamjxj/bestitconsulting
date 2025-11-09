@@ -189,15 +189,16 @@ export default function OurWorkPage() {
       >
         {/* Image with scale transform - separate from indicators */}
         <div className='absolute inset-0 w-full h-full z-0'>
-          <img
+          <Image
             src={validImages[index]}
             alt={alt}
-            className='w-full h-full object-cover transition-transform duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]'
+            fill
+            className='object-cover transition-transform duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]'
             style={{
-              height: '100%',
               objectFit: 'cover',
-              transform: isHovered ? 'scale(1.1)' : 'scale(1)'
+              transform: isHovered ? 'scale(1.1)' : 'scale(1)',
             }}
+            sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
           />
         </div>
 
@@ -212,7 +213,7 @@ export default function OurWorkPage() {
               style={{
                 transform: 'translateY(-50%)',
                 willChange: 'opacity',
-                opacity: isHovered ? 1 : 0
+                opacity: isHovered ? 1 : 0,
               }}
             >
               <ArrowRight className='h-4 w-4 rotate-180' />
@@ -226,7 +227,7 @@ export default function OurWorkPage() {
               style={{
                 transform: 'translateY(-50%)',
                 willChange: 'opacity',
-                opacity: isHovered ? 1 : 0
+                opacity: isHovered ? 1 : 0,
               }}
             >
               <ArrowRight className='h-4 w-4' />
@@ -664,7 +665,6 @@ export default function OurWorkPage() {
                                   delay={0.2}
                                   hover={false}
                                   overlay={true}
-                                  fill={true}
                                   overlayContent={
                                     <div className='text-white text-center'>
                                       <div className='w-8 h-8 mx-auto mb-2 bg-white/20 rounded-full flex items-center justify-center'>
@@ -678,7 +678,10 @@ export default function OurWorkPage() {
                                 />
                               </div>
                             ) : (
-                              <div className='w-full h-full bg-gradient-to-br from-blue-100 to-cyan-100 flex items-center justify-center' style={{ height: '100%' }}>
+                              <div
+                                className='w-full h-full bg-gradient-to-br from-blue-100 to-cyan-100 flex items-center justify-center'
+                                style={{ height: '100%' }}
+                              >
                                 <div className='text-center'>
                                   <Code2 className='w-8 h-8 text-blue-400 mx-auto mb-2' />
                                   <p className='text-gray-600 text-sm'>

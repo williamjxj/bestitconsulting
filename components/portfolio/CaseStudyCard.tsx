@@ -41,6 +41,7 @@
 
 import React, { useState, useRef, useCallback } from 'react'
 import { motion } from 'framer-motion'
+import Image from 'next/image'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -153,7 +154,13 @@ export const CaseStudyCard: React.FC<CaseStudyCardProps> = ({
           initial='initial'
           whileHover='hover'
         >
-          <img src={image} alt={title} className='w-full h-full object-cover' />
+          <Image
+            src={image}
+            alt={title}
+            fill
+            className='object-cover'
+            sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
+          />
 
           {/* Image overlay */}
           <motion.div

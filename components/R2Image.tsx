@@ -200,11 +200,12 @@ export function R2HeroImage(props: Omit<R2ImageProps, 'priority' | 'sizes'>) {
 }
 
 export function R2CardImage(
-  props: Omit<R2ImageProps, 'sizes' | 'aspectRatio'>
+  props: Omit<R2ImageProps, 'sizes' | 'aspectRatio' | 'fill'>
 ) {
   return (
     <R2Image
       {...props}
+      fill={true}
       aspectRatio='video'
       sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
       className={cn('w-full', props.className)}

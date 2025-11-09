@@ -399,11 +399,14 @@ export default function AboutPage() {
             >
               <div className='grid lg:grid-cols-3 gap-8 items-center'>
                 <div className='lg:col-span-1 text-center lg:text-left'>
-                  <div className='w-32 h-32 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-full mx-auto lg:mx-0 mb-6 flex items-center justify-center'>
-                    <img
+                  <div className='w-32 h-32 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-full mx-auto lg:mx-0 mb-6 flex items-center justify-center overflow-hidden'>
+                    <R2ProfileImage
                       src={founderInfo.image}
                       alt={founderInfo.name}
                       className='w-28 h-28 rounded-full object-cover'
+                      width={112}
+                      height={112}
+                      animation='fade'
                     />
                   </div>
                   <h3 className='text-2xl font-bold text-gray-900 mb-2'>
@@ -531,7 +534,7 @@ export default function AboutPage() {
                 <R2CardImage
                   src={officeImage.url}
                   alt='Development workspace'
-                  className='w-full h-80 rounded-xl shadow-xl'
+                  className='w-full rounded-xl shadow-xl'
                   animation='scale'
                   delay={0.2}
                   hover={true}
@@ -572,7 +575,7 @@ export default function AboutPage() {
                 <R2CardImage
                   src={cultureImage.url}
                   alt='Work values and commitment'
-                  className='w-full h-80 rounded-xl shadow-xl'
+                  className='w-full rounded-xl shadow-xl'
                   animation='scale'
                   delay={0.2}
                   hover={true}
