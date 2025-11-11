@@ -507,7 +507,7 @@ function ProjectImageCarousel({ project }: { project: Project }) {
  * ```tsx
  * <PortfolioSection
  *   projects={myProjects}
- *   title="Our Work"
+ *   title="Case Studies"
  *   description="Check out our latest projects"
  * />
  * ```

@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import Layout from '@/components/Layout'
 import { motion } from 'framer-motion'
 import { brandClasses } from '@/lib/branding'
@@ -35,7 +36,7 @@ const founderInfo = {
   name: 'William Jiang',
   role: 'Founder & Lead Developer',
   image: '/william.jpg',
-  bio: 'Full-stack developer with 10+ years of experience building scalable web applications and digital solutions.',
+  bio: 'Full-stack developer with 20+ years of experience building scalable web applications and digital solutions.',
   expertise: [
     'Full-Stack Development',
     'AI/ML',
@@ -119,6 +120,13 @@ export default function AboutPage() {
     <Layout>
       {/* Hero Section */}
       <section className='relative overflow-hidden bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 text-white py-24 md:py-32'>
+        <Image
+          src='/optimized/global.webp'
+          alt='Global technology background'
+          fill
+          className='object-cover object-center opacity-20 pointer-events-none'
+          priority={false}
+        />
         {/* Animated background elements */}
         <div className='absolute inset-0'>
           <div className='absolute -top-1/2 -right-1/2 w-full h-full bg-gradient-radial from-blue-500/20 to-transparent rounded-full animate-pulse-slow'></div>
@@ -184,7 +192,7 @@ export default function AboutPage() {
                 <DisplayCards
                   cards={[
                     {
-                      icon: <Briefcase className='size-4 text-blue-300' />,
+                      icon: <Briefcase className='size-4 text-blue-200' />,
                       title: '50+ Projects',
                       description: 'Successfully delivered',
                       date: '2024',
@@ -205,7 +213,7 @@ export default function AboutPage() {
                     },
                     {
                       icon: <Award className='size-4 text-purple-300' />,
-                      title: '10+ Years',
+                      title: '20+ Years',
                       description: 'Industry experience',
                       date: 'Since 2014',
                       iconClassName: 'text-purple-400',

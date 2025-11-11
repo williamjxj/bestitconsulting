@@ -286,7 +286,7 @@ export function TestimonialsSection({
           <div className='relative max-w-4xl mx-auto lg:pr-72'>
             <div className='pointer-events-none absolute inset-y-0 right-0 hidden lg:flex items-center justify-center overflow-visible z-0'>
               <Image
-                src='/gemini-thanks.png'
+                src='/optimized/gemini-thanks.png'
                 alt='Thank you note'
                 width={500}
                 height={360}

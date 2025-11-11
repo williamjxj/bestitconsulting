@@ -1,4 +1,5 @@
 'use client'
+import Image from 'next/image'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { PortfolioSection } from '@/components/sections/PortfolioSection'
@@ -42,40 +43,14 @@ export default function PortfolioPage() {
       <div className='min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50'>
         {/* Enhanced Hero Section */}
         <section className='relative overflow-hidden bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 text-white py-24 md:py-32'>
-          {/* Animated background elements */}
-          <div className='absolute inset-0'>
-            {/* Main gradient background with shifting animation */}
-            <div className='absolute inset-0 bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 bg-[length:200%_200%] animate-gradient-shift'></div>
+          <Image
+            src='/optimized/global.webp'
+            alt='Global technology background'
+            fill
+            className='object-cover object-center opacity-20 pointer-events-none'
+            priority={false}
+          />
 
-            {/* Floating orbs with different animations */}
-            <div className='absolute -top-1/2 -right-1/2 w-full h-full bg-gradient-radial from-blue-500/20 to-transparent rounded-full animate-ambient-pulse'></div>
-            <div className='absolute -bottom-1/2 -left-1/2 w-full h-full bg-gradient-radial from-cyan-400/15 to-transparent rounded-full animate-float'></div>
-
-            {/* Additional floating particles */}
-            <div className='absolute top-1/4 left-1/4 w-32 h-32 bg-gradient-radial from-purple-400/10 to-transparent rounded-full animate-particle-float parallax-float'></div>
-            <div
-              className='absolute top-3/4 right-1/3 w-24 h-24 bg-gradient-radial from-cyan-300/15 to-transparent rounded-full animate-particle-float gentle-rotate'
-              style={{ animationDelay: '2s' }}
-            ></div>
-            <div
-              className='absolute bottom-1/4 left-1/3 w-40 h-40 bg-gradient-radial from-blue-400/10 to-transparent rounded-full animate-particle-float breathe'
-              style={{ animationDelay: '4s' }}
-            ></div>
-
-            {/* Subtle wave animation */}
-            <div className='absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-blue-500/5 to-transparent animate-wave'></div>
-
-            {/* Glowing accent elements */}
-            <div className='absolute top-1/2 left-1/2 w-2 h-2 bg-cyan-400 rounded-full animate-glow soft-glow'></div>
-            <div
-              className='absolute top-1/3 right-1/4 w-1 h-1 bg-blue-300 rounded-full animate-glow gentle-rotate'
-              style={{ animationDelay: '1s' }}
-            ></div>
-            <div
-              className='absolute bottom-1/3 left-1/4 w-1.5 h-1.5 bg-purple-300 rounded-full animate-glow breathe'
-              style={{ animationDelay: '2s' }}
-            ></div>
-          </div>
 
           <div className='container mx-auto px-4 relative z-10'>
             <div className='max-w-4xl mx-auto text-center'>

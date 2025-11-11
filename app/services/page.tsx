@@ -1,14 +1,11 @@
 'use client'
 
-import { useRef } from 'react'
+import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 import {
   ArrowRight,
-  Code2,
   Users,
-  Cloud,
   Shield,
-  Server,
   BarChart2,
   CheckCircle,
   Target,
@@ -24,7 +21,6 @@ import { SlideIn } from '@/components/animations/SlideIn'
 import { AnimatedHeadline } from '@/components/animations/AnimatedHeadline'
 import { PageHeader } from '@/components/ui/page-header'
 import { Section } from '@/components/ui/section'
-import { AnimatedBeam } from '@/components/ui/animated-beam'
 import { R2Image, R2HeroImage } from '@/components/R2Image'
 import { useR2Assets, R2_ASSET_MAPPINGS } from '@/hooks/useR2Assets'
 import { useI18n } from '@/lib/i18n'
@@ -37,14 +33,6 @@ export default function ServicesPage() {
   // Get R2 assets for services page
   const heroImage = getAssetByFilename(R2_ASSET_MAPPINGS.services.hero)
   const teamImage = getAssetByFilename(R2_ASSET_MAPPINGS.services.team)
-
-  // Refs for animated beam nodes
-  const containerRef = useRef<HTMLDivElement>(null!)
-  const node1Ref = useRef<HTMLDivElement>(null!)
-  const node2Ref = useRef<HTMLDivElement>(null!)
-  const node3Ref = useRef<HTMLDivElement>(null!)
-  const node4Ref = useRef<HTMLDivElement>(null!)
-  const centerNodeRef = useRef<HTMLDivElement>(null!)
 
   const processSteps = [
     {
@@ -77,87 +65,15 @@ export default function ServicesPage() {
     <Layout>
       <div className='min-h-screen'>
         {/* Hero Section */}
-        <section className='relative bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 text-white py-24 md:py-32'>
+        <section className='relative bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 text-white py-24 md:py-32 overflow-hidden'>
+          <Image
+            src='/optimized/global.webp'
+            alt='Global technology background'
+            fill
+            className='object-cover object-center opacity-20 pointer-events-none'
+            priority={false}
+          />
           <div className='absolute inset-0 bg-black/20'></div>
-
-          {/* Animated Beam Background */}
-          <div className='absolute inset-0 overflow-hidden'>
-            <div className='relative h-full w-full' ref={containerRef}>
-              {/* Service nodes for animated beams */}
-              <div
-                className='absolute top-1/4 left-1/4 w-16 h-16 rounded-full bg-blue-500/20 border-2 border-blue-400/30 flex items-center justify-center'
-                ref={node1Ref}
-              >
-                <Code2 className='h-8 w-8 text-blue-300' />
-              </div>
-              <div
-                className='absolute top-1/3 right-1/4 w-16 h-16 rounded-full bg-cyan-500/20 border-2 border-cyan-400/30 flex items-center justify-center'
-                ref={node2Ref}
-              >
-                <Cloud className='h-8 w-8 text-cyan-300' />
-              </div>
-              <div
-                className='absolute bottom-1/3 left-1/3 w-16 h-16 rounded-full bg-purple-500/20 border-2 border-purple-400/30 flex items-center justify-center'
-                ref={node3Ref}
-              >
-                <Shield className='h-8 w-8 text-purple-300' />
-              </div>
-              <div
-                className='absolute bottom-1/4 right-1/3 w-16 h-16 rounded-full bg-green-500/20 border-2 border-green-400/30 flex items-center justify-center'
-                ref={node4Ref}
-              >
-                <Server className='h-8 w-8 text-green-300' />
-              </div>
-              <div
-                className='absolute top-1/2 left-1/2 w-20 h-20 rounded-full bg-gradient-to-r from-blue-500/30 to-purple-500/30 border-2 border-white/20 flex items-center justify-center'
-                ref={centerNodeRef}
-              >
-                <Target className='h-10 w-10 text-white' />
-              </div>
-
-              {/* Animated Beams */}
-              <AnimatedBeam
-                containerRef={containerRef}
-                fromRef={node1Ref}
-                toRef={centerNodeRef}
-                curvature={50}
-                duration={3}
-                delay={0}
-                gradientStartColor='#3b82f6'
-                gradientStopColor='#8b5cf6'
-              />
-              <AnimatedBeam
-                containerRef={containerRef}
-                fromRef={node2Ref}
-                toRef={centerNodeRef}
-                curvature={-50}
-                duration={3}
-                delay={0.5}
-                gradientStartColor='#06b6d4'
-                gradientStopColor='#8b5cf6'
-              />
-              <AnimatedBeam
-                containerRef={containerRef}
-                fromRef={node3Ref}
-                toRef={centerNodeRef}
-                curvature={50}
-                duration={3}
-                delay={1}
-                gradientStartColor='#a855f7'
-                gradientStopColor='#8b5cf6'
-              />
-              <AnimatedBeam
-                containerRef={containerRef}
-                fromRef={node4Ref}
-                toRef={centerNodeRef}
-                curvature={-50}
-                duration={3}
-                delay={1.5}
-                gradientStartColor='#10b981'
-                gradientStopColor='#8b5cf6'
-              />
-            </div>
-          </div>
 
           <div className='container mx-auto px-4 relative z-10'>
             <div className='max-w-4xl mx-auto text-center'>

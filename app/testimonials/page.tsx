@@ -107,12 +107,13 @@ export default function TestimonialsPage() {
       <div className='min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50'>
         {/* Enhanced Hero Section */}
         <section className='relative overflow-hidden bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 text-white py-24 md:py-32'>
-          {/* Animated background elements */}
-          <div className='absolute inset-0'>
-            <div className='absolute -top-1/2 -right-1/2 w-full h-full bg-gradient-radial from-blue-500/20 to-transparent rounded-full animate-pulse-slow'></div>
-            <div className='absolute -bottom-1/2 -left-1/2 w-full h-full bg-gradient-radial from-cyan-400/15 to-transparent rounded-full animate-float'></div>
-          </div>
-
+          <Image
+            src='/optimized/global.webp'
+            alt='Global technology background'
+            fill
+            className='object-cover object-center opacity-20 pointer-events-none'
+            priority={false}
+          />
           <div className='container mx-auto px-4 relative'>
             {/* Icon Cloud positioned inside container, to the left of heading */}
             <div className='pointer-events-none absolute right-0 md:right-4 top-1/2 -translate-y-1/2 opacity-70'>

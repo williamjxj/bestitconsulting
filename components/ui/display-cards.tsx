@@ -57,7 +57,7 @@ export default function DisplayCards({ cards }: DisplayCardsProps) {
     },
     {
       className:
-        '[grid-area:stack] translate-x-32 translate-y-20 hover:translate-y-10',
+        "[grid-area:stack] translate-x-32 translate-y-20 hover:translate-y-10",
     },
   ]
 

@@ -152,7 +152,7 @@ export const EN_TRANSLATIONS: Translations = {
     founder: {
       name: 'William Jiang',
       role: 'Founder & Lead Developer',
-      bio: 'Full-stack developer with 10+ years of experience building scalable web applications and digital solutions.',
+      bio: 'Full-stack developer with 20+ years of experience building scalable web applications and digital solutions.',
       experience: '20+ years',
       education: 'Computer Science & Software Engineering',
     },
@@ -211,7 +211,7 @@ export const EN_TRANSLATIONS: Translations = {
     },
   },
   'case-studies': {
-    title: 'Our Work',
+    title: 'Case Studies',
     subtitle:
       'Explore our portfolio of innovative projects and successful case studies',
   },

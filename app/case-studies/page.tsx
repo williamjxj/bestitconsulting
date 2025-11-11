@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import Layout from '@/components/Layout'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -10,7 +10,6 @@ import { ScrollTrigger } from '@/components/animations/ScrollTrigger'
 import { FadeIn } from '@/components/animations/FadeIn'
 import { SlideIn } from '@/components/animations/SlideIn'
 import { AnimatedCounter } from '@/components/animations/AnimatedCounter'
-import { AnimatedBeam } from '@/components/ui/animated-beam'
 import {
   Rocket,
   CheckCircle,
@@ -21,20 +20,6 @@ import {
   Users,
   TrendingUp,
   Clock,
-  Star,
-  Award,
-  Zap,
-  Monitor,
-  Database,
-  Cloud,
-  Brain,
-  FileCode,
-  Server,
-  BarChart3,
-  Layers,
-  GitBranch,
-  Settings,
-  Cpu,
   Github,
   MoreHorizontal,
 } from 'lucide-react'
@@ -53,30 +38,6 @@ export default function OurWorkPage() {
   const { t } = useI18n()
   const { getImages, getAssetByFilename } = useR2Assets()
   const BASE_URL = process.env.NEXT_PUBLIC_R2_BASE_URL || ''
-
-  // Get R2 assets for our work page
-  const heroImage = getAssetByFilename(R2_ASSET_MAPPINGS['our-work'].hero)
-  const project1Image = getAssetByFilename(
-    R2_ASSET_MAPPINGS['our-work'].project1
-  )
-  const project2Image = getAssetByFilename(
-    R2_ASSET_MAPPINGS['our-work'].project2
-  )
-  const project3Image = getAssetByFilename(
-    R2_ASSET_MAPPINGS['our-work'].project3
-  )
-
-  // Refs for animated beam nodes
-  const containerRef = useRef<HTMLDivElement>(null!)
-  const node1Ref = useRef<HTMLDivElement>(null!)
-  const node2Ref = useRef<HTMLDivElement>(null!)
-  const node3Ref = useRef<HTMLDivElement>(null!)
-  const node4Ref = useRef<HTMLDivElement>(null!)
-  const node5Ref = useRef<HTMLDivElement>(null!)
-  const node6Ref = useRef<HTMLDivElement>(null!)
-  const node7Ref = useRef<HTMLDivElement>(null!)
-  const node8Ref = useRef<HTMLDivElement>(null!)
-  const centerNodeRef = useRef<HTMLDivElement>(null!)
 
   const projects = [
     {
@@ -289,183 +250,14 @@ export default function OurWorkPage() {
       <div className='min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50'>
         {/* Hero Section */}
         <section className='relative overflow-hidden bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 text-white py-24 md:py-32'>
-          {/* Animated background elements */}
-          <div className='absolute inset-0'>
-            {/* Main gradient background with shifting animation */}
-            <div className='absolute inset-0 bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 bg-[length:200%_200%] animate-gradient-shift'></div>
+          <Image
+            src='/optimized/global.webp'
+            alt='Global technology background'
+            fill
+            className='object-cover object-center opacity-20 pointer-events-none'
+            priority={false}
+          />
 
-            {/* Floating orbs with different animations */}
-            <div className='absolute -top-1/2 -right-1/2 w-full h-full bg-gradient-radial from-blue-500/20 to-transparent rounded-full animate-ambient-pulse'></div>
-            <div className='absolute -bottom-1/2 -left-1/2 w-full h-full bg-gradient-radial from-cyan-400/15 to-transparent rounded-full animate-float'></div>
-
-            {/* Additional floating particles */}
-            <div className='absolute top-1/4 left-1/4 w-32 h-32 bg-gradient-radial from-purple-400/10 to-transparent rounded-full animate-particle-float parallax-float'></div>
-            <div
-              className='absolute top-3/4 right-1/3 w-24 h-24 bg-gradient-radial from-cyan-300/15 to-transparent rounded-full animate-particle-float gentle-rotate'
-              style={{ animationDelay: '2s' }}
-            ></div>
-            <div
-              className='absolute bottom-1/4 left-1/3 w-40 h-40 bg-gradient-radial from-blue-400/10 to-transparent rounded-full animate-particle-float breathe'
-              style={{ animationDelay: '4s' }}
-            ></div>
-
-            {/* Subtle wave animation */}
-            <div className='absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-blue-500/5 to-transparent animate-wave'></div>
-
-            {/* Glowing accent elements */}
-            <div className='absolute top-1/2 left-1/2 w-2 h-2 bg-cyan-400 rounded-full animate-glow soft-glow'></div>
-            <div
-              className='absolute top-1/3 right-1/4 w-1 h-1 bg-blue-300 rounded-full animate-glow gentle-rotate'
-              style={{ animationDelay: '1s' }}
-            ></div>
-            <div
-              className='absolute bottom-1/3 left-1/4 w-1.5 h-1.5 bg-purple-300 rounded-full animate-glow breathe'
-              style={{ animationDelay: '2s' }}
-            ></div>
-          </div>
-
-          {/* Animated Beam Background */}
-          <div className='absolute inset-0 overflow-hidden pointer-events-none z-10'>
-            <div className='relative h-full w-full' ref={containerRef}>
-              {/* Technology nodes for animated beams - positioned on far right to avoid content overlap */}
-              <div
-                className='absolute top-1/5 right-1/6 w-16 h-16 rounded-full bg-blue-500/20 border-2 border-blue-400/30 flex items-center justify-center'
-                ref={node1Ref}
-              >
-                <Brain className='h-8 w-8 text-blue-300' />
-              </div>
-              <div
-                className='absolute top-1/3 right-1/5 w-16 h-16 rounded-full bg-cyan-500/20 border-2 border-cyan-400/30 flex items-center justify-center'
-                ref={node2Ref}
-              >
-                <FileCode className='h-8 w-8 text-cyan-300' />
-              </div>
-              <div
-                className='absolute bottom-1/3 right-1/6 w-16 h-16 rounded-full bg-purple-500/20 border-2 border-purple-400/30 flex items-center justify-center'
-                ref={node3Ref}
-              >
-                <Server className='h-8 w-8 text-purple-300' />
-              </div>
-              <div
-                className='absolute bottom-1/5 right-1/5 w-16 h-16 rounded-full bg-green-500/20 border-2 border-green-400/30 flex items-center justify-center'
-                ref={node4Ref}
-              >
-                <BarChart3 className='h-8 w-8 text-green-300' />
-              </div>
-              <div
-                className='absolute top-1/6 right-1/8 w-14 h-14 rounded-full bg-orange-500/20 border-2 border-orange-400/30 flex items-center justify-center'
-                ref={node5Ref}
-              >
-                <Layers className='h-6 w-6 text-orange-300' />
-              </div>
-              <div
-                className='absolute top-2/3 right-1/8 w-14 h-14 rounded-full bg-red-500/20 border-2 border-red-400/30 flex items-center justify-center'
-                ref={node6Ref}
-              >
-                <GitBranch className='h-6 w-6 text-red-300' />
-              </div>
-              <div
-                className='absolute bottom-1/6 right-1/5 w-14 h-14 rounded-full bg-indigo-500/20 border-2 border-indigo-400/30 flex items-center justify-center'
-                ref={node7Ref}
-              >
-                <Settings className='h-6 w-6 text-indigo-300' />
-              </div>
-              <div
-                className='absolute top-1/2 right-1/8 w-14 h-14 rounded-full bg-pink-500/20 border-2 border-pink-400/30 flex items-center justify-center'
-                ref={node8Ref}
-              >
-                <Cpu className='h-6 w-6 text-pink-300' />
-              </div>
-              <div
-                className='absolute top-1/2 right-1/3 w-20 h-20 rounded-full bg-gradient-to-r from-blue-500/30 to-purple-500/30 border-2 border-white/20 flex items-center justify-center'
-                ref={centerNodeRef}
-              >
-                <Target className='h-10 w-10 text-white' />
-              </div>
-
-              {/* Animated Beams */}
-              <AnimatedBeam
-                containerRef={containerRef}
-                fromRef={node1Ref}
-                toRef={centerNodeRef}
-                curvature={50}
-                duration={4}
-                delay={0}
-                gradientStartColor='#93c5fd'
-                gradientStopColor='#1e40af'
-              />
-              <AnimatedBeam
-                containerRef={containerRef}
-                fromRef={node2Ref}
-                toRef={centerNodeRef}
-                curvature={-50}
-                duration={4}
-                delay={0.5}
-                gradientStartColor='#67e8f9'
-                gradientStopColor='#0e7490'
-              />
-              <AnimatedBeam
-                containerRef={containerRef}
-                fromRef={node3Ref}
-                toRef={centerNodeRef}
-                curvature={50}
-                duration={4}
-                delay={1.0}
-                gradientStartColor='#c084fc'
-                gradientStopColor='#6b21a8'
-              />
-              <AnimatedBeam
-                containerRef={containerRef}
-                fromRef={node4Ref}
-                toRef={centerNodeRef}
-                curvature={-50}
-                duration={4}
-                delay={1.5}
-                gradientStartColor='#6ee7b7'
-                gradientStopColor='#047857'
-              />
-              <AnimatedBeam
-                containerRef={containerRef}
-                fromRef={node5Ref}
-                toRef={centerNodeRef}
-                curvature={30}
-                duration={4}
-                delay={2.0}
-                gradientStartColor='#fed7aa'
-                gradientStopColor='#c2410c'
-              />
-              <AnimatedBeam
-                containerRef={containerRef}
-                fromRef={node6Ref}
-                toRef={centerNodeRef}
-                curvature={-30}
-                duration={4}
-                delay={2.5}
-                gradientStartColor='#fca5a5'
-                gradientStopColor='#b91c1c'
-              />
-              <AnimatedBeam
-                containerRef={containerRef}
-                fromRef={node7Ref}
-                toRef={centerNodeRef}
-                curvature={40}
-                duration={4}
-                delay={3.0}
-                gradientStartColor='#a5b4fc'
-                gradientStopColor='#3730a3'
-              />
-              <AnimatedBeam
-                containerRef={containerRef}
-                fromRef={node8Ref}
-                toRef={centerNodeRef}
-                curvature={-40}
-                duration={4}
-                delay={3.5}
-                gradientStartColor='#f9a8d4'
-                gradientStopColor='#be185d'
-              />
-            </div>
-          </div>
 
           <div className='max-w-7xl mx-auto px-4 relative z-30'>
             <div className='text-left mb-20 max-w-2xl'>

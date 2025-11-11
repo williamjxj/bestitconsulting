@@ -106,7 +106,7 @@ export const R2_ASSET_MAPPINGS = {
     office: 'jimeng-3.png',
     culture: 'jimeng-4.png',
   },
-  'our-work': {
+  'case-studies': {
     hero: 'jimeng-5.png',
     project1: 'jimeng-6.png',
     project2: 'jimeng-7.png',

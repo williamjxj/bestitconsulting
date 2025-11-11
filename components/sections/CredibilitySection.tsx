@@ -95,7 +95,7 @@ export function CredibilitySection({
 
   const expertise = [
     {
-      title: '10+ Years Experience',
+      title: '20+ Years Experience',
       description: 'Proven track record in software development',
       icon: Clock,
       gradient: 'from-indigo-500 to-blue-500',

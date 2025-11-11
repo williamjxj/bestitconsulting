@@ -5,7 +5,6 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Button } from '@/components/ui/button'
 import {
   ArrowRight,
-  Code2,
   Globe,
   Users,
   Award,
@@ -13,8 +12,6 @@ import {
   Zap,
   Rocket,
   CheckCircle,
-  Cpu,
-  Database,
   ChevronLeft,
   ChevronRight,
 } from 'lucide-react'
@@ -110,79 +107,6 @@ export function HeroSection() {
           opacity: 0.4,
         }}
       />
-      <div className='absolute inset-0 overflow-hidden'>
-        {/* Primary gradient orbs - centralized */}
-        <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-gradient-radial from-blue-500/20 to-transparent rounded-full animate-pulse-slow'></div>
-        <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-gradient-radial from-cyan-400/15 to-transparent rounded-full animate-float'></div>
-
-        {/* Secondary gradient layers - centralized */}
-        <div
-          className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-radial from-purple-500/10 to-transparent rounded-full animate-pulse-slow'
-          style={{ animationDelay: '2s' }}
-        ></div>
-        <div
-          className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-gradient-radial from-emerald-400/10 to-transparent rounded-full animate-float'
-          style={{ animationDelay: '4s' }}
-        ></div>
-
-        {/* Enhanced floating geometric shapes - centralized around center */}
-        <div
-          className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -ml-16 -mt-16 w-6 h-6 bg-cyan-300/40 rounded-full animate-float'
-          style={{ animationDelay: '0s' }}
-        ></div>
-        <div
-          className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 ml-12 -mt-12 w-4 h-4 bg-blue-300/30 rounded-full animate-float'
-          style={{ animationDelay: '1s' }}
-        ></div>
-        <div
-          className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-8 bg-purple-300/25 rounded-full animate-float'
-          style={{ animationDelay: '2s' }}
-        ></div>
-        <div
-          className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 ml-16 mt-12 w-5 h-5 bg-emerald-300/35 rounded-full animate-float'
-          style={{ animationDelay: '3s' }}
-        ></div>
-        <div
-          className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -ml-12 mt-16 w-3 h-3 bg-pink-300/30 rounded-full animate-float'
-          style={{ animationDelay: '4s' }}
-        ></div>
-
-        {/* Tech-themed floating icons - centralized */}
-        <div
-          className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -ml-24 -mt-8 opacity-20 animate-float'
-          style={{ animationDelay: '1s' }}
-        >
-          <Code2 className='h-8 w-8 text-cyan-300' />
-        </div>
-        <div
-          className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 ml-24 mt-8 opacity-20 animate-float'
-          style={{ animationDelay: '3s' }}
-        >
-          <Database className='h-6 w-6 text-blue-300' />
-        </div>
-        <div
-          className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 mt-12 opacity-20 animate-float'
-          style={{ animationDelay: '5s' }}
-        >
-          <Cpu className='h-7 w-7 text-purple-300' />
-        </div>
-
-        {/* Animated mesh grid */}
-        <div className='absolute inset-0 opacity-10'>
-          <div
-            className='absolute inset-0'
-            style={{
-              backgroundImage: `linear-gradient(rgba(59, 130, 246, 0.3) 1px, transparent 1px),
-                              linear-gradient(90deg, rgba(59, 130, 246, 0.3) 1px, transparent 1px)`,
-              backgroundSize: '60px 60px',
-              animation: 'gradient-shift 20s ease infinite',
-            }}
-          ></div>
-        </div>
-
-        {/* Noise texture overlay for depth */}
-        <div className='absolute inset-0 opacity-[0.015] bg-gradient-to-br from-white to-transparent mix-blend-overlay'></div>
-      </div>
       {/* </ParticleBackground> */}
 
       <div className='w-full px-4 sm:px-6 lg:px-8 relative z-10 pt-16 sm:pt-20'>

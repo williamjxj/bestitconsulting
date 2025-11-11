@@ -1,6 +1,7 @@
 'use client'
 
-import { useState } from 'react'
+import Image from 'next/image'
+import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import Layout from '@/components/Layout'
 import SmartGoogleMap from '@/components/SmartGoogleMap'
@@ -39,7 +40,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from '@/components/ui/carousel'
-import Autoplay from 'embla-carousel-autoplay'
+// Removed autoplay plugin; use custom LTR playback
 
 /**
  * Contact page component with hero carousel
@@ -61,6 +62,16 @@ import Autoplay from 'embla-carousel-autoplay'
 export default function ContactPage() {
   const { t } = useI18n()
   const [emblaApi, setEmblaApi] = useState<any>(null)
+  // Auto-play left-to-right: advance to the previous slide so content flows to the right
+  useEffect(() => {
+    if (!emblaApi) return
+    const id = setInterval(() => {
+      try {
+        emblaApi.scrollPrev()
+      } catch {}
+    }, 4000)
+    return () => clearInterval(id)
+  }, [emblaApi])
   const formFields = [
     {
       name: 'name',
@@ -188,6 +199,13 @@ export default function ContactPage() {
       <div className='min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50'>
         {/* Compact Hero Section */}
         <section className='relative overflow-hidden bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 text-white py-24 md:py-32'>
+          <Image
+            src='/optimized/global.webp'
+            alt='Global technology background'
+            fill
+            className='object-cover object-center opacity-20 pointer-events-none'
+            priority={false}
+          />
           <div className='container mx-auto px-4 relative z-10'>
             <div className='text-center max-w-4xl mx-auto'>
               <div className='inline-flex items-center gap-2 px-4 py-2 text-sm font-medium bg-blue-600/20 rounded-full mb-6 border border-blue-500/30'>
@@ -206,16 +224,10 @@ export default function ContactPage() {
               <div className='mb-8 max-w-2xl mx-auto relative'>
                 <Carousel
                   setApi={setEmblaApi}
-                  plugins={[
-                    Autoplay({
-                      delay: 4000,
-                      stopOnInteraction: true,
-                      stopOnMouseEnter: true,
-                    }),
-                  ]}
                   opts={{
                     align: 'start',
                     loop: true,
+                    direction: 'ltr',
                   }}
                   className='w-full'
                   role='region'
@@ -321,7 +333,11 @@ export default function ContactPage() {
             <div className='grid grid-cols-1 lg:grid-cols-3 gap-8'>
               {/* Contact Form */}
               <div className='lg:col-span-2'>
-                <Card className='border-0 shadow-xl bg-white'>
+                <Card
+                  className='border-0 shadow-xl bg-white'
+                  hover={false}
+                  animated={false}
+                >
                   <CardHeader className='pb-4'>
                     <CardTitle className='text-2xl font-bold text-gray-900 mb-2'>
                       {t('form.title', 'contact')}
