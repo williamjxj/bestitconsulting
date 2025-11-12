@@ -62,6 +62,37 @@ import {
 export default function ContactPage() {
   const { t } = useI18n()
   const [emblaApi, setEmblaApi] = useState<any>(null)
+
+  // Get subject from URL query param - read immediately on client side
+  const [initialSubject, setInitialSubject] = useState<string>(() => {
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search)
+      const title = params.get('title')
+      return title ? decodeURIComponent(title) : ''
+    }
+    return ''
+  })
+
+  // Update subject when URL changes (e.g., browser back/forward or navigation)
+  useEffect(() => {
+    const checkSubject = () => {
+      if (typeof window !== 'undefined') {
+        const params = new URLSearchParams(window.location.search)
+        const title = params.get('title')
+        const newSubject = title ? decodeURIComponent(title) : ''
+        setInitialSubject(newSubject)
+      }
+    }
+
+    // Check immediately and on navigation
+    checkSubject()
+    window.addEventListener('popstate', checkSubject)
+
+    return () => {
+      window.removeEventListener('popstate', checkSubject)
+    }
+  }, [])
+
   // Auto-play left-to-right: advance to the previous slide so content flows to the right
   useEffect(() => {
     if (!emblaApi) return
@@ -106,11 +137,19 @@ export default function ContactPage() {
       width: 'full' as const,
     },
     {
+      name: 'subject',
+      label: 'Subject',
+      type: 'text' as const,
+      placeholder: 'Enter subject',
+      required: false,
+      width: 'full' as const,
+    },
+    {
       name: 'service',
       label: 'Service Interest',
-      type: 'multiselect' as const,
-      placeholder: 'Select services (multiple allowed)',
-      required: true,
+      type: 'select' as const,
+      placeholder: 'Select a service',
+      required: false,
       options: [
         { value: 'web-development', label: 'Web Development' },
         { value: 'mobile-apps', label: 'Mobile Apps' },
@@ -380,9 +419,11 @@ export default function ContactPage() {
                     )}
 
                     <AnimatedForm
+                      key={initialSubject}
                       fields={formFields}
                       onSubmit={handleFormSubmit}
                       submitText='Send Message'
+                      initialValues={initialSubject ? { subject: initialSubject } : {}}
                     />
                   </CardContent>
                 </Card>

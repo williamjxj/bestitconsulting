@@ -113,7 +113,7 @@ export default function HomePage() {
                       </p>
                       <div className='flex gap-4'>
                         <Button size='lg' asChild>
-                          <Link href='/contact'>
+                          <Link href='/contact#contact-form'>
                             {t('video.startJourney', 'home')}
                             <ArrowRight className='ml-2 h-4 w-4' />
                           </Link>

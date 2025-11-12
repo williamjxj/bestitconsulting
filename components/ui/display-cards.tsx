@@ -25,18 +25,20 @@ function DisplayCard({
   return (
     <div
       className={cn(
-        "relative flex h-36 w-[22rem] -skew-y-[8deg] select-none flex-col justify-between rounded-xl border-2 bg-muted/70 backdrop-blur-sm px-4 py-3 transition-all duration-700 after:absolute after:-right-1 after:top-[-5%] after:h-[110%] after:w-[20rem] after:bg-gradient-to-l after:from-background after:to-transparent after:content-[''] hover:border-white/20 hover:bg-muted [&>*]:flex [&>*]:items-center [&>*]:gap-2",
+        "relative flex h-36 w-[22rem] -skew-y-[8deg] select-none flex-col justify-between rounded-xl border-2 border-blue-400/40 bg-gradient-to-br from-blue-800/30 via-indigo-800/25 to-slate-800/30 backdrop-blur-md px-4 py-3 transition-all duration-700 after:absolute after:-right-1 after:top-[-5%] after:h-[110%] after:w-[20rem] after:bg-gradient-to-l after:from-blue-800/20 after:via-indigo-800/15 after:to-transparent after:content-[''] hover:border-blue-300/50 hover:from-blue-700/40 hover:via-indigo-700/35 hover:to-slate-700/40 [&>*]:flex [&>*]:items-center [&>*]:gap-2",
         className
       )}
     >
       <div>
-        <span className='relative inline-block rounded-full bg-blue-800 p-1'>
+        <span className='relative inline-block rounded-full bg-blue-600/40 backdrop-blur-sm border border-blue-400/30 p-1'>
           {icon}
         </span>
-        <p className={cn('text-lg font-medium', titleClassName)}>{title}</p>
+        <p className={cn('text-lg font-medium text-white', titleClassName)}>
+          {title}
+        </p>
       </div>
-      <p className='whitespace-nowrap text-lg'>{description}</p>
-      <p className='text-muted-foreground'>{date}</p>
+      <p className='whitespace-nowrap text-lg text-blue-100'>{description}</p>
+      <p className='text-blue-200/70'>{date}</p>
     </div>
   )
 }
@@ -57,7 +59,7 @@ export default function DisplayCards({ cards }: DisplayCardsProps) {
     },
     {
       className:
-        "[grid-area:stack] translate-x-32 translate-y-20 hover:translate-y-10",
+        '[grid-area:stack] translate-x-32 translate-y-20 hover:translate-y-10',
     },
   ]
 

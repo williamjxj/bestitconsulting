@@ -96,17 +96,34 @@ export function HeroSection() {
         threshold={0.1}
         rootMargin='100px'
       > */}
-      {/* Background image with opacity */}
-      <div
-        className='absolute inset-0 overflow-hidden'
-        style={{
-          backgroundImage: `url(${R2_BASE_URL}/home-page/unsplash.avif)`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
-          opacity: 0.4,
-        }}
-      />
+      {/* Background video with fallback image */}
+      <div className='absolute inset-0 overflow-hidden'>
+        {/* Video background - hidden on mobile for performance */}
+        <video
+          className='hidden md:block absolute inset-0 w-full h-full object-cover'
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload='auto'
+          poster='/Best IT Consultining.jpg'
+          style={{ opacity: 0.4 }}
+        >
+          <source src='/Best IT Consulting.mov' type='video/quicktime' />
+          <source src='/Best IT Consulting.mov' type='video/mp4' />
+        </video>
+        {/* Fallback image - shown on mobile and as fallback */}
+        <div
+          className='absolute inset-0 w-full h-full'
+          style={{
+            backgroundImage: 'url(/Best IT Consultining.jpg)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+            opacity: 0.4,
+          }}
+        />
+      </div>
       {/* </ParticleBackground> */}
 
       <div className='w-full px-4 sm:px-6 lg:px-8 relative z-10 pt-16 sm:pt-20'>

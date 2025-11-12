@@ -1,8 +1,9 @@
 'use client'
 
-import Image from 'next/image'
 import Layout from '@/components/Layout'
 import { motion } from 'framer-motion'
+import Link from 'next/link'
+import Image from 'next/image'
 import { brandClasses } from '@/lib/branding'
 import { useReducedMotion } from '@/lib/accessibility'
 import { getDeviceType } from '@/lib/mobile-optimization'
@@ -31,6 +32,10 @@ import {
 } from '@/components/R2Image'
 import { useR2Assets, R2_ASSET_MAPPINGS } from '@/hooks/useR2Assets'
 import { useI18n } from '@/lib/i18n'
+
+const R2_BASE_URL =
+  process.env.NEXT_PUBLIC_R2_BASE_URL ||
+  'https://pub-3b3f23afc5404f20b2081d34fa4c87b8.r2.dev'
 
 const founderInfo = {
   name: 'William Jiang',
@@ -120,12 +125,15 @@ export default function AboutPage() {
     <Layout>
       {/* Hero Section */}
       <section className='relative overflow-hidden bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 text-white py-24 md:py-32'>
-        <Image
-          src='/optimized/global.webp'
-          alt='Global technology background'
-          fill
-          className='object-cover object-center opacity-20 pointer-events-none'
-          priority={false}
+        <div
+          className='absolute inset-0 overflow-hidden pointer-events-none'
+          style={{
+            backgroundImage: `url(${R2_BASE_URL}/home-page/unsplash.avif)`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+            opacity: 0.4,
+          }}
         />
         {/* Animated background elements */}
         <div className='absolute inset-0'>
@@ -168,15 +176,15 @@ export default function AboutPage() {
                   size='lg'
                   className='group text-lg px-8 py-4 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700'
                 >
-                  {t('hero.ourServices', 'about')}
-                  <ArrowRight className='ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform' />
+                    {t('hero.ourServices', 'about')}
+                    <ArrowRight className='ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform' />
                 </Button>
                 <Button
                   variant='outline'
                   size='lg'
                   className='text-lg px-8 py-4 bg-white/10 border-white/20 hover:bg-white/20'
                 >
-                  {t('hero.viewPortfolio', 'about')}
+                    {t('hero.viewPortfolio', 'about')}
                 </Button>
               </motion.div>
             </motion.div>
@@ -199,7 +207,7 @@ export default function AboutPage() {
                       iconClassName: 'text-blue-400',
                       titleClassName: 'text-blue-400',
                       className:
-                        "[grid-area:stack] hover:-translate-y-8 before:absolute before:w-[100%] before:outline-1 before:rounded-xl before:outline-border before:h-[100%] before:content-[''] before:bg-blend-overlay before:bg-background/50 grayscale-[100%] hover:before:opacity-0 before:transition-opacity before:duration:700 hover:grayscale-0 before:left-0 before:top-0",
+                        "[grid-area:stack] hover:-translate-y-8",
                     },
                     {
                       icon: <Users className='size-4 text-green-300' />,
@@ -209,7 +217,7 @@ export default function AboutPage() {
                       iconClassName: 'text-green-400',
                       titleClassName: 'text-green-400',
                       className:
-                        "[grid-area:stack] translate-x-8 translate-y-6 hover:-translate-y-1 before:absolute before:w-[100%] before:outline-1 before:rounded-xl before:outline-border before:h-[100%] before:content-[''] before:bg-blend-overlay before:bg-background/50 grayscale-[100%] hover:before:opacity-0 before:transition-opacity before:duration:700 hover:grayscale-0 before:left-0 before:top-0",
+                        "[grid-area:stack] translate-x-8 translate-y-6 hover:-translate-y-1",
                     },
                     {
                       icon: <Award className='size-4 text-purple-300' />,
@@ -219,7 +227,7 @@ export default function AboutPage() {
                       iconClassName: 'text-purple-400',
                       titleClassName: 'text-purple-400',
                       className:
-                        '[grid-area:stack] translate-x-16 translate-y-12 hover:translate-y-8',
+                        "[grid-area:stack] translate-x-16 translate-y-12 hover:translate-y-8",
                     },
                   ]}
                 />
@@ -405,16 +413,16 @@ export default function AboutPage() {
               viewport={{ once: true }}
               whileHover={shouldAnimate ? { y: -5 } : undefined}
             >
-              <div className='grid lg:grid-cols-3 gap-8 items-center'>
+              <div className='grid lg:grid-cols-3 gap-8 items-start'>
                 <div className='lg:col-span-1 text-center lg:text-left'>
-                  <div className='w-32 h-32 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-full mx-auto lg:mx-0 mb-6 flex items-center justify-center overflow-hidden'>
-                    <R2ProfileImage
+                  <div className='relative w-32 h-32 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-full mx-auto lg:mx-0 mb-6 overflow-hidden shrink-0'>
+                    <Image
                       src={founderInfo.image}
                       alt={founderInfo.name}
-                      className='w-28 h-28 rounded-full object-cover'
-                      width={112}
-                      height={112}
-                      animation='fade'
+                      width={128}
+                      height={128}
+                      className='w-full h-full object-cover object-center rounded-full'
+                      priority
                     />
                   </div>
                   <h3 className='text-2xl font-bold text-gray-900 mb-2'>
@@ -668,15 +676,15 @@ export default function AboutPage() {
                 size='lg'
                 className='bg-white text-blue-600 hover:bg-gray-100'
               >
-                Start Your Project
-                <ArrowRight className='ml-2 h-4 w-4' />
+                  Start Your Project
+                  <ArrowRight className='ml-2 h-4 w-4' />
               </Button>
               <Button
                 variant='outline'
                 size='lg'
                 className='border-white text-white hover:bg-white hover:text-blue-600'
               >
-                Schedule Consultation
+                  Schedule Consultation
               </Button>
             </div>
           </motion.div>

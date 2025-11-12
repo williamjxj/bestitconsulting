@@ -588,7 +588,7 @@ export default function OurWorkPage() {
                 size='lg'
                 className='bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white px-8 py-3'
               >
-                <Link href='/contact' className='flex items-center gap-2'>
+                <Link href='/contact#contact-form' className='flex items-center gap-2'>
                   <span>Start Your Project</span>
                   <ArrowRight className='h-5 w-5' />
                 </Link>

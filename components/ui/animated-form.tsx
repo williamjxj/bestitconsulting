@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useReducedMotion } from '@/lib/accessibility'
 import { getDeviceType } from '@/lib/mobile-optimization'
@@ -17,6 +17,7 @@ interface FormField {
   required?: boolean
   options?: Array<{ value: string; label: string }>
   width?: 'full' | 'half'
+  readOnly?: boolean
 }
 
 interface AnimatedFormProps {
@@ -24,6 +25,7 @@ interface AnimatedFormProps {
   onSubmit: (data: Record<string, string>) => Promise<void>
   submitText?: string
   className?: string
+  initialValues?: Record<string, string>
 }
 
 export function AnimatedForm({
@@ -31,9 +33,10 @@ export function AnimatedForm({
   onSubmit,
   submitText = 'Send Message',
   className,
+  initialValues,
 }: AnimatedFormProps) {
   const [formData, setFormData] = useState<Record<string, string | string[]>>(
-    {}
+    () => initialValues || {}
   )
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -43,6 +46,13 @@ export function AnimatedForm({
   const reducedMotion = useReducedMotion()
   const deviceType = getDeviceType()
   const shouldAnimate = !reducedMotion && deviceType !== 'mobile'
+
+  // Update formData when initialValues changes
+  useEffect(() => {
+    if (initialValues && Object.keys(initialValues).length > 0) {
+      setFormData(prev => ({ ...prev, ...initialValues }))
+    }
+  }, [initialValues])
 
   const handleInputChange = (name: string, value: string | string[]) => {
     setFormData(prev => ({ ...prev, [name]: value }))
@@ -318,9 +328,9 @@ export function AnimatedForm({
               </motion.div>
             ))}
 
-          {/* Service and Message fields - full width */}
+          {/* Subject, Service and Message fields - full width */}
           {fields
-            .filter(f => f.name === 'service' || f.name === 'message')
+            .filter(f => f.name === 'subject' || f.name === 'service' || f.name === 'message')
             .map((field, index) => (
               <motion.div
                 key={field.name}
@@ -355,6 +365,29 @@ export function AnimatedForm({
                           : 'border-gray-300'
                       )}
                     />
+                  ) : field.type === 'select' ? (
+                    <motion.select
+                      value={formData[field.name] || ''}
+                      onChange={e =>
+                        handleInputChange(field.name, e.target.value)
+                      }
+                      onFocus={() => setFocusedField(field.name)}
+                      onBlur={() => setFocusedField(null)}
+                      className={cn(
+                        'w-full px-4 py-3 border rounded-lg transition-all duration-200 bg-white',
+                        'focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500',
+                        errors[field.name]
+                          ? 'border-red-300 focus:ring-red-500/50 focus:border-red-500'
+                          : 'border-gray-300'
+                      )}
+                    >
+                      <option value=''>{field.placeholder}</option>
+                      {field.options?.map(option => (
+                        <option key={option.value} value={option.value}>
+                          {option.label}
+                        </option>
+                      ))}
+                    </motion.select>
                   ) : field.type === 'multiselect' ? (
                     <div className='space-y-2'>
                       <div className='grid grid-cols-1 sm:grid-cols-2 gap-2'>
@@ -411,12 +444,17 @@ export function AnimatedForm({
                       onFocus={() => setFocusedField(field.name)}
                       onBlur={() => setFocusedField(null)}
                       placeholder={field.placeholder}
+                      readOnly={field.readOnly}
                       className={cn(
                         'w-full px-4 py-3 border rounded-lg transition-all duration-200',
+                        field.readOnly
+                          ? 'bg-gray-100 text-gray-600 cursor-not-allowed'
+                          : 'bg-white',
                         'focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500',
                         errors[field.name]
                           ? 'border-red-300 focus:ring-red-500/50 focus:border-red-500'
-                          : 'border-gray-300'
+                          : 'border-gray-300',
+                        field.readOnly && 'focus:ring-0 focus:border-gray-300'
                       )}
                     />
                   )}

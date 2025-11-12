@@ -25,11 +25,14 @@ import {
   MessageSquare,
 } from 'lucide-react'
 import Link from 'next/link'
-import Image from 'next/image'
 import { R2Image, R2CardImage, R2HeroImage } from '@/components/R2Image'
 import IconCloudDemo from '@/components/ui/IconCloudDemo'
 import { useR2Assets, R2_ASSET_MAPPINGS } from '@/hooks/useR2Assets'
 import { useI18n } from '@/lib/i18n'
+
+const R2_BASE_URL =
+  process.env.NEXT_PUBLIC_R2_BASE_URL ||
+  'https://pub-3b3f23afc5404f20b2081d34fa4c87b8.r2.dev'
 
 export default function TestimonialsPage() {
   const { t } = useI18n()
@@ -107,12 +110,15 @@ export default function TestimonialsPage() {
       <div className='min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50'>
         {/* Enhanced Hero Section */}
         <section className='relative overflow-hidden bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 text-white py-24 md:py-32'>
-          <Image
-            src='/optimized/global.webp'
-            alt='Global technology background'
-            fill
-            className='object-cover object-center opacity-20 pointer-events-none'
-            priority={false}
+          <div
+            className='absolute inset-0 overflow-hidden pointer-events-none'
+            style={{
+              backgroundImage: `url(${R2_BASE_URL}/home-page/unsplash.avif)`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat',
+              opacity: 0.4,
+            }}
           />
           <div className='container mx-auto px-4 relative'>
             {/* Icon Cloud positioned inside container, to the left of heading */}
@@ -143,7 +149,7 @@ export default function TestimonialsPage() {
                   className='group text-lg px-8 py-4 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700'
                   asChild
                 >
-                  <Link href='/contact'>
+                  <Link href='/contact#contact-form'>
                     <MessageSquare className='mr-2 h-5 w-5' />
                     {t('hero.shareStory', 'testimonials')}
                     <ArrowRight className='ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform' />
@@ -155,7 +161,7 @@ export default function TestimonialsPage() {
                   className='text-lg px-8 py-4 bg-white/10 border-white/20 hover:bg-white/20'
                   asChild
                 >
-                  <Link href='/portfolio'>
+                  <Link href='/contact#contact-form'>
                     <Rocket className='mr-2 h-5 w-5' />
                     {t('hero.viewWork', 'testimonials')}
                   </Link>

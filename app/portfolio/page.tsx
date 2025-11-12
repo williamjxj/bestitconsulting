@@ -79,7 +79,7 @@ export default function PortfolioPage() {
                   className='group text-lg px-8 py-4 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700'
                   asChild
                 >
-                  <Link href='/contact'>
+                  <Link href='/contact#contact-form'>
                     <Rocket className='mr-2 h-5 w-5' />
                     {t('startProject', 'portfolio')}
                     <ArrowRight className='ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform' />
