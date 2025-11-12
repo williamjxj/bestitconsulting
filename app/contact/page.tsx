@@ -40,6 +40,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from '@/components/ui/carousel'
+import { CustomerInquiriesList } from '@/components/ui/customer-inquiries-list'
 // Removed autoplay plugin; use custom LTR playback
 
 /**
@@ -62,6 +63,7 @@ import {
 export default function ContactPage() {
   const { t } = useI18n()
   const [emblaApi, setEmblaApi] = useState<any>(null)
+  const [isCarouselHovered, setIsCarouselHovered] = useState(false)
 
   // Get subject from URL query param - read immediately on client side
   const [initialSubject, setInitialSubject] = useState<string>(() => {
@@ -95,14 +97,14 @@ export default function ContactPage() {
 
   // Auto-play left-to-right: advance to the previous slide so content flows to the right
   useEffect(() => {
-    if (!emblaApi) return
+    if (!emblaApi || isCarouselHovered) return // Pause when hovered
     const id = setInterval(() => {
       try {
         emblaApi.scrollPrev()
       } catch {}
     }, 4000)
     return () => clearInterval(id)
-  }, [emblaApi])
+  }, [emblaApi, isCarouselHovered])
   const formFields = [
     {
       name: 'name',
@@ -246,95 +248,107 @@ export default function ContactPage() {
             priority={false}
           />
           <div className='container mx-auto px-4 relative z-10'>
-            <div className='text-center max-w-4xl mx-auto'>
-              <div className='inline-flex items-center gap-2 px-4 py-2 text-sm font-medium bg-blue-600/20 rounded-full mb-6 border border-blue-500/30'>
-                <MessageSquare className='h-4 w-4 text-cyan-300' />
-                <span>{t('hero.badge', 'contact')}</span>
+            <div className='grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center'>
+              {/* Left Column - Hero Content */}
+              <div className='text-center lg:text-left max-w-4xl mx-auto lg:mx-0'>
+                <div className='inline-flex items-center gap-2 px-4 py-2 text-sm font-medium bg-blue-600/20 rounded-full mb-6 border border-blue-500/30'>
+                  <MessageSquare className='h-4 w-4 text-cyan-300' />
+                  <span>{t('hero.badge', 'contact')}</span>
+                </div>
+
+                <h1 className='text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6'>
+                  <AnimatedHeadline
+                    text={t('hero.title', 'contact')}
+                    className='text-4xl md:text-5xl lg:text-6xl font-bold leading-tight'
+                  />
+                </h1>
+
+                {/* Carousel for Hero Text */}
+                <div
+                  className='mb-8 max-w-2xl mx-auto lg:mx-0 relative'
+                  onMouseEnter={() => setIsCarouselHovered(true)}
+                  onMouseLeave={() => setIsCarouselHovered(false)}
+                >
+                  <Carousel
+                    setApi={setEmblaApi}
+                    opts={{
+                      align: 'start',
+                      loop: true,
+                      direction: 'ltr',
+                    }}
+                    className='w-full'
+                    role='region'
+                    aria-roledescription='carousel'
+                  >
+                    <CarouselContent>
+                      <CarouselItem
+                        role='group'
+                        aria-roledescription='slide'
+                        aria-label='Slide 1 of 3'
+                      >
+                        <p className='text-lg md:text-xl text-blue-100/90 text-center lg:text-left px-4 lg:px-0'>
+                          {t('carousel.slide1', 'contact')}
+                        </p>
+                      </CarouselItem>
+                      <CarouselItem
+                        role='group'
+                        aria-roledescription='slide'
+                        aria-label='Slide 2 of 3'
+                      >
+                        <p className='text-lg md:text-xl text-blue-100/90 text-center lg:text-left px-4 lg:px-0'>
+                          {t('carousel.slide2', 'contact')}
+                        </p>
+                      </CarouselItem>
+                      <CarouselItem
+                        role='group'
+                        aria-roledescription='slide'
+                        aria-label='Slide 3 of 3'
+                      >
+                        <p className='text-lg md:text-xl text-blue-100/90 text-center lg:text-left px-4 lg:px-0'>
+                          {t('carousel.slide3', 'contact')}
+                        </p>
+                      </CarouselItem>
+                    </CarouselContent>
+                    <CarouselPrevious
+                      className='left-0 md:-left-12 text-white border-white/30 hover:bg-white/10 hover:border-white/50 bg-white/5 backdrop-blur-sm'
+                      aria-label='Previous slide'
+                    />
+                    <CarouselNext
+                      className='right-0 md:-right-12 text-white border-white/30 hover:bg-white/10 hover:border-white/50 bg-white/5 backdrop-blur-sm'
+                      aria-label='Next slide'
+                    />
+                  </Carousel>
+                </div>
+
+                <div className='flex flex-col sm:flex-row gap-4 justify-center lg:justify-start items-center'>
+                  <Button
+                    size='lg'
+                    className='group text-lg px-6 py-3 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700'
+                    asChild
+                  >
+                    <Link href='#contact-form'>
+                      <Send className='mr-2 h-5 w-5' />
+                      {t('hero.getConsultation', 'contact')}
+                      <ArrowRight className='ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform' />
+                    </Link>
+                  </Button>
+                  <Button
+                    size='lg'
+                    variant='outline'
+                    className='text-lg px-6 py-3 bg-white/10 border-white/20 hover:bg-white/20'
+                    asChild
+                  >
+                    <Link href='#contact-methods'>
+                      <Phone className='mr-2 h-5 w-5' />
+                      {t('hero.callNow', 'contact')}
+                    </Link>
+                  </Button>
+                </div>
               </div>
 
-              <h1 className='text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6'>
-                <AnimatedHeadline
-                  text={t('hero.title', 'contact')}
-                  className='text-4xl md:text-5xl lg:text-6xl font-bold leading-tight'
-                />
-              </h1>
-
-              {/* Carousel for Hero Text */}
-              <div className='mb-8 max-w-2xl mx-auto relative'>
-                <Carousel
-                  setApi={setEmblaApi}
-                  opts={{
-                    align: 'start',
-                    loop: true,
-                    direction: 'ltr',
-                  }}
-                  className='w-full'
-                  role='region'
-                  aria-roledescription='carousel'
-                >
-                  <CarouselContent>
-                    <CarouselItem
-                      role='group'
-                      aria-roledescription='slide'
-                      aria-label='Slide 1 of 3'
-                    >
-                      <p className='text-lg md:text-xl text-blue-100/90 text-center px-4'>
-                        {t('carousel.slide1', 'contact')}
-                      </p>
-                    </CarouselItem>
-                    <CarouselItem
-                      role='group'
-                      aria-roledescription='slide'
-                      aria-label='Slide 2 of 3'
-                    >
-                      <p className='text-lg md:text-xl text-blue-100/90 text-center px-4'>
-                        {t('carousel.slide2', 'contact')}
-                      </p>
-                    </CarouselItem>
-                    <CarouselItem
-                      role='group'
-                      aria-roledescription='slide'
-                      aria-label='Slide 3 of 3'
-                    >
-                      <p className='text-lg md:text-xl text-blue-100/90 text-center px-4'>
-                        {t('carousel.slide3', 'contact')}
-                      </p>
-                    </CarouselItem>
-                  </CarouselContent>
-                  <CarouselPrevious
-                    className='left-0 md:-left-12 text-white border-white/30 hover:bg-white/10 hover:border-white/50 bg-white/5 backdrop-blur-sm'
-                    aria-label='Previous slide'
-                  />
-                  <CarouselNext
-                    className='right-0 md:-right-12 text-white border-white/30 hover:bg-white/10 hover:border-white/50 bg-white/5 backdrop-blur-sm'
-                    aria-label='Next slide'
-                  />
-                </Carousel>
-              </div>
-
-              <div className='flex flex-col sm:flex-row gap-4 justify-center items-center'>
-                <Button
-                  size='lg'
-                  className='group text-lg px-6 py-3 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700'
-                  asChild
-                >
-                  <Link href='#contact-form'>
-                    <Send className='mr-2 h-5 w-5' />
-                    {t('hero.getConsultation', 'contact')}
-                    <ArrowRight className='ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform' />
-                  </Link>
-                </Button>
-                <Button
-                  size='lg'
-                  variant='outline'
-                  className='text-lg px-6 py-3 bg-white/10 border-white/20 hover:bg-white/20'
-                  asChild
-                >
-                  <Link href='#contact-methods'>
-                    <Phone className='mr-2 h-5 w-5' />
-                    {t('hero.callNow', 'contact')}
-                  </Link>
-                </Button>
+              {/* Right Column - Customer Inquiries List */}
+              <div className='flex justify-end items-start'>
+                <CustomerInquiriesList />
               </div>
             </div>
           </div>
@@ -423,7 +437,9 @@ export default function ContactPage() {
                       fields={formFields}
                       onSubmit={handleFormSubmit}
                       submitText='Send Message'
-                      initialValues={initialSubject ? { subject: initialSubject } : {}}
+                      initialValues={
+                        initialSubject ? { subject: initialSubject } : {}
+                      }
                     />
                   </CardContent>
                 </Card>

@@ -219,7 +219,7 @@ const TechnologyShowcase = () => {
       ),
     },
     {
-      name: 'Vercel',
+      name: 'SaaS, PaaS',
       color: 'from-black to-gray-800',
       icon: (
         <svg className='w-6 h-6' viewBox='0 0 24 24' fill='currentColor'>

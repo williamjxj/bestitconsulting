@@ -61,6 +61,10 @@ const R2_BASE_URL =
   process.env.NEXT_PUBLIC_R2_BASE_URL ||
   'https://pub-3b3f23afc5404f20b2081d34fa4c87b8.r2.dev'
 
+// Background type: 'image' (R2) or 'video' (local video file)
+// Set to 'image' to use R2 image, 'video' to use local video
+const BACKGROUND_TYPE: 'image' | 'video' = 'image'
+
 export function HeroSection() {
   const [currentIndex, setCurrentIndex] = useState(0)
 
@@ -96,33 +100,49 @@ export function HeroSection() {
         threshold={0.1}
         rootMargin='100px'
       > */}
-      {/* Background video with fallback image */}
+      {/* Background - R2 image (default) or video (backup) */}
       <div className='absolute inset-0 overflow-hidden'>
-        {/* Video background - hidden on mobile for performance */}
-        <video
-          className='hidden md:block absolute inset-0 w-full h-full object-cover'
-          autoPlay
-          loop
-          muted
-          playsInline
-          preload='auto'
-          poster='/Best IT Consultining.jpg'
-          style={{ opacity: 0.4 }}
-        >
-          <source src='/Best IT Consulting.mov' type='video/quicktime' />
-          <source src='/Best IT Consulting.mov' type='video/mp4' />
-        </video>
-        {/* Fallback image - shown on mobile and as fallback */}
-        <div
-          className='absolute inset-0 w-full h-full'
-          style={{
-            backgroundImage: 'url(/Best IT Consultining.jpg)',
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            backgroundRepeat: 'no-repeat',
-            opacity: 0.4,
-          }}
-        />
+        {BACKGROUND_TYPE === 'video' ? (
+          <>
+            {/* Video background - hidden on mobile for performance */}
+            <video
+              className='hidden md:block absolute inset-0 w-full h-full object-cover'
+              autoPlay
+              loop
+              muted
+              playsInline
+              preload='auto'
+              poster='/Best IT Consultining.jpg'
+              style={{ opacity: 0.4 }}
+            >
+              <source src='/Best IT Consulting.mov' type='video/quicktime' />
+              <source src='/Best IT Consulting.mov' type='video/mp4' />
+            </video>
+            {/* Fallback image - shown on mobile and as fallback */}
+            <div
+              className='absolute inset-0 w-full h-full'
+              style={{
+                backgroundImage: 'url(/Best IT Consultining.jpg)',
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                backgroundRepeat: 'no-repeat',
+                opacity: 0.4,
+              }}
+            />
+          </>
+        ) : (
+          /* R2 Image background (default) */
+          <div
+            className='absolute inset-0 w-full h-full'
+            style={{
+              backgroundImage: `url(${R2_BASE_URL}/home-page/unsplash.avif)`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat',
+              opacity: 0.4,
+            }}
+          />
+        )}
       </div>
       {/* </ParticleBackground> */}
 
