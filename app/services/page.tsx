@@ -13,6 +13,7 @@ import {
 } from 'lucide-react'
 import { ServiceCard } from '@/components/ServiceCard'
 import { ServicesSection } from '@/components/sections/ServicesSection'
+import { SpecializationsSection } from '@/components/sections/SpecializationsSection'
 import Layout from '@/components/Layout'
 import Link from 'next/link'
 import { ScrollTrigger } from '@/components/animations/ScrollTrigger'
@@ -104,6 +105,9 @@ export default function ServicesPage() {
           title={t('section.title', 'services')}
           description={t('section.description', 'services')}
         />
+
+        {/* Specializations Section */}
+        <SpecializationsSection />
 
         {/* Process Section */}
         <ScrollTrigger animation='fade' direction='up' duration={0.8}>
