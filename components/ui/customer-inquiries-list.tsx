@@ -14,6 +14,7 @@ import {
   Zap,
   TrendingUp,
   Video,
+  RefreshCw,
 } from 'lucide-react'
 
 interface CustomerInquiry {
@@ -91,10 +92,20 @@ const customerInquiries = [
 ]
 
 export function CustomerInquiriesList() {
-  const [notifications, setNotifications] = useState<CustomerInquiry[]>([])
+  // Initialize with 4 items
+  const initialNotifications: CustomerInquiry[] = customerInquiries
+    .slice(0, 4)
+    .map((inquiry, idx) => ({
+      id: Date.now() + idx,
+      ...inquiry,
+    }))
+  const [notifications, setNotifications] =
+    useState<CustomerInquiry[]>(initialNotifications)
   const [removingIds, setRemovingIds] = useState<Set<number>>(new Set())
   const [isHovered, setIsHovered] = useState(false)
-  const indexRef = useRef(0)
+  const [showRefresh, setShowRefresh] = useState(false)
+  const indexRef = useRef(4) // Start from index 4 since we've already shown 0-3
+  const refreshTimeoutRef = useRef<NodeJS.Timeout | null>(null)
 
   useEffect(() => {
     if (isHovered) return // Pause when hovered
@@ -106,9 +117,19 @@ export function CustomerInquiriesList() {
       }
       setNotifications(prev => [newNotification, ...prev].slice(0, 6))
       indexRef.current = (indexRef.current + 1) % customerInquiries.length
+
+      // Show refresh icon animation
+      setShowRefresh(true)
+      if (refreshTimeoutRef.current) clearTimeout(refreshTimeoutRef.current)
+      refreshTimeoutRef.current = setTimeout(() => {
+        setShowRefresh(false)
+      }, 500) // Hide after 0.5 seconds
     }, 4000)
 
-    return () => clearInterval(interval)
+    return () => {
+      clearInterval(interval)
+      if (refreshTimeoutRef.current) clearTimeout(refreshTimeoutRef.current)
+    }
   }, [isHovered])
 
   const removeNotification = (id: number) => {
@@ -136,6 +157,9 @@ export function CustomerInquiriesList() {
           <h2 className='text-[10px] sm:text-xs font-semibold text-white/90'>
             Contact Us
           </h2>
+          {showRefresh && (
+            <RefreshCw className='w-3 h-3 sm:w-3.5 sm:h-3.5 text-white/90 animate-spin' />
+          )}
         </div>
       )}
 

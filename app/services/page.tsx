@@ -91,7 +91,7 @@ export default function ServicesPage() {
                 {t('hero.description', 'services')}
               </p>
               <Button size='lg' className='group' asChild>
-                <Link href='/contact'>
+                <Link href='/contact?title=Get%20Started#contact-form'>
                   {t('hero.getStarted', 'services')}
                   <ArrowRight className='ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform' />
                 </Link>
@@ -181,7 +181,7 @@ export default function ServicesPage() {
                 className='border-white/30 hover:bg-white/10'
                 asChild
               >
-                <Link href='/portfolio'>View Case Studies</Link>
+                <Link href='/case-studies'>View Case Studies</Link>
               </Button>
             </div>
           </div>

@@ -112,7 +112,7 @@ export default function FAQPage() {
                   className='text-lg px-6 py-3 bg-white/10 border-white/20 hover:bg-white/20'
                   asChild
                 >
-                  <Link href='/contact'>
+                  <Link href='/contact#contact-form'>
                     <MessageSquare className='mr-2 h-5 w-5' />
                     Ask a Question
                   </Link>
@@ -163,7 +163,7 @@ export default function FAQPage() {
                 className='text-lg px-6 py-3 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700'
                 asChild
               >
-                <Link href='/contact'>
+                <Link href='/contact#contact-form'>
                   <MessageSquare className='mr-2 h-5 w-5' />
                   Contact Us
                 </Link>

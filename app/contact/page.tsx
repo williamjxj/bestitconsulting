@@ -248,9 +248,9 @@ export default function ContactPage() {
             priority={false}
           />
           <div className='container mx-auto px-4 relative z-10'>
-            <div className='grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center'>
+            <div className='grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-4 items-center'>
               {/* Left Column - Hero Content */}
-              <div className='text-center lg:text-left max-w-4xl mx-auto lg:mx-0'>
+              <div className='text-center lg:text-left max-w-4xl mx-auto lg:mx-0 lg:ml-auto lg:mr-8'>
                 <div className='inline-flex items-center gap-2 px-4 py-2 text-sm font-medium bg-blue-600/20 rounded-full mb-6 border border-blue-500/30'>
                   <MessageSquare className='h-4 w-4 text-cyan-300' />
                   <span>{t('hero.badge', 'contact')}</span>

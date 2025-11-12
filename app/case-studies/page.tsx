@@ -258,34 +258,86 @@ export default function OurWorkPage() {
             priority={false}
           />
 
-
           <div className='max-w-7xl mx-auto px-4 relative z-30'>
-            <div className='text-left mb-20 max-w-2xl'>
-              <div className='inline-flex items-center gap-2 px-4 py-2 text-sm font-medium bg-blue-600/20 rounded-full mb-8 border border-blue-500/30 animate-fade-in backdrop-blur-sm'>
-                <Rocket className='h-4 w-4 text-cyan-300 animate-float' />
-                <span>Live Projects Portfolio • Interactive Demos</span>
+            <div className='grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center'>
+              {/* Left Column - Hero Content */}
+              <div className='text-left mb-20 lg:mb-0 max-w-2xl'>
+                <div className='inline-flex items-center gap-2 px-4 py-2 text-sm font-medium bg-blue-600/20 rounded-full mb-8 border border-blue-500/30 animate-fade-in backdrop-blur-sm'>
+                  <Rocket className='h-4 w-4 text-cyan-300 animate-float' />
+                  <span>Live Projects Portfolio • Interactive Demos</span>
+                </div>
+                <h1 className='text-5xl md:text-6xl lg:text-7xl font-bold mb-8'>
+                  <AnimatedHeadline
+                    text={t('title', 'case-studies')}
+                    className='text-5xl md:text-6xl lg:text-7xl font-bold'
+                  />
+                </h1>
+                <p className='text-xl md:text-2xl text-blue-100/90 max-w-2xl leading-relaxed mb-8'>
+                  {t('subtitle', 'case-studies')}
+                </p>
+                <div className='flex flex-wrap gap-6 text-sm text-blue-200/80'>
+                  <div className='flex items-center gap-2'>
+                    <CheckCircle className='h-4 w-4 text-green-400' />
+                    <span>9+ Live Projects</span>
+                  </div>
+                  <div className='flex items-center gap-2'>
+                    <CheckCircle className='h-4 w-4 text-green-400' />
+                    <span>Multiple Industries</span>
+                  </div>
+                  <div className='flex items-center gap-2'>
+                    <CheckCircle className='h-4 w-4 text-green-400' />
+                    <span>Modern Tech Stack</span>
+                  </div>
+                </div>
               </div>
-              <h1 className='text-5xl md:text-6xl lg:text-7xl font-bold mb-8'>
-                <AnimatedHeadline
-                  text={t('title', 'case-studies')}
-                  className='text-5xl md:text-6xl lg:text-7xl font-bold'
-                />
-              </h1>
-              <p className='text-xl md:text-2xl text-blue-100/90 max-w-2xl leading-relaxed mb-8'>
-                {t('subtitle', 'case-studies')}
-              </p>
-              <div className='flex flex-wrap gap-6 text-sm text-blue-200/80'>
-                <div className='flex items-center gap-2'>
-                  <CheckCircle className='h-4 w-4 text-green-400' />
-                  <span>9+ Live Projects</span>
+
+              {/* Right Column - Video Player */}
+              <div className='hidden lg:block w-full'>
+                <div
+                  className='relative w-full overflow-hidden rounded-lg shadow-2xl bg-black'
+                  style={{ aspectRatio: '16/9' }}
+                >
+                  {/* Video - Desktop only */}
+                  <video
+                    className='absolute inset-0 w-full h-full object-cover'
+                    controls
+                    muted
+                    playsInline
+                    poster='/Best IT Consultining.jpg'
+                    style={{ objectFit: 'cover' }}
+                  >
+                    <source
+                      src='/Best IT Consulting.mov'
+                      type='video/quicktime'
+                    />
+                    <source src='/Best IT Consulting.mov' type='video/mp4' />
+                    Your browser does not support the video tag.
+                  </video>
                 </div>
-                <div className='flex items-center gap-2'>
-                  <CheckCircle className='h-4 w-4 text-green-400' />
-                  <span>Multiple Industries</span>
-                </div>
-                <div className='flex items-center gap-2'>
-                  <CheckCircle className='h-4 w-4 text-green-400' />
-                  <span>Modern Tech Stack</span>
+              </div>
+
+              {/* Fallback Image - Mobile only */}
+              <div className='lg:hidden w-full'>
+                <div
+                  className='relative w-full overflow-hidden rounded-lg shadow-2xl'
+                  style={{ aspectRatio: '16/9', position: 'relative' }}
+                >
+                  <Image
+                    src='/Best IT Consultining.jpg'
+                    alt='Best IT Consulting'
+                    fill
+                    className='object-cover'
+                    sizes='100vw'
+                    priority
+                    style={{
+                      objectFit: 'cover',
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      width: '100%',
+                      height: '100%',
+                    }}
+                  />
                 </div>
               </div>
             </div>
@@ -588,7 +640,10 @@ export default function OurWorkPage() {
                 size='lg'
                 className='bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white px-8 py-3'
               >
-                <Link href='/contact#contact-form' className='flex items-center gap-2'>
+                <Link
+                  href='/contact#contact-form'
+                  className='flex items-center gap-2'
+                >
                   <span>Start Your Project</span>
                   <ArrowRight className='h-5 w-5' />
                 </Link>

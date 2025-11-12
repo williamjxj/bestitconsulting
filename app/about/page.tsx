@@ -175,16 +175,22 @@ export default function AboutPage() {
                 <Button
                   size='lg'
                   className='group text-lg px-8 py-4 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700'
+                  asChild
                 >
+                  <Link href='/services'>
                     {t('hero.ourServices', 'about')}
                     <ArrowRight className='ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform' />
+                  </Link>
                 </Button>
                 <Button
                   variant='outline'
                   size='lg'
                   className='text-lg px-8 py-4 bg-white/10 border-white/20 hover:bg-white/20'
+                  asChild
                 >
+                  <Link href='/portfolio'>
                     {t('hero.viewPortfolio', 'about')}
+                  </Link>
                 </Button>
               </motion.div>
             </motion.div>
@@ -206,8 +212,7 @@ export default function AboutPage() {
                       date: '2024',
                       iconClassName: 'text-blue-400',
                       titleClassName: 'text-blue-400',
-                      className:
-                        "[grid-area:stack] hover:-translate-y-8",
+                      className: '[grid-area:stack] hover:-translate-y-8',
                     },
                     {
                       icon: <Users className='size-4 text-green-300' />,
@@ -217,7 +222,7 @@ export default function AboutPage() {
                       iconClassName: 'text-green-400',
                       titleClassName: 'text-green-400',
                       className:
-                        "[grid-area:stack] translate-x-8 translate-y-6 hover:-translate-y-1",
+                        '[grid-area:stack] translate-x-8 translate-y-6 hover:-translate-y-1',
                     },
                     {
                       icon: <Award className='size-4 text-purple-300' />,
@@ -227,7 +232,7 @@ export default function AboutPage() {
                       iconClassName: 'text-purple-400',
                       titleClassName: 'text-purple-400',
                       className:
-                        "[grid-area:stack] translate-x-16 translate-y-12 hover:translate-y-8",
+                        '[grid-area:stack] translate-x-16 translate-y-12 hover:translate-y-8',
                     },
                   ]}
                 />
@@ -675,16 +680,22 @@ export default function AboutPage() {
               <Button
                 size='lg'
                 className='bg-white text-blue-600 hover:bg-gray-100'
+                asChild
               >
+                <Link href='/contact?title=Start%20Your%20Project#contact-form'>
                   Start Your Project
                   <ArrowRight className='ml-2 h-4 w-4' />
+                </Link>
               </Button>
               <Button
                 variant='outline'
                 size='lg'
                 className='border-white text-white hover:bg-white hover:text-blue-600'
+                asChild
               >
+                <Link href='/contact?title=Schedule%20Consultation#contact-form'>
                   Schedule Consultation
+                </Link>
               </Button>
             </div>
           </motion.div>

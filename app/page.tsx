@@ -119,7 +119,7 @@ export default function HomePage() {
                           </Link>
                         </Button>
                         <Button size='lg' variant='outline' asChild>
-                          <Link href='/portfolio'>
+                          <Link href='/case-studies'>
                             {t('video.viewCaseStudies', 'home')}
                           </Link>
                         </Button>
@@ -279,7 +279,7 @@ export default function HomePage() {
                 className='border-white/30 hover:bg-white/10'
                 asChild
               >
-                <Link href='/portfolio'>{t('cta.viewWork', 'home')}</Link>
+                <Link href='/case-studies'>{t('cta.viewWork', 'home')}</Link>
               </Button>
             </div>
           </div>
