@@ -60,16 +60,25 @@ const carouselSlides = [
   },
 ]
 
-const R2_BASE_URL =
-  process.env.NEXT_PUBLIC_R2_BASE_URL ||
-  'https://pub-3b3f23afc5404f20b2081d34fa4c87b8.r2.dev'
-
-// Background type: 'image' (R2) or 'video' (local video file)
-// Set to 'image' to use R2 image, 'video' to use local video
+// Background type: 'image' (R2) or 'video' (R2 video file)
+// Set to 'image' to use R2 image, 'video' to use R2 video
 const BACKGROUND_TYPE: 'image' | 'video' = 'image'
+
+// Video and poster filenames for hero section
+const HERO_VIDEO_FILENAME = 'Best IT Consulting.mov'
+const HERO_POSTER_FILENAME = 'Best IT Consultining.jpg'
 
 export function HeroSection() {
   const [currentIndex, setCurrentIndex] = useState(0)
+  const R2_BASE_URL = process.env.NEXT_PUBLIC_R2_BASE_URL || ''
+
+  // Build R2 URLs for video and poster
+  const videoUrl = R2_BASE_URL
+    ? `${R2_BASE_URL}/${encodeURIComponent(HERO_VIDEO_FILENAME)}`
+    : ''
+  const posterUrl = R2_BASE_URL
+    ? `${R2_BASE_URL}/${encodeURIComponent(HERO_POSTER_FILENAME)}`
+    : ''
 
   // Auto-rotate every 8 seconds
   useEffect(() => {
@@ -105,7 +114,7 @@ export function HeroSection() {
       > */}
       {/* Background - R2 image (default) or video (backup) */}
       <div className='absolute inset-0 overflow-hidden'>
-        {BACKGROUND_TYPE === 'video' ? (
+        {BACKGROUND_TYPE === 'video' && videoUrl ? (
           <>
             {/* Video background - hidden on mobile for performance */}
             <video
@@ -115,26 +124,28 @@ export function HeroSection() {
               muted
               playsInline
               preload='auto'
-              poster='/Best IT Consultining.jpg'
+              poster={posterUrl || undefined}
               style={{ opacity: 0.4 }}
             >
-              <source src='/Best IT Consulting.mov' type='video/quicktime' />
-              <source src='/Best IT Consulting.mov' type='video/mp4' />
+              <source src={videoUrl} type='video/quicktime' />
+              <source src={videoUrl} type='video/mp4' />
             </video>
             {/* Fallback image - shown on mobile and as fallback */}
-            <div
-              className='absolute inset-0 w-full h-full'
-              style={{
-                backgroundImage: 'url(/Best IT Consultining.jpg)',
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-                backgroundRepeat: 'no-repeat',
-                opacity: 0.4,
-              }}
-            />
+            {posterUrl && (
+              <div
+                className='absolute inset-0 w-full h-full'
+                style={{
+                  backgroundImage: `url(${posterUrl})`,
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                  backgroundRepeat: 'no-repeat',
+                  opacity: 0.4,
+                }}
+              />
+            )}
           </>
-        ) : (
-          /* R2 Image background (default) */
+        ) : /* R2 Image background (default) */
+        R2_BASE_URL ? (
           <div
             className='absolute inset-0 w-full h-full'
             style={{
@@ -145,7 +156,7 @@ export function HeroSection() {
               opacity: 0.4,
             }}
           />
-        )}
+        ) : null}
       </div>
       <div className='absolute inset-0 overflow-hidden'>
         {/* Primary gradient orbs - centralized */}

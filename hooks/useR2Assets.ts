@@ -111,6 +111,8 @@ export const R2_ASSET_MAPPINGS = {
     project1: 'jimeng-6.png',
     project2: 'jimeng-7.png',
     project3: 'jimeng-8.png',
+    video: 'Best IT Consulting.mov',
+    poster: 'Best IT Consultining.jpg',
   },
   portfolio: {
     hero: 'jimeng-1.png',

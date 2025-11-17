@@ -37,7 +37,25 @@ import { useI18n } from '@/lib/i18n'
 export default function OurWorkPage() {
   const { t } = useI18n()
   const { getImages, getAssetByFilename } = useR2Assets()
-  const BASE_URL = process.env.NEXT_PUBLIC_R2_BASE_URL || ''
+  const R2_BASE_URL = process.env.NEXT_PUBLIC_R2_BASE_URL || ''
+
+  // Get R2 assets for case-studies page
+  const videoAsset = getAssetByFilename(R2_ASSET_MAPPINGS['case-studies'].video)
+  const posterAsset = getAssetByFilename(
+    R2_ASSET_MAPPINGS['case-studies'].poster
+  )
+
+  // Build R2 URLs using environment variable
+  const videoUrl =
+    videoAsset?.url ||
+    (R2_BASE_URL
+      ? `${R2_BASE_URL}/${encodeURIComponent(R2_ASSET_MAPPINGS['case-studies'].video)}`
+      : '')
+  const posterUrl =
+    posterAsset?.url ||
+    (R2_BASE_URL
+      ? `${R2_BASE_URL}/${encodeURIComponent(R2_ASSET_MAPPINGS['case-studies'].poster)}`
+      : '')
 
   const projects = [
     {
@@ -298,48 +316,49 @@ export default function OurWorkPage() {
                   style={{ aspectRatio: '16/9' }}
                 >
                   {/* Video - Desktop only */}
-                  <video
-                    className='absolute inset-0 w-full h-full object-cover'
-                    controls
-                    muted
-                    playsInline
-                    poster='/Best IT Consultining.jpg'
-                    style={{ objectFit: 'cover' }}
-                  >
-                    <source
-                      src='/Best IT Consulting.mov'
-                      type='video/quicktime'
-                    />
-                    <source src='/Best IT Consulting.mov' type='video/mp4' />
-                    Your browser does not support the video tag.
-                  </video>
+                  {videoUrl && (
+                    <video
+                      className='absolute inset-0 w-full h-full object-cover'
+                      controls
+                      muted
+                      playsInline
+                      poster={posterUrl || undefined}
+                      style={{ objectFit: 'cover' }}
+                    >
+                      <source src={videoUrl} type='video/quicktime' />
+                      <source src={videoUrl} type='video/mp4' />
+                      Your browser does not support the video tag.
+                    </video>
+                  )}
                 </div>
               </div>
 
               {/* Fallback Image - Mobile only */}
-              <div className='lg:hidden w-full'>
-                <div
-                  className='relative w-full overflow-hidden rounded-lg shadow-2xl'
-                  style={{ aspectRatio: '16/9', position: 'relative' }}
-                >
-                  <Image
-                    src='/Best IT Consultining.jpg'
-                    alt='Best IT Consulting'
-                    fill
-                    className='object-cover'
-                    sizes='100vw'
-                    priority
-                    style={{
-                      objectFit: 'cover',
-                      position: 'absolute',
-                      top: 0,
-                      left: 0,
-                      width: '100%',
-                      height: '100%',
-                    }}
-                  />
+              {posterUrl && (
+                <div className='lg:hidden w-full'>
+                  <div
+                    className='relative w-full overflow-hidden rounded-lg shadow-2xl'
+                    style={{ aspectRatio: '16/9', position: 'relative' }}
+                  >
+                    <Image
+                      src={posterUrl}
+                      alt='Best IT Consulting'
+                      fill
+                      className='object-cover'
+                      sizes='100vw'
+                      priority
+                      style={{
+                        objectFit: 'cover',
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        width: '100%',
+                        height: '100%',
+                      }}
+                    />
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
           </div>
         </section>
@@ -408,34 +427,34 @@ export default function OurWorkPage() {
                             // Local folder carousels by project id
                             const idToLocalImages: Record<number, string[]> = {
                               1: [
-                                `${BASE_URL}/face-fusion-agent/f1.png`,
-                                `${BASE_URL}/face-fusion-agent/f2.png`,
-                                `${BASE_URL}/face-fusion-agent/f3.png`,
-                                `${BASE_URL}/face-fusion-agent/f5.png`,
-                                `${BASE_URL}/face-fusion-agent/f6.png`,
+                                `${R2_BASE_URL}/face-fusion-agent/f1.png`,
+                                `${R2_BASE_URL}/face-fusion-agent/f2.png`,
+                                `${R2_BASE_URL}/face-fusion-agent/f3.png`,
+                                `${R2_BASE_URL}/face-fusion-agent/f5.png`,
+                                `${R2_BASE_URL}/face-fusion-agent/f6.png`,
                               ],
                               2: [
-                                `${BASE_URL}/nextjs-supabase-kappa-nine/n1.png`,
-                                `${BASE_URL}/nextjs-supabase-kappa-nine/n2.png`,
-                                `${BASE_URL}/nextjs-supabase-kappa-nine/n3.png`,
-                                `${BASE_URL}/nextjs-supabase-kappa-nine/n4.png`,
-                                `${BASE_URL}/nextjs-supabase-kappa-nine/n5.png`,
-                                `${BASE_URL}/nextjs-supabase-kappa-nine/n6.png`,
-                                `${BASE_URL}/nextjs-supabase-kappa-nine/n7.png`,
-                                `${BASE_URL}/nextjs-supabase-kappa-nine/n8.png`,
+                                `${R2_BASE_URL}/nextjs-supabase-kappa-nine/n1.png`,
+                                `${R2_BASE_URL}/nextjs-supabase-kappa-nine/n2.png`,
+                                `${R2_BASE_URL}/nextjs-supabase-kappa-nine/n3.png`,
+                                `${R2_BASE_URL}/nextjs-supabase-kappa-nine/n4.png`,
+                                `${R2_BASE_URL}/nextjs-supabase-kappa-nine/n5.png`,
+                                `${R2_BASE_URL}/nextjs-supabase-kappa-nine/n6.png`,
+                                `${R2_BASE_URL}/nextjs-supabase-kappa-nine/n7.png`,
+                                `${R2_BASE_URL}/nextjs-supabase-kappa-nine/n8.png`,
                               ],
                               3: [
-                                `${BASE_URL}/manus-ai-shop/m1.png`,
-                                `${BASE_URL}/manus-ai-shop/m2.png`,
-                                `${BASE_URL}/manus-ai-shop/m3.png`,
-                                `${BASE_URL}/manus-ai-shop/m4.png`,
-                                `${BASE_URL}/manus-ai-shop/m5.png`,
-                                `${BASE_URL}/manus-ai-shop/m6.png`,
-                                `${BASE_URL}/manus-ai-shop/m7.png`,
+                                `${R2_BASE_URL}/manus-ai-shop/m1.png`,
+                                `${R2_BASE_URL}/manus-ai-shop/m2.png`,
+                                `${R2_BASE_URL}/manus-ai-shop/m3.png`,
+                                `${R2_BASE_URL}/manus-ai-shop/m4.png`,
+                                `${R2_BASE_URL}/manus-ai-shop/m5.png`,
+                                `${R2_BASE_URL}/manus-ai-shop/m6.png`,
+                                `${R2_BASE_URL}/manus-ai-shop/m7.png`,
                               ],
                               6: [
-                                `${BASE_URL}/friendshipdaycare/f1.png`,
-                                `${BASE_URL}/friendshipdaycare/f10.png`,
+                                `${R2_BASE_URL}/friendshipdaycare/f1.png`,
+                                `${R2_BASE_URL}/friendshipdaycare/f10.png`,
                               ],
                             }
 
