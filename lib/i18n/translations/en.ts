@@ -340,7 +340,7 @@ export const EN_TRANSLATIONS: Translations = {
     },
     video: {
       badge: 'See Us In Action',
-      title: 'Watch How We Transform',
+      title: 'How We Transform',
       titleHighlight: ' Businesses',
       description:
         'Discover how our innovative solutions have helped companies streamline operations, reduce costs, and accelerate growth through digital transformation.',

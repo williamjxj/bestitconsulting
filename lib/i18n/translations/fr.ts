@@ -342,7 +342,7 @@ export const FR_TRANSLATIONS: Translations = {
     },
     video: {
       badge: 'Voyez-nous en Action',
-      title: 'Regardez Comment Nous Transformons',
+      title: 'Comment Nous Transformons',
       titleHighlight: ' les Entreprises',
       description:
         'Découvrez comment nos solutions innovantes ont aidé les entreprises à rationaliser leurs opérations, réduire les coûts et accélérer la croissance grâce à la transformation numérique.',

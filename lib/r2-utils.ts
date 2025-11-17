@@ -70,11 +70,9 @@ export function isR2Configured(): boolean {
   }
 }
 
-/**
- * Get demo video URL (jimeng-5.mp4)
- */
+
 export function getDemoVideoUrl(): string {
-  return getR2VideoUrl('jimeng-5.mp4')
+  return getR2VideoUrl('home-page/b11-v1.mov')
 }
 
 /**
@@ -128,7 +126,7 @@ export async function listR2Assets(): Promise<string[]> {
 
     // Fallback to hardcoded list if AWS SDK fails
     console.log('Falling back to hardcoded asset list')
-    return ['jimeng-5.mp4', 'jimeng-5-poster.jpg']
+    return ['home-page/b11-v1.mov']
   }
 }
 

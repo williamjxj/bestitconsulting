@@ -325,7 +325,7 @@ export const ZH_TRANSLATIONS: Translations = {
     },
     video: {
       badge: '观看我们的行动',
-      title: '观看我们如何转变',
+      title: '我们如何转变',
       titleHighlight: ' 企业',
       description:
         '了解我们的创新解决方案如何帮助公司简化运营、降低成本，并通过数字化转型加速增长。',

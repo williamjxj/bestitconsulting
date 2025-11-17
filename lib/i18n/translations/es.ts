@@ -341,7 +341,7 @@ export const ES_TRANSLATIONS: Translations = {
     },
     video: {
       badge: 'Véanos en Acción',
-      title: 'Vea Cómo Transformamos',
+      title: 'Cómo Transformamos',
       titleHighlight: ' Empresas',
       description:
         'Descubra cómo nuestras soluciones innovadoras han ayudado a las empresas a optimizar operaciones, reducir costos y acelerar el crecimiento a través de la transformación digital.',

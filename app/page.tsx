@@ -136,7 +136,7 @@ export default function HomePage() {
                           className='w-full aspect-video rounded-xl overflow-hidden shadow-2xl'
                           controls={true}
                           autoPlay={false}
-                          loop={true}
+                          loop={false}
                           muted={true}
                           playsInline={true}
                           animation='scale'

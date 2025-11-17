@@ -84,8 +84,8 @@ export function useR2Assets() {
 export const R2_ASSET_MAPPINGS = {
   home: {
     hero: 'jimeng-1.png',
-    demo: 'jimeng-5.mp4',
-    demoPoster: 'jimeng-5-poster.jpg',
+    demo: 'home-page/b11-v1.mov',
+    demoPoster: 'home-page/b11-v1.jpg',
     technology: 'jimeng-2.png',
     team: 'jimeng-3.png',
     gammaC1: 'home-page/gamma-c1.png',
@@ -107,7 +107,7 @@ export const R2_ASSET_MAPPINGS = {
     culture: 'jimeng-4.png',
   },
   'case-studies': {
-    hero: 'jimeng-5.png',
+    hero: 'jimeng-1.png', // Using jimeng-1.png since jimeng-5.png doesn't exist (not actually used on this page)
     project1: 'jimeng-6.png',
     project2: 'jimeng-7.png',
     project3: 'jimeng-8.png',
@@ -121,7 +121,7 @@ export const R2_ASSET_MAPPINGS = {
     gallery3: 'jimeng-4.png',
   },
   contact: {
-    hero: 'jimeng-5.png',
+    hero: 'jimeng-1.png', // Using jimeng-1.png since jimeng-5.png doesn't exist (not actually used on this page)
     office: 'jimeng-6.png',
     team: 'jimeng-7.png',
   },
