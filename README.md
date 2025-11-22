@@ -40,12 +40,18 @@ Best IT Consulting is a Canadian IT consulting firm specializing in full-stack d
 
 ### Key Features
 
-- ✨ **Modern Animations** - Smooth, performant animations using Framer Motion and GSAP
-- 🌍 **Internationalization** - Full i18n support for 4 languages
+- ✨ **Modern Animations** - Smooth, performant animations using Framer Motion, GSAP, and Lottie
+- 🌍 **Internationalization** - Full i18n support for 4 languages (English, French, Spanish, Chinese)
 - 📱 **Fully Responsive** - Mobile-first design optimized for all devices
-- ⚡ **Performance Optimized** - Fast loading times with Next.js optimization
+- ⚡ **Performance Optimized** - Fast loading times with Next.js optimization, code splitting, and lazy loading
 - 🎨 **Beautiful UI** - Custom components built with Tailwind CSS and shadcn/ui
 - 🔒 **Secure** - Best practices for security and data protection
+- 🖼️ **Cloudflare R2 Integration** - Efficient asset storage and delivery
+- 📧 **Email Integration** - Contact form with Resend API and automated email responses
+- 🗺️ **Google Maps** - Interactive map integration for contact page
+- 🎬 **Video Support** - Video playback with poster images and optimized loading
+- 🎯 **Accessibility** - WCAG 2.1 AA compliance with keyboard navigation and screen reader support
+- 📊 **Analytics Ready** - Structured data and SEO optimization
 
 ---
 
@@ -132,18 +138,22 @@ Ready to discuss your project? [Contact us](https://www.bestitconsulting.ca/cont
 - **Language:** TypeScript 5
 - **UI Library:** React 19
 - **Styling:** Tailwind CSS v4
-- **Animations:** Framer Motion, GSAP
+- **Animations:** Framer Motion, GSAP, Lottie React
 - **Backend:** Supabase
-- **Asset Storage:** Cloudflare R2
+- **Asset Storage:** Cloudflare R2 (via AWS SDK)
 - **Email:** Resend
+- **Fonts:** Geist Sans & Geist Mono (Next.js fonts)
 
 ### Key Libraries & Tools
 
 - **UI Components:** shadcn/ui, Radix UI
-- **Form Handling:** Custom animated forms
-- **Maps:** Google Maps integration
-- **Internationalization:** Custom i18n solution
-- **Code Quality:** ESLint, Prettier, TypeScript strict mode
+- **Form Handling:** Custom animated forms with validation
+- **Maps:** Google Maps integration (SmartGoogleMap component)
+- **Internationalization:** Custom i18n solution with 4 languages
+- **Carousel:** Embla Carousel with autoplay
+- **3D Graphics:** Three.js for advanced visualizations
+- **QR Codes:** QR code generation for contact information
+- **Code Quality:** ESLint, Prettier, TypeScript strict mode, Markdownlint
 
 ### Development Tools
 
@@ -151,6 +161,7 @@ Ready to discuss your project? [Contact us](https://www.bestitconsulting.ca/cont
 - **Version Control:** Git
 - **Deployment:** Vercel (recommended)
 - **Environment:** Node.js 20+
+- **Build Tool:** Next.js built-in bundler with webpack optimizations
 
 ---
 
@@ -171,13 +182,13 @@ git clone <repository-url>
 cd bestitconsulting
 ```
 
-2. **Install dependencies**
+1. **Install dependencies**
 
 ```bash
 npm install
 ```
 
-3. **Set up environment variables**
+1. **Set up environment variables**
 
 Create a `.env.local` file in the root directory with the following variables:
 
@@ -187,7 +198,7 @@ NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
 SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
 
-# Cloudflare R2 Configuration
+# Cloudflare R2 Configuration (for asset storage)
 NEXT_PUBLIC_R2_BASE_URL=your_r2_base_url
 R2_ACCESS_KEY_ID=your_r2_access_key
 R2_SECRET_ACCESS_KEY=your_r2_secret_key
@@ -196,13 +207,16 @@ R2_ENDPOINT=your_r2_endpoint
 
 # Email Configuration (Resend)
 RESEND_API_KEY=your_resend_api_key
-CONTACT_EMAIL=your_contact_email
+FROM_EMAIL=service@bestitconsulting.ca
+BUSINESS_EMAIL=service@bestitconsulting.ca
 
 # Google Maps (optional)
 NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=your_google_maps_api_key
 ```
 
-4. **Run the development server**
+**Note:** The `.env.local` file is already present in the project root with all required variables. Make sure to update it with your actual credentials.
+
+1. **Run the development server**
 
 ```bash
 npm run dev
@@ -226,7 +240,13 @@ npm run lint:fix        # Run ESLint with auto-fix
 npm run format          # Format code with Prettier
 npm run format:check     # Check if code is formatted
 npm run type-check      # Run TypeScript type checking
-npm run quality         # Run all quality checks (lint, format, type-check)
+npm run lint:md         # Lint markdown files
+npm run lint:md:fix     # Fix markdown linting issues
+npm run quality         # Run all quality checks (lint, format, type-check, markdown)
+
+# Utilities
+npm run setup:email      # Setup email configuration script
+npm run generate:favicon # Generate favicon files
 ```
 
 ---
@@ -262,14 +282,22 @@ bestitconsulting/
 
 ## 🌍 Internationalization
 
-The website supports multiple languages:
+The website supports multiple languages with a custom i18n solution:
 
-- **English** (en) - Default
-- **French** (fr)
-- **Spanish** (es)
-- **Chinese** (zh)
+- **English** (en) - Default language
+- **French** (fr) - Français
+- **Spanish** (es) - Español
+- **Chinese** (zh) - 中文
 
-Language switching is available through the header language selector. Translations are managed in `lib/i18n/translations/`.
+### Features
+
+- **Language Persistence** - Selected language is saved in localStorage
+- **Dynamic Translation** - Use `useI18n()` hook for translations
+- **Translation Categories** - Organized by page/section (nav, home, services, about, etc.)
+- **Language Selector** - Available in the header with flag indicators
+- **SEO Support** - Language-specific meta tags and content
+
+Language switching is available through the header language selector. Translations are managed in `lib/i18n/translations/` with separate files for each language.
 
 ---
 
@@ -277,31 +305,45 @@ Language switching is available through the header language selector. Translatio
 
 The project uses a custom design system built on:
 
-- **Tailwind CSS v4** - Utility-first CSS framework
-- **shadcn/ui** - High-quality component library
-- **Custom Components** - Brand-specific components
-- **CSS Variables** - Theme customization
-- **Responsive Design** - Mobile-first approach
+- **Tailwind CSS v4** - Utility-first CSS framework with custom configuration
+- **shadcn/ui** - High-quality, accessible component library
+- **Radix UI** - Headless UI primitives for accessibility
+- **Custom Components** - Brand-specific components and animations
+- **CSS Variables** - Theme customization with CSS custom properties
+- **Responsive Design** - Mobile-first approach with breakpoint system
+- **Animation Library** - Custom animation components (FadeIn, SlideIn, ScaleIn, etc.)
+- **Magic UI Components** - Pre-built animated components (marquee, animated-beam, etc.)
+- **Color System** - Consistent color palette with semantic naming
+- **Typography** - Geist font family with variable fonts
 
 ---
 
 ## 📊 Performance & Optimization
 
-- **Next.js Optimization** - Automatic code splitting and optimization
-- **Image Optimization** - Next.js Image component with Cloudflare R2
+- **Next.js Optimization** - Automatic code splitting, tree shaking, and bundle optimization
+- **Image Optimization** - Next.js Image component with Cloudflare R2 CDN
+- **Video Optimization** - Lazy loading with poster images and optimized formats
 - **Lazy Loading** - Components and assets loaded on demand
-- **Animation Performance** - Optimized animations with reduced motion support
-- **SEO** - Comprehensive meta tags and structured data
+- **Animation Performance** - GPU-accelerated animations with reduced motion support
+- **Package Optimization** - Optimized imports for Framer Motion, GSAP, Three.js, and Lottie
+- **Webpack Configuration** - Custom webpack config for client-side optimizations
+- **SEO** - Comprehensive meta tags, structured data, and language-specific SEO
+- **Font Optimization** - Next.js font optimization with Geist Sans and Geist Mono
+- **R2 Asset Management** - Efficient asset fetching and caching via custom hook
 
 ---
 
 ## 🔒 Security
 
-- Environment variables for sensitive data
-- Secure API routes
-- Input validation and sanitization
-- HTTPS enforcement
-- Secure authentication patterns
+- **Environment Variables** - All sensitive data stored in `.env.local` (not committed)
+- **Secure API Routes** - Server-side API routes with proper error handling
+- **Input Validation** - Email format validation and required field checks
+- **HTTPS Enforcement** - Production deployment with HTTPS
+- **Supabase Security** - Row-level security policies and service role key protection
+- **R2 Access Control** - Secure Cloudflare R2 bucket access with access keys
+- **Email Security** - Resend API with verified sender domains
+- **XSS Protection** - React's built-in XSS protection
+- **CSRF Protection** - Next.js built-in CSRF protection for API routes
 
 ---
 
@@ -309,11 +351,14 @@ The project uses a custom design system built on:
 
 The project maintains high code quality standards:
 
-- **TypeScript** - Strict type checking
-- **ESLint** - Code linting with Next.js and TypeScript rules
-- **Prettier** - Consistent code formatting
-- **EditorConfig** - Consistent editor settings
-- **Pre-commit Hooks** - Quality checks before commits (recommended)
+- **TypeScript** - Strict type checking enabled
+- **ESLint** - Code linting with Next.js, TypeScript, and Prettier rules
+- **Prettier** - Consistent code formatting across the project
+- **Markdownlint** - Markdown file linting and formatting
+- **Type Safety** - Comprehensive TypeScript types and interfaces
+- **Code Organization** - Clear separation of concerns (components, hooks, lib, utils)
+- **Documentation** - JSDoc comments for exported functions and components
+- **Consistent Naming** - kebab-case for files and folders, PascalCase for components
 
 ---
 
@@ -344,7 +389,7 @@ The application can be deployed to any platform that supports Next.js:
 ## 📞 Contact & Support
 
 - **Website:** [https://www.bestitconsulting.ca/](https://www.bestitconsulting.ca/)
-- **Email:** service@bestitconsulting.ca
+- **Email:** [service@bestitconsulting.ca](mailto:service@bestitconsulting.ca)
 - **Phone:** +1 (236) 992-3846
 
 ---
