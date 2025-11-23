@@ -18,6 +18,8 @@
     "generate:favicon": "node scripts/generate-favicon.js"
   },
   "dependencies": {
+    "@ai-sdk/deepseek": "^1.0.29",
+    "@ai-sdk/react": "^2.0.100",
     "@aws-sdk/client-s3": "^3.918.0",
     "@radix-ui/react-avatar": "^1.1.10",
     "@radix-ui/react-dialog": "^1.1.15",
@@ -26,6 +28,7 @@
     "@tailwindcss/typography": "^0.5.19",
     "@types/qrcode": "^1.5.6",
     "@types/three": "^0.180.0",
+    "ai": "^5.0.100",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "dotenv": "^17.2.3",

@@ -1,0 +1,194 @@
+openapi: 3.0.0
+info:
+  title: AI Chatbot API
+  version: 1.0.0
+  description: API endpoint for AI chatbot functionality using Vercel AI SDK and DeepSeek LLM
+servers:
+  - url: /api/chat
+    description: Chat API endpoint
+paths:
+  /api/chat:
+    post:
+      summary: Send chat message and receive streaming AI response
+      description: |
+        Accepts a conversation history and returns a streaming AI response.
+        Uses Vercel AI Gateway in production or DeepSeek API directly in local development.
+        No authentication required (public endpoint).
+      operationId: postChat
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - messages
+              properties:
+                messages:
+                  type: array
+                  description: Array of conversation messages
+                  items:
+                    $ref: '#/components/schemas/Message'
+                  minItems: 1
+                  maxItems: 100
+      responses:
+        '200':
+          description: Streaming response started successfully
+          content:
+            text/event-stream:
+              schema:
+                type: string
+                format: binary
+              examples:
+                streaming:
+                  value: |
+                    data: {"type":"text-delta","textDelta":"Hello"}
+                    data: {"type":"text-delta","textDelta":" there"}
+                    data: {"type":"finish","finishReason":"stop"}
+        '400':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                emptyMessages:
+                  value:
+                    error:
+                      type: validation
+                      message: Messages array is required and cannot be empty
+                      retryable: false
+                tokenLimit:
+                  value:
+                    error:
+                      type: validation
+                      message: Message exceeds token limit. Please shorten your message.
+                      retryable: false
+                      details: Maximum tokens: 8000
+        '408':
+          description: Request timeout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error:
+                  type: timeout
+                  message: Request timed out. Please try again.
+                  retryable: true
+        '429':
+          description: Rate limit exceeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              headers:
+                Retry-After:
+                  description: Seconds to wait before retrying
+                  schema:
+                    type: integer
+              example:
+                error:
+                  type: rate_limit
+                  message: Rate limit exceeded. Please try again later.
+                  retryable: true
+                  retryAfter: 60
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error:
+                  type: service
+                  message: An error occurred processing your request. Please try again.
+                  retryable: true
+                  details: Internal server error
+components:
+  schemas:
+    Message:
+      type: object
+      required:
+        - id
+        - role
+        - content
+      properties:
+        id:
+          type: string
+          description: Unique message identifier
+          example: msg_1234567890
+        role:
+          type: string
+          enum:
+            - user
+            - assistant
+            - system
+          description: Message role
+          example: user
+        content:
+          type: string
+          description: Message text content
+          minLength: 1
+          maxLength: 32000
+          example: What services do you offer?
+        parts:
+          type: array
+          description: Structured message parts (for future extensibility)
+          items:
+            $ref: '#/components/schemas/MessagePart'
+    MessagePart:
+      type: object
+      required:
+        - type
+        - text
+      properties:
+        type:
+          type: string
+          enum:
+            - text
+          description: Part type (currently only text supported)
+          example: text
+        text:
+          type: string
+          description: Text content
+          example: What services do you offer?
+    ErrorResponse:
+      type: object
+      required:
+        - error
+      properties:
+        error:
+          type: object
+          required:
+            - type
+            - message
+            - retryable
+          properties:
+            type:
+              type: string
+              enum:
+                - validation
+                - timeout
+                - rate_limit
+                - service
+                - network
+                - configuration
+              description: Error type
+            message:
+              type: string
+              description: Human-readable error message
+            retryable:
+              type: boolean
+              description: Whether the request can be retried
+            details:
+              type: string
+              description: Additional error details (optional)
+            retryAfter:
+              type: integer
+              description: Seconds to wait before retrying (if retryable)
+            actionUrl:
+              type: string
+              format: uri
+              description: URL for user action (e.g., add credit card)
+

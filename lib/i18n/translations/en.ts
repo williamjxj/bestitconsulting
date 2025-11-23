@@ -443,4 +443,16 @@ export const EN_TRANSLATIONS: Translations = {
     privacy: 'Privacy Policy',
     terms: 'Terms of Service',
   },
+  chatbot: {
+    title: 'Best IT Consulting Assistant',
+    placeholder: 'Type your message...',
+    thinking: 'Thinking...',
+    error: 'An error occurred. Please try again.',
+    retry: 'Retry',
+    startConversation: 'Start a conversation!',
+    openLabel: 'Open AI Assistant',
+    closeLabel: 'Close AI Assistant',
+    copyMessage: 'Copy message',
+    messageCopied: 'Message copied',
+  },
 }

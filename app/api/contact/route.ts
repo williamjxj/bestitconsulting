@@ -6,7 +6,8 @@ const resend = new Resend(process.env.RESEND_API_KEY)
 // Configurable sender and business recipient. Use a verified domain (e.g. service@bestitconsulting.ca)
 // or Resend-managed address (bestitconsulting@resend.dev) until your domain is verified.
 const FROM_EMAIL = process.env.FROM_EMAIL || 'service@bestitconsulting.ca'
-const BUSINESS_EMAIL = process.env.BUSINESS_EMAIL || 'service@bestitconsulting.ca'
+const BUSINESS_EMAIL =
+  process.env.BUSINESS_EMAIL || 'service@bestitconsulting.ca'
 
 export async function POST(request: NextRequest) {
   try {

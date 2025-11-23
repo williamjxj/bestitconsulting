@@ -445,4 +445,16 @@ export const ES_TRANSLATIONS: Translations = {
     privacy: 'Política de Privacidad',
     terms: 'Términos de Servicio',
   },
+  chatbot: {
+    title: 'Asistente Best IT Consulting',
+    placeholder: 'Escribe tu mensaje...',
+    thinking: 'Pensando...',
+    error: 'Ocurrió un error. Por favor, inténtalo de nuevo.',
+    retry: 'Reintentar',
+    startConversation: '¡Inicia una conversación!',
+    openLabel: 'Abrir Asistente IA',
+    closeLabel: 'Cerrar Asistente IA',
+    copyMessage: 'Copiar mensaje',
+    messageCopied: 'Mensaje copiado',
+  },
 }

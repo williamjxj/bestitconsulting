@@ -420,4 +420,16 @@ export const ZH_TRANSLATIONS: Translations = {
     privacy: '隐私政策',
     terms: '服务条款',
   },
+  chatbot: {
+    title: 'Best IT Consulting 助手',
+    placeholder: '输入您的消息...',
+    thinking: '思考中...',
+    error: '发生错误。请重试。',
+    retry: '重试',
+    startConversation: '开始对话！',
+    openLabel: '打开AI助手',
+    closeLabel: '关闭AI助手',
+    copyMessage: '复制消息',
+    messageCopied: '消息已复制',
+  },
 }

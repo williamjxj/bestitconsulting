@@ -133,7 +133,11 @@ export function DemoVideo({ className = '' }: DemoVideoProps) {
         muted={isMuted}
         onLoadedData={handleVideoLoad}
         onError={handleVideoError}
-        poster={process.env.NEXT_PUBLIC_R2_BASE_URL ? `${process.env.NEXT_PUBLIC_R2_BASE_URL}/home-page/b11-v1.jpg` : undefined}
+        poster={
+          process.env.NEXT_PUBLIC_R2_BASE_URL
+            ? `${process.env.NEXT_PUBLIC_R2_BASE_URL}/home-page/b11-v1.jpg`
+            : undefined
+        }
       />
 
       {/* Video Controls Overlay */}

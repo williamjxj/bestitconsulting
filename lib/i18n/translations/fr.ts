@@ -446,4 +446,16 @@ export const FR_TRANSLATIONS: Translations = {
     privacy: 'Politique de Confidentialité',
     terms: "Conditions d'Utilisation",
   },
+  chatbot: {
+    title: 'Assistant Best IT Consulting',
+    placeholder: 'Tapez votre message...',
+    thinking: 'Réflexion...',
+    error: "Une erreur s'est produite. Veuillez réessayer.",
+    retry: 'Réessayer',
+    startConversation: 'Commencez une conversation!',
+    openLabel: "Ouvrir l'Assistant IA",
+    closeLabel: "Fermer l'Assistant IA",
+    copyMessage: 'Copier le message',
+    messageCopied: 'Message copié',
+  },
 }

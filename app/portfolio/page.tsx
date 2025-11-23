@@ -51,7 +51,6 @@ export default function PortfolioPage() {
             priority={false}
           />
 
-
           <div className='container mx-auto px-4 relative z-10'>
             <div className='max-w-4xl mx-auto text-center'>
               <div className='inline-flex items-center gap-2 px-4 py-2 text-sm font-medium bg-blue-600/20 rounded-full mb-8 border border-blue-500/30 animate-fade-in backdrop-blur-sm'>
