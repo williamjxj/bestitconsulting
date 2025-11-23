@@ -23,6 +23,7 @@ import { TestimonialsSection } from '@/components/sections/TestimonialsSection'
 import { R2Image, R2Video, R2HeroImage } from '@/components/R2Image'
 import { useR2Assets, R2_ASSET_MAPPINGS } from '@/hooks/useR2Assets'
 import { useI18n } from '@/lib/i18n'
+import ChatWidget from '@/components/chat-widget/chat-widget-lazy'
 
 export default function HomePage() {
   const { t } = useI18n()
@@ -285,6 +286,7 @@ export default function HomePage() {
           </div>
         </section>
       </div>
+      <ChatWidget />
     </Layout>
   )
 }
