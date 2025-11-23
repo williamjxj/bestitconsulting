@@ -62,7 +62,8 @@ export default function OurWorkPage() {
       id: 1,
       title: 'Face Fusion Agent',
       description: 'AI-powered face fusion and manipulation tool',
-      url: 'https://github.com/williamjxj/face-swap-poc',
+      url: 'https://face-fusion-agent.vercel.app',
+      githubUrl: 'https://github.com/williamjxj/face-swap-poc',
       category: 'AI/ML',
       status: 'Live',
       technologies: ['Next.js', 'AI/ML', 'Computer Vision', 'ComfyUI'],
@@ -73,7 +74,8 @@ export default function OurWorkPage() {
       title: 'Images Hub',
       description:
         'A unified gateway to stunning images from Cloudflare, Unsplash, Pexels, Pixabay, and more—your one-stop source for high-quality visuals, and AI Chatbot assistant!',
-      url: 'https://github.com/williamjxj/images-hub',
+      url: 'https://images-hub-pim.vercel.app/',
+      githubUrl: 'https://github.com/williamjxj/images-hub',
       category: 'Development',
       status: 'Live',
       technologies: ['Next.js', 'Image API', 'Multi-Source'],
@@ -83,7 +85,8 @@ export default function OurWorkPage() {
       id: 2,
       title: 'Images Synthesis & Online Subscription',
       description: 'Full-stack web application with authentication',
-      url: 'https://github.com/williamjxj/nextjs-supabase',
+      url: 'https://nextjs-supabase-kappa-nine.vercel.app',
+      githubUrl: 'https://github.com/williamjxj/nextjs-supabase',
       category: 'Development',
       status: 'Live',
       technologies: ['Next.js', 'Supabase', 'TypeScript'],
@@ -93,7 +96,8 @@ export default function OurWorkPage() {
       id: 3,
       title: 'AI Images Cart & Purchase',
       description: 'AI-powered e-commerce platform',
-      url: 'https://github.com/williamjxj/manus-ai-shop',
+      url: 'https://manus-ai-shop.vercel.app',
+      githubUrl: 'https://github.com/williamjxj/manus-ai-shop',
       category: 'E-commerce',
       status: 'Live',
       technologies: ['Next.js', 'AI', 'E-commerce'],
@@ -103,7 +107,8 @@ export default function OurWorkPage() {
       id: 4,
       title: 'BidMaster Hub',
       description: 'Project bidding management platform',
-      url: 'https://github.com/williamjxj/bidmaster',
+      url: 'https://bidmaster-hub.vercel.app/',
+      githubUrl: 'https://github.com/williamjxj/bidmaster',
       category: 'Business',
       status: 'Live',
       technologies: ['Next.js', 'Business Logic', 'Management'],
@@ -113,7 +118,8 @@ export default function OurWorkPage() {
       id: 5,
       title: 'Cart & Online Payment',
       description: 'Model Context Protocol template application',
-      url: 'https://github.com/williamjxj/nextjs-mcp-template',
+      url: 'https://nextjs-mcp-template.vercel.app/',
+      githubUrl: 'https://github.com/williamjxj/nextjs-mcp-template',
       category: 'Development',
       status: 'Live',
       technologies: ['Next.js', 'MCP', 'Template'],
@@ -123,7 +129,8 @@ export default function OurWorkPage() {
       id: 6,
       title: 'Friendship Daycare',
       description: 'Childcare and daycare management system',
-      url: 'https://github.com/williamjxj/friendshipdaycare',
+      url: 'https://friendshipdaycare.vercel.app/',
+      githubUrl: 'https://github.com/williamjxj/friendshipdaycare',
       category: 'Business',
       status: 'Live',
       technologies: ['Next.js', 'Management', 'Childcare'],
@@ -594,14 +601,6 @@ export default function OurWorkPage() {
                               rel='noopener noreferrer'
                               className='hover:underline'
                               title={project.url}
-                              onClick={e => {
-                                e.preventDefault()
-                              }}
-                              onKeyDown={e => {
-                                if (e.key === 'Enter' || e.key === ' ') {
-                                  e.preventDefault()
-                                }
-                              }}
                             >
                               {project.title}
                             </Link>
@@ -627,30 +626,38 @@ export default function OurWorkPage() {
                           </div>
                           <MoreHorizontal className='w-4 h-4 text-gray-400' />
                         </div>
-                        <Button
-                          asChild
-                          className='w-full bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white text-sm py-2'
-                        >
-                          <Link
-                            href={project.url}
-                            target='_blank'
-                            rel='noopener noreferrer'
-                            className='flex items-center justify-center gap-2'
-                            title={project.url}
-                            onClick={e => {
-                              e.preventDefault()
-                            }}
-                            onKeyDown={e => {
-                              if (e.key === 'Enter' || e.key === ' ') {
-                                e.preventDefault()
-                              }
-                            }}
+                        <div className='flex gap-2'>
+                          <Button
+                            asChild
+                            className='flex-1 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white text-sm py-2'
                           >
-                            <Github className='h-4 w-4' />
-                            <span>View Project</span>
-                            <ArrowRight className='h-4 w-4 group-hover:translate-x-1 transition-transform' />
-                          </Link>
-                        </Button>
+                            <Link
+                              href={project.url}
+                              target='_blank'
+                              rel='noopener noreferrer'
+                              className='flex items-center justify-center gap-2'
+                              title={project.url}
+                            >
+                              <Globe className='h-4 w-4' />
+                              <span>Live Site</span>
+                            </Link>
+                          </Button>
+                          <Button
+                            asChild
+                            className='flex-1 bg-gray-700 hover:bg-gray-800 text-white text-sm py-2'
+                          >
+                            <Link
+                              href={(project as any).githubUrl || project.url}
+                              target='_blank'
+                              rel='noopener noreferrer'
+                              className='flex items-center justify-center gap-2'
+                              title={(project as any).githubUrl || project.url}
+                            >
+                              <Github className='h-4 w-4' />
+                              <span>GitHub</span>
+                            </Link>
+                          </Button>
+                        </div>
                       </CardContent>
                     </Card>
                   </SlideIn>
