@@ -10,6 +10,9 @@ import { FadeIn } from '@/components/animations/FadeIn'
 import { SlideIn } from '@/components/animations/SlideIn'
 import { AnimatedCounter } from '@/components/animations/AnimatedCounter'
 import { AnimatedHeadline } from '@/components/animations/AnimatedHeadline'
+import { motion } from 'framer-motion'
+import { useEffect, useRef, useState } from 'react'
+import { gsap } from 'gsap'
 import {
   Star,
   Quote,
@@ -33,6 +36,106 @@ import { useI18n } from '@/lib/i18n'
 const R2_BASE_URL =
   process.env.NEXT_PUBLIC_R2_BASE_URL ||
   'https://pub-3b3f23afc5404f20b2081d34fa4c87b8.r2.dev'
+
+/**
+ * GSAP Animated Headline Component
+ * Animates text with color gradient and reveal effects
+ */
+function GSAPAnimatedHeadline({
+  text,
+  className = '',
+  size = 'large',
+}: {
+  text: string
+  className?: string
+  size?: 'large' | 'small'
+}) {
+  const headlineRef = useRef<HTMLHeadingElement>(null)
+  const [isVisible, setIsVisible] = useState(false)
+
+  useEffect(() => {
+    if (!headlineRef.current) return
+
+    // Intersection Observer for scroll-triggered animation
+    const observer = new IntersectionObserver(
+      entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting && !isVisible) {
+            setIsVisible(true)
+          }
+        })
+      },
+      { threshold: 0.1 }
+    )
+
+    observer.observe(headlineRef.current)
+
+    return () => {
+      observer.disconnect()
+    }
+  }, [isVisible])
+
+  useEffect(() => {
+    if (!headlineRef.current || !isVisible) return
+
+    const words = text.split(' ')
+    const wordElements: HTMLSpanElement[] = []
+
+    // Clear and rebuild structure
+    headlineRef.current.innerHTML = ''
+    words.forEach((word, index) => {
+      const span = document.createElement('span')
+      span.textContent = word
+      span.className = 'inline-block'
+      span.style.opacity = '0'
+      span.style.transform = 'translateY(20px)'
+      span.style.marginRight = index < words.length - 1 ? '0.25em' : '0'
+      headlineRef.current?.appendChild(span)
+      wordElements.push(span)
+    })
+
+    // GSAP animation timeline
+    const tl = gsap.timeline()
+
+    // Animate each word with stagger and color change
+    wordElements.forEach((wordSpan, index) => {
+      tl.to(
+        wordSpan,
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.6,
+          ease: 'power3.out',
+          color:
+            size === 'large'
+              ? '#1e40af' // blue-800 for large
+              : '#2563eb', // blue-600 for small
+        },
+        index * 0.1
+      ).to(
+        wordSpan,
+        {
+          color: '#111827', // gray-900
+          duration: 0.8,
+          ease: 'power2.inOut',
+        },
+        index * 0.1 + 0.3
+      )
+    })
+
+    return () => {
+      tl.kill()
+    }
+  }, [text, size, isVisible])
+
+  const Tag = size === 'large' ? 'h2' : 'h3'
+
+  return (
+    <Tag ref={headlineRef} className={className}>
+      {text}
+    </Tag>
+  )
+}
 
 export default function TestimonialsPage() {
   const { t } = useI18n()
@@ -85,23 +188,24 @@ export default function TestimonialsPage() {
   const achievements = [
     {
       icon: <Award className='h-12 w-12 text-yellow-500' />,
-      title: 'Best Technology Partner 2024',
-      organization: 'Canadian Business Awards',
+      title: '100% Client Satisfaction Rate',
+      organization: 'Client Feedback 2024',
       description:
-        'Recognized for outstanding innovation and client satisfaction',
+        'Every client has rated our services 5 stars, demonstrating our commitment to excellence',
     },
     {
       icon: <TrendingUp className='h-12 w-12 text-green-500' />,
-      title: 'Top 10 IT Consulting Firms',
-      organization: 'Tech Review Magazine',
+      title: 'Rapid Growth Achievement',
+      organization: 'Business Milestones',
       description:
-        'Ranked among the leading technology consulting companies in Canada',
+        'Successfully delivered 50+ projects with consistent quality and on-time delivery',
     },
     {
       icon: <Heart className='h-12 w-12 text-red-500' />,
-      title: 'Client Choice Award',
-      organization: 'Industry Excellence Awards',
-      description: 'Voted by clients as the most trusted technology partner',
+      title: 'Trusted Technology Partner',
+      organization: 'Client Testimonials',
+      description:
+        'Clients consistently recommend us for our personalized service and technical expertise',
     },
   ]
 
@@ -223,9 +327,10 @@ export default function TestimonialsPage() {
         <section className='py-20 px-4 bg-gradient-to-br from-blue-50 to-cyan-50'>
           <div className='max-w-6xl mx-auto'>
             <div className='text-center mb-16'>
-              <h2 className='text-4xl font-bold text-gray-900 mb-6'>
-                Awards & Recognition
-              </h2>
+              <GSAPAnimatedHeadline
+                text='Awards & Recognition'
+                className='text-4xl font-bold text-gray-900 mb-6'
+              />
               <p className='text-xl text-gray-600 max-w-3xl mx-auto'>
                 Our commitment to excellence has been recognized by industry
                 leaders and client organizations
@@ -234,23 +339,55 @@ export default function TestimonialsPage() {
 
             <div className='grid grid-cols-1 md:grid-cols-3 gap-8'>
               {achievements.map((achievement, index) => (
-                <Card
+                <motion.div
                   key={index}
-                  className='border-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2 bg-white text-center'
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: '-50px' }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  whileHover={{
+                    y: -8,
+                    scale: 1.02,
+                    transition: { duration: 0.3, ease: 'easeOut' },
+                  }}
+                  className='group'
                 >
-                  <CardContent className='p-8'>
-                    <div className='mb-6'>{achievement.icon}</div>
-                    <h3 className='text-xl font-bold text-gray-900 mb-2'>
-                      {achievement.title}
-                    </h3>
-                    <p className='text-blue-600 font-medium mb-3'>
-                      {achievement.organization}
-                    </p>
-                    <p className='text-gray-600 text-sm leading-relaxed'>
-                      {achievement.description}
-                    </p>
-                  </CardContent>
-                </Card>
+                  <Card
+                    className='border-0 shadow-lg bg-white text-center overflow-hidden relative'
+                    animated={false}
+                    hover={false}
+                  >
+                    {/* Subtle gradient overlay on hover - no background rectangle */}
+                    <motion.div
+                      className='absolute inset-0 bg-gradient-to-br from-blue-50/30 to-cyan-50/30 opacity-0 group-hover:opacity-100 pointer-events-none rounded-xl'
+                      transition={{ duration: 0.3 }}
+                    />
+
+                    <CardContent className='p-8 relative z-10'>
+                      <motion.div
+                        className='mb-6'
+                        whileHover={{
+                          scale: 1.1,
+                          rotate: [0, -5, 5, -5, 0],
+                          transition: { duration: 0.5 },
+                        }}
+                      >
+                        {achievement.icon}
+                      </motion.div>
+                      <GSAPAnimatedHeadline
+                        text={achievement.title}
+                        className='text-xl font-bold text-gray-900 mb-2'
+                        size='small'
+                      />
+                      <p className='text-blue-600 font-medium mb-3'>
+                        {achievement.organization}
+                      </p>
+                      <p className='text-gray-600 text-sm leading-relaxed'>
+                        {achievement.description}
+                      </p>
+                    </CardContent>
+                  </Card>
+                </motion.div>
               ))}
             </div>
           </div>

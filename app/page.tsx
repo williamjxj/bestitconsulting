@@ -1,11 +1,14 @@
 'use client'
 
 import { Button } from '@/components/ui/button'
+import { Card, CardContent } from '@/components/ui/card'
+import { motion } from 'framer-motion'
 import {
   ArrowRight,
   Code2,
   Users,
   Cloud,
+  Brain,
   Shield,
   Star,
   Building,
@@ -49,7 +52,7 @@ export default function HomePage() {
       description: t('features.cloud.description', 'home'),
     },
     {
-      icon: <Shield className='h-8 w-8' />,
+      icon: <Brain className='h-8 w-8' />,
       title: t('features.cybersecurity.title', 'home'),
       description: t('features.cybersecurity.description', 'home'),
     },
@@ -79,7 +82,7 @@ export default function HomePage() {
     {
       number: '247',
       label: t('stats.supportAvailable', 'home'),
-      icon: <Shield className='h-6 w-6' />,
+      icon: <Brain className='h-6 w-6' />,
     },
   ]
 
@@ -159,50 +162,76 @@ export default function HomePage() {
         </ScrollTrigger>
 
         {/* Features Overview */}
-        <section className='py-12 bg-muted/30'>
-          <div className='w-full px-4 sm:px-6 lg:px-8'>
-            <div className='w-full lg:max-w-7xl lg:mx-auto'>
-              <div className='text-center mb-16'>
-                <span className='inline-block px-4 py-1.5 text-sm font-medium bg-blue-100 text-blue-800 rounded-full mb-4'>
-                  {t('features.badge', 'home')}
-                </span>
-                <h2 className='text-3xl md:text-4xl font-bold mb-4'>
-                  {t('features.title', 'home')}
-                </h2>
-                <p className='text-lg text-muted-foreground max-w-2xl mx-auto'>
-                  {t('features.subtitle', 'home')}
-                </p>
-              </div>
+        <section className='py-20 px-4 bg-gradient-to-br from-blue-50 to-cyan-50'>
+          <div className='max-w-6xl mx-auto'>
+            <div className='text-center mb-16'>
+              <span className='inline-block px-4 py-1.5 text-sm font-medium bg-blue-100 text-blue-800 rounded-full mb-4'>
+                {t('features.badge', 'home')}
+              </span>
+              <h2 className='text-3xl md:text-4xl font-bold mb-4'>
+                {t('features.title', 'home')}
+              </h2>
+              <p className='text-lg text-gray-600 max-w-2xl mx-auto'>
+                {t('features.subtitle', 'home')}
+              </p>
+            </div>
 
-              <div className='grid md:grid-cols-2 lg:grid-cols-4 gap-8'>
-                {features.map((feature, index) => (
-                  <div
-                    key={index}
-                    className='group bg-card p-6 rounded-xl border border-border/40 hover:border-blue-500/30 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg'
+            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8'>
+              {features.map((feature, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: '-50px' }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  whileHover={{
+                    y: -8,
+                    scale: 1.02,
+                    transition: { duration: 0.3, ease: 'easeOut' },
+                  }}
+                  className='group'
+                >
+                  <Card
+                    className='border-0 shadow-lg bg-white text-center overflow-hidden relative h-full'
+                    animated={false}
+                    hover={false}
                   >
-                    <div className='w-12 h-12 bg-blue-500/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-blue-500/20 transition-colors'>
-                      <div className='text-blue-500 group-hover:scale-110 transition-transform'>
-                        {feature.icon}
-                      </div>
-                    </div>
-                    <h3 className='text-xl font-semibold mb-2'>
-                      {feature.title}
-                    </h3>
-                    <p className='text-muted-foreground'>
-                      {feature.description}
-                    </p>
-                  </div>
-                ))}
-              </div>
+                    {/* Subtle gradient overlay on hover */}
+                    <motion.div
+                      className='absolute inset-0 bg-gradient-to-br from-blue-50/30 to-cyan-50/30 opacity-0 group-hover:opacity-100 pointer-events-none rounded-xl'
+                      transition={{ duration: 0.3 }}
+                    />
 
-              <div className='text-center mt-12'>
-                <Button size='lg' asChild>
-                  <Link href='/services' className='group'>
-                    {t('features.exploreAll', 'home')}
-                    <ArrowRight className='ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform' />
-                  </Link>
-                </Button>
-              </div>
+                    <CardContent className='p-6 relative z-10'>
+                      <motion.div
+                        className='w-12 h-12 bg-blue-500/10 rounded-lg flex items-center justify-center mb-4 mx-auto group-hover:bg-blue-500/20 transition-colors'
+                        whileHover={{
+                          scale: 1.1,
+                          rotate: [0, -5, 5, -5, 0],
+                          transition: { duration: 0.5 },
+                        }}
+                      >
+                        <div className='text-blue-500'>{feature.icon}</div>
+                      </motion.div>
+                      <h3 className='text-xl font-semibold mb-2 text-gray-900'>
+                        {feature.title}
+                      </h3>
+                      <p className='text-gray-600 text-sm leading-relaxed'>
+                        {feature.description}
+                      </p>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              ))}
+            </div>
+
+            <div className='text-center mt-12'>
+              <Button size='lg' asChild>
+                <Link href='/services' className='group'>
+                  {t('features.exploreAll', 'home')}
+                  <ArrowRight className='ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform' />
+                </Link>
+              </Button>
             </div>
           </div>
         </section>

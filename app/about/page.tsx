@@ -23,7 +23,10 @@ import {
   Building,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { Card, CardContent } from '@/components/ui/card'
 import DisplayCards from '@/components/ui/display-cards'
+import { useEffect, useRef, useState } from 'react'
+import { gsap } from 'gsap'
 import {
   R2Image,
   R2ProfileImage,
@@ -36,6 +39,106 @@ import { useI18n } from '@/lib/i18n'
 const R2_BASE_URL =
   process.env.NEXT_PUBLIC_R2_BASE_URL ||
   'https://pub-3b3f23afc5404f20b2081d34fa4c87b8.r2.dev'
+
+/**
+ * GSAP Animated Headline Component
+ * Animates text with color gradient and reveal effects
+ */
+function GSAPAnimatedHeadline({
+  text,
+  className = '',
+  size = 'large',
+}: {
+  text: string
+  className?: string
+  size?: 'large' | 'small'
+}) {
+  const headlineRef = useRef<HTMLHeadingElement>(null)
+  const [isVisible, setIsVisible] = useState(false)
+
+  useEffect(() => {
+    if (!headlineRef.current) return
+
+    // Intersection Observer for scroll-triggered animation
+    const observer = new IntersectionObserver(
+      entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting && !isVisible) {
+            setIsVisible(true)
+          }
+        })
+      },
+      { threshold: 0.1 }
+    )
+
+    observer.observe(headlineRef.current)
+
+    return () => {
+      observer.disconnect()
+    }
+  }, [isVisible])
+
+  useEffect(() => {
+    if (!headlineRef.current || !isVisible) return
+
+    const words = text.split(' ')
+    const wordElements: HTMLSpanElement[] = []
+
+    // Clear and rebuild structure
+    headlineRef.current.innerHTML = ''
+    words.forEach((word, index) => {
+      const span = document.createElement('span')
+      span.textContent = word
+      span.className = 'inline-block'
+      span.style.opacity = '0'
+      span.style.transform = 'translateY(20px)'
+      span.style.marginRight = index < words.length - 1 ? '0.25em' : '0'
+      headlineRef.current?.appendChild(span)
+      wordElements.push(span)
+    })
+
+    // GSAP animation timeline
+    const tl = gsap.timeline()
+
+    // Animate each word with stagger and color change
+    wordElements.forEach((wordSpan, index) => {
+      tl.to(
+        wordSpan,
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.6,
+          ease: 'power3.out',
+          color:
+            size === 'large'
+              ? '#1e40af' // blue-800 for large
+              : '#2563eb', // blue-600 for small
+        },
+        index * 0.1
+      ).to(
+        wordSpan,
+        {
+          color: '#111827', // gray-900
+          duration: 0.8,
+          ease: 'power2.inOut',
+        },
+        index * 0.1 + 0.3
+      )
+    })
+
+    return () => {
+      tl.kill()
+    }
+  }, [text, size, isVisible])
+
+  const Tag = size === 'large' ? 'h2' : 'h3'
+
+  return (
+    <Tag ref={headlineRef} className={className}>
+      {text}
+    </Tag>
+  )
+}
 
 const founderInfo = {
   name: 'William Jiang',
@@ -268,78 +371,169 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Mission & Vision */}
-      <section className='py-16 lg:py-24 bg-gray-50'>
-        <div className={brandClasses.container}>
-          <div className='grid lg:grid-cols-2 gap-12 lg:gap-16'>
+      {/* Mission, Vision & Commitment */}
+      <section className='py-20 px-4 bg-gradient-to-br from-blue-50 to-cyan-50'>
+        <div className='max-w-6xl mx-auto'>
+          <div className='text-center mb-16'>
+            <GSAPAnimatedHeadline
+              text='Our Mission, Vision & Commitment'
+              className='text-4xl font-bold text-gray-900 mb-6'
+            />
+            <p className='text-xl text-gray-600 max-w-3xl mx-auto'>
+              The principles that guide our work and shape how we serve our
+              clients
+            </p>
+          </div>
+
+          <div className='grid grid-cols-1 md:grid-cols-3 gap-8'>
+            {/* Our Mission */}
             <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6 }}
-              viewport={{ once: true }}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-50px' }}
+              transition={{ duration: 0.5, delay: 0 }}
+              whileHover={{
+                y: -8,
+                scale: 1.02,
+                transition: { duration: 0.3, ease: 'easeOut' },
+              }}
+              className='group'
             >
-              <div className='w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center mb-6'>
-                <Target className='h-6 w-6 text-white' />
-              </div>
-              <h2 className='text-3xl lg:text-4xl font-bold text-gray-900 mb-6'>
-                Our Mission
-              </h2>
-              <p className='text-lg text-gray-600 leading-relaxed mb-6'>
-                To empower businesses with cutting-edge technology solutions
-                that drive growth, efficiency, and innovation. We believe
-                technology should be an enabler, not a barrier, to your success.
-              </p>
-              <ul className='space-y-3'>
-                {[
-                  'Deliver exceptional value through technology',
-                  'Build lasting partnerships with our clients',
-                  'Foster innovation and continuous improvement',
-                  'Maintain the highest standards of quality',
-                ].map((item, index) => (
-                  <motion.li
-                    key={item}
-                    className='flex items-center space-x-3'
-                    initial={{ opacity: 0, x: -10 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.3, delay: index * 0.1 }}
-                    viewport={{ once: true }}
+              <Card
+                className='border-0 shadow-lg bg-white text-center overflow-hidden relative h-full'
+                animated={false}
+                hover={false}
+              >
+                {/* Subtle gradient overlay on hover */}
+                <motion.div
+                  className='absolute inset-0 bg-gradient-to-br from-blue-50/30 to-cyan-50/30 opacity-0 group-hover:opacity-100 pointer-events-none rounded-xl'
+                  transition={{ duration: 0.3 }}
+                />
+
+                <CardContent className='p-8 relative z-10'>
+                  <motion.div
+                    className='mb-6'
+                    whileHover={{
+                      scale: 1.1,
+                      rotate: [0, -5, 5, -5, 0],
+                      transition: { duration: 0.5 },
+                    }}
                   >
-                    <CheckCircle className='h-5 w-5 text-green-500 flex-shrink-0' />
-                    <span className='text-gray-600'>{item}</span>
-                  </motion.li>
-                ))}
-              </ul>
+                    <Target className='h-12 w-12 text-blue-600 mx-auto' />
+                  </motion.div>
+                  <GSAPAnimatedHeadline
+                    text='Our Mission'
+                    className='text-xl font-bold text-gray-900 mb-4'
+                    size='small'
+                  />
+                  <p className='text-gray-600 text-sm leading-relaxed'>
+                    To empower businesses with cutting-edge technology solutions
+                    that drive growth, efficiency, and innovation. We believe
+                    technology should be an enabler, not a barrier, to your
+                    success.
+                  </p>
+                </CardContent>
+              </Card>
             </motion.div>
 
+            {/* Our Vision */}
             <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6 }}
-              viewport={{ once: true }}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-50px' }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              whileHover={{
+                y: -8,
+                scale: 1.02,
+                transition: { duration: 0.3, ease: 'easeOut' },
+              }}
+              className='group'
             >
-              <div className='w-12 h-12 bg-indigo-600 rounded-lg flex items-center justify-center mb-6'>
-                <Globe className='h-6 w-6 text-white' />
-              </div>
-              <h2 className='text-3xl lg:text-4xl font-bold text-gray-900 mb-6'>
-                Our Vision
-              </h2>
-              <p className='text-lg text-gray-600 leading-relaxed mb-6'>
-                To be the leading technology consulting firm that transforms how
-                businesses operate in the digital world. We envision a future
-                where every company has access to world-class technology
-                solutions.
-              </p>
-              <div className='bg-white p-6 rounded-xl shadow-sm border border-gray-200'>
-                <h3 className='font-semibold text-gray-900 mb-3'>
-                  Our Commitment
-                </h3>
-                <p className='text-gray-600'>
-                  We're committed to staying at the forefront of technology
-                  trends, investing in our team's growth, and continuously
-                  improving our processes to deliver exceptional results for our
-                  clients.
-                </p>
-              </div>
+              <Card
+                className='border-0 shadow-lg bg-white text-center overflow-hidden relative h-full'
+                animated={false}
+                hover={false}
+              >
+                {/* Subtle gradient overlay on hover */}
+                <motion.div
+                  className='absolute inset-0 bg-gradient-to-br from-blue-50/30 to-cyan-50/30 opacity-0 group-hover:opacity-100 pointer-events-none rounded-xl'
+                  transition={{ duration: 0.3 }}
+                />
+
+                <CardContent className='p-8 relative z-10'>
+                  <motion.div
+                    className='mb-6'
+                    whileHover={{
+                      scale: 1.1,
+                      rotate: [0, -5, 5, -5, 0],
+                      transition: { duration: 0.5 },
+                    }}
+                  >
+                    <Globe className='h-12 w-12 text-indigo-600 mx-auto' />
+                  </motion.div>
+                  <GSAPAnimatedHeadline
+                    text='Our Vision'
+                    className='text-xl font-bold text-gray-900 mb-4'
+                    size='small'
+                  />
+                  <p className='text-gray-600 text-sm leading-relaxed'>
+                    To be the leading technology consulting firm that transforms
+                    how businesses operate in the digital world. We envision a
+                    future where every company has access to world-class
+                    technology solutions.
+                  </p>
+                </CardContent>
+              </Card>
+            </motion.div>
+
+            {/* Our Commitment */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-50px' }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              whileHover={{
+                y: -8,
+                scale: 1.02,
+                transition: { duration: 0.3, ease: 'easeOut' },
+              }}
+              className='group'
+            >
+              <Card
+                className='border-0 shadow-lg bg-white text-center overflow-hidden relative h-full'
+                animated={false}
+                hover={false}
+              >
+                {/* Subtle gradient overlay on hover */}
+                <motion.div
+                  className='absolute inset-0 bg-gradient-to-br from-blue-50/30 to-cyan-50/30 opacity-0 group-hover:opacity-100 pointer-events-none rounded-xl'
+                  transition={{ duration: 0.3 }}
+                />
+
+                <CardContent className='p-8 relative z-10'>
+                  <motion.div
+                    className='mb-6'
+                    whileHover={{
+                      scale: 1.1,
+                      rotate: [0, -5, 5, -5, 0],
+                      transition: { duration: 0.5 },
+                    }}
+                  >
+                    <Shield className='h-12 w-12 text-green-600 mx-auto' />
+                  </motion.div>
+                  <GSAPAnimatedHeadline
+                    text='Our Commitment'
+                    className='text-xl font-bold text-gray-900 mb-4'
+                    size='small'
+                  />
+                  <p className='text-gray-600 text-sm leading-relaxed'>
+                    We're committed to staying at the forefront of technology
+                    trends, investing in our team's growth, and continuously
+                    improving our processes to deliver exceptional results for
+                    our clients.
+                  </p>
+                </CardContent>
+              </Card>
             </motion.div>
           </div>
         </div>

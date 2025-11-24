@@ -355,21 +355,22 @@ export const EN_TRANSLATIONS: Translations = {
       fullStack: {
         title: 'Full-Stack Development',
         description:
-          'Modern web and mobile applications built with cutting-edge technologies.',
+          'Build powerful, scalable applications from frontend to backend. We deliver end-to-end solutions using cutting-edge technologies that transform your ideas into high-performing digital products.',
       },
       cloud: {
         title: 'Cloud Solutions',
         description:
-          'Scalable cloud architecture and deployment for maximum performance.',
+          'Transform your infrastructure with scalable cloud architecture. Deploy faster, scale effortlessly, and optimize costs with enterprise-grade cloud solutions tailored to your business needs.',
       },
       cybersecurity: {
-        title: 'Cybersecurity',
+        title: 'Legacy System Migration to AI',
         description:
-          'Comprehensive security solutions to protect your digital assets.',
+          'Update and migrate legacy systems and applications to modern AI-driven solutions for enhanced efficiency and innovation.',
       },
       teamAugmentation: {
         title: 'Team Augmentation',
-        description: 'Expert developers to accelerate your project delivery.',
+        description:
+          'Scale your team instantly with top-tier developers. Get dedicated experts who seamlessly integrate with your workflow to accelerate delivery and boost productivity.',
       },
       exploreAll: 'Explore All Services',
     },
