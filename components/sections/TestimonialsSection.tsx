@@ -36,8 +36,8 @@ interface TestimonialsSectionProps {
 
 const defaultTestimonials: Testimonial[] = [
   {
-    id: 'sarah-wang',
-    name: 'Sarah Wang',
+    id: 'sarah-murray',
+    name: 'Sarah Murray',
     role: 'CEO',
     company: 'TechFlow Solutions',
     content:
