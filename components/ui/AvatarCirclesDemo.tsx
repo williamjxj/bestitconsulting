@@ -2,38 +2,49 @@
 
 import { AvatarCircles } from '@/components/ui/avatar-circles'
 
-// Professional avatars using UI Avatars service for business professionals
-const avatars = [
-  {
-    imageUrl:
-      'https://ui-avatars.com/api/?name=Sarah+Johnson&background=0056b3&color=fff&size=128&bold=true',
-  },
-  {
-    imageUrl:
-      'https://ui-avatars.com/api/?name=Michael+Chen&background=0d9488&color=fff&size=128&bold=true',
-  },
-  {
-    imageUrl:
-      'https://ui-avatars.com/api/?name=Emily+Rodriguez&background=7c3aed&color=fff&size=128&bold=true',
-  },
-  {
-    imageUrl:
-      'https://ui-avatars.com/api/?name=David+Kim&background=dc2626&color=fff&size=128&bold=true',
-  },
-  {
-    imageUrl:
-      'https://ui-avatars.com/api/?name=Lisa+Wang&background=ea580c&color=fff&size=128&bold=true',
-  },
-  {
-    imageUrl:
-      'https://ui-avatars.com/api/?name=James+Wilson&background=059669&color=fff&size=128&bold=true',
-  },
-]
+interface Testimonial {
+  id: string
+  name: string
+  role: string
+  company: string
+  content: string
+  rating: number
+  avatar?: string
+  featured?: boolean
+  keyResults: string[]
+  industry: string
+  year: string
+}
 
-export function AvatarCirclesDemo() {
+interface AvatarCirclesDemoProps {
+  testimonials?: Testimonial[]
+  numPeople?: number
+}
+
+export function AvatarCirclesDemo({
+  testimonials = [],
+  numPeople = 99,
+}: AvatarCirclesDemoProps) {
+  // Use actual avatar photos from testimonials, fallback to first 6 if available
+  const avatars = testimonials
+    .filter(t => t.avatar) // Only include testimonials with avatar photos
+    .slice(0, 6) // Take first 6 with photos
+    .map(t => ({
+      imageUrl: t.avatar!,
+    }))
+
+  // If no testimonials provided or no avatars, use default fallback
+  if (avatars.length === 0) {
+    return (
+      <div className='flex w-full items-center justify-center'>
+        <AvatarCircles numPeople={numPeople} avatarUrls={[]} />
+      </div>
+    )
+  }
+
   return (
     <div className='flex w-full items-center justify-center'>
-      <AvatarCircles numPeople={99} avatarUrls={avatars} />
+      <AvatarCircles numPeople={numPeople} avatarUrls={avatars} />
     </div>
   )
 }

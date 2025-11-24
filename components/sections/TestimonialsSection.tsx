@@ -36,15 +36,15 @@ interface TestimonialsSectionProps {
 
 const defaultTestimonials: Testimonial[] = [
   {
-    id: 'sarah-johnson',
-    name: 'Sarah Johnson',
+    id: 'sarah-wang',
+    name: 'Sarah Wang',
     role: 'CEO',
     company: 'TechFlow Solutions',
     content:
       'BestIT Consulting transformed our entire digital infrastructure. Their expertise in cloud migration saved us 60% on operational costs while improving our system reliability dramatically. The team was professional, responsive, and delivered beyond our expectations.',
     rating: 5,
     avatar:
-      'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face&auto=format',
+      'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=150&h=150&fit=crop&crop=face&auto=format',
     featured: true,
     keyResults: [
       '60% cost reduction',
@@ -55,8 +55,8 @@ const defaultTestimonials: Testimonial[] = [
     year: '2024',
   },
   {
-    id: 'michael-chen',
-    name: 'Michael Chen',
+    id: 'michael-duckworth',
+    name: 'Michael Duckworth',
     role: 'CTO',
     company: 'HealthVital Medical',
     content:
@@ -73,8 +73,8 @@ const defaultTestimonials: Testimonial[] = [
     year: '2024',
   },
   {
-    id: 'emily-rodriguez',
-    name: 'Emily Rodriguez',
+    id: 'emily-carr',
+    name: 'Emily Carr',
     role: 'Director of Operations',
     company: 'RetailMax Enterprise',
     content:
@@ -91,8 +91,8 @@ const defaultTestimonials: Testimonial[] = [
     year: '2023',
   },
   {
-    id: 'david-kim',
-    name: 'David Kim',
+    id: 'david-rodriguez',
+    name: 'David Rodriguez',
     role: 'VP of Technology',
     company: 'FinanceCore Bank',
     content:
@@ -109,8 +109,8 @@ const defaultTestimonials: Testimonial[] = [
     year: '2024',
   },
   {
-    id: 'lisa-wang',
-    name: 'Lisa Wang',
+    id: 'lisa-brown',
+    name: 'Lisa Brown',
     role: 'Product Manager',
     company: 'InnovateTech',
     content:
@@ -127,8 +127,8 @@ const defaultTestimonials: Testimonial[] = [
     year: '2023',
   },
   {
-    id: 'james-wilson',
-    name: 'James Wilson',
+    id: 'pankaj-singh',
+    name: 'Pankaj Singh',
     role: 'IT Director',
     company: 'EduTech Solutions',
     content:
@@ -167,7 +167,7 @@ const defaultTestimonials: Testimonial[] = [
       "BestIT's smart manufacturing solution has transformed our production line. The IoT integration and AI-powered analytics have increased our efficiency and reduced waste dramatically.",
     rating: 5,
     avatar:
-      'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face&auto=format',
+      'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=150&h=150&fit=crop&crop=face&auto=format',
     keyResults: [
       '35% efficiency gain',
       '40% waste reduction',
@@ -301,7 +301,7 @@ export function TestimonialsSection({
                   {title}
                 </h2>
                 <div className='flex-shrink-0 lg:ml-4'>
-                  <AvatarCirclesDemo />
+                  <AvatarCirclesDemo testimonials={testimonials} />
                 </div>
               </div>
               <p className='text-xl text-gray-600 max-w-3xl mx-auto lg:mx-0'>
