@@ -44,8 +44,15 @@ export function AnimatedForm({
   const [focusedField, setFocusedField] = useState<string | null>(null)
 
   const reducedMotion = useReducedMotion()
-  const deviceType = getDeviceType()
-  const shouldAnimate = !reducedMotion && deviceType !== 'mobile'
+  const [deviceType, setDeviceType] = useState<'mobile' | 'tablet' | 'desktop'>('desktop')
+  const [shouldAnimate, setShouldAnimate] = useState(false)
+
+  // Only compute device type and animation preference on client after hydration
+  useEffect(() => {
+    const currentDeviceType = getDeviceType()
+    setDeviceType(currentDeviceType)
+    setShouldAnimate(!reducedMotion && currentDeviceType !== 'mobile')
+  }, [reducedMotion])
 
   // Update formData when initialValues changes
   useEffect(() => {

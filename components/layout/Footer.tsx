@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { motion } from 'framer-motion'
@@ -128,14 +128,21 @@ const faqs = [
 
 export function Footer() {
   const reducedMotion = useReducedMotion()
-  const deviceType = getDeviceType()
-  const shouldAnimate = !reducedMotion && deviceType !== 'mobile'
+  const [deviceType, setDeviceType] = useState<'mobile' | 'tablet' | 'desktop'>('desktop')
+  const [shouldAnimate, setShouldAnimate] = useState(false)
   const router = useRouter()
   const [tooltip, setTooltip] = useState<{
     text: string
     x: number
     y: number
   } | null>(null)
+
+  // Only compute device type and animation preference on client after hydration
+  useEffect(() => {
+    const currentDeviceType = getDeviceType()
+    setDeviceType(currentDeviceType)
+    setShouldAnimate(!reducedMotion && currentDeviceType !== 'mobile')
+  }, [reducedMotion])
 
   const handleLinkClick = (
     e: React.MouseEvent<HTMLAnchorElement>,
@@ -171,41 +178,43 @@ export function Footer() {
   }
 
   return (
-    <footer className='bg-gray-900 text-white py-12'>
+    <footer className='bg-gray-900 text-white py-8 sm:py-12'>
       {/* Main Footer Content */}
       <div className={brandClasses.container}>
-        <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8'>
+        <div className='grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 sm:gap-6 md:gap-8'>
           {/* Company Info */}
           <motion.div
-            className='sm:col-span-2 md:col-span-1'
+            className='col-span-2 sm:col-span-2 md:col-span-1'
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
-            <Link href='/' className='flex items-center mb-6 group'>
+            <Link href='/' className='flex items-center mb-4 sm:mb-6 group'>
               <motion.div
                 whileHover={shouldAnimate ? { scale: 1.05 } : undefined}
                 transition={{ scale: { duration: 0.2 } }}
-                className='text-2xl font-bold text-white transition-opacity duration-300 group-hover:opacity-90'
+                className='text-xl sm:text-2xl font-bold text-white transition-opacity duration-300 group-hover:opacity-90'
               >
                 Best IT Consulting
               </motion.div>
             </Link>
 
             {/* Contact Info */}
-            <div className='space-y-2 mb-6'>
-              <div className='flex items-center space-x-3 text-gray-400'>
-                <Mail className='h-4 w-4 text-blue-400' />
-                <span className='text-sm'>service@bestitconsulting.ca</span>
+            <div className='space-y-2 sm:space-y-2 mb-4 sm:mb-6'>
+              <div className='flex items-start sm:items-center space-x-2 sm:space-x-3 text-gray-400'>
+                <Mail className='h-4 w-4 text-blue-400 flex-shrink-0 mt-0.5 sm:mt-0' />
+                <span className='text-xs sm:text-sm break-all'>service@bestitconsulting.ca</span>
               </div>
-              <div className='flex items-center space-x-3 text-gray-400'>
-                <Phone className='h-4 w-4 text-blue-400' />
-                <span className='text-sm'>+1 (236) 992-3846</span>
+              <div className='flex items-center space-x-2 sm:space-x-3 text-gray-400'>
+                <Phone className='h-4 w-4 text-blue-400 flex-shrink-0' />
+                <a href='tel:+12369923846' className='text-xs sm:text-sm hover:text-white transition-colors'>
+                  +1 (236) 992-3846
+                </a>
               </div>
-              <div className='flex items-center space-x-3 text-gray-400'>
-                <MapPin className='h-4 w-4 text-blue-400' />
-                <span className='text-sm'>Great Vancouver, Canada 🇨🇦</span>
+              <div className='flex items-start sm:items-center space-x-2 sm:space-x-3 text-gray-400'>
+                <MapPin className='h-4 w-4 text-blue-400 flex-shrink-0 mt-0.5 sm:mt-0' />
+                <span className='text-xs sm:text-sm'>Great Vancouver, Canada 🇨🇦</span>
               </div>
             </div>
 
@@ -241,10 +250,10 @@ export function Footer() {
                 transition={{ duration: 0.6, delay: categoryIndex * 0.1 }}
                 viewport={{ once: true }}
               >
-                <h3 className='font-semibold text-white mb-4 capitalize'>
+                <h3 className='font-semibold text-white mb-2 sm:mb-3 md:mb-4 capitalize text-xs sm:text-sm md:text-base'>
                   {category}
                 </h3>
-                <ul className='space-y-2 text-gray-400'>
+                <ul className='space-y-1 sm:space-y-1.5 md:space-y-2 text-gray-400'>
                   {links.map((link, index) => (
                     <motion.li
                       key={link.name}
@@ -257,31 +266,31 @@ export function Footer() {
                         <FAQDialogCompact
                           faqs={faqs}
                           triggerText={link.name}
-                          className='text-gray-400 hover:text-white transition-colors p-0 h-auto font-normal justify-start'
+                          className='text-gray-400 hover:text-white transition-colors p-0 h-auto font-normal justify-start text-[11px] sm:text-xs md:text-sm'
                         />
                       ) : (link as any).isExternal ? (
                         <a
                           href={(link as any).href}
                           target='_blank'
                           rel='noopener noreferrer'
-                          className='text-gray-400 hover:text-white transition-colors flex items-center group cursor-pointer'
+                          className='text-gray-400 hover:text-white transition-colors flex items-start sm:items-center group cursor-pointer text-[11px] sm:text-xs md:text-sm'
                         >
                           {(link as any).icon &&
                             (() => {
                               const IconComponent = (link as any).icon
-                              return <IconComponent className='mr-2 h-4 w-4' />
+                              return <IconComponent className='mr-1.5 sm:mr-2 h-3 w-3 sm:h-4 sm:w-4 flex-shrink-0 mt-0.5 sm:mt-0' />
                             })()}
-                          <span>{link.name}</span>
-                          <ArrowRight className='ml-2 h-3 w-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200' />
+                          <span className='break-words leading-tight'>{link.name}</span>
+                          <ArrowRight className='ml-auto sm:ml-2 h-2.5 w-2.5 sm:h-3 sm:w-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex-shrink-0' />
                         </a>
                       ) : (
                         <a
                           href={link.href}
                           onClick={e => handleLinkClick(e, link)}
-                          className='text-gray-400 hover:text-white transition-colors flex items-center group cursor-pointer'
+                          className='text-gray-400 hover:text-white transition-colors flex items-start sm:items-center group cursor-pointer text-[11px] sm:text-xs md:text-sm'
                         >
-                          <span>{link.name}</span>
-                          <ArrowRight className='ml-2 h-3 w-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200' />
+                          <span className='break-words leading-tight'>{link.name}</span>
+                          <ArrowRight className='ml-auto sm:ml-2 h-2.5 w-2.5 sm:h-3 sm:w-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex-shrink-0' />
                         </a>
                       )}
                     </motion.li>
@@ -293,19 +302,19 @@ export function Footer() {
 
           {/* Mobile Access Section */}
           <motion.div
-            className='lg:col-span-1'
+            className='col-span-2 sm:col-span-2 md:col-span-1 lg:col-span-1'
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.5 }}
             viewport={{ once: true }}
           >
-            <h3 className='font-semibold text-white mb-4 flex items-center gap-2'>
+            <h3 className='font-semibold text-white mb-3 sm:mb-4 flex items-center gap-2 text-sm sm:text-base'>
               <Smartphone className='h-4 w-4 text-blue-400' />
               Mobile Access
             </h3>
-            <div className='flex flex-col items-center space-y-3'>
+            <div className='flex flex-col items-center space-y-2 sm:space-y-3'>
               <QRCodeCompact url='https://bestitconsulting.ca' size={80} />
-              <p className='text-gray-400 text-xs text-center'>
+              <p className='text-gray-400 text-xs text-center max-w-[120px] sm:max-w-none'>
                 Scan to visit our website
               </p>
             </div>
@@ -314,14 +323,14 @@ export function Footer() {
 
         {/* Bottom Bar */}
         <motion.div
-          className='border-t border-gray-100 mt-8 pt-8 text-center text-gray-400'
+          className='border-t border-gray-100 mt-6 sm:mt-8 pt-6 sm:pt-8 text-center text-gray-400'
           style={{ borderColor: '#334155' }}
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
         >
-          <p>© 2025 BestIT Consulting Ltd. All rights reserved.</p>
+          <p className='text-xs sm:text-sm px-4'>© 2025 BestIT Consulting Ltd. All rights reserved.</p>
         </motion.div>
       </div>
 

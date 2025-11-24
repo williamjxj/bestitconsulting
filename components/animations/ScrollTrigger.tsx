@@ -6,7 +6,7 @@
 'use client'
 
 import { motion, useInView } from 'framer-motion'
-import { ReactNode, forwardRef, useRef } from 'react'
+import { ReactNode, forwardRef, useRef, useState, useEffect } from 'react'
 import { useReducedMotion } from '@/lib/accessibility'
 import {
   getMobileOptimizedVariants,
@@ -51,7 +51,12 @@ export const ScrollTrigger = forwardRef<HTMLDivElement, ScrollTriggerProps>(
       margin: '0px 0px -50px 0px',
     })
     const reducedMotion = useReducedMotion()
-    const deviceType = getDeviceType()
+    const [deviceType, setDeviceType] = useState<'mobile' | 'tablet' | 'desktop'>('desktop')
+
+    // Only compute device type on client after hydration
+    useEffect(() => {
+      setDeviceType(getDeviceType())
+    }, [])
 
     // Get animation variants based on type and direction
     const getAnimationVariants = () => {
