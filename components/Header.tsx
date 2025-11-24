@@ -152,7 +152,7 @@ export default function Header() {
                 </>
               )}
             </div>
-            <LanguageSelector showNativeName={false} iconOnly={true} />
+            <LanguageSelector showNativeName={true} iconOnly={true} />
           </div>
 
           {/* Desktop Navigation - Center */}
