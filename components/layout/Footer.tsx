@@ -29,15 +29,17 @@ import { FAQDialogCompact } from '@/components/ui/faq-dialog'
 // Pages that exist and should navigate normally
 const existingPages = [
   '/about',
-  '/about#team',
+  '/about#values',
+  '/about#how-we-work',
   '/services',
   '/portfolio',
   '/case-studies',
+  '/testimonials',
   '/faq',
 ]
 
 // Pages that should redirect to contact form with CTA title
-const redirectToContactPages = ['/careers', '/blog', '/docs', '/support']
+const redirectToContactPages = ['/support']
 
 // Legal pages that should show tooltip (don't exist)
 const legalPages = ['/privacy', '/terms', '/cookies', '/gdpr']
@@ -45,33 +47,34 @@ const legalPages = ['/privacy', '/terms', '/cookies', '/gdpr']
 const footerLinks = {
   company: [
     { name: 'About Us', href: '/about' },
-    { name: 'Our Team', href: '/about#team' },
-    { name: 'Careers', href: '/careers', redirectToContact: true },
-    { name: 'FAQ', href: '/faq' },
+    { name: 'Why Choose Us', href: '/about#values' },
+    { name: 'Our Approach', href: '/about#how-we-work' },
+    { name: 'FAQ', href: '/faq', isLarge: true },
   ],
   services: [
+    { name: 'AI Consulting', href: '/services#ai-consulting' },
+    { name: 'Software Outsourcing', href: '/services#software-outsourcing' },
     { name: 'Web Development', href: '/services#web-development' },
     { name: 'Cloud Solutions', href: '/services#cloud-solutions' },
-    { name: 'AI Consulting', href: '/services#ai-consulting' },
     { name: 'Mobile Apps', href: '/services#mobile-apps' },
-    {
-      name: 'Enterprise Software Upgrade',
-      href: '/services#enterprise-software-upgrade',
-    },
-    { name: 'Software Outsourcing', href: '/services#software-outsourcing' },
     { name: 'DevOps', href: '/services#devops' },
   ],
   resources: [
     { name: 'Portfolio', href: '/portfolio' },
     { name: 'Case Studies', href: '/case-studies' },
-    { name: 'Blog', href: '/blog', redirectToContact: true },
-    { name: 'Documentation', href: '/docs', redirectToContact: true },
-    { name: 'Support', href: '/support', redirectToContact: true },
+    { name: 'Testimonials', href: '/testimonials' },
+    {
+      name: 'Support',
+      href: '/support',
+      redirectToContact: true,
+      ctaTitle: 'support',
+    },
     {
       name: 'Presentation',
       href: 'https://gamma.app/docs/Best-IT-Consulting-gwcl04w56hlfimh',
       icon: Presentation,
       isExternal: true,
+      isLarge: true,
     },
   ],
   legal: [
@@ -128,7 +131,9 @@ const faqs = [
 
 export function Footer() {
   const reducedMotion = useReducedMotion()
-  const [deviceType, setDeviceType] = useState<'mobile' | 'tablet' | 'desktop'>('desktop')
+  const [deviceType, setDeviceType] = useState<'mobile' | 'tablet' | 'desktop'>(
+    'desktop'
+  )
   const [shouldAnimate, setShouldAnimate] = useState(false)
   const router = useRouter()
   const [tooltip, setTooltip] = useState<{
@@ -156,7 +161,7 @@ export function Footer() {
     // Links that should redirect to contact form
     if (link.redirectToContact) {
       e.preventDefault()
-      const title = encodeURIComponent(link.name)
+      const title = encodeURIComponent((link as any).ctaTitle || link.name)
       router.push(`/contact?title=${title}#contact-form`)
       return
     }
@@ -204,17 +209,24 @@ export function Footer() {
             <div className='space-y-2 sm:space-y-2 mb-4 sm:mb-6'>
               <div className='flex items-start sm:items-center space-x-2 sm:space-x-3 text-gray-400'>
                 <Mail className='h-4 w-4 text-blue-400 flex-shrink-0 mt-0.5 sm:mt-0' />
-                <span className='text-xs sm:text-sm break-all'>service@bestitconsulting.ca</span>
+                <span className='text-xs sm:text-sm break-all'>
+                  service@bestitconsulting.ca
+                </span>
               </div>
               <div className='flex items-center space-x-2 sm:space-x-3 text-gray-400'>
                 <Phone className='h-4 w-4 text-blue-400 flex-shrink-0' />
-                <a href='tel:+12369923846' className='text-xs sm:text-sm hover:text-white transition-colors'>
+                <a
+                  href='tel:+12369923846'
+                  className='text-xs sm:text-sm hover:text-white transition-colors'
+                >
                   +1 (236) 992-3846
                 </a>
               </div>
               <div className='flex items-start sm:items-center space-x-2 sm:space-x-3 text-gray-400'>
                 <MapPin className='h-4 w-4 text-blue-400 flex-shrink-0 mt-0.5 sm:mt-0' />
-                <span className='text-xs sm:text-sm'>Great Vancouver, Canada 🇨🇦</span>
+                <span className='text-xs sm:text-sm'>
+                  Great Vancouver, Canada 🇨🇦
+                </span>
               </div>
             </div>
 
@@ -263,33 +275,61 @@ export function Footer() {
                       viewport={{ once: true }}
                     >
                       {link.name === 'FAQ' ? (
-                        <FAQDialogCompact
-                          faqs={faqs}
-                          triggerText={link.name}
-                          className='text-gray-400 hover:text-white transition-colors p-0 h-auto font-normal justify-start text-[11px] sm:text-xs md:text-sm'
-                        />
+                        <div className='flex items-start sm:items-center group w-full cursor-pointer'>
+                          <FAQDialogCompact
+                            faqs={faqs}
+                            triggerText={link.name}
+                            className={`text-gray-400 hover:text-white hover:bg-transparent transition-colors p-0 h-auto font-normal justify-start flex-1 cursor-pointer ${
+                              (link as any).isLarge
+                                ? 'text-xs sm:text-sm md:text-base font-medium'
+                                : 'text-[11px] sm:text-xs md:text-sm'
+                            }`}
+                          />
+                          <ArrowRight className='ml-auto sm:ml-2 h-2.5 w-2.5 sm:h-3 sm:w-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex-shrink-0' />
+                        </div>
                       ) : (link as any).isExternal ? (
                         <a
                           href={(link as any).href}
                           target='_blank'
                           rel='noopener noreferrer'
-                          className='text-gray-400 hover:text-white transition-colors flex items-start sm:items-center group cursor-pointer text-[11px] sm:text-xs md:text-sm'
+                          className={`text-gray-400 hover:text-white transition-colors flex items-start sm:items-center group cursor-pointer ${
+                            (link as any).isLarge
+                              ? 'text-xs sm:text-sm md:text-base font-medium'
+                              : 'text-[11px] sm:text-xs md:text-sm'
+                          }`}
                         >
                           {(link as any).icon &&
                             (() => {
                               const IconComponent = (link as any).icon
-                              return <IconComponent className='mr-1.5 sm:mr-2 h-3 w-3 sm:h-4 sm:w-4 flex-shrink-0 mt-0.5 sm:mt-0' />
+                              return (
+                                <IconComponent className='mr-1.5 sm:mr-2 h-3 w-3 sm:h-4 sm:w-4 flex-shrink-0 mt-0.5 sm:mt-0' />
+                              )
                             })()}
-                          <span className='break-words leading-tight'>{link.name}</span>
+                          <span className='break-words leading-tight'>
+                            {link.name}
+                          </span>
                           <ArrowRight className='ml-auto sm:ml-2 h-2.5 w-2.5 sm:h-3 sm:w-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex-shrink-0' />
                         </a>
                       ) : (
                         <a
                           href={link.href}
                           onClick={e => handleLinkClick(e, link)}
-                          className='text-gray-400 hover:text-white transition-colors flex items-start sm:items-center group cursor-pointer text-[11px] sm:text-xs md:text-sm'
+                          className={`text-gray-400 hover:text-white transition-colors flex items-start sm:items-center group cursor-pointer ${
+                            (link as any).isLarge
+                              ? 'text-xs sm:text-sm md:text-base font-medium'
+                              : 'text-[11px] sm:text-xs md:text-sm'
+                          }`}
                         >
-                          <span className='break-words leading-tight'>{link.name}</span>
+                          {(link as any).icon &&
+                            (() => {
+                              const IconComponent = (link as any).icon
+                              return (
+                                <IconComponent className='mr-1.5 sm:mr-2 h-3 w-3 sm:h-4 sm:w-4 flex-shrink-0 mt-0.5 sm:mt-0' />
+                              )
+                            })()}
+                          <span className='break-words leading-tight'>
+                            {link.name}
+                          </span>
                           <ArrowRight className='ml-auto sm:ml-2 h-2.5 w-2.5 sm:h-3 sm:w-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex-shrink-0' />
                         </a>
                       )}
@@ -330,7 +370,9 @@ export function Footer() {
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
         >
-          <p className='text-xs sm:text-sm px-4'>© 2025 BestIT Consulting Ltd. All rights reserved.</p>
+          <p className='text-xs sm:text-sm px-4'>
+            © 2025 BestIT Consulting Ltd. All rights reserved.
+          </p>
         </motion.div>
       </div>
 
