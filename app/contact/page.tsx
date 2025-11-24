@@ -40,7 +40,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from '@/components/ui/carousel'
-import { CustomerInquiriesList } from '@/components/ui/customer-inquiries-list'
+import { CustomerInquiriesMarquee3D } from '@/components/ui/customer-inquiries-marquee-3d'
 // Removed autoplay plugin; use custom LTR playback
 
 /**
@@ -74,6 +74,46 @@ export default function ContactPage() {
     }
     return ''
   })
+
+  // Handle "Get Free Consultation" button click
+  const handleGetConsultationClick = (e: React.MouseEvent) => {
+    e.preventDefault()
+    // Set the subject to the hero title (CTA title)
+    const ctaTitle = t('hero.title', 'contact')
+    // Update URL to include the title for better UX and browser history
+    if (typeof window !== 'undefined') {
+      const url = new URL(window.location.href)
+      url.searchParams.set('title', encodeURIComponent(ctaTitle))
+      window.history.pushState({}, '', url.toString())
+    }
+    setInitialSubject(ctaTitle)
+    // Scroll to the contact form after a brief delay to ensure form updates
+    setTimeout(() => {
+      const formElement = document.getElementById('contact-form')
+      if (formElement) {
+        formElement.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      }
+    }, 100)
+  }
+
+  // Handle "Call Now" button click - trigger FaceTime or phone call
+  const handleCallNowClick = (e: React.MouseEvent) => {
+    e.preventDefault()
+    const phoneNumber = '+12369923846' // Remove spaces and special chars for tel/facetime
+    // Use FaceTime for Apple devices, tel: for others
+    if (typeof window !== 'undefined') {
+      const isAppleDevice = /iPhone|iPad|iPod|Macintosh/i.test(
+        navigator.userAgent
+      )
+      if (isAppleDevice) {
+        // FaceTime for Apple devices
+        window.location.href = `facetime://${phoneNumber}`
+      } else {
+        // Standard phone call for other devices
+        window.location.href = `tel:${phoneNumber}`
+      }
+    }
+  }
 
   // Update subject when URL changes (e.g., browser back/forward or navigation)
   useEffect(() => {
@@ -324,31 +364,29 @@ export default function ContactPage() {
                   <Button
                     size='lg'
                     className='group text-lg px-6 py-3 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700'
-                    asChild
+                    onClick={handleGetConsultationClick}
                   >
-                    <Link href='#contact-form'>
-                      <Send className='mr-2 h-5 w-5' />
-                      {t('hero.getConsultation', 'contact')}
-                      <ArrowRight className='ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform' />
-                    </Link>
+                    <Send className='mr-2 h-5 w-5' />
+                    {t('hero.getConsultation', 'contact')}
+                    <ArrowRight className='ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform' />
                   </Button>
                   <Button
                     size='lg'
                     variant='outline'
                     className='text-lg px-6 py-3 bg-white/10 border-white/20 hover:bg-white/20'
-                    asChild
+                    onClick={handleCallNowClick}
                   >
-                    <Link href='#contact-methods'>
-                      <Phone className='mr-2 h-5 w-5' />
-                      {t('hero.callNow', 'contact')}
-                    </Link>
+                    <Phone className='mr-2 h-5 w-5' />
+                    {t('hero.callNow', 'contact')}
                   </Button>
                 </div>
               </div>
 
-              {/* Right Column - Customer Inquiries List */}
-              <div className='flex justify-end items-start'>
-                <CustomerInquiriesList />
+              {/* Right Column - Customer Inquiries 3D Marquee */}
+              <div className='flex justify-center lg:justify-end items-center w-full lg:w-auto'>
+                <div className='w-full max-w-4xl lg:max-w-none'>
+                  <CustomerInquiriesMarquee3D />
+                </div>
               </div>
             </div>
           </div>

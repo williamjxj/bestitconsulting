@@ -28,6 +28,15 @@ export function MarqueeStyles() {
         }
       }
 
+      @keyframes marquee-reverse {
+        from {
+          transform: translateX(calc(-100% - var(--gap, 1rem)));
+        }
+        to {
+          transform: translateX(0);
+        }
+      }
+
       @keyframes marquee-vertical {
         from {
           transform: translateY(0);
@@ -37,12 +46,29 @@ export function MarqueeStyles() {
         }
       }
 
+      @keyframes marquee-vertical-reverse {
+        from {
+          transform: translateY(calc(-100% - var(--gap, 1rem)));
+        }
+        to {
+          transform: translateY(0);
+        }
+      }
+
       .animate-marquee {
         animation: marquee var(--duration, 40s) infinite linear;
       }
 
+      .animate-marquee-reverse {
+        animation: marquee-reverse var(--duration, 40s) infinite linear;
+      }
+
       .animate-marquee-vertical {
         animation: marquee-vertical var(--duration, 40s) linear infinite;
+      }
+
+      .animate-marquee-vertical-reverse {
+        animation: marquee-vertical-reverse var(--duration, 40s) linear infinite;
       }
     `
     document.head.appendChild(style)
