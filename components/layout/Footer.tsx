@@ -22,9 +22,61 @@ import {
   Users,
   Smartphone,
   Presentation,
+  Video,
+  FileText,
+  Image as ImageIcon,
+  Music,
 } from 'lucide-react'
 import { QRCodeCompact } from '@/components/ui/qr-code'
 import { FAQDialogCompact } from '@/components/ui/faq-dialog'
+import { getR2AssetUrl } from '@/lib/r2-utils'
+
+// Helper function to get icon for file extension
+function getFileIcon(filename: string) {
+  const ext = filename.toLowerCase().split('.').pop()
+  switch (ext) {
+    case 'mp4':
+    case 'mov':
+    case 'avi':
+    case 'mkv':
+    case 'webm':
+      return Video
+    case 'm4a':
+    case 'mp3':
+    case 'wav':
+    case 'ogg':
+      return Music
+    case 'pdf':
+    case 'doc':
+    case 'docx':
+    case 'txt':
+      return FileText
+    case 'png':
+    case 'jpg':
+    case 'jpeg':
+    case 'gif':
+    case 'webp':
+    case 'svg':
+      return ImageIcon
+    default:
+      return FileText
+  }
+}
+
+// Helper function to get display name from filename
+function getDisplayName(filename: string): string {
+  // Remove 'resources/' prefix if present
+  let name = filename.replace(/^resources\//, '')
+  // Remove file extension
+  name = name.replace(/\.[^/.]+$/, '')
+  // Replace hyphens/underscores with spaces and capitalize
+  name = name.replace(/[-_]/g, ' ')
+  // Capitalize first letter of each word
+  return name
+    .split(' ')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join(' ')
+}
 
 // Pages that exist and should navigate normally
 const existingPages = [
@@ -45,11 +97,14 @@ const redirectToContactPages = ['/support']
 const legalPages = ['/privacy', '/terms', '/cookies', '/gdpr']
 
 const footerLinks = {
-  company: [
-    { name: 'About Us', href: '/about' },
-    { name: 'Why Choose Us', href: '/about#values' },
-    { name: 'Our Approach', href: '/about#how-we-work' },
-    { name: 'FAQ', href: '/faq', isLarge: true },
+  sitemap: [
+    { name: 'Home', href: '/' },
+    { name: 'Services', href: '/services' },
+    { name: 'About', href: '/about' },
+    { name: 'Case Studies', href: '/case-studies' },
+    { name: 'Portfolio', href: '/portfolio' },
+    { name: 'Testimonials', href: '/testimonials' },
+    { name: 'Contact', href: '/contact' },
   ],
   services: [
     { name: 'AI Consulting', href: '/services#ai-consulting' },
@@ -59,24 +114,7 @@ const footerLinks = {
     { name: 'Mobile Apps', href: '/services#mobile-apps' },
     { name: 'DevOps', href: '/services#devops' },
   ],
-  resources: [
-    { name: 'Portfolio', href: '/portfolio' },
-    { name: 'Case Studies', href: '/case-studies' },
-    { name: 'Testimonials', href: '/testimonials' },
-    {
-      name: 'Support',
-      href: '/support',
-      redirectToContact: true,
-      ctaTitle: 'support',
-    },
-    {
-      name: 'Presentation',
-      href: 'https://gamma.app/docs/Best-IT-Consulting-gwcl04w56hlfimh',
-      icon: Presentation,
-      isExternal: true,
-      isLarge: true,
-    },
-  ],
+  resources: [], // Will be populated from R2 bucket
   legal: [
     { name: 'Privacy Policy', href: '/privacy', showTooltip: true },
     { name: 'Terms of Service', href: '/terms', showTooltip: true },
@@ -129,6 +167,13 @@ const faqs = [
   },
 ]
 
+interface R2Resource {
+  filename: string
+  url: string
+  icon: any
+  displayName: string
+}
+
 export function Footer() {
   const reducedMotion = useReducedMotion()
   const [deviceType, setDeviceType] = useState<'mobile' | 'tablet' | 'desktop'>(
@@ -141,6 +186,8 @@ export function Footer() {
     x: number
     y: number
   } | null>(null)
+  const [r2Resources, setR2Resources] = useState<R2Resource[]>([])
+  const [resourcesLoading, setResourcesLoading] = useState(true)
 
   // Only compute device type and animation preference on client after hydration
   useEffect(() => {
@@ -148,6 +195,39 @@ export function Footer() {
     setDeviceType(currentDeviceType)
     setShouldAnimate(!reducedMotion && currentDeviceType !== 'mobile')
   }, [reducedMotion])
+
+  // Fetch R2 resources folder items
+  useEffect(() => {
+    const fetchR2Resources = async () => {
+      try {
+        const response = await fetch('/api/r2-assets')
+        const data = await response.json()
+
+        if (data.assets && Array.isArray(data.assets)) {
+          // Filter for resources folder items
+          const resources = data.assets
+            .filter((asset: any) => asset.filename.startsWith('resources/'))
+            .map((asset: any) => ({
+              filename: asset.filename,
+              url: asset.url,
+              icon: getFileIcon(asset.filename),
+              displayName: getDisplayName(asset.filename),
+            }))
+            .sort((a: R2Resource, b: R2Resource) =>
+              a.displayName.localeCompare(b.displayName)
+            )
+
+          setR2Resources(resources)
+        }
+      } catch (error) {
+        console.error('Error fetching R2 resources:', error)
+      } finally {
+        setResourcesLoading(false)
+      }
+    }
+
+    fetchR2Resources()
+  }, [])
 
   const handleLinkClick = (
     e: React.MouseEvent<HTMLAnchorElement>,
@@ -208,13 +288,13 @@ export function Footer() {
             {/* Contact Info */}
             <div className='space-y-2 sm:space-y-2 mb-4 sm:mb-6'>
               <div className='flex items-start sm:items-center space-x-2 sm:space-x-3 text-gray-400'>
-                <Mail className='h-4 w-4 text-blue-400 flex-shrink-0 mt-0.5 sm:mt-0' />
+                <Mail className='h-4 w-4 text-white flex-shrink-0 mt-0.5 sm:mt-0' />
                 <span className='text-xs sm:text-sm break-all'>
                   service@bestitconsulting.ca
                 </span>
               </div>
               <div className='flex items-center space-x-2 sm:space-x-3 text-gray-400'>
-                <Phone className='h-4 w-4 text-blue-400 flex-shrink-0' />
+                <Phone className='h-4 w-4 text-white flex-shrink-0' />
                 <a
                   href='tel:+12369923846'
                   className='text-xs sm:text-sm hover:text-white transition-colors'
@@ -223,7 +303,7 @@ export function Footer() {
                 </a>
               </div>
               <div className='flex items-start sm:items-center space-x-2 sm:space-x-3 text-gray-400'>
-                <MapPin className='h-4 w-4 text-blue-400 flex-shrink-0 mt-0.5 sm:mt-0' />
+                <MapPin className='h-4 w-4 text-white flex-shrink-0 mt-0.5 sm:mt-0' />
                 <span className='text-xs sm:text-sm'>
                   Great Vancouver, Canada 🇨🇦
                 </span>
@@ -253,28 +333,63 @@ export function Footer() {
 
           {/* Links Sections */}
           {Object.entries(footerLinks).map(
-            ([category, links], categoryIndex) => (
-              <motion.div
-                key={category}
-                className='lg:col-span-1'
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: categoryIndex * 0.1 }}
-                viewport={{ once: true }}
-              >
-                <h3 className='font-semibold text-white mb-2 sm:mb-3 md:mb-4 capitalize text-xs sm:text-sm md:text-base'>
-                  {category}
-                </h3>
-                <ul className='space-y-1 sm:space-y-1.5 md:space-y-2 text-gray-400'>
-                  {links.map((link, index) => (
-                    <motion.li
-                      key={link.name}
-                      initial={{ opacity: 0, x: -10 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      transition={{ duration: 0.3, delay: index * 0.05 }}
-                      viewport={{ once: true }}
-                    >
-                      {link.name === 'FAQ' ? (
+            ([category, links], categoryIndex) => {
+              // For resources category, use R2 resources instead of static links
+              const displayLinks =
+                category === 'resources' ? r2Resources : links
+
+              return (
+                <motion.div
+                  key={category}
+                  className={`lg:col-span-1 ${
+                    category === 'resources' ? 'lg:mr-4 xl:mr-6' : ''
+                  }`}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: categoryIndex * 0.1 }}
+                  viewport={{ once: true }}
+                >
+                  <h3 className='font-semibold text-white mb-2 sm:mb-3 md:mb-4 capitalize text-xs sm:text-sm md:text-base'>
+                    {category}
+                  </h3>
+                  <ul className='space-y-1 sm:space-y-1.5 md:space-y-2 text-gray-400'>
+                    {category === 'resources' && resourcesLoading ? (
+                      <li className='text-[11px] sm:text-xs md:text-sm text-gray-500'>
+                        Loading...
+                      </li>
+                    ) : category === 'resources' && displayLinks.length === 0 ? (
+                      <li className='text-[11px] sm:text-xs md:text-sm text-gray-500'>
+                        No resources available
+                      </li>
+                    ) : (
+                      displayLinks.map((link: any, index: number) => (
+                        <motion.li
+                          key={category === 'resources' ? link.filename : link.name}
+                          initial={{ opacity: 0, x: -10 }}
+                          whileInView={{ opacity: 1, x: 0 }}
+                          transition={{ duration: 0.3, delay: index * 0.05 }}
+                          viewport={{ once: true }}
+                        >
+                          {category === 'resources' ? (
+                            // R2 Resource link
+                            <a
+                              href={link.url}
+                              target='_blank'
+                              rel='noopener noreferrer'
+                              className='text-gray-400 hover:text-white transition-colors flex items-start sm:items-center group cursor-pointer text-[11px] sm:text-xs md:text-sm'
+                            >
+                              {(() => {
+                                const IconComponent = link.icon
+                                return (
+                                  <IconComponent className='mr-1.5 sm:mr-2 h-3 w-3 sm:h-4 sm:w-4 flex-shrink-0 mt-0.5 sm:mt-0' />
+                                )
+                              })()}
+                              <span className='break-words leading-tight flex-1 min-w-0'>
+                                {link.displayName}
+                              </span>
+                              <ArrowRight className='ml-auto sm:ml-2 h-2.5 w-2.5 sm:h-3 sm:w-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex-shrink-0' />
+                            </a>
+                          ) : link.name === 'FAQ' ? (
                         <div className='flex items-start sm:items-center group w-full cursor-pointer'>
                           <FAQDialogCompact
                             faqs={faqs}
@@ -331,13 +446,15 @@ export function Footer() {
                             {link.name}
                           </span>
                           <ArrowRight className='ml-auto sm:ml-2 h-2.5 w-2.5 sm:h-3 sm:w-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex-shrink-0' />
-                        </a>
-                      )}
-                    </motion.li>
-                  ))}
-                </ul>
-              </motion.div>
-            )
+                            </a>
+                          )}
+                        </motion.li>
+                      ))
+                    )}
+                  </ul>
+                </motion.div>
+              )
+            }
           )}
 
           {/* Mobile Access Section */}

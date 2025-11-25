@@ -90,8 +90,24 @@ export default function Header() {
             </Link>
           </div>
 
-          {/* Mobile: Hamburger Menu and Language Selector - Right side */}
+          {/* Mobile: Hamburger Menu, Language Selector, and Sister Site Link - Right side */}
           <div className='lg:hidden flex items-center space-x-1.5 flex-shrink-0 z-50'>
+            <LanguageSelector showNativeName={true} iconOnly={true} />
+            <a
+              href='https://www.bestitconsultants.ca'
+              target='_blank'
+              rel='noopener noreferrer'
+              className='flex items-center transition-opacity duration-300 hover:opacity-80'
+              title='Visit BestIT Consultants - Sister Website'
+            >
+              <Image
+                src='/b22-logo.png'
+                alt='BestIT Consultants Logo'
+                width={36}
+                height={36}
+                className='h-9 w-9'
+              />
+            </a>
             <div className='relative flex-shrink-0'>
               <button
                 type='button'
@@ -152,7 +168,6 @@ export default function Header() {
                 </>
               )}
             </div>
-            <LanguageSelector showNativeName={true} iconOnly={true} />
           </div>
 
           {/* Desktop Navigation - Center */}
@@ -177,9 +192,24 @@ export default function Header() {
             </div>
           </div>
 
-          {/* Desktop Language Selector - Right Side */}
+          {/* Desktop Language Selector and Sister Site Link - Right Side */}
           <div className='hidden lg:flex items-center space-x-3 flex-shrink-0'>
             <LanguageSelector showNativeName={true} />
+            <a
+              href='https://www.bestitconsultants.ca'
+              target='_blank'
+              rel='noopener noreferrer'
+              className='flex items-center transition-opacity duration-300 hover:opacity-80'
+              title='Visit BestIT Consultants - Sister Website'
+            >
+              <Image
+                src='/b22-logo.png'
+                alt='BestIT Consultants Logo'
+                width={40}
+                height={40}
+                className='h-10 w-10'
+              />
+            </a>
           </div>
         </div>
       </div>

@@ -170,6 +170,10 @@ export function getAssetType(
     return 'video'
   }
 
+  if (['m4a', 'mp3', 'wav', 'ogg', 'aac'].includes(ext || '')) {
+    return 'document' // Audio files treated as documents for now
+  }
+
   if (['pdf', 'doc', 'docx', 'txt'].includes(ext || '')) {
     return 'document'
   }
