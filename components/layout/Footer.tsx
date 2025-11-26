@@ -113,6 +113,7 @@ const footerLinks = {
     { name: 'Cloud Solutions', href: '/services#cloud-solutions' },
     { name: 'Mobile Apps', href: '/services#mobile-apps' },
     { name: 'DevOps', href: '/services#devops' },
+    { name: 'FAQ', href: '/faq', isLarge: true },
   ],
   resources: [], // Will be populated from R2 bucket
   legal: [
@@ -266,10 +267,11 @@ export function Footer() {
     <footer className='bg-gray-900 text-white py-8 sm:py-12'>
       {/* Main Footer Content */}
       <div className={brandClasses.container}>
-        <div className='grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 sm:gap-6 md:gap-8'>
+        <div className='flex flex-wrap justify-between gap-4 sm:gap-6 md:gap-8 lg:flex-nowrap lg:justify-start'>
           {/* Company Info */}
           <motion.div
-            className='col-span-2 sm:col-span-2 md:col-span-1'
+            className='w-full sm:w-[calc(50%-0.75rem)] md:w-[calc(33.333%-1.33rem)] lg:w-[calc(16.666%-1.33rem)] lg:flex-shrink-0'
+            style={{ order: 1 }}
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
@@ -338,12 +340,21 @@ export function Footer() {
               const displayLinks =
                 category === 'resources' ? r2Resources : links
 
+              // Determine order for mobile stacking
+              const orderMap: { [key: string]: number } = {
+                sitemap: 2,
+                services: 3,
+                resources: 4,
+                legal: 5,
+              }
+
               return (
                 <motion.div
                   key={category}
-                  className={`lg:col-span-1 ${
+                  className={`w-[calc(50%-0.5rem)] sm:w-[calc(50%-0.75rem)] md:w-[calc(33.333%-1.33rem)] lg:w-[calc(16.666%-1.33rem)] lg:flex-shrink-0 ${
                     category === 'resources' ? 'lg:mr-4 xl:mr-6' : ''
                   }`}
+                  style={{ order: orderMap[category] || categoryIndex + 2 }}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: categoryIndex * 0.1 }}
@@ -459,21 +470,19 @@ export function Footer() {
 
           {/* Mobile Access Section */}
           <motion.div
-            className='col-span-2 sm:col-span-2 md:col-span-1 lg:col-span-1'
+            className='w-full sm:w-[calc(50%-0.75rem)] md:w-[calc(33.333%-1.33rem)] lg:w-[calc(16.666%-1.33rem)] lg:flex-shrink-0'
+            style={{ order: 6 }}
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.5 }}
             viewport={{ once: true }}
           >
             <h3 className='font-semibold text-white mb-3 sm:mb-4 flex items-center gap-2 text-sm sm:text-base'>
-              <Smartphone className='h-4 w-4 text-blue-400' />
+              <Smartphone className='h-4 w-4 text-white' />
               Mobile Access
             </h3>
-            <div className='flex flex-col items-center space-y-2 sm:space-y-3'>
+            <div className='flex flex-col items-start'>
               <QRCodeCompact url='https://bestitconsulting.ca' size={80} />
-              <p className='text-gray-400 text-xs text-center max-w-[120px] sm:max-w-none'>
-                Scan to visit our website
-              </p>
             </div>
           </motion.div>
         </div>
