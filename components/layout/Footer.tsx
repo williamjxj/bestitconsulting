@@ -27,7 +27,7 @@ import {
   Image as ImageIcon,
   Music,
 } from 'lucide-react'
-import { QRCodeCompact } from '@/components/ui/qr-code'
+import { QRCode } from 'react-qr-code'
 import { FAQDialogCompact } from '@/components/ui/faq-dialog'
 import { getR2AssetUrl } from '@/lib/r2-utils'
 
@@ -368,14 +368,17 @@ export function Footer() {
                       <li className='text-[11px] sm:text-xs md:text-sm text-gray-500'>
                         Loading...
                       </li>
-                    ) : category === 'resources' && displayLinks.length === 0 ? (
+                    ) : category === 'resources' &&
+                      displayLinks.length === 0 ? (
                       <li className='text-[11px] sm:text-xs md:text-sm text-gray-500'>
                         No resources available
                       </li>
                     ) : (
                       displayLinks.map((link: any, index: number) => (
                         <motion.li
-                          key={category === 'resources' ? link.filename : link.name}
+                          key={
+                            category === 'resources' ? link.filename : link.name
+                          }
                           initial={{ opacity: 0, x: -10 }}
                           whileInView={{ opacity: 1, x: 0 }}
                           transition={{ duration: 0.3, delay: index * 0.05 }}
@@ -401,62 +404,62 @@ export function Footer() {
                               <ArrowRight className='ml-auto sm:ml-2 h-2.5 w-2.5 sm:h-3 sm:w-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex-shrink-0' />
                             </a>
                           ) : link.name === 'FAQ' ? (
-                        <div className='flex items-start sm:items-center group w-full cursor-pointer'>
-                          <FAQDialogCompact
-                            faqs={faqs}
-                            triggerText={link.name}
-                            className={`text-gray-400 hover:text-white hover:bg-transparent transition-colors p-0 h-auto font-normal justify-start flex-1 cursor-pointer ${
-                              (link as any).isLarge
-                                ? 'text-xs sm:text-sm md:text-base font-medium'
-                                : 'text-[11px] sm:text-xs md:text-sm'
-                            }`}
-                          />
-                          <ArrowRight className='ml-auto sm:ml-2 h-2.5 w-2.5 sm:h-3 sm:w-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex-shrink-0' />
-                        </div>
-                      ) : (link as any).isExternal ? (
-                        <a
-                          href={(link as any).href}
-                          target='_blank'
-                          rel='noopener noreferrer'
-                          className={`text-gray-400 hover:text-white transition-colors flex items-start sm:items-center group cursor-pointer ${
-                            (link as any).isLarge
-                              ? 'text-xs sm:text-sm md:text-base font-medium'
-                              : 'text-[11px] sm:text-xs md:text-sm'
-                          }`}
-                        >
-                          {(link as any).icon &&
-                            (() => {
-                              const IconComponent = (link as any).icon
-                              return (
-                                <IconComponent className='mr-1.5 sm:mr-2 h-3 w-3 sm:h-4 sm:w-4 flex-shrink-0 mt-0.5 sm:mt-0' />
-                              )
-                            })()}
-                          <span className='break-words leading-tight'>
-                            {link.name}
-                          </span>
-                          <ArrowRight className='ml-auto sm:ml-2 h-2.5 w-2.5 sm:h-3 sm:w-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex-shrink-0' />
-                        </a>
-                      ) : (
-                        <a
-                          href={link.href}
-                          onClick={e => handleLinkClick(e, link)}
-                          className={`text-gray-400 hover:text-white transition-colors flex items-start sm:items-center group cursor-pointer ${
-                            (link as any).isLarge
-                              ? 'text-xs sm:text-sm md:text-base font-medium'
-                              : 'text-[11px] sm:text-xs md:text-sm'
-                          }`}
-                        >
-                          {(link as any).icon &&
-                            (() => {
-                              const IconComponent = (link as any).icon
-                              return (
-                                <IconComponent className='mr-1.5 sm:mr-2 h-3 w-3 sm:h-4 sm:w-4 flex-shrink-0 mt-0.5 sm:mt-0' />
-                              )
-                            })()}
-                          <span className='break-words leading-tight'>
-                            {link.name}
-                          </span>
-                          <ArrowRight className='ml-auto sm:ml-2 h-2.5 w-2.5 sm:h-3 sm:w-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex-shrink-0' />
+                            <div className='flex items-start sm:items-center group w-full cursor-pointer'>
+                              <FAQDialogCompact
+                                faqs={faqs}
+                                triggerText={link.name}
+                                className={`text-gray-400 hover:text-white hover:bg-transparent transition-colors p-0 h-auto font-normal justify-start flex-1 cursor-pointer ${
+                                  (link as any).isLarge
+                                    ? 'text-xs sm:text-sm md:text-base font-medium'
+                                    : 'text-[11px] sm:text-xs md:text-sm'
+                                }`}
+                              />
+                              <ArrowRight className='ml-auto sm:ml-2 h-2.5 w-2.5 sm:h-3 sm:w-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex-shrink-0' />
+                            </div>
+                          ) : (link as any).isExternal ? (
+                            <a
+                              href={(link as any).href}
+                              target='_blank'
+                              rel='noopener noreferrer'
+                              className={`text-gray-400 hover:text-white transition-colors flex items-start sm:items-center group cursor-pointer ${
+                                (link as any).isLarge
+                                  ? 'text-xs sm:text-sm md:text-base font-medium'
+                                  : 'text-[11px] sm:text-xs md:text-sm'
+                              }`}
+                            >
+                              {(link as any).icon &&
+                                (() => {
+                                  const IconComponent = (link as any).icon
+                                  return (
+                                    <IconComponent className='mr-1.5 sm:mr-2 h-3 w-3 sm:h-4 sm:w-4 flex-shrink-0 mt-0.5 sm:mt-0' />
+                                  )
+                                })()}
+                              <span className='break-words leading-tight'>
+                                {link.name}
+                              </span>
+                              <ArrowRight className='ml-auto sm:ml-2 h-2.5 w-2.5 sm:h-3 sm:w-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex-shrink-0' />
+                            </a>
+                          ) : (
+                            <a
+                              href={link.href}
+                              onClick={e => handleLinkClick(e, link)}
+                              className={`text-gray-400 hover:text-white transition-colors flex items-start sm:items-center group cursor-pointer ${
+                                (link as any).isLarge
+                                  ? 'text-xs sm:text-sm md:text-base font-medium'
+                                  : 'text-[11px] sm:text-xs md:text-sm'
+                              }`}
+                            >
+                              {(link as any).icon &&
+                                (() => {
+                                  const IconComponent = (link as any).icon
+                                  return (
+                                    <IconComponent className='mr-1.5 sm:mr-2 h-3 w-3 sm:h-4 sm:w-4 flex-shrink-0 mt-0.5 sm:mt-0' />
+                                  )
+                                })()}
+                              <span className='break-words leading-tight'>
+                                {link.name}
+                              </span>
+                              <ArrowRight className='ml-auto sm:ml-2 h-2.5 w-2.5 sm:h-3 sm:w-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex-shrink-0' />
                             </a>
                           )}
                         </motion.li>
@@ -482,7 +485,14 @@ export function Footer() {
               Mobile Access
             </h3>
             <div className='flex flex-col items-start'>
-              <QRCodeCompact url='https://bestitconsulting.ca' size={80} />
+              <div className='p-2 bg-white rounded-lg shadow-md border border-gray-200'>
+                <QRCode
+                  value='https://www.bestitconsulting.ca'
+                  size={120}
+                  level='M'
+                  style={{ height: 'auto', maxWidth: '100%', width: '100%' }}
+                />
+              </div>
             </div>
           </motion.div>
         </div>
