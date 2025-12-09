@@ -27,7 +27,7 @@ import {
   Image as ImageIcon,
   Music,
 } from 'lucide-react'
-import { QRCode } from 'react-qr-code'
+import QRCode from 'react-qr-code'
 import { FAQDialogCompact } from '@/components/ui/faq-dialog'
 import { getR2AssetUrl } from '@/lib/r2-utils'
 
