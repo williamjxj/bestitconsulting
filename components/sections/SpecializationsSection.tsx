@@ -14,6 +14,7 @@ import {
   Store,
   Package,
   Plane,
+  Phone,
 } from 'lucide-react'
 import {
   Card,
@@ -104,6 +105,15 @@ const specializations: Specialization[] = [
     icon: <Plane className='h-8 w-8 text-white' />,
     hoverGradient: 'from-violet-50 to-purple-50',
     iconGradient: 'from-violet-500 to-purple-500',
+  },
+  {
+    id: 'telecommunications',
+    title: 'Telecommunications',
+    description:
+      'We help telecom providers modernize infrastructure, implement AI-driven network optimization, and enhance customer experience through secure and scalable digital solutions.',
+    icon: <Phone className='h-8 w-8 text-white' />,
+    hoverGradient: 'from-sky-50 to-blue-50',
+    iconGradient: 'from-sky-500 to-blue-500',
   },
 ]
 

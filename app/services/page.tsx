@@ -4,58 +4,40 @@ import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 import {
   ArrowRight,
-  Users,
   Shield,
-  BarChart2,
   CheckCircle,
   Target,
   Zap,
 } from 'lucide-react'
-import { ServiceCard } from '@/components/ServiceCard'
 import { ServicesSection } from '@/components/sections/ServicesSection'
 import { SpecializationsSection } from '@/components/sections/SpecializationsSection'
 import Layout from '@/components/Layout'
 import Link from 'next/link'
-import { ScrollTrigger } from '@/components/animations/ScrollTrigger'
 import { FadeIn } from '@/components/animations/FadeIn'
-import { SlideIn } from '@/components/animations/SlideIn'
 import { AnimatedHeadline } from '@/components/animations/AnimatedHeadline'
-import { PageHeader } from '@/components/ui/page-header'
-import { Section } from '@/components/ui/section'
-import { R2Image, R2HeroImage } from '@/components/R2Image'
-import { useR2Assets, R2_ASSET_MAPPINGS } from '@/hooks/useR2Assets'
+import { WorkflowSection } from '@/components/ui/workflow-section'
 import { useI18n } from '@/lib/i18n'
 
 export default function ServicesPage() {
   const { t } = useI18n()
-  const breadcrumbs = [{ name: 'Home', href: '/' }, { name: 'Services' }]
-  const { getImages, getAssetByFilename } = useR2Assets()
-
-  // Get R2 assets for services page
-  const heroImage = getAssetByFilename(R2_ASSET_MAPPINGS.services.hero)
-  const teamImage = getAssetByFilename(R2_ASSET_MAPPINGS.services.team)
 
   const processSteps = [
     {
-      step: '01',
       title: t('process.step1.title', 'services'),
       description: t('process.step1.description', 'services'),
       icon: <Target className='h-8 w-8' />,
     },
     {
-      step: '02',
       title: t('process.step2.title', 'services'),
       description: t('process.step2.description', 'services'),
       icon: <CheckCircle className='h-8 w-8' />,
     },
     {
-      step: '03',
       title: t('process.step3.title', 'services'),
       description: t('process.step3.description', 'services'),
       icon: <Zap className='h-8 w-8' />,
     },
     {
-      step: '04',
       title: t('process.step4.title', 'services'),
       description: t('process.step4.description', 'services'),
       icon: <Shield className='h-8 w-8' />,
@@ -110,50 +92,22 @@ export default function ServicesPage() {
         <SpecializationsSection />
 
         {/* Process Section */}
-        <ScrollTrigger animation='fade' direction='up' duration={0.8}>
-          <section className='py-20 bg-muted/30'>
-            <div className='container mx-auto px-4'>
-              <FadeIn delay={0.2} duration={0.8}>
-                <div className='text-center mb-16'>
-                  <h2 className='text-3xl md:text-4xl font-bold mb-4'>
-                    {t('process.title', 'services')}
-                  </h2>
-                  <p className='text-lg text-muted-foreground max-w-2xl mx-auto'>
-                    {t('process.subtitle', 'services')}
-                  </p>
-                </div>
-              </FadeIn>
-
-              <div className='grid md:grid-cols-2 lg:grid-cols-4 gap-8'>
-                {processSteps.map((step, index) => (
-                  <SlideIn
-                    key={index}
-                    direction='up'
-                    delay={0.4 + index * 0.1}
-                    duration={0.6}
-                  >
-                    <div className='text-center group'>
-                      <div className='relative mb-6'>
-                        <div className='w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300'>
-                          <div className='text-white'>{step.icon}</div>
-                        </div>
-                        <span className='absolute -top-2 -right-2 w-8 h-8 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-sm font-bold'>
-                          {step.step}
-                        </span>
-                      </div>
-                      <h3 className='text-xl font-semibold mb-3'>
-                        {step.title}
-                      </h3>
-                      <p className='text-muted-foreground'>
-                        {step.description}
-                      </p>
-                    </div>
-                  </SlideIn>
-                ))}
+        <section className='py-20 bg-muted/30'>
+          <div className='container mx-auto px-4'>
+            <FadeIn delay={0.2} duration={0.8}>
+              <div className='text-center mb-16'>
+                <h2 className='text-3xl md:text-4xl font-bold mb-4'>
+                  {t('process.title', 'services')}
+                </h2>
+                <p className='text-lg text-muted-foreground max-w-2xl mx-auto'>
+                  {t('process.subtitle', 'services')}
+                </p>
               </div>
-            </div>
-          </section>
-        </ScrollTrigger>
+            </FadeIn>
+
+            <WorkflowSection steps={processSteps} />
+          </div>
+        </section>
 
         {/* CTA Section */}
         <section className='py-20 bg-gradient-to-r from-blue-600 to-indigo-700 text-white'>
