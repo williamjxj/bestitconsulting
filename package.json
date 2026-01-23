@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "postbuild": "next-sitemap",
     "start": "next start",
     "lint": "next lint",
     "lint:fix": "next lint --fix",
@@ -40,12 +41,14 @@
     "lucide-react": "^0.511.0",
     "motion": "^12.23.24",
     "next": "15.2.8",
+    "next-sitemap": "^4.2.3",
     "qrcode": "^1.5.4",
     "react": "^19.1.2",
     "react-dom": "^19.1.2",
     "react-qr-code": "^2.0.18",
     "resend": "^4.7.0",
     "rough-notation": "^0.5.1",
+    "schema-dts": "^1.1.5",
     "tailwind-merge": "^3.3.0",
     "three": "^0.180.0"
   },

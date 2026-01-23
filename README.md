@@ -51,7 +51,46 @@ Best IT Consulting is a Canadian IT consulting firm specializing in full-stack d
 - 🗺️ **Google Maps** - Interactive map integration for contact page
 - 🎬 **Video Support** - Video playback with poster images and optimized loading
 - 🎯 **Accessibility** - WCAG 2.1 AA compliance with keyboard navigation and screen reader support
-- 📊 **Analytics Ready** - Structured data and SEO optimization
+- 📊 **SEO Optimized** - Comprehensive SEO with metadata, structured data, and sitemaps (see SEO section below)
+
+---
+
+## 🔍 SEO Optimization
+
+The website implements comprehensive SEO best practices for maximum search visibility:
+
+### Metadata Implementation
+- **Unique Titles & Descriptions:** Every page has optimized meta tags
+- **Open Graph Protocol:** Full OG metadata for social media sharing
+- **Twitter Cards:** Rich preview cards for Twitter sharing
+- **Canonical URLs:** Prevent duplicate content issues
+- **hreflang Tags:** Multi-language support infrastructure (x-default for English)
+
+### Structured Data (JSON-LD)
+- **Organization Schema:** Site-wide business identity
+- **WebSite Schema:** Homepage with sitelinks search box
+- **Service Schema:** Rich results for service offerings
+- **Review Schema:** Star ratings in search results
+- **FAQPage Schema:** FAQ snippets in Google
+
+### Technical SEO
+- **XML Sitemap:** Auto-generated with next-sitemap (static + dynamic routes)
+- **Robots.txt:** Environment-aware (production: allow with exclusions, staging: block all)
+- **Performance:** Core Web Vitals optimized (LCP <2.5s, FID <100ms, CLS <0.1)
+- **Mobile-First:** Optimized for mobile-first indexing
+- **Semantic HTML:** Proper heading hierarchy and HTML5 elements
+
+### SEO Utilities
+- **Location:** `lib/seo-utils.ts` - Metadata generation functions
+- **Location:** `lib/structured-data.ts` - Schema.org structured data helpers
+- **Configuration:** `next-sitemap.config.js` - Sitemap generation rules
+
+### Lighthouse SEO Score Target
+- **Target:** >95 (excellent)
+- **Bundle Impact:** <5KB
+- **Performance Impact:** <50ms
+
+For detailed SEO documentation, see `/specs/006-improve-seo/` directory.
 
 ---
 

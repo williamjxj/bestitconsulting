@@ -56,5 +56,8 @@ next-env.d.ts
 /.cursor
 .obsidian
 .vscode
+.agent/
+.antigravity/
+
 # Documentation build
-docs
+# docs

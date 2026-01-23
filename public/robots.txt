@@ -1,0 +1,13 @@
+# *
+User-agent: *
+Allow: /
+Disallow: /api/*
+Disallow: /_next/static/*
+Disallow: /admin/*
+
+# Host
+Host: https://bestitconsulting.com
+
+# Sitemaps
+Sitemap: https://bestitconsulting.com/sitemap.xml
+Sitemap: https://bestitconsulting.com/server-sitemap.xml

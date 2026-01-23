@@ -1,0 +1,575 @@
+openapi: 3.0.3
+info:
+  title: SEO Utilities API Contract
+  version: 1.0.0
+  description: |
+    Contract for SEO metadata generation utilities used throughout the Best IT Consulting website.
+    
+    These are internal utility functions, not HTTP APIs, but documented in OpenAPI format 
+    for consistency and clarity.
+  contact:
+    name: Best IT Consulting Development Team
+    email: dev@bestitconsulting.com
+
+paths:
+  /buildPageMetadata:
+    description: Generate complete page metadata for Next.js
+    post:
+      summary: Build page metadata
+      description: |
+        Generates a complete SEO metadata object for a page including title, description,
+        Open Graph tags, Twitter Card, canonical URL, and hreflang tags.
+      operationId: buildPageMetadata
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - title
+                - description
+                - pathname
+              properties:
+                title:
+                  type: string
+                  minLength: 10
+                  maxLength: 60
+                  description: Page title (will be appended with " | Best IT Consulting")
+                  example: "Modern Web Solutions & IT Services"
+                description:
+                  type: string
+                  minLength: 50
+                  maxLength: 160
+                  description: Meta description for the page
+                  example: "Professional IT consulting and web development services for modern businesses."
+                pathname:
+                  type: string
+                  pattern: "^/"
+                  description: URL pathname for the page
+                  example: "/services"
+                options:
+                  type: object
+                  description: Optional overrides for specific metadata fields
+                  properties:
+                    openGraph:
+                      $ref: '#/components/schemas/OpenGraphMetadata'
+                    twitter:
+                      $ref: '#/components/schemas/TwitterMetadata'
+                    keywords:
+                      type: array
+                      items:
+                        type: string
+                      maxItems: 10
+      responses:
+        '200':
+          description: Successfully generated metadata
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SEOMetadata'
+
+  /getOGImage:
+    description: Get appropriate Open Graph image for a pathname
+    post:
+      summary: Get OG image path
+      description: |
+        Returns the appropriate Open Graph image path for a given pathname.
+        Uses custom images for major pages, falls back to default for others.
+      operationId: getOGImage
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - pathname
+              properties:
+                pathname:
+                  type: string
+                  description: URL pathname
+                  example: "/services"
+      responses:
+        '200':
+          description: OG image path
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  imagePath:
+                    type: string
+                    description: Relative path to OG image
+                    example: "/og-images/services.png"
+
+  /structuredDataScript:
+    description: Generate JSON-LD script tag content
+    post:
+      summary: Create structured data script
+      description: |
+        Converts a schema.org structured data object into a properly formatted
+        JSON-LD string for injection into HTML script tags.
+      operationId: structuredDataScript
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: '#/components/schemas/OrganizationSchema'
+                - $ref: '#/components/schemas/WebSiteSchema'
+                - $ref: '#/components/schemas/ServiceSchema'
+                - $ref: '#/components/schemas/ReviewSchema'
+                - $ref: '#/components/schemas/FAQPageSchema'
+      responses:
+        '200':
+          description: JSON-LD script content
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  script:
+                    type: string
+                    description: JSON-LD formatted string
+
+components:
+  schemas:
+    SEOMetadata:
+      type: object
+      required:
+        - title
+        - description
+      properties:
+        title:
+          type: string
+          description: Complete page title
+          example: "Modern Web Solutions & IT Services | Best IT Consulting"
+        description:
+          type: string
+          description: Meta description
+          example: "Professional IT consulting and web development services."
+        keywords:
+          type: array
+          items:
+            type: string
+          description: Target keywords (optional, low priority)
+        openGraph:
+          $ref: '#/components/schemas/OpenGraphMetadata'
+        twitter:
+          $ref: '#/components/schemas/TwitterMetadata'
+        canonical:
+          type: string
+          format: uri
+          description: Canonical URL (absolute)
+          example: "https://bestitconsulting.com/services"
+        alternates:
+          $ref: '#/components/schemas/AlternatesMetadata'
+        robots:
+          $ref: '#/components/schemas/RobotsMetadata'
+
+    OpenGraphMetadata:
+      type: object
+      properties:
+        title:
+          type: string
+          description: OG title (can differ from page title)
+        description:
+          type: string
+          description: OG description
+        images:
+          type: array
+          items:
+            $ref: '#/components/schemas/OpenGraphImage'
+        type:
+          type: string
+          enum: [website, article, profile]
+          default: website
+        siteName:
+          type: string
+          default: "Best IT Consulting"
+        locale:
+          type: string
+          pattern: "^[a-z]{2}_[A-Z]{2}$"
+          example: "en_US"
+
+    OpenGraphImage:
+      type: object
+      required:
+        - url
+        - width
+        - height
+        - alt
+      properties:
+        url:
+          type: string
+          format: uri
+          description: Absolute URL to image
+          example: "https://bestitconsulting.com/og-images/services.png"
+        width:
+          type: integer
+          description: Image width in pixels
+          example: 1200
+          default: 1200
+        height:
+          type: integer
+          description: Image height in pixels
+          example: 630
+          default: 630
+        alt:
+          type: string
+          description: Image alt text
+          example: "Best IT Consulting Services"
+        type:
+          type: string
+          description: Image MIME type
+          example: "image/png"
+
+    TwitterMetadata:
+      type: object
+      properties:
+        card:
+          type: string
+          enum: [summary, summary_large_image, app, player]
+          default: summary_large_image
+        site:
+          type: string
+          description: Twitter handle for the site
+          example: "@bestitconsulting"
+        creator:
+          type: string
+          description: Twitter handle for content creator
+          example: "@bestitconsulting"
+        title:
+          type: string
+          description: Twitter card title (if different from OG)
+        description:
+          type: string
+          description: Twitter card description (if different from OG)
+        images:
+          type: array
+          items:
+            type: string
+            format: uri
+
+    AlternatesMetadata:
+      type: object
+      properties:
+        languages:
+          type: object
+          description: Language-specific alternate URLs
+          additionalProperties:
+            type: string
+            format: uri
+          example:
+            x-default: "https://bestitconsulting.com/"
+            en: "https://bestitconsulting.com/"
+            fr: "https://bestitconsulting.com/fr/"
+
+    RobotsMetadata:
+      type: object
+      properties:
+        index:
+          type: boolean
+          default: true
+          description: Allow search engine indexing
+        follow:
+          type: boolean
+          default: true
+          description: Allow following links
+        noarchive:
+          type: boolean
+          default: false
+          description: Prevent caching
+        nosnippet:
+          type: boolean
+          default: false
+          description: Prevent snippet in search results
+        noimageindex:
+          type: boolean
+          default: false
+          description: Prevent image indexing
+        maxSnippet:
+          type: integer
+          description: Max snippet length (-1 for no limit)
+          default: -1
+        maxImagePreview:
+          type: string
+          enum: [none, standard, large]
+          default: large
+        maxVideoPreview:
+          type: integer
+          description: Max video preview length in seconds (-1 for no limit)
+          default: -1
+
+    # Structured Data Schemas
+    
+    OrganizationSchema:
+      type: object
+      required:
+        - "@type"
+        - name
+        - url
+      properties:
+        "@type":
+          type: string
+          enum: [Organization]
+        "@context":
+          type: string
+          enum: ["https://schema.org"]
+          default: "https://schema.org"
+        name:
+          type: string
+          example: "Best IT Consulting"
+        alternateName:
+          type: string
+          example: "Best IT"
+        url:
+          type: string
+          format: uri
+          example: "https://bestitconsulting.com"
+        logo:
+          type: string
+          format: uri
+          example: "https://bestitconsulting.com/logo.png"
+        description:
+          type: string
+        address:
+          $ref: '#/components/schemas/PostalAddress'
+        contactPoint:
+          $ref: '#/components/schemas/ContactPoint'
+        sameAs:
+          type: array
+          items:
+            type: string
+            format: uri
+          description: Social media profiles
+
+    WebSiteSchema:
+      type: object
+      required:
+        - "@type"
+        - name
+        - url
+      properties:
+        "@type":
+          type: string
+          enum: [WebSite]
+        "@context":
+          type: string
+          enum: ["https://schema.org"]
+        name:
+          type: string
+        alternateName:
+          type: string
+        url:
+          type: string
+          format: uri
+        description:
+          type: string
+        potentialAction:
+          $ref: '#/components/schemas/SearchAction'
+
+    ServiceSchema:
+      type: object
+      required:
+        - "@type"
+        - name
+        - description
+        - provider
+      properties:
+        "@type":
+          type: string
+          enum: [Service]
+        "@context":
+          type: string
+          enum: ["https://schema.org"]
+        name:
+          type: string
+          example: "Web Development"
+        description:
+          type: string
+        serviceType:
+          type: string
+          example: "Web Development"
+        provider:
+          type: object
+          properties:
+            "@type":
+              type: string
+              enum: [Organization]
+            name:
+              type: string
+        areaServed:
+          type: object
+          properties:
+            "@type":
+              type: string
+              enum: [Place]
+            name:
+              type: string
+              example: "Canada"
+        offers:
+          type: object
+          properties:
+            "@type":
+              type: string
+              enum: [Offer]
+            price:
+              type: string
+            priceCurrency:
+              type: string
+              example: "CAD"
+
+    ReviewSchema:
+      type: object
+      required:
+        - "@type"
+        - author
+        - reviewBody
+        - itemReviewed
+      properties:
+        "@type":
+          type: string
+          enum: [Review]
+        "@context":
+          type: string
+          enum: ["https://schema.org"]
+        author:
+          type: object
+          properties:
+            "@type":
+              type: string
+              enum: [Person]
+            name:
+              type: string
+        reviewBody:
+          type: string
+        reviewRating:
+          type: object
+          properties:
+            "@type":
+              type: string
+              enum: [Rating]
+            ratingValue:
+              type: number
+              minimum: 1
+              maximum: 5
+            bestRating:
+              type: number
+              default: 5
+            worstRating:
+              type: number
+              default: 1
+        datePublished:
+          type: string
+          format: date
+        itemReviewed:
+          type: object
+          properties:
+            "@type":
+              type: string
+              enum: [Organization]
+            name:
+              type: string
+
+    FAQPageSchema:
+      type: object
+      required:
+        - "@type"
+        - mainEntity
+      properties:
+        "@type":
+          type: string
+          enum: [FAQPage]
+        "@context":
+          type: string
+          enum: ["https://schema.org"]
+        mainEntity:
+          type: array
+          items:
+            $ref: '#/components/schemas/Question'
+
+    Question:
+      type: object
+      required:
+        - "@type"
+        - name
+        - acceptedAnswer
+      properties:
+        "@type":
+          type: string
+          enum: [Question]
+        name:
+          type: string
+          description: The question text
+        acceptedAnswer:
+          type: object
+          properties:
+            "@type":
+              type: string
+              enum: [Answer]
+            text:
+              type: string
+              description: The answer text
+
+    PostalAddress:
+      type: object
+      properties:
+        "@type":
+          type: string
+          enum: [PostalAddress]
+        addressCountry:
+          type: string
+          example: "CA"
+        addressRegion:
+          type: string
+          example: "BC"
+        addressLocality:
+          type: string
+          example: "Vancouver"
+        postalCode:
+          type: string
+          example: "V5K 0A1"
+        streetAddress:
+          type: string
+
+    ContactPoint:
+      type: object
+      properties:
+        "@type":
+          type: string
+          enum: [ContactPoint]
+        contactType:
+          type: string
+          example: "customer service"
+        email:
+          type: string
+          format: email
+        telephone:
+          type: string
+        availableLanguage:
+          type: array
+          items:
+            type: string
+          example: ["English", "French", "Spanish", "Chinese"]
+
+    SearchAction:
+      type: object
+      properties:
+        "@type":
+          type: string
+          enum: [SearchAction]
+        target:
+          type: object
+          properties:
+            "@type":
+              type: string
+              enum: [EntryPoint]
+            urlTemplate:
+              type: string
+              example: "https://bestitconsulting.com/search?q={search_term_string}"
+        query-input:
+          type: string
+          example: "required name=search_term_string"
