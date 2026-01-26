@@ -34,7 +34,7 @@ Open Graph (OG) images are preview images that appear when your website is share
 
 **Example:**
 ```
-When someone shares: https://bestitconsulting.com/services
+When someone shares: https://bestitconsulting.ca/services
 Social media shows: Custom "Services" image with branding
 Without custom image: Generic website screenshot or blank
 ```

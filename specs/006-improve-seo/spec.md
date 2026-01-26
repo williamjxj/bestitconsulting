@@ -184,7 +184,7 @@ const CUSTOM_OG_PAGES = [
 // Disallow: /api/*
 // Disallow: /_next/static/*
 // Disallow: /admin/*
-// Sitemap: https://bestitconsulting.com/sitemap.xml
+// Sitemap: https://bestitconsulting.ca/sitemap.xml
 //
 // Staging/Development robots.txt:
 // User-agent: *

@@ -459,7 +459,7 @@ All images must be **1200×630px, <200KB, PNG or JPEG format**.
 
 1. **Run Lighthouse Baseline Audit (T019)**
    ```bash
-   lighthouse https://bestitconsulting.com --only-categories=seo --output=json --output-path=./specs/006-improve-seo/lighthouse-baseline.json
+   lighthouse https://bestitconsulting.ca --only-categories=seo --output=json --output-path=./specs/006-improve-seo/lighthouse-baseline.json
    ```
 
 2. **Content Optimization Pass (T073-T081)**
@@ -558,7 +558,7 @@ Since all page.tsx files use `'use client'`, they cannot export metadata directl
 
 Ensure these are set:
 
-- `NEXT_PUBLIC_BASE_URL=https://bestitconsulting.com` (production)
+- `NEXT_PUBLIC_BASE_URL=https://bestitconsulting.ca` (production)
 - `VERCEL_ENV=production` (automatic on Vercel)
 - `NODE_ENV=production` (automatic in production builds)
 

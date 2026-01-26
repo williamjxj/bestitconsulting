@@ -186,7 +186,7 @@ export function buildPageMetadata(
   pathname: string,
   options?: Partial<SEOMetadata>
 ): Metadata {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://bestitconsulting.com';
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://bestitconsulting.ca';
   const fullUrl = `${baseUrl}${pathname}`;
   const ogImage = getOGImage(pathname);
 

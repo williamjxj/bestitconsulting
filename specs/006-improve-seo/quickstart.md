@@ -31,7 +31,7 @@ Create `next-sitemap.config.js` in project root:
 ```javascript
 /** @type {import('next-sitemap').IConfig} */
 module.exports = {
-  siteUrl: process.env.SITE_URL || 'https://bestitconsulting.com',
+  siteUrl: process.env.SITE_URL || 'https://bestitconsulting.ca',
   generateRobotsTxt: true,
   generateIndexSitemap: true,
   exclude: ['/admin/*', '/api/*', '/_next/*'],
@@ -70,7 +70,7 @@ export function buildPageMetadata(
   description: string,
   pathname: string
 ): Metadata {
-  const baseUrl = 'https://bestitconsulting.com';
+  const baseUrl = 'https://bestitconsulting.ca';
   const fullUrl = `${baseUrl}${pathname}`;
   
   return {
@@ -166,13 +166,13 @@ import type { Organization } from 'schema-dts';
 const organizationSchema: Organization = {
   '@type': 'Organization',
   name: 'Best IT Consulting',
-  url: 'https://bestitconsulting.com',
-  logo: 'https://bestitconsulting.com/logo.png',
+  url: 'https://bestitconsulting.ca',
+  logo: 'https://bestitconsulting.ca/logo.png',
   description: 'Professional IT consulting and modern web solutions',
   contactPoint: {
     '@type': 'ContactPoint',
     contactType: 'customer service',
-    email: 'contact@bestitconsulting.com',
+    email: 'contact@bestitconsulting.ca',
   },
 };
 
@@ -276,7 +276,7 @@ export function buildPageMetadata(
   description: string,
   pathname: string
 ): Metadata {
-  const baseUrl = 'https://bestitconsulting.com';
+  const baseUrl = 'https://bestitconsulting.ca';
   const ogImage = getOGImage(pathname);
   
   return {
@@ -308,7 +308,7 @@ export function buildPageMetadata(
 import type { MetadataRoute } from 'next';
 
 export default function robots(): MetadataRoute.Robots {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://bestitconsulting.com';
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://bestitconsulting.ca';
   const isProduction = process.env.VERCEL_ENV === 'production';
 
   if (!isProduction) {
@@ -394,7 +394,7 @@ npx tsc --noEmit
 
 ### Audit SEO
 ```bash
-lighthouse https://bestitconsulting.com --only-categories=seo
+lighthouse https://bestitconsulting.ca --only-categories=seo
 ```
 
 ---

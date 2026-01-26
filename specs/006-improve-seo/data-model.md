@@ -65,7 +65,7 @@ const homeMetadata: SEOMetadata = {
     description: 'Expert IT consulting and modern web development services',
     images: [
       {
-        url: 'https://bestitconsulting.com/og-images/home.png',
+        url: 'https://bestitconsulting.ca/og-images/home.png',
         width: 1200,
         height: 630,
         alt: 'Best IT Consulting - Modern Web Solutions',
@@ -78,11 +78,11 @@ const homeMetadata: SEOMetadata = {
     site: '@bestitconsulting',
     creator: '@bestitconsulting',
   },
-  canonical: 'https://bestitconsulting.com/',
+  canonical: 'https://bestitconsulting.ca/',
   alternates: {
     languages: {
-      'x-default': 'https://bestitconsulting.com/',
-      'en': 'https://bestitconsulting.com/',
+      'x-default': 'https://bestitconsulting.ca/',
+      'en': 'https://bestitconsulting.ca/',
     },
   },
   robots: {
@@ -152,7 +152,7 @@ export interface OpenGraphImage {
 **Example:**
 ```typescript
 const ogImage: OpenGraphImage = {
-  url: 'https://bestitconsulting.com/og-images/services.png',
+  url: 'https://bestitconsulting.ca/og-images/services.png',
   width: 1200,
   height: 630,
   alt: 'Best IT Consulting Services - Web Development, Cloud, DevOps',
@@ -232,11 +232,11 @@ export interface AlternatesMetadata {
 ```typescript
 const alternates: AlternatesMetadata = {
   languages: {
-    'x-default': 'https://bestitconsulting.com/',
-    'en': 'https://bestitconsulting.com/',
-    'fr': 'https://bestitconsulting.com/fr/', // Future
-    'es': 'https://bestitconsulting.com/es/', // Future
-    'zh': 'https://bestitconsulting.com/zh/', // Future
+    'x-default': 'https://bestitconsulting.ca/',
+    'en': 'https://bestitconsulting.ca/',
+    'fr': 'https://bestitconsulting.ca/fr/', // Future
+    'es': 'https://bestitconsulting.ca/es/', // Future
+    'zh': 'https://bestitconsulting.ca/zh/', // Future
   },
 };
 ```
@@ -322,8 +322,8 @@ export const organizationSchema: Organization = {
   '@type': 'Organization',
   name: 'Best IT Consulting',
   alternateName: 'Best IT',
-  url: 'https://bestitconsulting.com',
-  logo: 'https://bestitconsulting.com/logo.png',
+  url: 'https://bestitconsulting.ca',
+  logo: 'https://bestitconsulting.ca/logo.png',
   description: 'Professional IT consulting and modern web solutions provider specializing in web development, cloud services, and digital transformation.',
   
   foundingDate: '2008', // Update with actual date
@@ -340,7 +340,7 @@ export const organizationSchema: Organization = {
   contactPoint: {
     '@type': 'ContactPoint',
     contactType: 'customer service',
-    email: 'contact@bestitconsulting.com',
+    email: 'contact@bestitconsulting.ca',
     availableLanguage: ['English', 'French', 'Spanish', 'Chinese'],
   },
   
@@ -381,14 +381,14 @@ export const websiteSchema: WebSite = {
   '@type': 'WebSite',
   name: 'Best IT Consulting',
   alternateName: 'Best IT',
-  url: 'https://bestitconsulting.com',
+  url: 'https://bestitconsulting.ca',
   description: 'Professional IT consulting and modern web solutions',
   
   potentialAction: {
     '@type': 'SearchAction',
     target: {
       '@type': 'EntryPoint',
-      urlTemplate: 'https://bestitconsulting.com/search?q={search_term_string}',
+      urlTemplate: 'https://bestitconsulting.ca/search?q={search_term_string}',
     },
     'query-input': 'required name=search_term_string',
   } as SearchAction,
@@ -439,7 +439,7 @@ export function createServiceSchema(data: ServiceSchemaData): Service {
     provider: {
       '@type': 'Organization',
       name: data.provider,
-      url: 'https://bestitconsulting.com',
+      url: 'https://bestitconsulting.ca',
     },
     
     areaServed: data.areaServed ? {
@@ -508,7 +508,7 @@ export function createReviewSchema(data: ReviewSchemaData): Review {
     itemReviewed: {
       '@type': 'Organization',
       name: 'Best IT Consulting',
-      sameAs: 'https://bestitconsulting.com',
+      sameAs: 'https://bestitconsulting.ca',
     },
   };
 }
@@ -651,7 +651,7 @@ export interface RobotPolicy {
 **Example Configuration:**
 ```typescript
 const sitemapConfig: SitemapConfig = {
-  siteUrl: 'https://bestitconsulting.com',
+  siteUrl: 'https://bestitconsulting.ca',
   generateRobotsTxt: true,
   generateIndexSitemap: true,
   exclude: ['/admin/*', '/api/*', '/_next/*'],
@@ -727,7 +727,7 @@ export function buildPageMetadata(
   pathname: string,
   options?: Partial<SEOMetadata>
 ): SEOMetadata {
-  const baseUrl = 'https://bestitconsulting.com';
+  const baseUrl = 'https://bestitconsulting.ca';
   const fullUrl = `${baseUrl}${pathname}`;
   const ogImage = getOGImage(pathname);
   

@@ -19,8 +19,8 @@ export const organizationSchema: WithContext<Organization> = {
   '@type': 'Organization',
   name: 'Best IT Consulting',
   alternateName: 'Best IT',
-  url: 'https://bestitconsulting.com',
-  logo: 'https://bestitconsulting.com/logo.png',
+  url: 'https://bestitconsulting.ca',
+  logo: 'https://bestitconsulting.ca/logo.png',
   description:
     'Professional IT consulting and modern web solutions provider specializing in web development, cloud services, and digital transformation.',
 
@@ -39,7 +39,7 @@ export const organizationSchema: WithContext<Organization> = {
   contactPoint: {
     '@type': 'ContactPoint',
     contactType: 'customer service',
-    email: 'contact@bestitconsulting.com',
+    email: 'contact@bestitconsulting.ca',
     availableLanguage: ['English', 'French', 'Spanish', 'Chinese'],
   },
 
@@ -60,14 +60,14 @@ export const websiteSchema: WithContext<WebSite> = {
   '@type': 'WebSite',
   name: 'Best IT Consulting',
   alternateName: 'Best IT',
-  url: 'https://bestitconsulting.com',
+  url: 'https://bestitconsulting.ca',
   description: 'Professional IT consulting and modern web solutions',
 
   potentialAction: {
     '@type': 'SearchAction',
     target: {
       '@type': 'EntryPoint',
-      urlTemplate: 'https://bestitconsulting.com/search?q={search_term_string}',
+      urlTemplate: 'https://bestitconsulting.ca/search?q={search_term_string}',
     },
     'query-input': 'required name=search_term_string',
   } as SearchAction,
@@ -110,7 +110,7 @@ export function createServiceSchema(data: ServiceSchemaData): WithContext<Servic
     provider: {
       '@type': 'Organization',
       name: data.provider,
-      url: 'https://bestitconsulting.com',
+      url: 'https://bestitconsulting.ca',
     },
 
     areaServed: data.areaServed
@@ -171,7 +171,7 @@ export function createReviewSchema(data: ReviewSchemaData): WithContext<Review> 
     itemReviewed: {
       '@type': 'Organization',
       name: 'Best IT Consulting',
-      sameAs: 'https://bestitconsulting.com',
+      sameAs: 'https://bestitconsulting.ca',
     },
   };
 }

@@ -32,7 +32,7 @@ This research document consolidates findings from SEO best practices, competitor
 ```typescript
 // next-sitemap.config.js
 module.exports = {
-  siteUrl: 'https://bestitconsulting.com',
+  siteUrl: 'https://bestitconsulting.ca',
   generateRobotsTxt: true,
   generateIndexSitemap: true,
   exclude: ['/admin/*', '/api/*', '/_next/*'],
@@ -113,8 +113,8 @@ export const organizationSchema: Organization = {
   '@type': 'Organization',
   '@context': 'https://schema.org',
   name: 'Best IT Consulting',
-  url: 'https://bestitconsulting.com',
-  logo: 'https://bestitconsulting.com/logo.png',
+  url: 'https://bestitconsulting.ca',
+  logo: 'https://bestitconsulting.ca/logo.png',
   description: 'Professional IT consulting and modern web solutions',
   address: {
     '@type': 'PostalAddress',
@@ -125,7 +125,7 @@ export const organizationSchema: Organization = {
   contactPoint: {
     '@type': 'ContactPoint',
     contactType: 'customer service',
-    email: 'contact@bestitconsulting.com',
+    email: 'contact@bestitconsulting.ca',
   },
   sameAs: [
     // Social media profiles
@@ -272,7 +272,7 @@ export function getOGImage(pathname: string): string {
 ```typescript
 // app/layout.tsx
 export async function generateMetadata(): Promise<Metadata> {
-  const baseUrl = 'https://bestitconsulting.com';
+  const baseUrl = 'https://bestitconsulting.ca';
   
   return {
     title: 'Best IT Consulting - Modern Web Solutions',
@@ -340,7 +340,7 @@ Disallow: /api/*
 Disallow: /_next/static/*
 Disallow: /admin/*
 
-Sitemap: https://bestitconsulting.com/sitemap.xml
+Sitemap: https://bestitconsulting.ca/sitemap.xml
 ```
 
 **Staging/Preview robots.txt:**
@@ -355,7 +355,7 @@ Disallow: /
 import type { MetadataRoute } from 'next';
 
 export default function robots(): MetadataRoute.Robots {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://bestitconsulting.com';
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://bestitconsulting.ca';
   const isProduction = process.env.VERCEL_ENV === 'production';
 
   if (!isProduction) {

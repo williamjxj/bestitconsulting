@@ -9,7 +9,7 @@ info:
     for consistency and clarity.
   contact:
     name: Best IT Consulting Development Team
-    email: dev@bestitconsulting.com
+    email: dev@bestitconsulting.ca
 
 paths:
   /buildPageMetadata:
@@ -163,7 +163,7 @@ components:
           type: string
           format: uri
           description: Canonical URL (absolute)
-          example: "https://bestitconsulting.com/services"
+          example: "https://bestitconsulting.ca/services"
         alternates:
           $ref: '#/components/schemas/AlternatesMetadata'
         robots:
@@ -206,7 +206,7 @@ components:
           type: string
           format: uri
           description: Absolute URL to image
-          example: "https://bestitconsulting.com/og-images/services.png"
+          example: "https://bestitconsulting.ca/og-images/services.png"
         width:
           type: integer
           description: Image width in pixels
@@ -263,9 +263,9 @@ components:
             type: string
             format: uri
           example:
-            x-default: "https://bestitconsulting.com/"
-            en: "https://bestitconsulting.com/"
-            fr: "https://bestitconsulting.com/fr/"
+            x-default: "https://bestitconsulting.ca/"
+            en: "https://bestitconsulting.ca/"
+            fr: "https://bestitconsulting.ca/fr/"
 
     RobotsMetadata:
       type: object
@@ -328,11 +328,11 @@ components:
         url:
           type: string
           format: uri
-          example: "https://bestitconsulting.com"
+          example: "https://bestitconsulting.ca"
         logo:
           type: string
           format: uri
-          example: "https://bestitconsulting.com/logo.png"
+          example: "https://bestitconsulting.ca/logo.png"
         description:
           type: string
         address:
@@ -569,7 +569,7 @@ components:
               enum: [EntryPoint]
             urlTemplate:
               type: string
-              example: "https://bestitconsulting.com/search?q={search_term_string}"
+              example: "https://bestitconsulting.ca/search?q={search_term_string}"
         query-input:
           type: string
           example: "required name=search_term_string"

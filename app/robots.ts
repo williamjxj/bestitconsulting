@@ -9,7 +9,7 @@ import type { MetadataRoute } from 'next';
  * @returns Robots configuration
  */
 export default function robots(): MetadataRoute.Robots {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://bestitconsulting.com';
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://bestitconsulting.ca';
 
   // Detect environment (Vercel or generic NODE_ENV)
   const isProduction =

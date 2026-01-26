@@ -1,6 +1,6 @@
 /** @type {import('next-sitemap').IConfig} */
 module.exports = {
-  siteUrl: process.env.SITE_URL || 'https://bestitconsulting.com',
+  siteUrl: process.env.SITE_URL || 'https://bestitconsulting.ca',
   generateRobotsTxt: true,
   generateIndexSitemap: true,
   exclude: ['/admin/*', '/api/*', '/_next/*', '/server-sitemap.xml'],
@@ -13,7 +13,7 @@ module.exports = {
       },
     ],
     additionalSitemaps: [
-      'https://bestitconsulting.com/server-sitemap.xml', // For dynamic routes
+      'https://bestitconsulting.ca/server-sitemap.xml', // For dynamic routes
     ],
   },
   // Transform function for dynamic route discovery

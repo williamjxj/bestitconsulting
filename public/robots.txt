@@ -6,8 +6,8 @@ Disallow: /_next/static/*
 Disallow: /admin/*
 
 # Host
-Host: https://bestitconsulting.com
+Host: https://bestitconsulting.ca
 
 # Sitemaps
-Sitemap: https://bestitconsulting.com/sitemap.xml
-Sitemap: https://bestitconsulting.com/server-sitemap.xml
+Sitemap: https://bestitconsulting.ca/sitemap.xml
+Sitemap: https://bestitconsulting.ca/server-sitemap.xml

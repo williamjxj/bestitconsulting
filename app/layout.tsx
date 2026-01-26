@@ -18,7 +18,7 @@ const geistMono = Geist_Mono({
 })
 
 const baseUrl =
-  process.env.NEXT_PUBLIC_BASE_URL || 'https://bestitconsulting.com'
+  process.env.NEXT_PUBLIC_BASE_URL || 'https://bestitconsulting.ca'
 
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
