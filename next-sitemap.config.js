@@ -13,7 +13,7 @@ module.exports = {
       },
     ],
     additionalSitemaps: [
-      'https://bestitconsulting.ca/server-sitemap.xml', // For dynamic routes
+      // 'https://bestitconsulting.ca/server-sitemap.xml', // For dynamic routes (when needed)
     ],
   },
   // Transform function for dynamic route discovery
