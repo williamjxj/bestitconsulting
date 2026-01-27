@@ -99,7 +99,6 @@ COMPANY INFORMATION:
 - Website: https://www.bestitconsulting.ca
 - Phone: +1 (236) 992-3846
 - Email: service@bestitconsulting.ca
-- Team: 50+ certified professionals
 - Experience: 20+ years
 - Projects Delivered: 50+
 - Client Satisfaction: 98%

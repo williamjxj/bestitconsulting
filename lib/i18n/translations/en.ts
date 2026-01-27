@@ -309,6 +309,50 @@ export const EN_TRANSLATIONS: Translations = {
       startProject: 'Start Your Project',
       viewWork: 'View Our Work',
     },
+    faq: {
+      sectionTitle: 'Frequently Asked Questions',
+      sectionDescription: 'Find answers to common questions before reaching out',
+      timeline: {
+        question: 'What is your typical project timeline?',
+        answer:
+          'Project timelines vary based on scope and complexity. Small projects typically take 2-4 weeks, medium projects 1-3 months, and large enterprise solutions 3-6 months or more. We provide detailed timelines during our initial consultation.',
+      },
+      support: {
+        question: 'Do you offer ongoing support and maintenance?',
+        answer:
+          'Yes, we provide comprehensive support packages including 24/7 monitoring, regular updates, bug fixes, and technical assistance to ensure your solution runs smoothly long after launch.',
+      },
+      technology: {
+        question: 'Can you work with our existing technology stack?',
+        answer:
+          'Absolutely! We specialize in integrating with existing systems and can work with virtually any technology stack to enhance your current infrastructure and ensure seamless integration.',
+      },
+      industries: {
+        question: 'What industries do you serve?',
+        answer:
+          'We serve clients across healthcare, finance, retail, manufacturing, transportation, education, and technology sectors, adapting our solutions to industry-specific requirements and compliance standards.',
+      },
+      pricing: {
+        question: 'How do you structure your pricing?',
+        answer:
+          'We offer flexible pricing models including fixed-price projects, time and materials, and retainer agreements. Pricing is based on project scope, complexity, timeline requirements, and the specific technologies involved.',
+      },
+      consultation: {
+        question: 'Is the initial consultation really free?',
+        answer:
+          'Yes! We offer a completely free 30-minute consultation to discuss your project requirements, provide initial recommendations, and answer any questions you may have about our services.',
+      },
+      security: {
+        question: 'How do you ensure data security and privacy?',
+        answer:
+          'We implement industry-standard security measures including encryption, secure data transmission, regular security audits, and compliance with GDPR and other privacy regulations to protect your data.',
+      },
+      team: {
+        question: 'What is the size and expertise of your team?',
+        answer:
+          'Our team consists of 50+ certified professionals including software engineers, cloud architects, data scientists, UI/UX designers, and project managers with expertise across multiple technologies and frameworks.',
+      },
+    },
   },
   errors: {
     notFound: 'Page not found',

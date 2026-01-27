@@ -311,6 +311,50 @@ export const FR_TRANSLATIONS: Translations = {
       startProject: 'Démarrer Votre Projet',
       viewWork: 'Voir Notre Travail',
     },
+    faq: {
+      sectionTitle: 'Questions Fréquemment Posées',
+      sectionDescription: 'Trouvez des réponses aux questions courantes avant de nous contacter',
+      timeline: {
+        question: 'Quel est votre calendrier de projet typique?',
+        answer:
+          "Les délais de projet varient en fonction de la portée et de la complexité. Les petits projets prennent généralement 2 à 4 semaines, les projets moyens 1 à 3 mois, et les grandes solutions d'entreprise 3 à 6 mois ou plus. Nous fournissons des calendriers détaillés lors de notre consultation initiale.",
+      },
+      support: {
+        question: 'Offrez-vous un support et une maintenance continus?',
+        answer:
+          "Oui, nous fournissons des forfaits de support complets comprenant une surveillance 24h/24 et 7j/7, des mises à jour régulières, des corrections de bogues et une assistance technique pour garantir que votre solution fonctionne parfaitement après le lancement.",
+      },
+      technology: {
+        question: 'Pouvez-vous travailler avec notre pile technologique existante?',
+        answer:
+          "Absolument! Nous nous spécialisons dans l'intégration avec les systèmes existants et pouvons travailler avec pratiquement n'importe quelle pile technologique pour améliorer votre infrastructure actuelle et assurer une intégration transparente.",
+      },
+      industries: {
+        question: 'Quelles industries servez-vous?',
+        answer:
+          "Nous servons des clients dans les secteurs de la santé, de la finance, du commerce de détail, de la fabrication, du transport, de l'éducation et de la technologie, en adaptant nos solutions aux exigences spécifiques de l'industrie et aux normes de conformité.",
+      },
+      pricing: {
+        question: 'Comment structurez-vous vos tarifs?',
+        answer:
+          "Nous offrons des modèles de tarification flexibles comprenant des projets à prix fixe, du temps et des matériaux, et des accords de rétention. Les prix sont basés sur la portée du projet, la complexité, les exigences de calendrier et les technologies spécifiques impliquées.",
+      },
+      consultation: {
+        question: 'La consultation initiale est-elle vraiment gratuite?',
+        answer:
+          "Oui! Nous offrons une consultation entièrement gratuite de 30 minutes pour discuter des exigences de votre projet, fournir des recommandations initiales et répondre à toutes les questions que vous pourriez avoir sur nos services.",
+      },
+      security: {
+        question: 'Comment assurez-vous la sécurité et la confidentialité des données?',
+        answer:
+          "Nous mettons en œuvre des mesures de sécurité standard de l'industrie, notamment le chiffrement, la transmission sécurisée des données, des audits de sécurité réguliers et la conformité au RGPD et à d'autres réglementations sur la confidentialité pour protéger vos données.",
+      },
+      team: {
+        question: "Quelle est la taille et l'expertise de votre équipe?",
+        answer:
+          "Notre équipe se compose de plus de 50 professionnels certifiés, notamment des ingénieurs logiciels, des architectes cloud, des data scientists, des designers UI/UX et des chefs de projet avec une expertise dans de multiples technologies et frameworks.",
+      },
+    },
   },
   errors: {
     notFound: 'Page non trouvée',

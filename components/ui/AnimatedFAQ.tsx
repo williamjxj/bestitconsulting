@@ -45,9 +45,8 @@ export function AnimatedFAQ({ faqs, className = '' }: AnimatedFAQProps) {
           >
             <Card className='border-0 bg-white overflow-hidden'>
               <motion.button
-                className='w-full p-6 text-left focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-inset'
+                className='w-full p-6 text-left focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-inset transition-colors hover:bg-gray-50'
                 onClick={() => toggleItem(faq.id)}
-                whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
                 <div className='flex items-center justify-between'>

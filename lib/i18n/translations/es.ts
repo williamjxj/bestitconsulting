@@ -310,6 +310,50 @@ export const ES_TRANSLATIONS: Translations = {
       startProject: 'Comience Su Proyecto',
       viewWork: 'Ver Nuestro Trabajo',
     },
+    faq: {
+      sectionTitle: 'Preguntas Frecuentes',
+      sectionDescription: 'Encuentre respuestas a preguntas comunes antes de contactarnos',
+      timeline: {
+        question: '¿Cuál es su cronograma típico de proyecto?',
+        answer:
+          'Los cronogramas de proyectos varían según el alcance y la complejidad. Los proyectos pequeños suelen tomar 2-4 semanas, los proyectos medianos 1-3 meses, y las soluciones empresariales grandes 3-6 meses o más. Proporcionamos cronogramas detallados durante nuestra consulta inicial.',
+      },
+      support: {
+        question: '¿Ofrecen soporte y mantenimiento continuo?',
+        answer:
+          'Sí, proporcionamos paquetes de soporte integral que incluyen monitoreo 24/7, actualizaciones regulares, corrección de errores y asistencia técnica para garantizar que su solución funcione sin problemas después del lanzamiento.',
+      },
+      technology: {
+        question: '¿Pueden trabajar con nuestra pila tecnológica existente?',
+        answer:
+          '¡Absolutamente! Nos especializamos en la integración con sistemas existentes y podemos trabajar con prácticamente cualquier pila tecnológica para mejorar su infraestructura actual y garantizar una integración perfecta.',
+      },
+      industries: {
+        question: '¿A qué industrias sirven?',
+        answer:
+          'Atendemos a clientes en los sectores de salud, finanzas, comercio minorista, manufactura, transporte, educación y tecnología, adaptando nuestras soluciones a los requisitos específicos de la industria y estándares de cumplimiento.',
+      },
+      pricing: {
+        question: '¿Cómo estructuran sus precios?',
+        answer:
+          'Ofrecemos modelos de precios flexibles que incluyen proyectos de precio fijo, tiempo y materiales, y acuerdos de retención. Los precios se basan en el alcance del proyecto, la complejidad, los requisitos de cronograma y las tecnologías específicas involucradas.',
+      },
+      consultation: {
+        question: '¿La consulta inicial es realmente gratuita?',
+        answer:
+          '¡Sí! Ofrecemos una consulta completamente gratuita de 30 minutos para discutir los requisitos de su proyecto, proporcionar recomendaciones iniciales y responder cualquier pregunta que pueda tener sobre nuestros servicios.',
+      },
+      security: {
+        question: '¿Cómo garantizan la seguridad y privacidad de los datos?',
+        answer:
+          'Implementamos medidas de seguridad estándar de la industria que incluyen cifrado, transmisión segura de datos, auditorías de seguridad regulares y cumplimiento con GDPR y otras regulaciones de privacidad para proteger sus datos.',
+      },
+      team: {
+        question: '¿Cuál es el tamaño y la experiencia de su equipo?',
+        answer:
+          'Nuestro equipo consta de más de 50 profesionales certificados que incluyen ingenieros de software, arquitectos de nube, científicos de datos, diseñadores UI/UX y gerentes de proyectos con experiencia en múltiples tecnologías y frameworks.',
+      },
+    },
   },
   errors: {
     notFound: 'Página no encontrada',

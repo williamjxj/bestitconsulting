@@ -41,6 +41,7 @@ import {
   CarouselPrevious,
 } from '@/components/ui/carousel'
 import { CustomerInquiriesMarquee3D } from '@/components/ui/customer-inquiries-marquee-3d'
+import { AnimatedFAQ } from '@/components/ui/AnimatedFAQ'
 // Removed autoplay plugin; use custom LTR playback
 
 /**
@@ -145,6 +146,51 @@ export default function ContactPage() {
     }, 4000)
     return () => clearInterval(id)
   }, [emblaApi, isCarouselHovered])
+
+  // FAQ data for contact page
+  const faqs = [
+    {
+      id: 'timeline',
+      question: t('faq.timeline.question', 'contact'),
+      answer: t('faq.timeline.answer', 'contact'),
+    },
+    {
+      id: 'support',
+      question: t('faq.support.question', 'contact'),
+      answer: t('faq.support.answer', 'contact'),
+    },
+    {
+      id: 'technology',
+      question: t('faq.technology.question', 'contact'),
+      answer: t('faq.technology.answer', 'contact'),
+    },
+    {
+      id: 'industries',
+      question: t('faq.industries.question', 'contact'),
+      answer: t('faq.industries.answer', 'contact'),
+    },
+    {
+      id: 'pricing',
+      question: t('faq.pricing.question', 'contact'),
+      answer: t('faq.pricing.answer', 'contact'),
+    },
+    {
+      id: 'consultation',
+      question: t('faq.consultation.question', 'contact'),
+      answer: t('faq.consultation.answer', 'contact'),
+    },
+    {
+      id: 'security',
+      question: t('faq.security.question', 'contact'),
+      answer: t('faq.security.answer', 'contact'),
+    },
+    {
+      id: 'team',
+      question: t('faq.team.question', 'contact'),
+      answer: t('faq.team.answer', 'contact'),
+    },
+  ]
+
   const formFields = [
     {
       name: 'name',
@@ -719,6 +765,28 @@ export default function ContactPage() {
                 </Card>
               </div>
             </div>
+          </div>
+        </section>
+
+        {/* FAQ Section */}
+        <section className='py-16 px-4 bg-gradient-to-br from-slate-50 to-blue-50'>
+          <div className='max-w-4xl mx-auto'>
+            <div className='text-center mb-12'>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+              >
+                <h2 className='text-3xl md:text-4xl font-bold text-gray-900 mb-4'>
+                  {t('faq.sectionTitle', 'contact')}
+                </h2>
+                <p className='text-lg md:text-xl text-gray-600 max-w-2xl mx-auto'>
+                  {t('faq.sectionDescription', 'contact')}
+                </p>
+              </motion.div>
+            </div>
+
+            <AnimatedFAQ faqs={faqs} />
           </div>
         </section>
 

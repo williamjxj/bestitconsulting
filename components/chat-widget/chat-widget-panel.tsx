@@ -23,6 +23,8 @@ import Image from 'next/image'
 import { useChatWidget } from '@/lib/hooks/use-chat-widget'
 import { useI18n } from '@/lib/i18n'
 import type { Message } from '@/types/chat-widget'
+import ReactMarkdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
 
 interface ChatWidgetPanelProps {
   /** Whether the chat panel is currently open */
@@ -226,36 +228,36 @@ export function ChatWidgetPanel({ isOpen, onClose }: ChatWidgetPanelProps) {
           aria-modal='true'
         >
           <Card
-            className='flex flex-col h-full shadow-2xl overflow-hidden bg-white dark:bg-gray-900'
+            className='flex flex-col h-full shadow-2xl overflow-hidden bg-white dark:bg-gray-900 !pt-0'
             animated={false}
             hover={false}
           >
-            <CardHeader className='flex items-center justify-between px-4 py-2 border-b flex-shrink-0'>
-              <CardTitle className='text-lg font-semibold'>
-                {t('title', 'chatbot')}
-              </CardTitle>
-              <div className='flex items-center gap-2'>
+            <CardHeader className='flex items-center justify-between px-4 py-2 border-b bg-gradient-to-r from-blue-50 to-cyan-50 flex-shrink-0'>
+              <div className='flex items-center gap-3'>
                 <Image
                   src='/angel.webp'
                   alt='AI Assistant'
-                  width={24}
-                  height={24}
-                  className='object-cover rounded-full'
+                  width={44}
+                  height={44}
+                  className='object-cover rounded-full ring-2 ring-blue-200'
                 />
-                <Button
-                  variant='ghost'
-                  size='icon'
-                  onClick={onClose}
-                  aria-label={t('closeLabel', 'chatbot')}
-                >
-                  <X className='h-4 w-4' />
-                </Button>
+                <CardTitle className='text-lg font-semibold text-gray-900'>
+                  {t('title', 'chatbot')}
+                </CardTitle>
               </div>
+              <Button
+                variant='ghost'
+                size='icon'
+                onClick={onClose}
+                aria-label={t('closeLabel', 'chatbot')}
+              >
+                <X className='h-4 w-4' />
+              </Button>
             </CardHeader>
 
             <div
               ref={scrollContainerRef}
-              className='flex-1 min-h-0 overflow-y-auto px-3 py-2 space-y-3 custom-scrollbar'
+              className='flex-1 min-h-0 overflow-y-auto px-4 py-4 space-y-4 custom-scrollbar'
               style={{ scrollBehavior: 'smooth' }}
             >
               {messages.length === 0 && (
@@ -285,23 +287,81 @@ export function ChatWidgetPanel({ isOpen, onClose }: ChatWidgetPanelProps) {
                     }`}
                   >
                     <div
-                      className={`max-w-[80%] rounded-lg px-4 py-2 ${
+                      className={`max-w-[80%] rounded-lg px-4 py-3 shadow-md ${
                         message.role === 'user'
-                          ? 'bg-primary text-primary-foreground'
-                          : 'bg-indigo-500 text-white shadow-sm'
+                          ? 'bg-gradient-to-r from-blue-600 to-cyan-600 text-white'
+                          : 'bg-indigo-600 text-white border border-indigo-500/20'
                       }`}
                     >
                       <div className='flex items-start justify-between gap-2'>
-                        <p className='text-sm whitespace-pre-wrap flex-1'>
-                          {content}
-                        </p>
+                        <div className='text-sm flex-1'>
+                          {message.role === 'assistant' ? (
+                            <div className='prose prose-sm prose-invert max-w-none [&>*:first-child]:mt-0 [&>*:last-child]:mb-0'>
+                              <ReactMarkdown
+                                remarkPlugins={[remarkGfm]}
+                                components={{
+                                p: ({ children }) => (
+                                  <p className='mb-2 last:mb-0'>{children}</p>
+                                ),
+                                strong: ({ children }) => (
+                                  <strong className='font-bold text-white'>
+                                    {children}
+                                  </strong>
+                                ),
+                                em: ({ children }) => (
+                                  <em className='italic'>{children}</em>
+                                ),
+                                ul: ({ children }) => (
+                                  <ul className='list-disc list-inside mb-2 space-y-1'>
+                                    {children}
+                                  </ul>
+                                ),
+                                ol: ({ children }) => (
+                                  <ol className='list-decimal list-inside mb-2 space-y-1'>
+                                    {children}
+                                  </ol>
+                                ),
+                                li: ({ children }) => (
+                                  <li className='ml-2'>{children}</li>
+                                ),
+                                code: ({ children, className }) => {
+                                  const isInline = !className
+                                  return isInline ? (
+                                    <code className='bg-indigo-700/50 px-1.5 py-0.5 rounded text-xs font-mono'>
+                                      {children}
+                                    </code>
+                                  ) : (
+                                    <code className='block bg-indigo-700/50 p-2 rounded text-xs font-mono overflow-x-auto my-2'>
+                                      {children}
+                                    </code>
+                                  )
+                                },
+                                a: ({ href, children }) => (
+                                  <a
+                                    href={href}
+                                    target='_blank'
+                                    rel='noopener noreferrer'
+                                    className='underline hover:text-cyan-200'
+                                  >
+                                    {children}
+                                  </a>
+                                ),
+                              }}
+                              >
+                                {content}
+                              </ReactMarkdown>
+                            </div>
+                          ) : (
+                            <p className='whitespace-pre-wrap'>{content}</p>
+                          )}
+                        </div>
                         <div className='flex items-center gap-1 flex-shrink-0'>
                           {timestamp && (
                             <span
                               className={`text-xs ${
                                 message.role === 'user'
-                                  ? 'text-primary-foreground/70'
-                                  : 'text-white/70'
+                                  ? 'text-primary-foreground/80'
+                                  : 'text-white/80'
                               }`}
                             >
                               {formatTimestamp(timestamp)}
@@ -312,8 +372,8 @@ export function ChatWidgetPanel({ isOpen, onClose }: ChatWidgetPanelProps) {
                             size='icon'
                             className={`h-6 w-6 ${
                               message.role === 'user'
-                                ? 'text-primary-foreground/70 hover:text-primary-foreground hover:bg-primary-foreground/20'
-                                : 'text-white/70 hover:text-white hover:bg-white/20'
+                                ? 'text-primary-foreground/80 hover:text-primary-foreground hover:bg-primary-foreground/20'
+                                : 'text-white/80 hover:text-white hover:bg-white/20'
                             }`}
                             onClick={() =>
                               handleCopyMessage(message.id, content)
@@ -370,7 +430,7 @@ export function ChatWidgetPanel({ isOpen, onClose }: ChatWidgetPanelProps) {
 
             <form
               onSubmit={handleSubmit}
-              className='px-3 py-2 border-t shrink-0'
+              className='px-4 py-3 border-t bg-gray-50/50 shrink-0'
             >
               <div className='flex gap-2 w-full'>
                 <input
@@ -379,7 +439,7 @@ export function ChatWidgetPanel({ isOpen, onClose }: ChatWidgetPanelProps) {
                   onChange={e => setInput(e.target.value)}
                   placeholder={t('placeholder', 'chatbot')}
                   disabled={isLoading}
-                  className='flex-1 w-full min-w-0 px-4 py-2 rounded-lg border border-input bg-background text-sm focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed'
+                  className='flex-1 w-full min-w-0 px-4 py-2.5 rounded-lg border border-input bg-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed transition-all'
                 />
                 <Button
                   type='submit'
