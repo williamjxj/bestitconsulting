@@ -2,7 +2,7 @@
 module.exports = {
   siteUrl: process.env.SITE_URL || 'https://bestitconsulting.ca',
   generateRobotsTxt: true,
-  generateIndexSitemap: true,
+  generateIndexSitemap: false, // Use single sitemap file instead of index
   exclude: ['/admin/*', '/api/*', '/_next/*', '/server-sitemap.xml'],
   robotsTxtOptions: {
     policies: [
