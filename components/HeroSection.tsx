@@ -112,10 +112,15 @@ export function HeroSection() {
         threshold={0.1}
         rootMargin='100px'
       > */}
-      {/* Background - R2 image (default) or video (backup) */}
+      {/* Background - R2 image (default) or video (backup); subtle Ken Burns on first paint */}
       <div className='absolute inset-0 overflow-hidden'>
         {BACKGROUND_TYPE === 'video' && videoUrl ? (
-          <>
+          <motion.div
+            className='absolute inset-0 size-full origin-center will-change-transform'
+            initial={{ scale: 1 }}
+            animate={{ scale: 1.1 }}
+            transition={{ duration: 3, ease: [0.42, 0, 0.58, 1] }}
+          >
             {/* Video background - hidden on mobile for performance */}
             <video
               className='hidden md:block absolute inset-0 w-full h-full object-cover'
@@ -143,11 +148,14 @@ export function HeroSection() {
                 }}
               />
             )}
-          </>
+          </motion.div>
         ) : /* R2 Image background (default) */
         R2_BASE_URL ? (
-          <div
-            className='absolute inset-0 w-full h-full'
+          <motion.div
+            className='absolute inset-0 w-full h-full origin-center will-change-transform'
+            initial={{ scale: 1 }}
+            animate={{ scale: 1.1 }}
+            transition={{ duration: 3, ease: [0.42, 0, 0.58, 1] }}
             style={{
               backgroundImage: `url(${R2_BASE_URL}/home-page/unsplash.avif)`,
               backgroundSize: 'cover',

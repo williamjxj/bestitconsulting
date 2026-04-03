@@ -680,50 +680,6 @@ Before going live:
 
 ---
 
-## Quick Start Checklist
-
-### For You: Canva Method
-
-**Time:** 1.5-2 hours total
-
-- [ ] **Setup (15 min)**
-  - [ ] Create Canva account (free)
-  - [ ] Upload Best IT Consulting logo
-  - [ ] Add brand colors (#2563eb, #4f46e5)
-  - [ ] Set custom size: 1200×630px
-
-- [ ] **Create Images (10-15 min each)**
-  - [ ] default.png - Branded fallback
-  - [ ] home.png - Hero message
-  - [ ] about.png - Team/expertise
-  - [ ] services.png - Service offerings
-  - [ ] portfolio.png - Work showcase
-  - [ ] contact.png - CTA
-  - [ ] case-studies.png - Success stories
-  - [ ] testimonials.png - Social proof
-
-- [ ] **Optimize (15 min)**
-  - [ ] Download all as PNG
-  - [ ] Run through TinyPNG
-  - [ ] Verify all <200KB
-  - [ ] Verify all 1200×630px
-
-- [ ] **Integration (5 min)**
-  - [ ] Upload to `public/og-images/`
-  - [ ] Delete placeholder files
-  - [ ] Test build
-
-- [ ] **Validation (15 min)**
-  - [ ] Test locally
-  - [ ] Deploy to staging/production
-  - [ ] Test with Facebook Debugger
-  - [ ] Test with Twitter Validator
-
-**Total Time:** ~2 hours  
-**Cost:** Free (or $12.99 for Pro features)
-
----
-
 ## Resources & Tools
 
 ### Design Tools

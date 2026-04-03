@@ -10,31 +10,20 @@ const REQUEST_TIMEOUT_MS = 60_000
 const MAX_TOKENS_PER_MESSAGE = 8000
 
 /**
- * Get the model to use based on environment
- * Production: Use model string format for Vercel AI Gateway routing
- * Local: Use Deepseek provider directly
+ * DeepSeek via `@ai-sdk/deepseek` using `DEEPSEEK_API_KEY`.
+ * Use the same path locally and on Vercel: `.env.local` is not deployed, so set
+ * `DEEPSEEK_API_KEY` in your host’s dashboard (e.g. Vercel → Project → Environment Variables).
+ * The old `deepseek/deepseek-chat` gateway string required AI Gateway catalog setup and caused
+ * "model not found" when the gateway did not expose that id.
  */
 const getModel = () => {
-  // Check if running on Vercel (production)
-  const isVercelProduction = process.env.VERCEL === '1'
-
-  if (isVercelProduction) {
-    // On Vercel, model string format automatically routes through AI Gateway
-    // The DEEPSEEK_API_KEY should be configured in Vercel Dashboard → AI Gateway → Integrations
-    return 'deepseek/deepseek-chat'
-  } else {
-    // Local development: Use Deepseek provider directly with API key from env
-    const apiKey = process.env.DEEPSEEK_API_KEY
-    if (!apiKey) {
-      throw new Error(
-        'DEEPSEEK_API_KEY is required for local development. ' +
-          'Please set it in your .env.local file or configure it in Vercel Dashboard for production.'
-      )
-    }
-    // Create Deepseek provider with API key
-    const provider = createDeepSeek({ apiKey })
-    return provider.chat('deepseek-chat')
+  const apiKey = process.env.DEEPSEEK_API_KEY
+  if (!apiKey) {
+    throw new Error(
+      'DEEPSEEK_API_KEY is required. Add it to .env.local locally or to your production environment (e.g. Vercel).'
+    )
   }
+  return createDeepSeek({ apiKey }).chat('deepseek-chat')
 }
 
 /**
