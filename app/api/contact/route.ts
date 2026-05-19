@@ -1,21 +1,65 @@
 import { NextRequest, NextResponse } from 'next/server'
 import nodemailer from 'nodemailer'
 
-// Create SMTP transporter
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: process.env.SMTP_EMAIL,
-    pass: process.env.SMTP_PASSWORD,
-  },
-})
+const sanitizeEnv = (value?: string) => {
+  if (!value) return ''
+  // Handle accidental wrapping quotes from environment variable values
+  return value.trim().replace(/^['"]|['"]$/g, '')
+}
 
-// Sender and business recipient
-const FROM_EMAIL = process.env.SMTP_EMAIL || 'noreply@bestitconsulting.ca'
+const getSafeError = (error: unknown) => {
+  if (!(error instanceof Error)) {
+    return { message: 'Unknown error' }
+  }
+
+  const smtpError = error as Error & {
+    code?: string
+    response?: string
+    responseCode?: number
+    command?: string
+  }
+
+  return {
+    message: smtpError.message,
+    code: smtpError.code,
+    responseCode: smtpError.responseCode,
+    command: smtpError.command,
+    response: smtpError.response,
+  }
+}
+
 const BUSINESS_EMAIL = process.env.BUSINESS_EMAIL || 'jxjwilliam@gmail.com'
 
 export async function POST(request: NextRequest) {
   try {
+    const smtpEmail = sanitizeEnv(process.env.SMTP_EMAIL)
+    const smtpPassword = sanitizeEnv(process.env.SMTP_PASSWORD)
+    const businessEmail =
+      sanitizeEnv(process.env.BUSINESS_EMAIL) || BUSINESS_EMAIL
+
+    if (!smtpEmail || !smtpPassword) {
+      console.error('Contact API missing SMTP configuration', {
+        hasSmtpEmail: Boolean(smtpEmail),
+        hasSmtpPassword: Boolean(smtpPassword),
+      })
+      return NextResponse.json(
+        { error: 'Email service is not configured. Please try again later.' },
+        { status: 500 }
+      )
+    }
+
+    const transporter = nodemailer.createTransport({
+      host: 'smtp.gmail.com',
+      port: 465,
+      secure: true,
+      auth: {
+        user: smtpEmail,
+        pass: smtpPassword,
+      },
+    })
+
+    await transporter.verify()
+
     const body = await request.json()
     const {
       name,
@@ -48,8 +92,8 @@ export async function POST(request: NextRequest) {
 
     // Send email to your business email
     const businessEmailResult = await transporter.sendMail({
-      from: FROM_EMAIL,
-      to: BUSINESS_EMAIL,
+      from: smtpEmail,
+      to: businessEmail,
       subject: `New Contact Form Submission from ${name}`,
       html: `
       <div style="font-family: 'Inter', 'Segoe UI', Tahoma, sans-serif; max-width: 640px; margin: 0 auto; background-color: #f9fafb; border-radius: 10px; overflow: hidden; border: 1px solid #e2e8f0;">
@@ -122,7 +166,7 @@ export async function POST(request: NextRequest) {
 
     // Send confirmation email to the customer
     const customerEmailResult = await transporter.sendMail({
-      from: FROM_EMAIL,
+      from: smtpEmail,
       to: email,
       subject: 'Thank you for contacting Best IT Consulting',
       html: `
@@ -215,7 +259,8 @@ export async function POST(request: NextRequest) {
       },
       { status: 200 }
     )
-  } catch {
+  } catch (error) {
+    console.error('Contact API email send failed', getSafeError(error))
     return NextResponse.json(
       { error: 'Failed to send email. Please try again later.' },
       { status: 500 }
