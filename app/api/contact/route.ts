@@ -1,13 +1,18 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { Resend } from 'resend'
+import nodemailer from 'nodemailer'
 
-const resend = new Resend(process.env.RESEND_API_KEY)
+// Create SMTP transporter
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: process.env.SMTP_EMAIL,
+    pass: process.env.SMTP_PASSWORD,
+  },
+})
 
-// Configurable sender and business recipient. Use a verified domain (e.g. service@bestitconsulting.ca)
-// or Resend-managed address (bestitconsulting@resend.dev) until your domain is verified.
-const FROM_EMAIL = process.env.FROM_EMAIL || 'service@bestitconsulting.ca'
-const BUSINESS_EMAIL =
-  process.env.BUSINESS_EMAIL || 'service@bestitconsulting.ca'
+// Sender and business recipient
+const FROM_EMAIL = process.env.SMTP_EMAIL || 'noreply@bestitconsulting.ca'
+const BUSINESS_EMAIL = process.env.BUSINESS_EMAIL || 'jxjwilliam@gmail.com'
 
 export async function POST(request: NextRequest) {
   try {
@@ -42,9 +47,9 @@ export async function POST(request: NextRequest) {
     }
 
     // Send email to your business email
-    const businessEmailResult = await resend.emails.send({
+    const businessEmailResult = await transporter.sendMail({
       from: FROM_EMAIL,
-      to: [BUSINESS_EMAIL],
+      to: BUSINESS_EMAIL,
       subject: `New Contact Form Submission from ${name}`,
       html: `
       <div style="font-family: 'Inter', 'Segoe UI', Tahoma, sans-serif; max-width: 640px; margin: 0 auto; background-color: #f9fafb; border-radius: 10px; overflow: hidden; border: 1px solid #e2e8f0;">
@@ -116,9 +121,9 @@ export async function POST(request: NextRequest) {
     })
 
     // Send confirmation email to the customer
-    const customerEmailResult = await resend.emails.send({
+    const customerEmailResult = await transporter.sendMail({
       from: FROM_EMAIL,
-      to: [email],
+      to: email,
       subject: 'Thank you for contacting Best IT Consulting',
       html: `
       <div style="font-family: 'Inter', 'Segoe UI', Tahoma, sans-serif; max-width: 640px; margin: 0 auto; background-color: #f9fafb; border-radius: 10px; overflow: hidden; border: 1px solid #e2e8f0;">
@@ -205,8 +210,8 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(
       {
         message: 'Email sent successfully',
-        businessEmailId: businessEmailResult.data?.id,
-        customerEmailId: customerEmailResult.data?.id,
+        businessEmailId: businessEmailResult.messageId,
+        customerEmailId: customerEmailResult.messageId,
       },
       { status: 200 }
     )

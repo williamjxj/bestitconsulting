@@ -43,8 +43,12 @@ export function AnimatedForm({
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [focusedField, setFocusedField] = useState<string | null>(null)
 
+  const MESSAGE_MAX = 2000
+
   const reducedMotion = useReducedMotion()
-  const [deviceType, setDeviceType] = useState<'mobile' | 'tablet' | 'desktop'>('desktop')
+  const [deviceType, setDeviceType] = useState<'mobile' | 'tablet' | 'desktop'>(
+    'desktop'
+  )
   const [shouldAnimate, setShouldAnimate] = useState(false)
 
   // Only compute device type and animation preference on client after hydration
@@ -63,9 +67,9 @@ export function AnimatedForm({
 
   const handleInputChange = (name: string, value: string | string[]) => {
     setFormData(prev => ({ ...prev, [name]: value }))
-    if (errors[name]) {
-      setErrors(prev => ({ ...prev, [name]: '' }))
-    }
+    // Inline validation per-field for faster feedback
+    const error = validateField(name, value)
+    setErrors(prev => ({ ...prev, [name]: error }))
   }
 
   const handleMultiselectChange = (name: string, value: string) => {
@@ -109,6 +113,30 @@ export function AnimatedForm({
 
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0
+  }
+
+  const validateField = (
+    name: string,
+    value: string | string[] | undefined
+  ) => {
+    const field = fields.find(f => f.name === name)
+
+    if (!value || (typeof value === 'string' && value.trim() === '')) {
+      if (field?.required) return `${field.label} is required`
+      return ''
+    }
+
+    if (name === 'email' && typeof value === 'string') {
+      if (!/\S+@\S+\.\S+/.test(value))
+        return 'Please enter a valid email address'
+    }
+
+    if (name === 'message' && typeof value === 'string') {
+      if (value.length > MESSAGE_MAX)
+        return `Message exceeds ${MESSAGE_MAX} characters`
+    }
+
+    return ''
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -202,7 +230,7 @@ export function AnimatedForm({
                     onBlur={() => setFocusedField(null)}
                     placeholder={field.placeholder}
                     className={cn(
-                      'w-full px-4 py-3 border rounded-lg transition-all duration-200',
+                      'w-full px-4 py-3 md:py-4 border rounded-lg transition-all duration-200 text-base select-text',
                       'focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500',
                       errors[field.name]
                         ? 'border-red-300 focus:ring-red-500/50 focus:border-red-500'
@@ -256,7 +284,7 @@ export function AnimatedForm({
                       onBlur={() => setFocusedField(null)}
                       placeholder={field.placeholder}
                       className={cn(
-                        'w-full px-4 py-3 border rounded-lg transition-all duration-200',
+                        'w-full px-4 py-3 md:py-4 border rounded-lg transition-all duration-200 text-base select-text',
                         'focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500',
                         errors[field.name]
                           ? 'border-red-300 focus:ring-red-500/50 focus:border-red-500'
@@ -310,7 +338,7 @@ export function AnimatedForm({
                     onBlur={() => setFocusedField(null)}
                     placeholder={field.placeholder}
                     className={cn(
-                      'w-full px-4 py-3 border rounded-lg transition-all duration-200',
+                      'w-full px-4 py-3 md:py-4 border rounded-lg transition-all duration-200 text-base select-text',
                       'focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500',
                       errors[field.name]
                         ? 'border-red-300 focus:ring-red-500/50 focus:border-red-500'
@@ -337,7 +365,12 @@ export function AnimatedForm({
 
           {/* Subject, Service and Message fields - full width */}
           {fields
-            .filter(f => f.name === 'subject' || f.name === 'service' || f.name === 'message')
+            .filter(
+              f =>
+                f.name === 'subject' ||
+                f.name === 'service' ||
+                f.name === 'message'
+            )
             .map((field, index) => (
               <motion.div
                 key={field.name}
@@ -355,23 +388,29 @@ export function AnimatedForm({
 
                 <div className='relative'>
                   {field.type === 'textarea' ? (
-                    <motion.textarea
-                      value={formData[field.name] || ''}
-                      onChange={e =>
-                        handleInputChange(field.name, e.target.value)
-                      }
-                      onFocus={() => setFocusedField(field.name)}
-                      onBlur={() => setFocusedField(null)}
-                      placeholder={field.placeholder}
-                      rows={4}
-                      className={cn(
-                        'w-full px-4 py-3 border rounded-lg transition-all duration-200 resize-none',
-                        'focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500',
-                        errors[field.name]
-                          ? 'border-red-300 focus:ring-red-500/50 focus:border-red-500'
-                          : 'border-gray-300'
-                      )}
-                    />
+                    <>
+                      <motion.textarea
+                        value={formData[field.name] || ''}
+                        onChange={e =>
+                          handleInputChange(field.name, e.target.value)
+                        }
+                        onFocus={() => setFocusedField(field.name)}
+                        onBlur={() => setFocusedField(null)}
+                        placeholder={field.placeholder}
+                        rows={6}
+                        className={cn(
+                          'w-full px-4 py-4 md:py-6 border rounded-lg transition-all duration-200 text-base select-text resize-y',
+                          'focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500',
+                          errors[field.name]
+                            ? 'border-red-300 focus:ring-red-500/50 focus:border-red-500'
+                            : 'border-gray-300'
+                        )}
+                      />
+                      <div className='mt-2 text-sm text-gray-500 text-right'>
+                        {((formData[field.name] as string) || '').length}/
+                        {MESSAGE_MAX}
+                      </div>
+                    </>
                   ) : field.type === 'select' ? (
                     <motion.select
                       value={formData[field.name] || ''}
@@ -381,7 +420,7 @@ export function AnimatedForm({
                       onFocus={() => setFocusedField(field.name)}
                       onBlur={() => setFocusedField(null)}
                       className={cn(
-                        'w-full px-4 py-3 border rounded-lg transition-all duration-200 bg-white',
+                        'w-full px-4 py-3 md:py-4 border rounded-lg transition-all duration-200 bg-white text-base select-text',
                         'focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500',
                         errors[field.name]
                           ? 'border-red-300 focus:ring-red-500/50 focus:border-red-500'
@@ -453,7 +492,7 @@ export function AnimatedForm({
                       placeholder={field.placeholder}
                       readOnly={field.readOnly}
                       className={cn(
-                        'w-full px-4 py-3 border rounded-lg transition-all duration-200',
+                        'w-full px-4 py-3 md:py-4 border rounded-lg transition-all duration-200 text-base select-text',
                         field.readOnly
                           ? 'bg-gray-100 text-gray-600 cursor-not-allowed'
                           : 'bg-white',
@@ -495,10 +534,10 @@ export function AnimatedForm({
             type='submit'
             disabled={isSubmitting}
             className={cn(
-              'w-full bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white font-medium py-3 px-6 rounded-lg',
-              'transition-all duration-200 flex items-center justify-center space-x-2',
-              'disabled:opacity-50 disabled:cursor-not-allowed',
-              shouldAnimate && 'hover:scale-105 hover:shadow-lg'
+              'w-full bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white font-semibold py-4 px-6 rounded-lg text-lg',
+              'transition-all duration-200 flex items-center justify-center space-x-3',
+              'disabled:opacity-60 disabled:cursor-not-allowed',
+              shouldAnimate && 'hover:scale-105 hover:shadow-xl'
             )}
             whileHover={shouldAnimate ? { scale: 1.02 } : undefined}
             whileTap={shouldAnimate ? { scale: 0.98 } : undefined}
