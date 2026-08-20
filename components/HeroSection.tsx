@@ -298,12 +298,12 @@ export function HeroSection() {
                   {carouselSlides[currentIndex].description}
                 </p>
 
-                {/* Enhanced CTA buttons */}
-                <div className='flex flex-col sm:flex-row gap-6 justify-center items-center mb-16'>
+                {/* Enhanced CTA buttons - primary action gets the solid brand treatment */}
+                <div className='flex flex-col sm:flex-row gap-4 justify-center items-center mb-16'>
                   <AnimatedButton
                     size='lg'
-                    className='group text-lg px-8 py-4 bg-transparent border-2 border-white/30 hover:border-white/50 text-white hover:bg-white/10 backdrop-blur-sm transition-all duration-300'
-                    rippleColor='rgba(255, 255, 255, 0.2)'
+                    className='group text-lg px-8 py-4 bg-gradient-to-r from-blue-500 to-cyan-500 text-white border border-transparent shadow-lg shadow-blue-500/30 hover:shadow-blue-500/50 hover:brightness-110 transition-all duration-300'
+                    rippleColor='rgba(255, 255, 255, 0.25)'
                     duration={0.6}
                     asChild
                   >
@@ -316,7 +316,7 @@ export function HeroSection() {
                   <ButtonHoverEffects
                     size='lg'
                     variant='outline'
-                    className='text-lg px-8 py-4 bg-transparent border-2 border-white/20 hover:border-white/40 hover:bg-white/10 backdrop-blur-sm transition-all duration-300'
+                    className='text-lg px-8 py-4 bg-white/5 border border-white/25 hover:border-white/45 hover:bg-white/10 backdrop-blur-sm transition-all duration-300'
                     hoverScale={1.05}
                     hoverBgColor='rgba(255, 255, 255, 0.1)'
                     asChild

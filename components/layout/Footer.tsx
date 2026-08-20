@@ -125,9 +125,21 @@ const footerLinks = {
 }
 
 const socialLinks = [
-  { name: 'LinkedIn', href: '#', icon: Linkedin },
-  { name: 'Twitter', href: '#', icon: Twitter },
-  { name: 'GitHub', href: '#', icon: Github },
+  {
+    name: 'LinkedIn',
+    href: 'https://www.linkedin.com/company/bestitconsulting',
+    icon: Linkedin,
+  },
+  {
+    name: 'Twitter',
+    href: 'https://twitter.com/bestitconsulting',
+    icon: Twitter,
+  },
+  {
+    name: 'GitHub',
+    href: 'https://github.com/bestitconsulting',
+    icon: Github,
+  },
 ]
 
 const faqs = [
@@ -307,7 +319,7 @@ export function Footer() {
               <div className='flex items-start sm:items-center space-x-2 sm:space-x-3 text-gray-400'>
                 <MapPin className='h-4 w-4 text-white flex-shrink-0 mt-0.5 sm:mt-0' />
                 <span className='text-xs sm:text-sm'>
-                  Great Vancouver, Canada 🇨🇦
+                  Greater Vancouver, Canada 🇨🇦
                 </span>
               </div>
             </div>
@@ -360,17 +372,17 @@ export function Footer() {
                   transition={{ duration: 0.6, delay: categoryIndex * 0.1 }}
                   viewport={{ once: true }}
                 >
-                  <h3 className='font-semibold text-white mb-2 sm:mb-3 md:mb-4 capitalize text-xs sm:text-sm md:text-base'>
+                  <h3 className='font-semibold text-white mb-2 sm:mb-3 md:mb-4 uppercase tracking-wider text-xs'>
                     {category}
                   </h3>
                   <ul className='space-y-1 sm:space-y-1.5 md:space-y-2 text-gray-400'>
                     {category === 'resources' && resourcesLoading ? (
-                      <li className='text-[11px] sm:text-xs md:text-sm text-gray-500'>
+                      <li className='text-xs sm:text-sm text-gray-500'>
                         Loading...
                       </li>
                     ) : category === 'resources' &&
                       displayLinks.length === 0 ? (
-                      <li className='text-[11px] sm:text-xs md:text-sm text-gray-500'>
+                      <li className='text-xs sm:text-sm text-gray-500'>
                         No resources available
                       </li>
                     ) : (
@@ -390,7 +402,7 @@ export function Footer() {
                               href={link.url}
                               target='_blank'
                               rel='noopener noreferrer'
-                              className='text-gray-400 hover:text-white transition-colors flex items-start sm:items-center group cursor-pointer text-[11px] sm:text-xs md:text-sm'
+                              className='text-gray-400 hover:text-white transition-colors flex items-start sm:items-center group cursor-pointer text-xs sm:text-sm'
                             >
                               {(() => {
                                 const IconComponent = link.icon
@@ -411,7 +423,7 @@ export function Footer() {
                                 className={`text-gray-400 hover:text-white hover:bg-transparent transition-colors p-0 h-auto font-normal justify-start flex-1 cursor-pointer ${
                                   (link as any).isLarge
                                     ? 'text-xs sm:text-sm md:text-base font-medium'
-                                    : 'text-[11px] sm:text-xs md:text-sm'
+                                  : 'text-xs sm:text-sm'
                                 }`}
                               />
                               <ArrowRight className='ml-auto sm:ml-2 h-2.5 w-2.5 sm:h-3 sm:w-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex-shrink-0' />
@@ -424,7 +436,7 @@ export function Footer() {
                               className={`text-gray-400 hover:text-white transition-colors flex items-start sm:items-center group cursor-pointer ${
                                 (link as any).isLarge
                                   ? 'text-xs sm:text-sm md:text-base font-medium'
-                                  : 'text-[11px] sm:text-xs md:text-sm'
+                                  : 'text-xs sm:text-sm'
                               }`}
                             >
                               {(link as any).icon &&
@@ -446,7 +458,7 @@ export function Footer() {
                               className={`text-gray-400 hover:text-white transition-colors flex items-start sm:items-center group cursor-pointer ${
                                 (link as any).isLarge
                                   ? 'text-xs sm:text-sm md:text-base font-medium'
-                                  : 'text-[11px] sm:text-xs md:text-sm'
+                                  : 'text-xs sm:text-sm'
                               }`}
                             >
                               {(link as any).icon &&
@@ -480,7 +492,7 @@ export function Footer() {
             transition={{ duration: 0.6, delay: 0.5 }}
             viewport={{ once: true }}
           >
-            <h3 className='font-semibold text-white mb-3 sm:mb-4 flex items-center gap-2 text-sm sm:text-base'>
+            <h3 className='font-semibold text-white mb-3 sm:mb-4 flex items-center gap-2 uppercase tracking-wider text-xs'>
               <Smartphone className='h-4 w-4 text-white' />
               Mobile Access
             </h3>
@@ -507,7 +519,8 @@ export function Footer() {
           viewport={{ once: true }}
         >
           <p className='text-xs sm:text-sm px-4'>
-            © 2025 BestIT Consulting Ltd. All rights reserved.
+            © {new Date().getFullYear()} Best IT Consulting. All rights
+            reserved.
           </p>
         </motion.div>
       </div>

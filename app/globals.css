@@ -4,6 +4,20 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* Smooth scrolling + anchor offset for the fixed/sticky headers */
+html {
+  scroll-behavior: smooth;
+}
+
+section[id],
+div[id] {
+  scroll-margin-top: 5.5rem;
+}
+
+::selection {
+  background: rgba(59, 130, 246, 0.25);
+}
+
 /* Marquee keyframes - defined after Tailwind imports */
 @keyframes marquee {
   from {

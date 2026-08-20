@@ -67,7 +67,7 @@ export default function Header() {
       className={`fixed top-0 left-0 right-0 w-full z-50 transition-all duration-300 ${
         scrolled
           ? 'bg-white/95 backdrop-blur-md border-b border-gray-200/50 shadow-lg'
-          : 'bg-white/90 backdrop-blur-sm'
+          : 'bg-white/90 backdrop-blur-sm border-b border-transparent'
       }`}
     >
       <div className='w-full max-w-full lg:max-w-7xl lg:mx-auto px-3 sm:px-4 lg:px-8 box-border'>
@@ -111,6 +111,8 @@ export default function Header() {
             <div className='relative flex-shrink-0'>
               <button
                 type='button'
+                id='mobile-menu-toggle'
+                aria-controls='mobile-menu'
                 onClick={() => {
                   setMobileMenuOpen(!mobileMenuOpen)
                 }}
@@ -132,37 +134,50 @@ export default function Header() {
                     className='fixed inset-0 z-40 lg:hidden'
                     onClick={() => setMobileMenuOpen(false)}
                   />
-                  <div className='absolute right-0 top-full mt-1 bg-white border border-gray-200 rounded-md shadow-lg z-50 min-w-[200px] lg:hidden'>
-                    <div className='py-2'>
+                  <div
+                    id='mobile-menu'
+                    className='absolute left-1/2 -translate-x-1/2 top-full mt-2 w-[calc(100vw-2rem)] max-w-sm bg-white border border-gray-200/80 rounded-2xl shadow-2xl shadow-gray-900/10 z-50 lg:hidden overflow-hidden'
+                  >
+                    <div className='py-3'>
                       {navItems.map((item, index) => {
                         const Icon = item.icon
                         return (
                           <Link
                             key={item.href}
                             href={item.href}
-                            className={`relative py-2.5 px-4 rounded-lg font-semibold text-sm transition-all duration-300 flex items-center gap-3 ${
+                            className={`relative mx-3 my-0.5 py-3 px-4 rounded-xl font-semibold text-sm transition-all duration-300 flex items-center gap-3 ${
                               isActive(item.href)
-                                ? 'text-white bg-gradient-to-r from-blue-600 to-indigo-600 shadow-lg shadow-blue-500/25'
-                                : 'text-gray-700 hover:text-blue-600 hover:bg-blue-50 hover:shadow-md'
+                                ? 'text-blue-700 bg-blue-50 border border-blue-100'
+                                : 'text-gray-700 hover:text-blue-600 hover:bg-gray-50'
                             }`}
                             onClick={() => setMobileMenuOpen(false)}
                             style={{ animationDelay: `${index * 50}ms` }}
                           >
                             <Icon
-                              className={`h-5 w-5 flex-shrink-0 ${
+                              className={`h-5 w-5 flex-shrink-0 transition-colors ${
                                 isActive(item.href)
-                                  ? 'text-white'
-                                  : 'text-gray-500'
+                                  ? 'text-blue-600'
+                                  : 'text-gray-400 group-hover:text-blue-500'
                               }`}
                               strokeWidth={2}
                             />
                             {t(item.key)}
-                            {!isActive(item.href) && (
-                              <span className='absolute inset-0 rounded-lg bg-gradient-to-r from-blue-600/10 to-indigo-600/10 opacity-0 hover:opacity-100 transition-opacity duration-300'></span>
+                            {isActive(item.href) && (
+                              <span className='ml-auto h-1.5 w-1.5 rounded-full bg-blue-600' />
                             )}
                           </Link>
                         )
                       })}
+                    </div>
+                    <div className='border-t border-gray-100 p-3 bg-gray-50/60'>
+                      <Link
+                        href='/contact?title=Get%20Free%20Consultation#contact-form'
+                        onClick={() => setMobileMenuOpen(false)}
+                        className='flex items-center justify-center gap-2 w-full rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-500/25 transition-all duration-300 hover:shadow-blue-500/40 hover:brightness-110'
+                      >
+                        <MessageSquare className='h-4 w-4' />
+                        Get Free Consultation
+                      </Link>
                     </div>
                   </div>
                 </>
@@ -177,7 +192,8 @@ export default function Header() {
                 <Link
                   key={key}
                   href={href}
-                  className={`relative px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300 whitespace-nowrap ${
+                  aria-current={isActive(href) ? 'page' : undefined}
+                  className={`relative px-3.5 py-2 rounded-lg text-sm font-medium transition-all duration-300 whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/40 ${
                     isActive(href)
                       ? 'text-blue-600 bg-blue-50'
                       : 'text-gray-700 hover:text-blue-600 hover:bg-gray-50'
