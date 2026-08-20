@@ -5,40 +5,56 @@ import type {
   Review,
   FAQPage,
   Question,
-  SearchAction,
+  BreadcrumbList,
+  ListItem,
   WithContext,
   Thing,
 } from 'schema-dts';
+import { getBaseUrl } from './seo-utils';
+
+const baseUrl = getBaseUrl();
+
+type OrganizationWithGeo = WithContext<Organization> & {
+  geo: {
+    '@type': 'GeoCoordinates';
+    latitude: number;
+    longitude: number;
+  };
+};
 
 /**
  * Organization schema (site-wide)
  * Place in root layout for all pages
  */
-export const organizationSchema: WithContext<Organization> = {
+export const organizationSchema: OrganizationWithGeo = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
   name: 'Best IT Consulting',
   alternateName: 'Best IT',
-  url: 'https://bestitconsulting.ca',
-  logo: 'https://bestitconsulting.ca/logo.png',
+  url: baseUrl,
+  logo: `${baseUrl}/logo.png`,
   description:
     'Professional IT consulting and modern web solutions provider specializing in web development, cloud services, and digital transformation.',
 
-  // Update with actual business information
-  foundingDate: '2008',
-
   address: {
     '@type': 'PostalAddress',
+    streetAddress: '10355 152 Street',
     addressCountry: 'CA',
     addressRegion: 'BC',
-    addressLocality: 'Vancouver',
-    postalCode: 'V5K 0A1',
-    streetAddress: '123 Main Street',
+    addressLocality: 'Surrey',
+    postalCode: 'V3R 7C3',
+  },
+
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: 49.189201,
+    longitude: -122.804169,
   },
 
   contactPoint: {
     '@type': 'ContactPoint',
     contactType: 'customer service',
+    telephone: '+1-236-992-3846',
     email: 'contact@bestitconsulting.ca',
     availableLanguage: ['English', 'French', 'Spanish', 'Chinese'],
   },
@@ -60,17 +76,8 @@ export const websiteSchema: WithContext<WebSite> = {
   '@type': 'WebSite',
   name: 'Best IT Consulting',
   alternateName: 'Best IT',
-  url: 'https://bestitconsulting.ca',
+  url: baseUrl,
   description: 'Professional IT consulting and modern web solutions',
-
-  potentialAction: {
-    '@type': 'SearchAction',
-    target: {
-      '@type': 'EntryPoint',
-      urlTemplate: 'https://bestitconsulting.ca/search?q={search_term_string}',
-    },
-    'query-input': 'required name=search_term_string',
-  } as SearchAction,
 
   publisher: {
     '@type': 'Organization',
@@ -182,6 +189,40 @@ export function createReviewSchema(data: ReviewSchemaData): WithContext<Review> 
 export interface FAQItem {
   question: string;
   answer: string;
+}
+
+/**
+ * Breadcrumb item interface
+ */
+export interface BreadcrumbItem {
+  label: string;
+  href: string;
+}
+
+/**
+ * Create BreadcrumbList schema from breadcrumb items
+ *
+ * @param items - Breadcrumb items (first should be the homepage)
+ * @returns BreadcrumbList schema object
+ */
+export function createBreadcrumbSchema(
+  items: BreadcrumbItem[]
+): WithContext<BreadcrumbList> {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: items.map(
+      (item, index) =>
+        ({
+          '@type': 'ListItem',
+          position: index + 1,
+          name: item.label,
+          item: item.href.startsWith('http')
+            ? item.href
+            : `${baseUrl}${item.href.startsWith('/') ? item.href : `/${item.href}`}`,
+        }) as ListItem
+    ),
+  };
 }
 
 /**

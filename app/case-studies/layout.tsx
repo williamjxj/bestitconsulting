@@ -1,5 +1,9 @@
 import type { Metadata } from 'next'
 import { buildPageMetadata } from '@/lib/seo-utils'
+import {
+  createBreadcrumbSchema,
+  structuredDataScript,
+} from '@/lib/structured-data'
 
 export const metadata: Metadata = buildPageMetadata(
   'Case Studies - Client Success Stories',
@@ -7,10 +11,25 @@ export const metadata: Metadata = buildPageMetadata(
   '/case-studies'
 )
 
+const breadcrumbSchema = createBreadcrumbSchema([
+  { label: 'Home', href: '/' },
+  { label: 'Case Studies', href: '/case-studies' },
+])
+
 export default function CaseStudiesLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
-  return <>{children}</>
+  return (
+    <>
+      <script
+        type='application/ld+json'
+        dangerouslySetInnerHTML={{
+          __html: structuredDataScript(breadcrumbSchema),
+        }}
+      />
+      {children}
+    </>
+  )
 }

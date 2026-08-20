@@ -1,6 +1,31 @@
 import type { Metadata } from 'next';
 
 /**
+ * Resolve the canonical site URL.
+ *
+ * The live site 307-redirects the apex domain (bestitconsulting.ca) to
+ * www.bestitconsulting.ca, so we normalize every configured base URL to the
+ * www host. This keeps canonical URLs, sitemap entries, and Open Graph URLs
+ * pointing at the final (non-redirected) URL.
+ */
+export function getBaseUrl(): string {
+  const configured =
+    process.env.NEXT_PUBLIC_BASE_URL ||
+    process.env.NEXT_PUBLIC_SITE_URL ||
+    'https://bestitconsulting.ca';
+
+  try {
+    const url = new URL(configured);
+    if (url.hostname === 'bestitconsulting.ca') {
+      url.hostname = 'www.bestitconsulting.ca';
+    }
+    return url.toString().replace(/\/$/, '');
+  } catch {
+    return 'https://www.bestitconsulting.ca';
+  }
+}
+
+/**
  * Complete SEO metadata configuration for a page
  */
 export interface SEOMetadata {
@@ -159,6 +184,7 @@ const OG_IMAGES: Record<string, string> = {
   '/contact': '/og-images/contact.png',
   '/case-studies': '/og-images/case-studies.png',
   '/testimonials': '/og-images/testimonials.png',
+  '/faq': '/og-images/faq.png',
 };
 
 /**
@@ -186,7 +212,7 @@ export function buildPageMetadata(
   pathname: string,
   options?: Partial<SEOMetadata>
 ): Metadata {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://bestitconsulting.ca';
+  const baseUrl = getBaseUrl();
   const fullUrl = `${baseUrl}${pathname}`;
   const ogImage = getOGImage(pathname);
 

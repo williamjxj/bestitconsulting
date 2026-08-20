@@ -1,5 +1,9 @@
 import type { Metadata } from 'next'
 import { buildPageMetadata } from '@/lib/seo-utils'
+import {
+  createBreadcrumbSchema,
+  structuredDataScript,
+} from '@/lib/structured-data'
 
 export const metadata: Metadata = buildPageMetadata(
   'Contact Us - Get Your Free Consultation',
@@ -7,10 +11,25 @@ export const metadata: Metadata = buildPageMetadata(
   '/contact'
 )
 
+const breadcrumbSchema = createBreadcrumbSchema([
+  { label: 'Home', href: '/' },
+  { label: 'Contact', href: '/contact' },
+])
+
 export default function ContactLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
-  return <>{children}</>
+  return (
+    <>
+      <script
+        type='application/ld+json'
+        dangerouslySetInnerHTML={{
+          __html: structuredDataScript(breadcrumbSchema),
+        }}
+      />
+      {children}
+    </>
+  )
 }

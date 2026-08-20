@@ -1,24 +1,23 @@
 import type { Metadata } from 'next';
 import { buildPageMetadata } from '@/lib/seo-utils';
-import { createReviewSchema, structuredDataScript } from '@/lib/structured-data';
+import {
+  createBreadcrumbSchema,
+  structuredDataScript,
+} from '@/lib/structured-data';
 
 export const metadata: Metadata = buildPageMetadata(
-  'Client Testimonials - What Our Clients Say',
+  'Client Testimonials & Reviews',
   'Read testimonials from satisfied clients who transformed their businesses with Best IT Consulting. Real stories of success, growth, and digital transformation.',
   '/testimonials'
 );
 
-// Example review schemas - these should be populated with actual testimonials
-const sampleReviews = [
-  createReviewSchema({
-    author: 'John Smith',
-    reviewBody:
-      'Best IT Consulting transformed our business with a modern web application. Their expertise in Next.js and cloud deployment was invaluable.',
-    rating: 5,
-    datePublished: '2025-12-15',
-  }),
-  // Add more reviews as they become available
-];
+// Note: Review schema is intentionally not emitted until verifiable
+// (attributable) client testimonials are available. Fabricated reviews
+// violate Google's structured data guidelines.
+const breadcrumbSchema = createBreadcrumbSchema([
+  { label: 'Home', href: '/' },
+  { label: 'Testimonials', href: '/testimonials' },
+]);
 
 export default function TestimonialsLayout({
   children,
@@ -27,15 +26,12 @@ export default function TestimonialsLayout({
 }) {
   return (
     <>
-      {sampleReviews.map((review, index) => (
-        <script
-          key={index}
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: structuredDataScript(review),
-          }}
-        />
-      ))}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: structuredDataScript(breadcrumbSchema),
+        }}
+      />
       {children}
     </>
   );

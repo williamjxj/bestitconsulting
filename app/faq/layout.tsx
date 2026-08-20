@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { buildPageMetadata } from '@/lib/seo-utils'
 import {
+  createBreadcrumbSchema,
   createFAQPageSchema,
   structuredDataScript,
 } from '@/lib/structured-data'
@@ -11,33 +12,64 @@ export const metadata: Metadata = buildPageMetadata(
   '/faq'
 )
 
-// FAQ structured data for rich results
+// FAQ structured data for rich results.
+// Answers mirror the content rendered on the FAQ page.
 const faqItems = createFAQPageSchema([
   {
-    question: 'What services does Best IT Consulting offer?',
+    question: 'What is your typical project timeline?',
     answer:
-      'We offer comprehensive IT services including web development, cloud services, DevOps consulting, and digital transformation. We specialize in Next.js, React, TypeScript, and modern web technologies.',
+      'Depends on the project requirements and details.',
   },
   {
-    question: 'Do you work with small businesses?',
+    question: 'Do you offer ongoing support and maintenance?',
     answer:
-      'Yes! We work with businesses of all sizes, from startups to enterprises. Our solutions are tailored to meet your specific needs and budget.',
+      'Yes, we provide comprehensive support packages including 24/7 monitoring, regular updates, and technical assistance to ensure your solution runs smoothly.',
   },
   {
-    question: 'What technologies do you specialize in?',
+    question: 'Can you work with our existing technology stack?',
     answer:
-      'We specialize in Next.js, React, TypeScript, Node.js, AWS, Vercel, and modern web technologies. We focus on building fast, scalable, and maintainable applications.',
+      'Absolutely! We specialize in integrating with existing systems and can work with virtually any technology stack to enhance your current infrastructure.',
   },
   {
-    question: 'How long does a typical project take?',
+    question: 'What industries do you serve?',
     answer:
-      'Project timelines vary based on scope and complexity. A typical website takes 4-8 weeks, while larger applications may take 3-6 months. We provide detailed timelines during the consultation phase.',
+      'We serve clients across healthcare, finance, retail, manufacturing, transportation, education, and technology sectors, adapting our solutions to industry-specific requirements.',
   },
   {
-    question: 'Do you provide ongoing support and maintenance?',
+    question: 'How do you structure your pricing?',
     answer:
-      'Yes, we offer ongoing support and maintenance packages to ensure your application remains secure, up-to-date, and performing optimally. We can discuss support options during your consultation.',
+      'We offer flexible pricing models including fixed-price projects, time and materials, and retainer agreements. Pricing is based on project scope, complexity, and timeline requirements.',
   },
+  {
+    question: 'Is the initial consultation really free?',
+    answer:
+      'Yes! We offer a completely free 30-minute consultation to discuss your project requirements, provide initial recommendations, and answer any questions you may have.',
+  },
+  {
+    question: 'How do you ensure data security and privacy?',
+    answer:
+      'We implement industry-standard security measures including encryption, secure data transmission, regular security audits, and compliance with GDPR and other privacy regulations.',
+  },
+  {
+    question: 'What is the size and expertise of your team?',
+    answer:
+      'Our team consists of 50+ certified professionals including software engineers, cloud architects, data scientists, UI/UX designers, and project managers with expertise across multiple technologies.',
+  },
+  {
+    question: 'How do you handle project communication and updates?',
+    answer:
+      "We maintain regular communication through scheduled meetings, progress reports, and real-time collaboration tools. You'll have a dedicated project manager as your primary point of contact.",
+  },
+  {
+    question: 'Can your solutions scale with our business growth?',
+    answer:
+      'Absolutely! We design scalable solutions that can grow with your business. Our cloud-based architectures and modular designs ensure your systems can handle increased load and functionality.',
+  },
+])
+
+const breadcrumbSchema = createBreadcrumbSchema([
+  { label: 'Home', href: '/' },
+  { label: 'FAQ', href: '/faq' },
 ])
 
 export default function FAQLayout({ children }: { children: React.ReactNode }) {
@@ -47,6 +79,12 @@ export default function FAQLayout({ children }: { children: React.ReactNode }) {
         type='application/ld+json'
         dangerouslySetInnerHTML={{
           __html: structuredDataScript(faqItems),
+        }}
+      />
+      <script
+        type='application/ld+json'
+        dangerouslySetInnerHTML={{
+          __html: structuredDataScript(breadcrumbSchema),
         }}
       />
       {children}

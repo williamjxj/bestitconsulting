@@ -11,14 +11,15 @@ This directory contains Open Graph images for social media sharing.
 
 ## Required Images
 
-- [x] `default.png` - Default fallback for all pages (PLACEHOLDER - needs design)
-- [ ] `home.png` - Home page custom image
-- [ ] `about.png` - About page custom image
-- [ ] `services.png` - Services page custom image
-- [ ] `portfolio.png` - Portfolio page custom image
-- [ ] `contact.png` - Contact page custom image
-- [ ] `case-studies.png` - Case studies page custom image
-- [ ] `testimonials.png` - Testimonials page custom image
+- [x] `default.png` - Default branded fallback for all pages
+- [x] `home.png` - Home page custom image
+- [x] `about.png` - About page custom image
+- [x] `services.png` - Services page custom image
+- [x] `portfolio.png` - Portfolio page custom image
+- [x] `contact.png` - Contact page custom image
+- [x] `case-studies.png` - Case studies page custom image
+- [x] `testimonials.png` - Testimonials page custom image
+- [x] `faq.png` - FAQ page custom image
 
 ## Design Guidelines
 

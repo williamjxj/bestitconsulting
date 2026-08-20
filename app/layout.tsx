@@ -4,6 +4,7 @@ import './globals.css'
 import { I18nProvider } from '@/lib/i18n'
 import { MarqueeStyles } from '@/components/ui/MarqueeStyles'
 import { organizationSchema, structuredDataScript } from '@/lib/structured-data'
+import { getBaseUrl } from '@/lib/seo-utils'
 // import { AnimationPerformanceProvider } from '@/lib/animations/performance'
 // import { AnimationAccessibilityProvider } from '@/lib/animations/accessibility'
 
@@ -17,8 +18,7 @@ const geistMono = Geist_Mono({
   subsets: ['latin'],
 })
 
-const baseUrl =
-  process.env.NEXT_PUBLIC_BASE_URL || 'https://bestitconsulting.ca'
+const baseUrl = getBaseUrl()
 
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),

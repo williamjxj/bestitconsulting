@@ -1,0 +1,14 @@
+# Best IT Consulting
+
+> Best IT Consulting is a professional IT consulting and software development company based in Surrey, BC (Greater Vancouver), Canada. We help businesses ship modern web platforms, move to the cloud, and apply practical AI - on time and within budget. Founded by William Jiang, a full-stack developer with 20+ years of experience.
+
+## Pages
+
+- [Home](https://www.bestitconsulting.ca/): IT consulting and modern web development services for businesses of all sizes.
+- [Services](https://www.bestitconsulting.ca/services): Full-stack development, cloud solutions, IT consulting, team augmentation, and enterprise solutions.
+- [About](https://www.bestitconsulting.ca/about): About Best IT Consulting and founder William Jiang.
+- [Case Studies](https://www.bestitconsulting.ca/case-studies): Featured projects, live demos, and technical showcase.
+- [Portfolio](https://www.bestitconsulting.ca/portfolio): Portfolio of successful projects across industries.
+- [Testimonials](https://www.bestitconsulting.ca/testimonials): Client testimonials and satisfaction ratings.
+- [FAQ](https://www.bestitconsulting.ca/faq): Frequently asked questions about timelines, pricing, support, and technology.
+- [Contact](https://www.bestitconsulting.ca/contact): Free consultation, contact form, phone, and office details.

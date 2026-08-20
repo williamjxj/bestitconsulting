@@ -1,8 +1,31 @@
 # SEO Implementation Summary
 
-**Status:** Production-Ready (74% Complete - 80/108 tasks)  
-**Date:** 2026-01-23  
+**Status:** Production-Ready (SEO + GEO update shipped 2026-08-20)  
+**Date:** 2026-08-20  
 **Version:** 1.0.0
+
+---
+
+## Update (2026-08-20) — SEO fixes + GEO
+
+The following changes were verified with a live audit and local production
+builds:
+
+- **Social preview images fixed**: all 8 branded `public/og-images/*.png`
+  (1200×630) were generated (previously every `og:image` returned 404).
+  Regenerate with `scripts/generate-og-images.sh`.
+- **Canonical URLs** now use `www.bestitconsulting.ca` (matching the live
+  apex → www redirect) via `getBaseUrl()` in `lib/seo-utils.ts`.
+- **Sitemap** replaced `next-sitemap` with the app router route
+  (`app/sitemap.ts`): `www` URLs, correct priorities, no `robots.txt` entry.
+- **robots.txt** explicitly allows AI crawlers (GPTBot, ClaudeBot,
+  PerplexityBot, Google-Extended, etc.) — GEO best practice.
+- **GEO files**: `public/llms.txt` and `public/llms-full.txt` added.
+- **Structured data corrected**: real business address/phone (Surrey, BC),
+  removed the fake sitelinks `SearchAction` (no `/search` page), removed
+  fabricated Review schema, aligned FAQPage answers with the visible FAQ page,
+  added Service schemas for all services, BreadcrumbList on every page, and a
+  Person schema for the founder.
 
 ---
 
@@ -27,9 +50,10 @@ Comprehensive SEO optimization implemented for Best IT Consulting website, inclu
 Five types of JSON-LD structured data for rich search results:
 
 - **Organization** - Site-wide business identity
-- **WebSite** - Home page with sitelinks search box
+- **WebSite** - Home page site identity
 - **Service** - Services page for rich service results
-- **Review** - Testimonials page for star ratings
+- **BreadcrumbList** - All sub-pages
+- **Person** - About page (founder)
 - **FAQPage** - FAQ page with 5 sample FAQs
 
 ### 3. Technical SEO (100% Complete)
@@ -55,7 +79,7 @@ Five types of JSON-LD structured data for rich search results:
 - `lib/seo-utils.ts` - Metadata generation utilities (207 lines)
 - `lib/structured-data.ts` - Schema.org helpers (171 lines)
 - `app/robots.ts` - Dynamic robots.txt (37 lines)
-- `next-sitemap.config.js` - Sitemap configuration (40 lines)
+- `app/sitemap.ts` - Sitemap generation (www URLs + priorities)
 
 ### Page Metadata (Layout Files)
 - `app/layout.tsx` - Root layout + Organization schema
@@ -64,12 +88,13 @@ Five types of JSON-LD structured data for rich search results:
 - `app/portfolio/layout.tsx` - Portfolio metadata
 - `app/contact/layout.tsx` - Contact metadata
 - `app/case-studies/layout.tsx` - Case studies metadata
-- `app/testimonials/layout.tsx` - Testimonials metadata + Review schema
+- `app/testimonials/layout.tsx` - Testimonials metadata
 - `app/faq/layout.tsx` - FAQ metadata + FAQPage schema
 
 ### Generated Files
 - `public/sitemap.xml` - Sitemap index
-- `public/sitemap-0.xml` - Main sitemap (all 8 pages)
+- `public/sitemap.xml` - Previously generated sitemap (now served from
+  `app/sitemap.ts`)
 - `public/robots.txt` - Production robots directives
 
 ---
@@ -100,16 +125,13 @@ Five types of JSON-LD structured data for rich search results:
 
 ## Remaining Work (28 tasks)
 
-### 1. Custom OG Images (7 tasks) 🎨
-**Status:** NEEDS GRAPHIC DESIGNER  
-**Impact:** Blocks full social media optimization
+### 1. Custom OG Images ✅
+**Status:** DONE (2026-08-20)
 
-Design 8 custom Open Graph images (1200×630px):
-- default.png (branded fallback)
-- home.png, about.png, services.png, portfolio.png
-- contact.png, case-studies.png, testimonials.png
-
-**Current:** All pages use default placeholder (functional but not optimized)
+All 8 branded Open Graph images (1200×630px) are generated in
+`public/og-images/` (default, home, about, services, portfolio, contact,
+case-studies, testimonials, faq). Regenerate with
+`scripts/generate-og-images.sh`.
 
 ### 2. Validation & Testing (19 tasks) ✅
 **Status:** POST-DEPLOYMENT  
@@ -253,7 +275,7 @@ open http://localhost:3000/robots.txt
 1. Create `layout.tsx` with `buildPageMetadata()`
 2. Add structured data if appropriate
 3. Create custom OG image (major pages only)
-4. Update `next-sitemap.config.js` (dynamic routes)
+4. Sitemap lives in `app/sitemap.ts` (add new routes there)
 5. Use `SEO_CHECKLIST.md` for validation
 
 ---
@@ -270,7 +292,7 @@ open http://localhost:3000/robots.txt
 ### Structured Data Standards
 - **Format:** JSON-LD
 - **Validator:** schema-dts (TypeScript)
-- **Types:** Organization, WebSite, Service, Review, FAQPage
+- **Types:** Organization, WebSite, Service, BreadcrumbList, Person, FAQPage
 - **Required:** @context, @type, all schema-specific required fields
 
 ### Performance Targets
@@ -307,12 +329,13 @@ open http://localhost:3000/robots.txt
 | Technical SEO | ✅ Complete | Sitemap, robots.txt, semantic HTML |
 | Content Optimization | ✅ Complete | Alt attributes, headings, linking |
 | Code Quality | ✅ Complete | TypeScript, ESLint, Prettier |
-| OG Images | ⏳ Pending | Needs design work |
+| OG Images | ✅ Done | Branded 1200×630 images in `public/og-images/` |
 | Validation | ⏳ Pending | Post-deployment |
 
 **Overall:** 80/108 tasks complete (74%)  
 **Production-Ready:** ✅ YES  
-**Next Milestone:** Custom OG images + validation testing
+**Next Milestone:** Deploy, submit sitemaps in Search Console, re-test social
+previews (see `SEO_DEPLOY_CHECKLIST.md`)
 
 ---
 
